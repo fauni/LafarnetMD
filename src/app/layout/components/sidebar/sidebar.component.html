@@ -1,0 +1,67 @@
+<header>
+    <mz-sidenav #sidenav
+      [id]="'sidenav'"
+      [backgroundClass]="'sidenav-background'"
+      [closeOnClick]="true"
+      [collapseButtonId]="'btn-sidenav'"
+      [fixed]="true">
+  
+      <mz-sidenav-header>
+        <div class="user-view">
+          <img class="circle avatar" src="assets/images/doctor.png">
+          <div class="white-text name">Franz Aruni</div>
+          <div class="white-text email">DESARROLLO DE SOFTWARE</div>
+        </div>
+      </mz-sidenav-header>
+      
+      <mz-sidenav-link>
+        <a [routerLink]="['/home']"><i mz-icon-mdi [icon]="'home'"></i>Inicio</a>
+      </mz-sidenav-link>
+  
+      <mz-sidenav-link>
+        <a><i mz-icon-mdi [icon]="'book-open'"></i>Mis Tareas</a>
+      </mz-sidenav-link>
+  
+      <mz-sidenav-link>
+        <a [routerLink]="['/calendar']"><i mz-icon-mdi [icon]="'calendar'"></i>Calendario Lafar</a>
+      </mz-sidenav-link>
+  
+      <mz-sidenav-divider></mz-sidenav-divider>
+      <mz-sidenav-subheader>Mi Perfil</mz-sidenav-subheader>
+  
+      <mz-sidenav-link>
+        <a><i mz-icon-mdi [icon]="'account-circle'"></i>Mi Cuenta</a>
+      </mz-sidenav-link>
+      <mz-sidenav-link>
+        <a><i mz-icon-mdi [icon]="'settings'"></i>Ajustes</a>
+      </mz-sidenav-link>
+      <mz-sidenav-link>
+        <a><i mz-icon-mdi [icon]="'help-circle'"></i>Ayuda</a>
+      </mz-sidenav-link>
+      <mz-sidenav-link>
+        <a [routerLink]="['/login']" (click)="onLoggedout()">
+          <i mz-icon-mdi [icon]="'logout'"></i>Cerrar Sesión
+        </a>
+      </mz-sidenav-link>
+  
+      <ng-template ngFor let-groupedRoute [ngForOf]="groupedRoutes">
+        <mz-sidenav-subheader>
+          <span class="grey-text lighten-4">{{ groupedRoute.section }}</span>
+        </mz-sidenav-subheader>
+  
+        <mz-sidenav-link *ngFor="let route of groupedRoute.routes">
+          <a class="waves-effect white-text" [routerLink]="route.path" *ngIf="route.data">
+            <i mz-icon-mdi [icon]="route.data.icon" class="{{ route.data.class }} grey-text lighten-5"></i>{{ route.data.text }}
+          </a>
+        </mz-sidenav-link>
+      </ng-template>
+    </mz-sidenav>
+  
+    <button mz-button
+      class="sidenav-button hide-on-large-only"
+      id="btn-sidenav"
+      [float]="true"
+      [large]="false">
+      <i mz-icon-mdi [icon]="'menu'"></i>
+    </button>
+</header>

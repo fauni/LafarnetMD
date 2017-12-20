@@ -1,0 +1,34 @@
+
+<nav class="blue">
+    <div class="nav-wrapper">
+        <a (click)="bottomSheetFullscreenModal.open()" href="javascript:void(0);" class="button-collapse-right"><i class="mdi-navigation-apps"></i></a>
+    </div>
+</nav>
+
+<mz-modal #bottomSheetFullscreenModal 
+    [fixedFooter]="true" 
+    [bottomSheet]="false" 
+    [fullscreen]="false" 
+    [options]="modalOptions">
+    <mz-modal-header>
+            
+    </mz-modal-header>
+
+    <mz-modal-content>
+        
+        <div class="row">
+            <div *ngFor="let item of apps" class="col xl25 l3 m3 s4">
+                <div class="card grey darken-4 item-menu-apps">
+                    <div class="card-content white-text">
+                        <img src="assets/images/apps/docs.ico" class="imagen-app">
+                        <br>
+                        <a style = "color: #fff;" href="http://intranet.lafar.net/{{item.url}}" target="_blank" class="tituloApp">{{item.appname}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mz-modal-content>
+    <mz-modal-footer>
+        <button mz-button [flat]="true" mz-modal-close class="blue" style="color:#fff;"> X (Esc) </button>
+    </mz-modal-footer>
+</mz-modal>

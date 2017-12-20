@@ -1,0 +1,62 @@
+
+.white-text {
+    color: #FFFFFF !important;
+}
+
+.card-move-up .move-up {
+    padding: 20px;
+  }
+  
+  .black-overlay {
+    background-color: rgba(0, 0, 0, 0.42) !important;
+  }
+
+
+.item-menu-apps {
+    margin: 4px auto;
+    min-height: 80px;
+    max-width: 80%;
+    font-size: 10px;
+    text-align: center;
+    color: #fff;
+    padding: 0px;
+}
+
+.tituloApp{
+
+}
+
+.imagen-app{
+    margin-top: 5px;
+    width:70%;
+    height: auto;
+}
+
+.bg-image-apps {
+    background-image: url("../../../../assets/images/iphone.png");
+    width: 100%;
+    background-size: cover;
+}
+
+
+.bg-image-1 {
+    background-image: url("../../../../assets/images/macbook.png");
+    width: 100%;
+    background-size: cover;
+}
+
+.bg-image-2 {
+    background-image: url("../../../../assets/images/iphone.png");
+    width: 100%;
+    background-size: cover;
+}
+
+.bg-image-3 {
+    background-image: url("../../../../assets/images/applewatch.png");
+    width: 100%;
+    background-size: cover;
+}
+
+.card-content{
+    padding: 0px;
+}
