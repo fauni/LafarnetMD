@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../layout.service';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { AppsForUser } from './appsforuser';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 @Component({
     selector: 'app-header',
@@ -26,7 +27,7 @@ export class HeaderComponent implements OnInit {
         complete: () => { /*alert('Closed');*/ } // Callback for Modal close
     };
 
-    constructor(private servicioLayout: LayoutService) {
+    constructor(private servicioLayout: LayoutService, public ngxSmartModalService: NgxSmartModalService) {
 
     }
 

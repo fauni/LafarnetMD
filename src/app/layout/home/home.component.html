@@ -8,8 +8,7 @@
         <div class="card">
             <div class="card-image waves-effect waves-block waves-light">
                 <a href="javascript:void(0);" class="btn-floating btn-large btn-price waves-effect waves-light  red accent-2">CC</a>
-                <a href="javascript:void(0);" (click)="ModalViewPublicacion.open()"><img src="assets/images/docs/docs2.png" alt="product-img">
-                </a>
+                <a href="javascript:void(0);" (click)="ModalViewPublicacion.open()"><img src="assets/images/docs/docs2.png" alt="product-img"></a>
             </div>
             
             <ul class="card-action-buttons">
@@ -295,38 +294,90 @@
     
 
 </div>
-
-<!-- Compose Email Trigger -->
-<div id ="divButton" class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a class="btn-floating btn-large red modal-trigger" (click)="ModalAddPublicacion.open()">
-        <i class="large mdi-editor-mode-edit"></i>
-    </a>
-</div>
-<!--/ end items list -->
     
 <!-- Floating Action Button -->
-<!--<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a class="btn-floating btn-large red">
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large red" (click)="AddViewPublicacion.open()">
+    <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
         <i class="large mdi-editor-mode-edit"></i>
     </a>
-    <ul>
-        <li><a href="css-helpers.html" class="btn-floating red"><i class="large mdi-communication-live-help"></i></a></li>
-        <li><a href="app-widget.html" class="btn-floating yellow darken-1"><i class="large mdi-device-now-widgets"></i></a></li>
-        <li><a href="app-calendar.html" class="btn-floating green"><i class="large mdi-editor-insert-invitation"></i></a></li>
-        <li><a href="app-email.html" class="btn-floating blue"><i class="large mdi-communication-email"></i></a></li>
-    </ul>
-</div>-->
+</div>
 <!-- Floating Action Button -->
 
 </div>
 
+<form id="formPublicacion" name = "formPublicacion" #formPublicacion="ngForm" (ngSubmit)="onSubmit()" novalidate>
+<mz-modal #AddViewPublicacion
+[fixedFooter]="true" 
+[bottomSheet]="false" 
+[fullscreen]="false" 
+[options]="modalOptions">
+<mz-modal-header>
+    <nav class="lafar-bg-blue">
+        <div class="nav-wrapper">
+            <div class="left col s12 m5 l5">
+            <ul>
+                <li><a href="javascript:void(0);" (click)="AddViewPublicacion.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+                </li>
+                <li><a href="javascript:void(0);" class="email-type">Publicaciones</a>
+                </li>
+            </ul>
+            </div>
+            <div class="col s12 m7 l7 hide-on-med-and-down">
+            <ul class="right">
+                <li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a>
+                </li>
+                <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-content-send"></i></a></li>-->
+            </ul>
+            </div>
 
+        </div>
+    </nav>
+</mz-modal-header>
+<mz-modal-content>
+    <div class="container contenido-publicacion">
+        
+            <div class="section">
+                <div class="row">
+                    <mz-input-container class="col s12 m12">
+                        <input mz-input mz-validation required
+                        id="titulo"
+                        name="titulo"
+                        type="text"
+                        [errorMessageResource]="errorMessages.titulo"
+                        [label]="'Título de Publicación'"
+                        [placeholder]="'Ingrese el Titulo de Esta publicación'"
+                        [(ngModel)]="model.titulo"
+                        #titulo="ngModel" 
+                        required>
+                    </mz-input-container>
 
+                    <mz-datepicker-container class="col s12 m12">
+                            <input mz-datepicker mz-validation
+                            id="fechaCaduca"
+                            name="fechaCaduca"
+                            type="text"
+                            [errorMessageResource]="errorMessages.fechaCaduca"
+                            [label]="'Fecha de Caducidad'"
+                            [options]="options"
+                            [placeholder]="'Ingrese Fecha de caducidad de esta publicación'"
+                            [(ngModel)]="model.fechaCaduca"
+                            formcontrolname = "modelFechaCaduca"
+                            #fechaCaduca="ngModel" 
+                            required>
+                    </mz-datepicker-container>
+                </div>
+            </div>
 
+    </div>
+</mz-modal-content>
+<mz-modal-footer>
+    <button style="min-width:100%;" mz-button [disabled]="!formPublicacion.valid" type="submit" class="btn waves-effect blue accent-3 col s12 white-text">Publicar <i class="mdi-content-send"></i></button>
+</mz-modal-footer>
+</mz-modal>
+</form>
 
-
-
-<mz-modal #ModalViewPublicacion style="background-color: #fafafa;"
+<mz-modal #ModalViewPublicacion
 [fixedFooter]="false" 
 [bottomSheet]="true" 
 [fullscreen]="true" 
@@ -339,17 +390,10 @@
 </mz-modal-footer>
 </mz-modal>
 
-!-- Modal Trigger -->
-<a class="waves-effect waves-light btn modal-trigger" href="javascript:void(0);" (click)="openModal()">Modal</a>
 
-<div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div>
-
-
+<ngx-smart-modal #myModal [identifier]="'myModal'">
+    <h1>Title</h1>
+    <p>Some stuff...</p>
+  
+    <button (click)="myModal.close()">Close</button>
+  </ngx-smart-modal>

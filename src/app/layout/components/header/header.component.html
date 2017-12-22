@@ -1,7 +1,11 @@
-
-<nav class="blue">
+<nav class="lafar-bg-white">
+    <ul class="left">
+        <!--<li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="assets/images/apps/LogoH.png" alt="materialize logo" class="img-logo-banner"></a> <span class="logo-text"></span></h1></li>-->
+        <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="assets/images/apps/LogoHC.png" alt="materialize logo" class="img-logo-banner"></a> <span class="logo-text"></span></h1></li>
+    </ul>
     <div class="nav-wrapper">
-        <a (click)="bottomSheetFullscreenModal.open()" href="javascript:void(0);" class="button-collapse-right"><i class="mdi-navigation-apps"></i></a>
+        <a (click)="ngxSmartModalService.getModal('myMenu').open()" href="javascript:void(0);" class="button-collapse-right"><i class="mdi-navigation-apps lafar-blue"></i></a>
+<!--        <a (click)="bottomSheetFullscreenModal.open()" href="javascript:void(0);" class="button-collapse-right"><i class="mdi-navigation-apps"></i></a> -->
     </div>
 </nav>
 
@@ -32,3 +36,19 @@
         <button mz-button [flat]="true" mz-modal-close class="blue" style="color:#fff;"> X (Esc) </button>
     </mz-modal-footer>
 </mz-modal>
+
+
+
+<ngx-smart-modal #myMenu [identifier]="'myMenu'">
+    <div class="row">
+        <div *ngFor="let item of apps" class="parentCard col xl3 l3 m3 s4">
+            <div class="card item-menu-apps">
+                <a style = " display:nome; color: #fff;" href="http://intranet.lafar.net/{{item.url}}" target="_blank" class="tituloApp">
+                    <div class="card-content">
+                        <img src="assets/images/apps/{{item.code}}.png" class="imagen-app">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</ngx-smart-modal>

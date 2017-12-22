@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MzIconMdiModule, MzValidationModule, MzInputModule, MzModalModule, MzInjectionModule, MzButtonModule, MzProgressModule } from 'ng2-materialize';
+import { MzIconMdiModule,
+    MzValidationModule,
+    MzInputModule, MzModalModule, MzInjectionModule, MzButtonModule, MzProgressModule } from 'ng2-materialize';
 import { MzSpinnerModule } from 'ng2-materialize';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';

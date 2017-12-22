@@ -9,6 +9,7 @@ import { MzButtonModule, MzIconMdiModule, MzSidenavModule, MzModalModule, MzNavb
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import { MarkdownModule } from 'ngx-markdown';
 import { LayoutComponent } from './layout.component';
+import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 
 @NgModule({
     imports: [
@@ -20,9 +21,11 @@ import { LayoutComponent } from './layout.component';
         MzSidenavModule,
         MarkdownModule.forRoot(),
         MzModalModule,
-        MzNavbarModule
+        MzNavbarModule,
+        NgxSmartModalModule
     ],
-    declarations: [LayoutComponent, HeaderComponent, SidebarComponent, HeaderComponent]
+    declarations: [LayoutComponent, HeaderComponent, SidebarComponent, HeaderComponent],
+    providers: [ NgxSmartModalService ]
 })
 
 export class LayoutModule {}

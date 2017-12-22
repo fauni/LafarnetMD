@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+.lafar-dark{
+    color: #0d47a1;
+}
+
+.lafar-blue {
+    color: #009EE3;
+}
+
+.lafar-light{
+    color: #e3f2fd;
+}
+
+
+.lafar-bg-dark{
+    background: #0d47a1;
+}
+
+.lafar-bg-blue{
+    background: #009EE3;
+}
+
+.lafar-bg-light{
+    background: #e3f2fd;
+}
+
+.lafar-bg-white{
+    background: #fafafa;
+}
