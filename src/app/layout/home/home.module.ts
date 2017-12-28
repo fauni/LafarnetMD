@@ -11,6 +11,8 @@ import { MzModalModule,
 import { CodeSnippetModule } from '../shared/code-snippet/code-snippet.module';
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HomeService } from './home.service';
+import { ListaPublicacionComponent } from './lista-publicacion/lista-publicacion.component';
 
 @NgModule({
     imports: [
@@ -28,10 +30,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MzDatepickerModule
     ],
     declarations: [
-        HomeComponent
+        HomeComponent,
+        ListaPublicacionComponent
     ],
     providers: [
-        NgxSmartModalService
+        NgxSmartModalService, HomeService
     ]
 })
 export class HomeModule {}

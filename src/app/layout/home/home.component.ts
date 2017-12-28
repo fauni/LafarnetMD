@@ -2,6 +2,8 @@ import { Component, OnInit, Renderer, ViewChild } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Publicacion } from '../../models/publicacion';
+import { HomeService } from './home.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 declare var $: any;
 @Component({
@@ -15,15 +17,15 @@ export class HomeComponent implements OnInit {
   submitted = false;
   submittedValues: any;
   model: any = {};
-  publicacion: Publicacion;
-
+  publicacion: Publicacion = new Publicacion();
+  elem: any;
   options: Pickadate.DateOptions = {
     clear: 'Borrar', // Clear button text
     close: 'Ok',    // Ok button text
     today: 'Hoy', // Today button text
     closeOnClear: true,
     closeOnSelect: false,
-    format: 'dd-mm-yyyy',
+    format: 'yyyy-mm-dd',
     //formatSubmit: 'yyyy-mm-dd',
     //onClose: () => alert('Cerraste el picker.'),
     //onOpen: () => alert('abriste el picker.'),
@@ -40,10 +42,11 @@ export class HomeComponent implements OnInit {
     },
   };
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private hSer: HomeService,
+    private formBuilder: FormBuilder,
     private renderer: Renderer,
     public ngxSmartModalService: NgxSmartModalService) {
-
   }
 
   ngOnInit() {
@@ -52,6 +55,25 @@ export class HomeComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    if (this.elem.files.length > 0) {
+      console.log(this.elem.files[0]);
+      let formData = new FormData();
+      formData.append('file', this.elem.files[0]);
+      formData.append('username', 'faruni');
+      formData.append('id_area', '1');
+      formData.append('tipo_publicacion', '1');
+      formData.append('titulo', this.publicacion.titulo);
+      formData.append('fechaCaduca', this.publicacion.fechaCaduca);
+
+      this.hSer.upload(formData).subscribe(
+        data => {
+          console.log(data);
+        },
+        (err: HttpErrorResponse) => {
+          console.log('error!', err);
+        }
+      );
+    }
   }
 
   buildForm() {
@@ -59,5 +81,9 @@ export class HomeComponent implements OnInit {
       titulo: '',
       fechaCaduca: '01-01-1990'
     });
+  }
+
+  uploadFile(event) {
+    this.elem = event.target;
   }
 }
