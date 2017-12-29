@@ -188,7 +188,6 @@ export class LoginComponent implements OnInit {
         this.submitted = true;
         this.submittedValues = this.form.value;
     }
-
     openServiceModal() {
         this._modalService.open(DialogProgressComponent);
     }

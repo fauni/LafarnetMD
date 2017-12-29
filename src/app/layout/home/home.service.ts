@@ -13,4 +13,7 @@ export class HomeService {
     return this.http.post('http://localhost:8888/newapilafarnet/public/publicacion/upload', data);
   }
 
+  getPublications(): Observable<any> {
+    return this.http.get('http://localhost:8888/newapilafarnet/public/publicacion/get');
+  }
 }

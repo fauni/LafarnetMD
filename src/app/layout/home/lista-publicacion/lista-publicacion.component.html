@@ -1,11 +1,11 @@
 <div id="products" class="row">
   <div class="product-sizer"></div>
 
-  <div class="product col s4 xl3 m6 s12">
+  <div *ngFor="let item of publications" class="product col s4 xl3 m6 s12">
       <div class="card">
           <div class="card-image waves-effect waves-block waves-light">
               <a href="javascript:void(0);" class="btn-floating btn-large btn-price waves-effect waves-light  red accent-2">CC</a>
-              <a href="javascript:void(0);" (click)="ModalViewPublicacion.open()"><img src="assets/images/docs/docs2.png" alt="product-img"></a>
+              <a href="javascript:void(0);" (click)="ModalViewPublicacion.open()"><img src="{{urlImages+item.nombreAdjunto}}" alt="product-img"></a>
           </div>
           
           <ul class="card-action-buttons">
@@ -13,18 +13,17 @@
               </li>
               <li><a class="btn-floating waves-effect waves-light red accent-2"><i class="mdi-action-favorite"></i></a>
               </li>
-              <li><a class="btn-floating waves-effect waves-light light-blue"><i class="mdi-action-info activator"></i></a>
+              <li style="display:none;"><a class="btn-floating waves-effect waves-light light-blue"><i class="mdi-action-info activator"></i></a>
               </li>
           </ul>
           <div class="card-content">
               <div class="row">
-                  <div class="col s8">
-                      <p class="card-title grey-text text-darken-4"><a href="javascript:void(0);" class="grey-text text-darken-4" (click)="ModalViewPublicacion.open()">Titulo Publicacion 1</a>
+                  <div class="col s12 titulo-publicacion">
+                      <p class=""><a href="javascript:void(0);" class="grey-text text-darken-4" (click)="ModalViewPublicacion.open()">{{item.titulo}}</a>
                       </p>
                   </div>
-                  <div class="col s4 no-padding">
-                      <img src="assets/images/notices/amazon.jpg" alt="amazon" class="responsive-img">
-                      
+                  <div class="col s12 titulo-fecha">
+                        {{item.fechaPublicacion}}
                   </div>
               </div>
           </div>
@@ -36,3 +35,26 @@
   </div>
 
 </div>
+
+
+
+<mz-modal #ModalViewPublicacion
+[fixedFooter]="false" 
+[bottomSheet]="true" 
+[fullscreen]="true" 
+[options]="modalOptions">
+<mz-modal-content>
+    <iframe src="https://docs.google.com/viewer?url=http://intranet.lafar.net/arch/archpdf.pdf&embedded=true"></iframe>
+</mz-modal-content>
+<mz-modal-footer style="display:none;">
+
+</mz-modal-footer>
+</mz-modal>
+
+
+<ngx-smart-modal #myModal [identifier]="'myModal'">
+    <h1>Title</h1>
+    <p>Some stuff...</p>
+  
+    <button (click)="myModal.close()">Close</button>
+  </ngx-smart-modal>

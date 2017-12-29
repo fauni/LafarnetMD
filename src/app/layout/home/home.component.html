@@ -1,6 +1,6 @@
 <div class="section">
 <!-- statr products list -->
-    
+<app-lista-publicacion></app-lista-publicacion>    
 <!-- Floating Action Button -->
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large red" (click)="AddViewPublicacion.open()">
@@ -89,23 +89,3 @@
 </mz-modal>
 </form>
 
-<mz-modal #ModalViewPublicacion
-[fixedFooter]="false" 
-[bottomSheet]="true" 
-[fullscreen]="true" 
-[options]="modalOptions">
-<mz-modal-content>
-    <iframe src="https://docs.google.com/viewer?url=http://intranet.lafar.net/arch/archpdf.pdf&embedded=true"></iframe>
-</mz-modal-content>
-<mz-modal-footer style="display:none;">
-
-</mz-modal-footer>
-</mz-modal>
-
-
-<ngx-smart-modal #myModal [identifier]="'myModal'">
-    <h1>Title</h1>
-    <p>Some stuff...</p>
-  
-    <button (click)="myModal.close()">Close</button>
-  </ngx-smart-modal>

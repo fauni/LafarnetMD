@@ -1,0 +1,10 @@
+.titulo-fecha{
+    font-size: .8rem;
+    text-align: right;
+}
+
+.titulo-publicacion{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: right;
+}

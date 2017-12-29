@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeService } from './home.service';
 import { ListaPublicacionComponent } from './lista-publicacion/lista-publicacion.component';
 
+
 @NgModule({
     imports: [
         CommonModule,
