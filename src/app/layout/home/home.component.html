@@ -1,6 +1,8 @@
+<app-loading-pages [estado]="loading"></app-loading-pages>
+
 <div class="section">
 <!-- statr products list -->
-<app-lista-publicacion></app-lista-publicacion>    
+<app-lista-publicacion [publications]="publications"></app-lista-publicacion>
 <!-- Floating Action Button -->
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large red" (click)="AddViewPublicacion.open()">
@@ -77,15 +79,29 @@
 
     </div>
 
-    <div>
-        <label class="btn btn-default"> Upload Images 
-            <input type="file" hidden (change)="uploadFile($event)">
-        </label>
-    </div>
+    <mz-card class="footer-bar-publish">
+        <mz-card-content>
+        <div>
+            <label class="btn-flat">
+                <i style="font-size: 20px;" class="lafar-blue mdi-image-crop-original"></i>
+                Imagen
+                <input type="file" hidden (change)="uploadFile($event)" accept="image/*" required>
+            </label>
+
+            <label class="btn-flat">
+                <i style="font-size: 20px;" class="lafar-blue mdi-action-description"></i>
+                Documentos (PDF)
+                <input type="file" hidden (change)="uploadFileDocs($event)">
+            </label>
+        </div>
+        
+        </mz-card-content>
+    </mz-card>
 </mz-modal-content>
 <mz-modal-footer>
-    <button style="min-width:100%;" mz-button [disabled]="!formPublicacion.valid" type="submit" class="btn waves-effect blue accent-3 col s12 white-text">Publicar <i class="mdi-content-send"></i></button>
+    <button (click)="AddViewPublicacion.close()" style="min-width:100%;" mz-button [disabled]="!formPublicacion.valid" type="submit" class="btn waves-effect blue accent-3 col s12 white-text">Publicar <i class="mdi-content-send"></i></button>
 </mz-modal-footer>
 </mz-modal>
 </form>
 
+<simple-notifications></simple-notifications>

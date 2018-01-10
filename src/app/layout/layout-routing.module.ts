@@ -9,7 +9,7 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'home' },
             { path: 'home', loadChildren: 'app/layout/home/home.module#HomeModule'},
-            { path: 'calendar', loadChildren: 'app/layout/calendar/calendar.module#CalendarModule'}
+            { path: 'calendario', loadChildren: 'app/layout/calendario/calendario.module#CalendarioModule'}
         ]
     }
 ];

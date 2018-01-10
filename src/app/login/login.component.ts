@@ -8,7 +8,6 @@ import { Usuario } from '../models/usuario';
 import { NotificationsService } from 'angular2-notifications';
 import { AlertsService, AlertType } from '@jaspero/ng2-alerts';
 import { MzButtonModule, MzInputModule, MzModalService } from 'ng2-materialize';
-import { DialogProgressComponent } from './dialog-progress/dialog-progress.component';
 
 @Component({
     selector: 'app-login',
@@ -187,8 +186,5 @@ export class LoginComponent implements OnInit {
     onSubmit() {
         this.submitted = true;
         this.submittedValues = this.form.value;
-    }
-    openServiceModal() {
-        this._modalService.open(DialogProgressComponent);
     }
 }

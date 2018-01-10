@@ -24,7 +24,7 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
         MzNavbarModule,
         NgxSmartModalModule
     ],
-    declarations: [LayoutComponent, HeaderComponent, SidebarComponent, HeaderComponent],
+    declarations: [LayoutComponent, HeaderComponent, SidebarComponent],
     providers: [ NgxSmartModalService ]
 })
 

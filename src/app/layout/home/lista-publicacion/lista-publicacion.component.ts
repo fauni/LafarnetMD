@@ -1,22 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HomeService } from '../home.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSmartModalService } from 'ngx-smart-modal';
+
+declare var $: any;
 
 @Component({
   selector: 'app-lista-publicacion',
   templateUrl: './lista-publicacion.component.html',
-  styleUrls: ['./lista-publicacion.component.css']
+  styleUrls: ['./lista-publicacion.component.scss']
 })
 export class ListaPublicacionComponent implements OnInit {
-  public publications: any;
+  @Input() publications: any;
+
+  public nombreElemento: string;
+  //public publications: any;
   public urlImages: string;
-  constructor(private hSer: HomeService) {
+
+  //constructor(private hSer: HomeService) {  //Borrar
+  constructor(
+    private hSer: HomeService,
+    private ngxModalPublicacion: NgxSmartModalService
+  ) {
     this.urlImages = 'http://localhost:8888/newapilafarnet/assets/publicaciones_images/';
-  }
-  ngOnInit() {
-    this.onLoadPublications();
+    this.nombreElemento = 'publicacion.jpg';
   }
 
+  ngOnInit() {
+    //this.onLoadPublications(); //Borrar
+  }
+
+
+  openVistaPrevia() {
+    this.ngxModalPublicacion.getModal('myModalPublicacion').open();
+  }
+  /*
   onLoadPublications(): void {
     this.hSer.getPublications().subscribe(
         data => {
@@ -34,5 +52,5 @@ export class ListaPublicacionComponent implements OnInit {
           }
         }
     );
-}
+  }*/
 }

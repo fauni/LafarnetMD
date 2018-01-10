@@ -1,9 +1,10 @@
-import { Component, OnInit, Renderer, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer, ViewChild, Input } from '@angular/core';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Publicacion } from '../../models/publicacion';
 import { HomeService } from './home.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationsService } from 'angular2-notifications';
 
 declare var $: any;
 @Component({
@@ -12,6 +13,8 @@ declare var $: any;
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  loading: Boolean;
+  publications: any;
   scrollElement: JQuery;
   formPublicacion: FormGroup;
   submitted = false;
@@ -19,6 +22,7 @@ export class HomeComponent implements OnInit {
   model: any = {};
   publicacion: Publicacion = new Publicacion();
   elem: any;
+  elemDoc: any;
   options: Pickadate.DateOptions = {
     clear: 'Borrar', // Clear button text
     close: 'Ok',    // Ok button text
@@ -40,9 +44,13 @@ export class HomeComponent implements OnInit {
     fechaCaduca: {
       required: 'Es necesario la Fecha de Caducidad'
     },
+    urlImagen : {
+      required: 'Es necesario que Seleccione una imagen para mostrar'
+    }
   };
 
   constructor(
+    private _notification: NotificationsService,
     private hSer: HomeService,
     private formBuilder: FormBuilder,
     private renderer: Renderer,
@@ -50,40 +58,78 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.onLoadPublications();
     this.buildForm();
   }
 
   onSubmit() {
+    this.loading = true;
     this.submitted = true;
-    if (this.elem.files.length > 0) {
+    if (this.elem.files.length >= 0) {
       console.log(this.elem.files[0]);
       let formData = new FormData();
       formData.append('file', this.elem.files[0]);
+      formData.append('fileDocs', this.elemDoc.files[0]);
       formData.append('username', 'faruni');
       formData.append('id_area', '1');
       formData.append('tipo_publicacion', '1');
       formData.append('titulo', this.publicacion.titulo);
       formData.append('fechaCaduca', this.publicacion.fechaCaduca);
-
       this.hSer.upload(formData).subscribe(
         data => {
+          this._notification.success(
+            'Correcto!',
+            'Se publico correctamente!',
+            {
+                timeOut: 2000,
+                showProgressBar: true,
+                pauseOnHover: false,
+                clickToClose: false,
+                maxLength: 10
+            }
+          );
           console.log(data);
+          this.onLoadPublications();
         },
         (err: HttpErrorResponse) => {
           console.log('error!', err);
+          this.loading = false;
         }
       );
     }
   }
-
   buildForm() {
     this.formPublicacion = this.formBuilder.group({
       titulo: '',
       fechaCaduca: '01-01-1990'
     });
   }
-
   uploadFile(event) {
     this.elem = event.target;
+  }
+  uploadFileDocs(event) {
+    this.elemDoc = event.target;
+  }
+
+  onLoadPublications(): void {
+    this.loading = true;
+    this.hSer.getPublications().subscribe(
+        data => {
+            this.loading = false;
+            this.publications = data.body;
+        },
+        (err: HttpErrorResponse) => {
+          this.loading = false;
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('Ocurrio un error:', err.error.message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          }
+        }
+    );
+    this.loading = false;
   }
 }

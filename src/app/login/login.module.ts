@@ -11,7 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { JasperoAlertsModule } from '@jaspero/ng2-alerts';
-import { DialogProgressComponent } from './dialog-progress/dialog-progress.component';
 
 
 @NgModule({
@@ -31,7 +30,7 @@ import { DialogProgressComponent } from './dialog-progress/dialog-progress.compo
         MzModalModule,
         MzSpinnerModule
     ],
-    declarations: [LoginComponent, DialogProgressComponent],
-    entryComponents: [ DialogProgressComponent, ]
+    declarations: [LoginComponent],
+    entryComponents: []
 })
 export class LoginModule {}

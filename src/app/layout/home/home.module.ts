@@ -7,13 +7,17 @@ import { MzModalModule,
     MzInputModule,
     MzIconModule,
     MzValidationModule,
-    MzDatepickerModule } from 'ng2-materialize';
+    MzDatepickerModule,
+    MzSpinnerModule,
+    MzCardModule,
+    MzIconMdiModule} from 'ng2-materialize';
 import { CodeSnippetModule } from '../shared/code-snippet/code-snippet.module';
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeService } from './home.service';
 import { ListaPublicacionComponent } from './lista-publicacion/lista-publicacion.component';
-
+import { LoadingComponent } from '../components/loading/loading.component';
+import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
 
 @NgModule({
     imports: [
@@ -23,19 +27,24 @@ import { ListaPublicacionComponent } from './lista-publicacion/lista-publicacion
         MzNavbarModule,
         MzInputModule,
         MzIconModule,
+        MzIconMdiModule,
         CodeSnippetModule,
         NgxSmartModalModule,
         FormsModule,
         ReactiveFormsModule,
         MzValidationModule,
-        MzDatepickerModule
+        MzDatepickerModule,
+        MzSpinnerModule,
+        MzCardModule,
+        SimpleNotificationsModule.forRoot()
     ],
     declarations: [
         HomeComponent,
-        ListaPublicacionComponent
+        ListaPublicacionComponent,
+        LoadingComponent
     ],
     providers: [
-        NgxSmartModalService, HomeService
+        NgxSmartModalService, HomeService, NotificationsService
     ]
 })
 export class HomeModule {}
