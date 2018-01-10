@@ -12,13 +12,16 @@ import {HttpClientModule} from '@angular/common/http';
 import { LoginService } from './login/login.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutService } from './layout/layout.service';
+import { Globals } from './globals';
+import { AdminIntranetComponent } from './admin-intranet/admin-intranet.component';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdminIntranetComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,7 @@ import { LayoutService } from './layout/layout.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [AuthGuard, LoginService, LayoutService],
+  providers: [AuthGuard, LoginService, LayoutService, Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

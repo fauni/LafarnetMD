@@ -26,7 +26,7 @@
                     <div class="card-content white-text">
                         <img src="assets/images/apps/docs.ico" class="imagen-app">
                         <br>
-                        <a style = "color: #fff;" href="http://intranet.lafar.net/{{item.url}}" target="_blank" class="tituloApp">{{item.appname}}</a>
+                        <a style = "color: #fff;" href="{{ global.urlIntranet + item.url }}" target="_blank" class="tituloApp">{{item.appname}}</a>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
     <div class="row">
         <div *ngFor="let item of apps" class="parentCard col xl3 l3 m3 s4">
             <div class="card item-menu-apps">
-                <a style = " display:nome; color: #fff;" href="http://intranet.lafar.net/{{item.url}}" target="_blank" class="tituloApp">
+                <a style = " display:nome; color: #fff;" href="{{global.urlIntranet + item.url}}" target="_blank" class="tituloApp">
                     <div class="card-content">
                         <img src="assets/images/apps/{{item.code}}.png" class="imagen-app">
                     </div>
