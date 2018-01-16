@@ -1,0 +1,14 @@
+<mz-parallax class="header-background" [height]="250">
+    <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+
+<div class="header-content valign-wrapper lafar-light">
+  <img class="image-user circle" src="{{global.urlImagenesPersonal+user.foto}}">
+  <div class="nombre-user">{{user.first_name}} {{user.last_name}}</div>
+
+  <button mz-button
+    class="github-button blue"
+    (click)="enviarMensaje()">
+    <i mz-icon-mdi [icon]="'email'" [align]="'left'"></i>Enviar Mensaje
+  </button>
+</div>

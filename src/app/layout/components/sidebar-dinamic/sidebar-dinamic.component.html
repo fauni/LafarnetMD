@@ -8,23 +8,12 @@
   
       <mz-sidenav-header>
         <div class="user-view">
-          <!--<img class="circle avatar" src="assets/images/doctor.png" style="margin-left:180px;">
+          <img class="circle avatar" src="assets/images/doctor.png" style="margin-left:180px;">
           <div class="lafar-dark name">Franz Aruni</div>
-          <div class="lafar-dark email">DESARROLLO DE SOFTWARE</div>-->
-          <img class="circle avatar" src="{{global.urlImagenesPersonal + global.user.foto}}" style="margin-left:180px;">
-          <div class="lafar-dark name">{{global.user.first_name}} {{global.user.last_name}}</div>
-          <div class="lafar-dark email">{{global.user.cargo}}</div>
+          <div class="lafar-dark email">DESARROLLO DE SOFTWARE</div>
         </div>
       </mz-sidenav-header>
-
-      <mz-sidenav-link>
-        <a [routerLink]="['/home']"><i mz-icon-mdi [icon]="'home'" class="blue-text"></i>Inicio</a>
-      </mz-sidenav-link>
-
-      <mz-sidenav-link *ngFor="let item of items">
-        <a [routerLink]="[item.url]"><i mz-icon-mdi [icon]="item.icon" class="blue-text"></i>{{item.itemName}}</a>  
-      </mz-sidenav-link>
-      <!--
+      
       <mz-sidenav-link>
         <a [routerLink]="['/home']"><i mz-icon-mdi [icon]="'home'" class="blue-text"></i>Inicio</a>
       </mz-sidenav-link>
@@ -36,7 +25,7 @@
       <mz-sidenav-link>
         <a [routerLink]="['/calendario']"><i mz-icon-mdi [icon]="'calendar'" class="blue-text"></i>Calendario Lafar</a>
       </mz-sidenav-link>
-      -->
+  
       <mz-sidenav-divider></mz-sidenav-divider>
       <mz-sidenav-subheader>Mi Perfil</mz-sidenav-subheader>
   

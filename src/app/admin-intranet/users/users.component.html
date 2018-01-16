@@ -1,0 +1,36 @@
+<div id="mail-app">
+  <div class="row">
+    <div class="col s12">
+        <div id="lista-usuarios">
+            <ul class="collection">
+              <li class="collection-item avatar row" *ngFor="let user of userAll" (click)="editUser(user.username)">
+                <img src="{{ global.urlImagenesPersonal + user.foto}}" alt="" class="circle">
+                <div class="col l4">
+                    <span class="email-title">{{user.first_name + ' '+ user.last_name}}</span>
+                    <p class="truncate grey-text ultra-small">{{user.cargo}}</p>
+                </div>
+                <div class="col l4">
+                    <span class="email-title">{{user.area}}</span>
+                    <p class="truncate grey-text ultra-small">{{user.regional}}</p>
+                </div>
+                <div class="col l4">
+                    <span class="email-title">{{user.username}}</span>
+                    <p class="truncate grey-text ultra-small"> {{user.nombre_estado}}</p>
+                </div>
+              </li>
+            </ul>        
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+  <a class="btn-floating btn-large blue modal-trigger">
+    <i class="large mdi-social-person-add"></i>
+  </a>
+</div>

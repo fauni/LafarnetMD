@@ -9,41 +9,12 @@
     </div>
 </nav>
 
-<mz-modal #bottomSheetFullscreenModal 
-    [fixedFooter]="true" 
-    [bottomSheet]="false" 
-    [fullscreen]="false" 
-    [options]="modalOptions">
-    <mz-modal-header>
-            
-    </mz-modal-header>
-
-    <mz-modal-content>
-        
-        <div class="row">
-            <div *ngFor="let item of apps" class="col xl25 l3 m3 s4">
-                <div class="card grey darken-4 item-menu-apps">
-                    <div class="card-content white-text">
-                        <img src="assets/images/apps/docs.ico" class="imagen-app">
-                        <br>
-                        <a style = "color: #fff;" href="{{ global.urlIntranet + item.url }}" target="_blank" class="tituloApp">{{item.appname}}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </mz-modal-content>
-    <mz-modal-footer>
-        <button mz-button [flat]="true" mz-modal-close class="blue" style="color:#fff;"> X (Esc) </button>
-    </mz-modal-footer>
-</mz-modal>
-
-
-
 <ngx-smart-modal #myMenu [identifier]="'myMenu'">
     <div class="row">
         <div *ngFor="let item of apps" class="parentCard col xl3 l3 m3 s4">
             <div class="card item-menu-apps">
-                <a style = " display:nome; color: #fff;" href="{{global.urlIntranet + item.url}}" target="_blank" class="tituloApp">
+                <!--<a style = " display:nome; color: #fff;" href="{{global.urlIntranet + item.url}}" target="_blank" class="tituloApp">-->
+                    <a style = "color: #fff;" [routerLink]="[item.url]" class="tituloApp">
                     <div class="card-content">
                         <img src="assets/images/apps/{{item.code}}.png" class="imagen-app">
                     </div>

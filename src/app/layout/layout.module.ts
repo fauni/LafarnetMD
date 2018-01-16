@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
-import { HeaderComponent } from './components/header/header.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 import { MzButtonModule, MzIconMdiModule, MzSidenavModule, MzModalModule, MzNavbarModule } from 'ng2-materialize';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import { MarkdownModule } from 'ngx-markdown';
 import { LayoutComponent } from './layout.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
     imports: [
@@ -24,7 +24,8 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
         MzNavbarModule,
         NgxSmartModalModule
     ],
-    declarations: [LayoutComponent, HeaderComponent, SidebarComponent],
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
+    exports: [ HeaderComponent, SidebarComponent ],
     providers: [ NgxSmartModalService ]
 })
 

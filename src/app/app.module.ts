@@ -13,15 +13,11 @@ import { LoginService } from './login/login.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutService } from './layout/layout.service';
 import { Globals } from './globals';
-import { AdminIntranetComponent } from './admin-intranet/admin-intranet.component';
-
-
-
+import { FunGlobalService } from './shared/services/funGlobalService';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AdminIntranetComponent
+    AppComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +26,7 @@ import { AdminIntranetComponent } from './admin-intranet/admin-intranet.componen
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [AuthGuard, LoginService, LayoutService, Globals],
+  providers: [AuthGuard, LoginService, LayoutService, Globals, FunGlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
