@@ -33,13 +33,17 @@ export class ProfileComponent implements OnInit {
       this.user.username = params['username'];
       this.user.password = params['password'];
       this.user.id_cargo = params['id_cargo'];
+      this.user.cargo = params['cargo'];
       this.user.id_regional = params['id_regional'];
+      this.user.regional = params['regional'];
       this.user.id_grupo = params['id_grupo'];
       this.user.id_superior = params['id_superior'];
       this.user.id_area = params['id_area'];
+      this.user.area = params['area'];
       this.user.id_seccion = params['id_seccion'];
       this.user.foto = params['foto'];
       this.user.estado = params['estado'];
+      this.user.nombre_estado = params['nombre_estado'];
       this.user.usuario_creacion = params['usuario_creacion'];
       this.user.fecha_creacion = params['fecha_creacion'];
       this.user.usuario_modificacion = params['usuario_modificacion'];
@@ -49,6 +53,7 @@ export class ProfileComponent implements OnInit {
 
   onLoadApps(username): void {
     this.appsforuser = new AppsForUser(username);
+    //this.appsforuser = new AppsForUser('faruni');
     this.layoutService.AppsForUser(this.appsforuser).subscribe(
       data => {
           this.apps = data.body;

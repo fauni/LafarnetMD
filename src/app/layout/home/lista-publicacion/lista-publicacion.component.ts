@@ -2,6 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HomeService } from '../home.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { Globals } from '../../../globals';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SafeResourceUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
+import { MzModalService } from 'ng2-materialize';
 
 declare var $: any;
 
@@ -13,17 +17,26 @@ declare var $: any;
 export class ListaPublicacionComponent implements OnInit {
   @Input() publications: any;
 
-  public nombreElemento: string;
-  //public publications: any;
+  public esExcel: boolean;
+  public esWord: boolean;
+  public esPdf: boolean;
+  public esImagen: boolean;
+
   public urlImages: string;
+  public urlImagesDocs: string;
+  public pub: SafeResourceUrl;
+  public urlViewer: string;
 
   //constructor(private hSer: HomeService) {  //Borrar
   constructor(
     private hSer: HomeService,
-    private ngxModalPublicacion: NgxSmartModalService
+    private ngxModalPublicacion: NgxSmartModalService,
+    private global: Globals,
+    public sanitizer: DomSanitizer
   ) {
-    this.urlImages = 'http://localhost:8888/newapilafarnet/assets/publicaciones_images/';
-    this.nombreElemento = 'publicacion.jpg';
+    this.urlImages = this.global.urlPublicaciones;
+    this.urlImagesDocs = this.global.urlImagesDocs;
+    this.urlViewer = 'https://docs.google.com/viewer?url=';
   }
 
   ngOnInit() {
@@ -31,9 +44,12 @@ export class ListaPublicacionComponent implements OnInit {
   }
 
 
-  openVistaPrevia() {
+  openVistaPrevia(name: string) {
+    //alert(name);
+    this.pub = this.sanitizer.bypassSecurityTrustResourceUrl(this.urlViewer + this.global.urlPublicaciones + name + '&embedded=true');
     this.ngxModalPublicacion.getModal('myModalPublicacion').open();
   }
+
   /*
   onLoadPublications(): void {
     this.hSer.getPublications().subscribe(

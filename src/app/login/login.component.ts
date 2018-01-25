@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
                     this.usuario = data.body;
                     this.onLoadUserInformation(this.usuario[0]);
                     if (this.usuario[0].nombre_estado == 'activo') {
-                        console.log("Bienvenido a Lafarnet");
+                        console.log('Bienvenido a Lafarnet');
                         this._service.success(
                             'Acceso Correcto!',
                             'Bienvenido a Lafarnet',
@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
                         localStorage.setItem('isLoggedin', 'true');
                         this.router.navigate([this.returnUrl]);
                     } else if (this.usuario[0].nombre_estado == 'bloqueado') {
-                        console.log("Su cuenta se encuentra bloqueada");
+                        console.log('Su cuenta se encuentra bloqueada');
                         this._service.warn(
                             'Acceso no autorizado',
                             'Su cuenta se encuentra Bloqueada',
@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit {
                             }
                         );
                     } else if (this.usuario[0].nombre_estado == 'eliminado') {
-                        console.log("La cuenta de usuario ya no existe");
+                        console.log('La cuenta de usuario ya no existe');
                         this._service.info(
                             'Acceso no autorizado',
                             'Comuniquese con el Administrador',
@@ -139,14 +139,38 @@ export class LoginComponent implements OnInit {
 
             },
             (err: HttpErrorResponse) => {
+              console.log(err);
+              this.closeLoading();
               if (err.error instanceof Error) {
                 // A client-side or network error occurred. Handle it accordingly.
                 console.log('Ocurrio un error:', err.error.message);
+                    this._service.error(
+                        'No se puede conectar!',
+                        'Favor revise su Conexion',
+                        {
+                            timeOut: 3000,
+                            showProgressBar: true,
+                            pauseOnHover: false,
+                            clickToClose: false,
+                            maxLength: 10
+                        }
+                    );
               } else {
                 // The backend returned an unsuccessful response code.
                 // The response body may contain clues as to what went wrong,
                 console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
-              }
+                    this._service.error(
+                        'Ocurrio un error en el Servidor!',
+                        'Comuniquese con el Administrador',
+                        {
+                            timeOut: 3000,
+                            showProgressBar: true,
+                            pauseOnHover: false,
+                            clickToClose: false,
+                            maxLength: 10
+                        }
+                    );
+                }
             }
         );
     }

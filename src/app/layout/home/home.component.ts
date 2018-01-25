@@ -12,8 +12,8 @@ declare var $: any;
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
-  loading: Boolean;
   publications: any;
   scrollElement: JQuery;
   formPublicacion: FormGroup;
@@ -63,13 +63,11 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loading = true;
     this.submitted = true;
     if (this.elem.files.length >= 0) {
       console.log(this.elem.files[0]);
       let formData = new FormData();
       formData.append('file', this.elem.files[0]);
-      formData.append('fileDocs', this.elemDoc.files[0]);
       formData.append('username', 'faruni');
       formData.append('id_area', '1');
       formData.append('tipo_publicacion', '1');
@@ -93,11 +91,11 @@ export class HomeComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           console.log('error!', err);
-          this.loading = false;
         }
       );
     }
   }
+
   buildForm() {
     this.formPublicacion = this.formBuilder.group({
       titulo: '',
@@ -107,19 +105,13 @@ export class HomeComponent implements OnInit {
   uploadFile(event) {
     this.elem = event.target;
   }
-  uploadFileDocs(event) {
-    this.elemDoc = event.target;
-  }
 
   onLoadPublications(): void {
-    this.loading = true;
     this.hSer.getPublications().subscribe(
         data => {
-            this.loading = false;
             this.publications = data.body;
         },
         (err: HttpErrorResponse) => {
-          this.loading = false;
           if (err.error instanceof Error) {
             // A client-side or network error occurred. Handle it accordingly.
             console.log('Ocurrio un error:', err.error.message);
@@ -130,6 +122,5 @@ export class HomeComponent implements OnInit {
           }
         }
     );
-    this.loading = false;
   }
 }

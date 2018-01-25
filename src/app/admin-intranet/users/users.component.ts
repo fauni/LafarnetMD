@@ -51,13 +51,17 @@ export class UsersComponent implements OnInit {
         this.user.username = data.body[0].username;
         this.user.password = data.body[0].password;
         this.user.id_cargo = data.body[0].id_cargo;
+        this.user.cargo = data.body[0].cargo;
         this.user.id_regional = data.body[0].id_regional;
+        this.user.regional = data.body[0].regional;
         this.user.id_grupo = data.body[0].id_grupo;
         this.user.id_superior = data.body[0].id_superior;
         this.user.id_area = data.body[0].id_area;
+        this.user.area = data.body[0].area;
         this.user.id_seccion = data.body[0].id_seccion;
         this.user.foto = data.body[0].foto;
         this.user.estado = data.body[0].estado;
+        this.user.nombre_estado = data.body[0].nombre_estado;
         this.user.usuario_creacion = data.body[0].usuario_creacion;
         this.user.fecha_creacion = data.body[0].fecha_creacion;
         this.user.usuario_modificacion = data.body[0].usuario_modificacion;

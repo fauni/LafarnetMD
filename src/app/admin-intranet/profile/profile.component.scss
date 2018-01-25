@@ -13,19 +13,18 @@ $logo-resize: "only screen and (max-width: 650px)" !default;
 .header-content {
   position: relative;
   height: 230px;
-  margin-bottom: 36px;
 }
 
 .github-button {
   position: absolute;
   right: 10px;
-  top: 130px;
+  top: 150px;
 
   @media #{$logo-resize} {
-    top: 150px;
+    top: 170px;
     right: calc(50% - 110px);
   }
-}
+} 
 
 .image-user {
   position: absolute;
@@ -33,7 +32,7 @@ $logo-resize: "only screen and (max-width: 650px)" !default;
   margin-left: 20px;
 
   @media #{$logo-resize} {
-    top: 15px;
+    top: 25px;
     max-height: 100px;
     margin-left: calc(50% - 50px);
   }
@@ -50,4 +49,40 @@ $logo-resize: "only screen and (max-width: 650px)" !default;
     margin-top: 20px;
     //margin-left: calc(50% - 80px);
   }
+}
+
+.collection-item .row{
+  margin-bottom: 0;
+}
+#profile-page-about-details{
+  .row{
+    margin-bottom: 0;
+  }
+}
+
+//Menu
+.item-menu-apps {
+  margin: auto auto;
+  text-align: center;
+}
+
+.imagen-app{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width:100%;
+    height: auto;
+}
+
+.imagen-app:hover{
+  background-color: rgb(194, 233, 220);
+}
+
+.card-content{
+  padding: 0px 0px 0px 0px;
+}
+
+#btnAdd{
+  width: 100%;
+  min-height: 50px;
+  height: 100%;
 }
