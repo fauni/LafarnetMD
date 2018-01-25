@@ -27,7 +27,6 @@ export class ListaPublicacionComponent implements OnInit {
   public pub: SafeResourceUrl;
   public urlViewer: string;
 
-  //constructor(private hSer: HomeService) {  //Borrar
   constructor(
     private hSer: HomeService,
     private ngxModalPublicacion: NgxSmartModalService,
@@ -40,12 +39,11 @@ export class ListaPublicacionComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.onLoadPublications(); //Borrar
+
   }
 
 
   openVistaPrevia(name: string) {
-    //alert(name);
     this.pub = this.sanitizer.bypassSecurityTrustResourceUrl(this.urlViewer + this.global.urlPublicaciones + name + '&embedded=true');
     this.ngxModalPublicacion.getModal('myModalPublicacion').open();
   }

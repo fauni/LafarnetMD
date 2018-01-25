@@ -12,6 +12,9 @@
                   <img *ngIf="item.extension ==='pptx'" src="{{urlImagesDocs}}/pptBG.png" width="100%" height="100%">
                   <img *ngIf="item.extension ==='ppt'" src="{{urlImagesDocs}}/pptBG.png" width="100%" height="100%">
                   <img *ngIf="item.extension ==='pdf'" src="{{urlImagesDocs}}/pdfBG.png" width="100%" height="100%">
+                  <img *ngIf="item.extension ==='jpg'" src="{{urlImages + item.nombreAdjunto}}" width="100%" height="100%">
+                  <img *ngIf="item.extension ==='png'" src="{{urlImages + item.nombreAdjunto}}" width="100%" height="100%">
+
               </a>
           </div>
           

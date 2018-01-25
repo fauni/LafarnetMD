@@ -5,7 +5,13 @@ import { UsersComponent } from './users.component';
 
 const routes: Routes = [
     {
-        path: '', component: UsersComponent
+        path: '',
+        component: UsersComponent,
+        children: [
+            { path: '', redirectTo: 'list' },
+            { path: 'list', loadChildren: './list-user/list-user.module#ListUserModule' },
+            { path: 'add', loadChildren: './add-user/add-user.module#AddUserModule' }
+        ]
     }
 ];
 
