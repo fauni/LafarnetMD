@@ -5,6 +5,7 @@ import { AdminIntranetComponent } from './admin-intranet.component';
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { LayoutModule } from '../layout/layout.module';
 import { UsersService } from './users/users.service';
+import { CargosService } from './cargos/cargos.service';
 
 @NgModule({
     imports: [
@@ -14,7 +15,7 @@ import { UsersService } from './users/users.service';
         LayoutModule
     ],
     declarations: [AdminIntranetComponent],
-    providers: [ NgxSmartModalService, UsersService]
+    providers: [ NgxSmartModalService, UsersService, CargosService]
 })
 
 export class AdminIntranetModule {}

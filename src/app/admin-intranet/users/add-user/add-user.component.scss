@@ -21,7 +21,7 @@ $logo-resize: "only screen and (max-width: 650px)" !default;
   top: 150px;
 
   @media #{$logo-resize} {
-    top: 170px;
+    top: 160px;
     right: calc(50% - 110px);
   }
 } 
