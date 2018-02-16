@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     submitted = false;
     submittedValues: any;
     returnUrl: string;
+    returnUrlChangePassword: string;
     model: any = {};
     usuario: any;
     login: Login;
@@ -67,6 +68,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.returnUrl = this.route.snapshot.queryParams['home'] || '/';
+        this.returnUrlChangePassword = this.route.snapshot.queryParams['admin/users/password'] || '/';
         this.abrirLoader();
     }
 
@@ -79,8 +81,8 @@ export class LoginComponent implements OnInit {
                 this.closeLoading();
                 if (data.length > 0) {
                     this.usuario = data.body;
-                    this.onLoadUserInformation(this.usuario[0]);
-                    if (this.usuario[0].nombre_estado == 'activo') {
+                    this.onLoadUserInformation(this.usuario[0], this.login);
+                    if (this.usuario[0].nombre_estado === 'activo') {
                         console.log('Bienvenido a Lafarnet');
                         this._service.success(
                             'Acceso Correcto!',
@@ -95,7 +97,7 @@ export class LoginComponent implements OnInit {
                         );
                         localStorage.setItem('isLoggedin', 'true');
                         this.router.navigate([this.returnUrl]);
-                    } else if (this.usuario[0].nombre_estado == 'bloqueado') {
+                    } else if (this.usuario[0].nombre_estado === 'bloqueado') {
                         console.log('Su cuenta se encuentra bloqueada');
                         this._service.warn(
                             'Acceso no autorizado',
@@ -108,7 +110,7 @@ export class LoginComponent implements OnInit {
                                 maxLength: 10
                             }
                         );
-                    } else if (this.usuario[0].nombre_estado == 'eliminado') {
+                    } else if (this.usuario[0].nombre_estado === 'eliminado') {
                         console.log('La cuenta de usuario ya no existe');
                         this._service.info(
                             'Acceso no autorizado',
@@ -121,7 +123,22 @@ export class LoginComponent implements OnInit {
                                 maxLength: 10
                             }
                         );
-                    }
+                    } else if (this.usuario[0].nombre_estado === 'nuevo') {
+                        console.log('Usuario Nuevo');
+                        this._service.success(
+                            'Importante',
+                            'Necesita cambiar su contraseña',
+                            {
+                                timeOut: 3000,
+                                showProgressBar: true,
+                                pauseOnHover: false,
+                                clickToClose: false,
+                                maxLength: 10
+                            }
+                        );
+                        localStorage.setItem('isLoggedin', 'true');
+                        this.router.navigate([this.returnUrl]);
+                    } else {}
                 }else {
                     console.log('Usuario o Contraseña Incorrecta');
                     this._service.error(
@@ -136,7 +153,6 @@ export class LoginComponent implements OnInit {
                         }
                     );
                 }
-
             },
             (err: HttpErrorResponse) => {
               console.log(err);
@@ -216,13 +232,13 @@ export class LoginComponent implements OnInit {
         this.submittedValues = this.form.value;
     }
 
-    onLoadUserInformation(user: any) {
+    onLoadUserInformation(user: any, login: Login) {
         this.global.user.userid = user.userid;
         this.global.user.first_name = user.first_name;
         this.global.user.last_name = user.last_name;
         this.global.user.email_address = user.email_address;
         this.global.user.username = user.username;
-        this.global.user.password = user.password;
+        this.global.user.password = login.password;
         this.global.user.id_cargo = user.id_cargo;
         this.global.user.cargo = user.cargo;
         this.global.user.id_regional = user.id_regional;

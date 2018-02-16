@@ -26,7 +26,12 @@ import { FunGlobalService } from './shared/services/funGlobalService';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [AuthGuard, LoginService, LayoutService, Globals, FunGlobalService],
+  providers: [AuthGuard,
+    LoginService,
+    LayoutService,
+    Globals,
+    FunGlobalService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

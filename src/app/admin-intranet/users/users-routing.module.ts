@@ -9,8 +9,9 @@ const routes: Routes = [
         component: UsersComponent,
         children: [
             { path: '', redirectTo: 'list' },
-            { path: 'list', loadChildren: './list-user/list-user.module#ListUserModule' },
-            { path: 'add', loadChildren: './add-user/add-user.module#AddUserModule' }
+            { path: 'list', loadChildren: './list-user/list-user.module#ListUserModule'},
+            { path: 'add', loadChildren: './add-user/add-user.module#AddUserModule' },
+            { path: 'clave', loadChildren: './clave-user/clave-user.module#ClaveUserModule'}
         ]
     }
 ];
@@ -19,6 +20,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-
-export class UsersRoutingModule {
-}
+export class UsersRoutingModule {}

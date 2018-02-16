@@ -15,4 +15,6 @@ export class Globals {
     urlImagesDocs: string = 'assets/images/notices/';
     urlImagenUserDefault: string = 'assets/images/usuario.jpg';
     //urlPublicaciones: string = 'http://intranet.lafar.net/newapilafarnet/assets/publicaciones_images/';
+
+
 }

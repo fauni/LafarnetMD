@@ -5,6 +5,8 @@ import { Publicacion } from '../../models/publicacion';
 import { HomeService } from './home.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
+import { Globals } from '../../globals';
+import { ActivatedRoute, Router } from '@angular/router';
 
 declare var $: any;
 @Component({
@@ -39,7 +41,7 @@ export class HomeComponent implements OnInit {
 
   errorMessages = {
     titulo: {
-        required: 'Es necesario que ingrese el Titulo'
+      required: 'Es necesario que ingrese el Titulo'
     },
     fechaCaduca: {
       required: 'Es necesario la Fecha de Caducidad'
@@ -50,6 +52,8 @@ export class HomeComponent implements OnInit {
   };
 
   constructor(
+    private router: Router,
+    private global: Globals,
     private _notification: NotificationsService,
     private hSer: HomeService,
     private formBuilder: FormBuilder,
@@ -58,17 +62,25 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.onLoadPublications();
-    this.buildForm();
+    if (this.global.user.username) {
+      console.log('TRUE');
+      if (this.global.user.estado === 4) {
+        this.router.navigate(['/admin/users/clave']);
+      }
+      this.onLoadPublications();
+      this.buildForm();
+    }else {
+      console.log('FALSE');
+      this.router.navigate(['/login']);
+    }
   }
 
   onSubmit() {
     this.submitted = true;
     if (this.elem.files.length >= 0) {
-      console.log(this.elem.files[0]);
       let formData = new FormData();
       formData.append('file', this.elem.files[0]);
-      formData.append('username', 'faruni');
+      formData.append('username', this.global.user.username);
       formData.append('id_area', '1');
       formData.append('tipo_publicacion', '1');
       formData.append('titulo', this.publicacion.titulo);
@@ -104,6 +116,7 @@ export class HomeComponent implements OnInit {
   }
   uploadFile(event) {
     this.elem = event.target;
+    console.log(event);
   }
 
   onLoadPublications(): void {

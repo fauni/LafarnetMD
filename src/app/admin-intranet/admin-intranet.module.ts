@@ -6,6 +6,10 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { LayoutModule } from '../layout/layout.module';
 import { UsersService } from './users/users.service';
 import { CargosService } from './cargos/cargos.service';
+import { AreasComponent } from './areas/areas.component';
+import { AreasService } from './areas/areas.service';
+import { RegionalesComponent } from './regionales/regionales.component';
+import { RegionalesService } from './regionales/regionales.service';
 
 @NgModule({
     imports: [
@@ -14,8 +18,8 @@ import { CargosService } from './cargos/cargos.service';
         NgxSmartModalModule,
         LayoutModule
     ],
-    declarations: [AdminIntranetComponent],
-    providers: [ NgxSmartModalService, UsersService, CargosService]
+    declarations: [AdminIntranetComponent, AreasComponent, RegionalesComponent],
+    providers: [ NgxSmartModalService, UsersService, CargosService, AreasService, RegionalesService]
 })
 
 export class AdminIntranetModule {}

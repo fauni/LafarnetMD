@@ -4,14 +4,6 @@ import { CargosComponent } from './cargos.component';
 import { CargosRoutingModule } from './cargos-routing.module';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: []
-})
-export class CargosModule { }
-
-@NgModule({
     imports: [
         CommonModule,
         CargosRoutingModule
@@ -20,4 +12,4 @@ export class CargosModule { }
         CargosComponent
     ]
 })
-export class AppsModule {}
+export class CargosModule {}

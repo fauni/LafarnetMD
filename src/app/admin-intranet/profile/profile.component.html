@@ -17,7 +17,7 @@
   <div class="col l8 s12">
     <mz-card>
       <mz-card-title>
-        Información General
+        Información General <a class= "linkEdit" href="javascript:void(0)" (click)="EditDatosGeneralesModal.open()">Editar</a>
       </mz-card-title>
 
       <mz-card-content>
@@ -48,7 +48,7 @@
 
     <mz-card>
         <mz-card-title>
-          Información Laboral
+          Información Laboral <a class= "linkEdit" href="javascript:void(0)" (click)="EditDatosLaboralesModal.open()">Editar</a>
         </mz-card-title>
         <mz-card-content>
           <!-- Profile About Details  -->
@@ -83,7 +83,7 @@
         </mz-card-content>
       </mz-card>
   </div>
-  <div class="col l4 s12">
+  <div class="col l4 s12"> 
     <mz-card>
       <mz-card-title>
         Aplicaciones LAFAR
@@ -114,3 +114,149 @@
     </mz-card>
   </div>
 </div>
+
+<form #formEditGeneral="ngForm" (ngSubmit)="onSubmitInformacionGeneral()" novalidate>
+  <mz-modal #EditDatosGeneralesModal [fixedFooter]="true" [bottomSheet]="false" [fullscreen]="false" >
+    <mz-modal-header>
+      <nav class="lafar-bg-blue">
+        <div class="nav-wrapper">
+          <div class="left col s12 m5 l5">
+          <ul>
+              <li><a href="javascript:void(0);" (click)="EditDatosGeneralesModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+              </li>
+              <li><a href="javascript:void(0);" class="email-type">Información General</a>
+              </li>
+          </ul>
+          </div>
+        </div>
+      </nav>
+    </mz-modal-header>
+    <mz-modal-content>
+      <div>
+        <mz-card>
+          <mz-card-content>
+            <div class="row"> 
+              <mz-input-container class="col s12 m12">
+                <input mz-input mz-validation required
+                  id="first_name"
+                  name="first_name"
+                  type="text"
+                  [errorMessageResource]="errorMessages.first_name"
+                  [label]="'Nombres'"
+                  [(ngModel)]="user.first_name">
+              </mz-input-container>
+    
+              <mz-input-container class="col s12 m12">
+                <input mz-input mz-validation required
+                  id="last_name"
+                  name="last_name"
+                  type="text"
+                  [errorMessageResource]="errorMessages.last_name"
+                  [label]="'Apellidos'"
+                  [(ngModel)]="user.last_name">
+              </mz-input-container>
+    
+              <mz-input-container class="col s12 m12">
+                <input mz-input mz-validation required
+                  id="email_address"
+                  name="email_address"
+                  type="email"
+                  [errorMessageResource]="errorMessages.email_address"
+                  [label]="'Correo Electrónico'"
+                  [(ngModel)]="user.email_address"
+                  email>
+              </mz-input-container>
+            </div>   
+          </mz-card-content>
+        </mz-card>
+      </div>
+    </mz-modal-content>
+    <mz-modal-footer>
+      <button type="reset" mz-button [flat]="true" mz-modal-close>Cancelar</button>
+      <button type="submit" mz-button [flat]="true" mz-modal-close>Guardar</button>
+    </mz-modal-footer>
+  </mz-modal>  
+</form>
+
+<form #formEditLaboral="ngForm" (ngSubmit)="onSubmitInformacionLaboral()" novalidate>
+  <mz-modal #EditDatosLaboralesModal [fixedFooter]="true" [bottomSheet]="false" [fullscreen]="false" >
+    <mz-modal-header>
+      <nav class="lafar-bg-blue">
+        <div class="nav-wrapper">
+          <div class="left col s12 m5 l5">
+            <ul>
+              <li><a href="javascript:void(0);" (click)="EditDatosLaboralesModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+              </li>
+              <li><a href="javascript:void(0);" class="email-type">Información Laboral</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </mz-modal-header>
+    <mz-modal-content>
+      <div>
+        <mz-card>
+          <mz-card-content>
+            <div class="section">
+              <div class="row m-valign-wrapper">
+                <!--<div style="padding: 10px 10px" class="col s12 m4">
+                  <ng2-completer 
+                    [datasource]="cargoData"
+                    (selected)="onSelectCargo($event)"
+                    [(ngModel)]="descripcionCargo"
+                    [minSearchLength]="0"
+                    [inputClass]="'form-control'"
+                    [matchClass]="'match'"
+                    [autofocus]="true"
+                    [textNoResults]="'No se encontro resultados'"
+                    [initialValue]="'SECRETARIA DE GERENC'">
+                  </ng2-completer>
+                </div>-->
+                <mz-select-container class="col s12 m12">
+                  <select mz-select mz-validation required
+                    id="id_cargo"
+                    name="id_cargo"
+                    [errorMessageResource]="errorMessages.cargo"
+                    [label]="'Cargo'"
+                    [placeholder]="'Seleccione un Cargo'"
+                    [(ngModel)]="user.id_cargo">
+                    <option *ngFor="let cargo of cargos" [ngValue]="cargo.id">{{ cargo.nombre_cargo }}</option>
+                  </select>
+                </mz-select-container>
+                <mz-select-container class="col s12 m6">
+                  <select mz-select mz-validation required
+                    id="id_area"
+                    name="id_area"
+                    [errorMessageResource]="errorMessages.area"
+                    [label]="'Area'"
+                    [placeholder]="'Seleccione un Area'"
+                    [(ngModel)]="user.id_area">
+                    <option *ngFor="let area of areas" [ngValue]="area.id">{{ area.nombre }}</option>
+                  </select>
+                </mz-select-container>
+                <mz-select-container class="col s12 m6">
+                  <select mz-select mz-validation required
+                    id="id_regional"
+                    name="id_regional"
+                    [errorMessageResource]="errorMessages.regional"
+                    [label]="'Regional'"
+                    [placeholder]="'Seleccione una Regional'"
+                    [(ngModel)]="user.id_regional">
+                    <option *ngFor="let regional of regionales" [ngValue]="regional.id">{{ regional.nombre }}</option>
+                  </select>
+                </mz-select-container>
+              </div>
+            </div>
+          </mz-card-content>
+        </mz-card>
+      </div>
+    </mz-modal-content>
+    <mz-modal-footer>
+      <button type="reset" mz-button [flat]="true" mz-modal-close>Cancelar</button>
+      <button type="submit" mz-button [flat]="true" mz-modal-close>Guardar</button>
+    </mz-modal-footer>
+  </mz-modal>  
+</form>
+
+<simple-notifications></simple-notifications>

@@ -10,10 +10,30 @@ export class UsersService {
   constructor(private http: HttpClient, private global: Globals ) { }
 
   getUsers(): Observable<any> {
-    return this.http.get(this.global.urlAPI + '/usuario/get');
+    return this.http.get(this.global.urlAPI + 'usuario/get');
   }
 
   getUser(username: string): Observable<any> {
-    return this.http.get(this.global.urlAPI + '/usuario/get/' + username);
+    return this.http.get(this.global.urlAPI + 'usuario/get/' + username);
+  }
+
+  setUser(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'usuario/save', data);
+  }
+
+  changePassword (data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'usuario/changePassword', data);
+  }
+
+  updateUserInformationGeneral(data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'usuario/updateInformationGeneral', data);
+  }
+
+  updateUserInformationLaboral(data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'usuario/updateInformationLaboral', data);
+  }
+
+  deleteUser(data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'usuario/delete', data);
   }
 }

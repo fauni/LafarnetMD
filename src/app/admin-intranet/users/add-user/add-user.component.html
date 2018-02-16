@@ -4,12 +4,12 @@
 <form #userForm = "ngForm" (submit)="onSubmit()" novalidate>
   <div id="preview" class="header-content valign-wrapper lafar-light">
     <img class="image-user circle" src="{{urlFotoPerfil}}">
-    <div class="nombre-user">Imagen de Usuario</div>
-      <a href="javascript:void(0)" mz-button class="github-button white">
-        <ng4-files-click (filesSelect)="filesSelect($event)">
-            <i mz-icon-mdi [icon]="'camera'" [align]="'left'"></i>Cargar Nueva Foto
-        </ng4-files-click>
-      </a>
+    <div class="nombre-user">Agregar Nuevo Usuario</div>
+    <label class="btn github-button blue">
+      <i class="large mdi-image-camera-alt"></i>
+      Cargar Nueva Foto
+      <input type="file" hidden (change)="uploadImageUser($event)" required>
+    </label>
   </div>
 
   <div>
@@ -19,7 +19,7 @@
       </mz-card-title>
       <mz-card-content>
         <div class="row"> 
-          <mz-input-container class="col s12 m12">
+          <mz-input-container class="col s12 m4">
             <input mz-input mz-validation required
               id="first_name"
               name="first_name"
@@ -29,7 +29,7 @@
               [(ngModel)]="UserModel.first_name">
           </mz-input-container>
 
-          <mz-input-container class="col s12 m12">
+          <mz-input-container class="col s12 m4">
             <input mz-input mz-validation required
               id="last_name"
               name="last_name"
@@ -39,7 +39,7 @@
               [(ngModel)]="UserModel.last_name">
           </mz-input-container>
 
-          <mz-input-container class="col s12 m12">
+          <mz-input-container class="col s12 m4">
             <input mz-input mz-validation required
               id="email_address"
               name="email_address"
@@ -59,50 +59,83 @@
       <mz-card-title>
         Información Laboral
       </mz-card-title>
-    
       <mz-card-content>
           <div class="section">
-              <div class="row m-valign-wrapper">
-                <mz-input-container class="col s12 m12">
-                  <input mz-input mz-validation required
-                    id="username"
-                    name="username"
-                    type="text"
-                    [errorMessageResource]="errorMessages.username"
-                    [label]="'Nombre de Usuario'"
-                    [(ngModel)]="UserModel.username">
-                </mz-input-container>
-                <mz-input-container class="col s12 m12">
-                  <input mz-input mz-validation required
-                    id="password"
-                    name="password"
-                    type="password"
-                    [errorMessageResource]="errorMessages.password"
-                    [label]="'Contraseña'"
-                    [(ngModel)]="UserModel.password">
-                </mz-input-container>
-                <mz-select-container class="col s12 m12">
-                  <select mz-select mz-validation required
-                    id="id_cargo"
-                    name="id_cargo"
-                    [errorMessageResource]="errorMessages.cargo"
-                    [label]="'Cargo'"
-                    [placeholder]="'Seleccione un Cargo'"
-                    [(ngModel)]="UserModel.id_cargo">
-                    <option *ngFor="let cargo of cargos" [ngValue]="cargo.id">{{ cargo.nombre_cargo }}</option>
-                  </select>
-                </mz-select-container>
+            <div class="row m-valign-wrapper">
+              <mz-input-container class="col s12 m4">
+                <input mz-input mz-validation required
+                  id="username"
+                  name="username"
+                  type="text"
+                  [errorMessageResource]="errorMessages.username"
+                  [label]="'Nombre de Usuario'"
+                  [(ngModel)]="UserModel.username">
+              </mz-input-container>
+              <mz-input-container class="col s12 m4">
+                <input mz-input mz-validation required
+                  id="password"
+                  name="password"
+                  type="password"
+                  [errorMessageResource]="errorMessages.password"
+                  [label]="'Contraseña'"
+                  [(ngModel)]="UserModel.password">
+              </mz-input-container>
+              
+              <div style="padding: 10px 10px" class="col s12 m4">
+                <ng2-completer 
+                  (selected)="onSelectCargo($event)"
+                  [(ngModel)]="descripcionCargo"
+                  [datasource]="cargoData"
+                  [minSearchLength]="0"
+                  [maxChars]="4"
+                  [inputClass]="'form-control'"
+                  [placeholder]="'Seleccione el Cargo'"
+                  [matchClass]="'match'"
+                  [autofocus]="true"
+                  [textSearching]="false">
+                </ng2-completer>
               </div>
+
+              <mz-select-container class="col s12 m6">
+                <select mz-select mz-validation required
+                  id="id_area"
+                  name="id_area"
+                  [errorMessageResource]="errorMessages.area"
+                  [label]="'Area'"
+                  [placeholder]="'Seleccione un Area'"
+                  [(ngModel)]="UserModel.id_area">
+                  <option *ngFor="let area of areas" [ngValue]="area.id">{{ area.nombre }}</option>
+                </select>
+              </mz-select-container>
+              <mz-select-container class="col s12 m6">
+                <select mz-select mz-validation required
+                  id="id_regional"
+                  name="id_regional"
+                  [errorMessageResource]="errorMessages.regional"
+                  [label]="'Regional'"
+                  [placeholder]="'Seleccione una Regional'"
+                  [(ngModel)]="UserModel.id_regional">
+                  <option *ngFor="let regional of regionales" [ngValue]="regional.id">{{ regional.nombre }}</option>
+                </select>
+              </mz-select-container>
             </div>
+          </div>
       </mz-card-content>
     </mz-card>
   </div>
   <h2></h2>
   <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-      <button mz-button [disabled]="!userForm.valid" class="blue" type="submit">Guardar</button>
+      <button mz-button 
+        [float]="true" 
+        [large]="true" 
+        [disabled]="!userForm.valid" 
+        class="green" 
+        type="submit">
+          <i class="large mdi-action-done"></i>
+      </button>
   </div>
 
 </form>
 
 
-
+<simple-notifications></simple-notifications>

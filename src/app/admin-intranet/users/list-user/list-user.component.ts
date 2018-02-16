@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Users } from '../users';
 import { Globals } from '../../../globals';
 import { UsersService } from '../users.service';
+import { FilterListUserByPipe } from './filter-list-user.pipe';
+import { NotificationsService } from 'angular2-notifications';
+
 
 @Component({
   selector: 'app-list-user',
@@ -14,7 +17,15 @@ export class ListUserComponent implements OnInit {
   user: Users;
   userAll: any;
   estadoValue = true;
-  constructor(private sdata: UsersService, private global: Globals, private router: Router) { }
+
+  search = '';
+  constructor(
+    private ref: ChangeDetectorRef,
+    private sdata: UsersService,
+    private global: Globals,
+    private router: Router,
+    private servNotification: NotificationsService
+  ) { }
 
 
   ngOnInit() {
@@ -26,6 +37,7 @@ export class ListUserComponent implements OnInit {
     this.sdata.getUsers().subscribe(
       data => {
         this.userAll = data.body;
+        this.ref.markForCheck();
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -82,4 +94,71 @@ export class ListUserComponent implements OnInit {
     );
   }
 
+  deleteUser (username: string): void {
+    this.user = new Users();
+    this.user.username = username;
+    this.user.usuario_modificacion = this.global.user.username;
+    this.sdata.deleteUser(this.user).subscribe(
+      data => {
+        this.onLoadUsers();
+        this.openNotificacion(1, 'Su registro', 'fue eliminado Correctamente');
+        //this.router.navigate(['/admin/profile', this.user]);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  openNotificacion(tipo: number, titulo: string, mensaje: string) {
+    switch (tipo) {
+      case 1:
+        this.servNotification.success(
+          titulo,
+          mensaje,
+          {
+              timeOut: 2000,
+              showProgressBar: true,
+              pauseOnHover: false,
+              clickToClose: false,
+              maxLength: 10
+          }
+        );
+      break;
+      case 2:
+        console.log('Alert');
+        this.servNotification.alert(
+          titulo,
+          mensaje,
+          {
+              timeOut: 2000,
+              showProgressBar: true,
+              pauseOnHover: false,
+              clickToClose: false,
+              maxLength: 10
+          }
+        );
+      break;
+      case 3:
+        this.servNotification.error(
+          titulo,
+          mensaje,
+          {
+              timeOut: 2000,
+              showProgressBar: true,
+              pauseOnHover: false,
+              clickToClose: false,
+              maxLength: 10
+          }
+        );
+      break;
+    }
+  }
 }

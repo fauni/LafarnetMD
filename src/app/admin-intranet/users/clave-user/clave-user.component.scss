@@ -1,4 +1,4 @@
-@import "../../../_variables";
+@import "../../../../_variables";
 
 $logo-resize: "only screen and (max-width: 650px)" !default;
 
@@ -21,7 +21,7 @@ $logo-resize: "only screen and (max-width: 650px)" !default;
   top: 150px;
 
   @media #{$logo-resize} {
-    top: 170px;
+    top: 160px;
     right: calc(50% - 110px);
   }
 } 
@@ -60,33 +60,15 @@ $logo-resize: "only screen and (max-width: 650px)" !default;
   }
 }
 
-//Menu
-.item-menu-apps {
-  margin: auto auto;
-  text-align: center;
+.message-error {
+  color: red;
+  font-size: 12px;
+  margin-top: -15px;
+  margin-bottom: 25px;
 }
 
-.imagen-app{
-    margin-top: 0px;
-    margin-bottom: 0px;
-    width:100%;
-    height: auto;
-}
-
-.imagen-app:hover{
-  background-color: rgb(194, 233, 220);
-}
-
-.card-content{
-  padding: 0px 0px 0px 0px;
-}
-
-#btnAdd{
+.formPassword{
+  margin: 0 auto;
+  max-width: 400px;
   width: 100%;
-  min-height: 50px;
-  height: 100%;
-}
-
-.linkEdit{
-  font-size: 15px;
 }

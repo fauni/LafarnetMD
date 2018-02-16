@@ -33,8 +33,7 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        //this.onLoadApps(this.global.user.username);
-        this.onLoadApps('faruni');
+        this.onLoadApps(this.global.user.username);
     }
 
 
