@@ -1,16 +1,20 @@
 USE newlafarnet;
-select * from users;
-select * from users order by fecha_creacion desc;
-select * from log_auditoria;
+select * from users where username='rflores';
+select * from users order by fecha_modificacion desc;
+select * from log_auditoria order by fechaTransaccion desc;
+
+DROP TRIGGER logLafarnetUserUpdate;
 DELIMITER ///
-select @@identity;
 
 CREATE TRIGGER logLafarnetUserUpdate AFTER UPDATE ON users
 FOR EACH ROW
 
 BEGIN
-
-    IF NEW.first_name <> OLD.first_name THEN  
+IF NEW.estado = 3 THEN
+    INSERT INTO log_auditoria (tabla, llavePrimaria, campo, valorAnterior, valorNuevo, tipoTransaccion, fechaTransaccion, usuario)
+        VALUES('users', NEW.userid, 'estado', OLD.estado, NEW.estado, 'DELETE', now(), NEW.usuario_modificacion);
+ELSE 
+	IF NEW.first_name <> OLD.first_name THEN  
         INSERT INTO log_auditoria (tabla, llavePrimaria, campo, valorAnterior, valorNuevo, tipoTransaccion, fechaTransaccion, usuario)
         VALUES('users', NEW.userid, 'first_name', OLD.first_name, NEW.first_name, 'UPDATE', now(), NEW.usuario_modificacion);    
     END IF;
@@ -69,6 +73,10 @@ BEGIN
         INSERT INTO log_auditoria (tabla, llavePrimaria, campo, valorAnterior, valorNuevo, tipoTransaccion, fechaTransaccion, usuario)
         VALUES('users', NEW.userid, 'estado', OLD.estado, NEW.estado, 'UPDATE', now(), NEW.usuario_modificacion);    
     END IF;
+END IF;
+
+
+    
 END;
 ///
 

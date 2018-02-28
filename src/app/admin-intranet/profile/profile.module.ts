@@ -11,7 +11,9 @@ import {
     MzModalModule,
     MzInputModule,
     MzValidationModule,
-    MzSelectModule
+    MzSelectModule,
+    MzCheckboxModule,
+    MzRadioButtonModule
  } from 'ng2-materialize';
 
 
@@ -20,6 +22,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { Ng2CompleterModule } from 'ng2-completer';
+import { CodeSnippetModule } from '../../layout/shared/code-snippet/code-snippet.module';
 
 
 @NgModule({
@@ -39,9 +42,12 @@ import { Ng2CompleterModule } from 'ng2-completer';
         MzInputModule,
         MzModalModule,
         MzValidationModule,
+        MzCheckboxModule,
+        MzRadioButtonModule,
         FormsModule,
+        CodeSnippetModule,
         Ng2CompleterModule
-    ],
+        ],
     declarations: [
         ProfileComponent
     ]

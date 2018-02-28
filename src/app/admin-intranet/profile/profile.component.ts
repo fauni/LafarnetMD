@@ -24,7 +24,7 @@ import { CompleterItem } from 'ng2-completer/components/completer-item';
 export class ProfileComponent implements OnInit {
   user: Users;
   private sub: any;
-  private apps: any;
+  public apps: any;
   private appsforuser: AppsForUser;
 
   public cargoData: CompleterData;
@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private servNotification: NotificationsService,
     private route: ActivatedRoute,
-    private global: Globals,
+    public global: Globals,
     private layoutService: LayoutService,
     private servUser: UsersService,
     private servCargo: CargosService,
@@ -145,6 +145,10 @@ export class ProfileComponent implements OnInit {
     this.guardarInformacionLaboral();
   }
 
+  onSubmitEstadoUsuario() {
+    this.guardarEstadoUsuario();
+  }
+
   guardarInformacionGeneral() {
     this.user.usuario_modificacion = this.global.user.username;
     this.servUser.updateUserInformationGeneral(this.user).subscribe(
@@ -175,6 +179,10 @@ export class ProfileComponent implements OnInit {
         this.openNotificacion(3, 'Ocurrio un error', 'Comuniquese con el Administrador');
       }
     );
+  }
+
+  guardarEstadoUsuario() {
+    this.user.usuario_creacion = this.global.user.username;
   }
 
   onLoadCargos() {

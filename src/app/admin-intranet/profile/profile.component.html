@@ -17,6 +17,14 @@
   <div class="col l8 s12">
     <mz-card>
       <mz-card-title>
+        El Usuario Actualmente esta <a class= "linkEdit" href="javascript:void(0)" (click)="CambiarEstadoModal.open()">Editar</a>
+      </mz-card-title>
+      <mz-card-content>
+        <div class="lafar-dark">{{user.nombre_estado}}</div>
+      </mz-card-content>
+    </mz-card>
+    <mz-card>
+      <mz-card-title>
         Información General <a class= "linkEdit" href="javascript:void(0)" (click)="EditDatosGeneralesModal.open()">Editar</a>
       </mz-card-title>
 
@@ -259,4 +267,55 @@
   </mz-modal>  
 </form>
 
+<form #formCambiarEstado="ngForm" (ngSubmit)="onSubmitEstadoUsuario()" novalidate>
+  <mz-modal #CambiarEstadoModal [fixedFooter]="true" [bottomSheet]="false" [fullscreen]="false" >
+    <mz-modal-header>
+      <nav class="lafar-bg-blue">
+        <div class="nav-wrapper">
+          <div class="left col s12 m5 l5">
+          <ul>
+              <li><a href="javascript:void(0);" (click)="EditDatosGeneralesModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+              </li>
+              <li><a href="javascript:void(0);" class="email-type">Estado del Usuario</a>
+              </li>
+          </ul>
+          </div>
+        </div>
+      </nav>
+    </mz-modal-header>
+    <mz-modal-content>
+      <div>
+        <mz-card>
+          <mz-card-content>
+              <div class="section">
+
+                  <h5 class="light">HTML Structure</h5>
+                
+                  <p>
+                    The input element <b>must be</b> contained inside the <code class="language-markup">mz-radio-button-container</code> component otherwise an error will be shown in the console.
+                  </p>
+                
+                  <app-code-snippet>
+                &lt;mz-radio-button-container>
+                  &lt;input mz-radio-button
+                    [label]="'Radio text'"
+                    [withGap]="true"
+                    id="radio-button-id"
+                    name="radio-group"
+                    type="radio">
+                &lt;/mz-radio-button-container>
+                  </app-code-snippet>
+                </div>
+                
+          </mz-card-content>
+        </mz-card>
+      </div>
+    </mz-modal-content>
+    <mz-modal-footer>
+      <button type="reset" mz-button [flat]="true" mz-modal-close>Cancelar</button>
+      <button type="submit" mz-button [flat]="true" mz-modal-close>Guardar</button>
+    </mz-modal-footer>
+  </mz-modal>  
+</form>
+  
 <simple-notifications></simple-notifications>

@@ -1,3 +1,23 @@
-<p>
-  areas works!
-</p>
+<div class="container">
+  <div class="row">
+    <nav class="navbar">
+      <input class="form-control" type="text" name="search" [(ngModel)]="filter">
+    </nav>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nro</th>
+          <th>Nombre del Área</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let area of areas | filter:filter; let i = index">
+          <td>{{i + 1}}</td>
+          <td>{{area.nombre}}</td>
+          <td>{{area.estado}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

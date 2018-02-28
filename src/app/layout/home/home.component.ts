@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (this.global.user.username) {
       console.log('TRUE');
-      if (this.global.user.estado === 4) {
+      if (this.global.user.estado == 4) {
         this.router.navigate(['/admin/users/clave']);
       }
       this.onLoadPublications();

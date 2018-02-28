@@ -29,7 +29,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       private router: Router,
       private mScrollbarService: MalihuScrollbarService,
       private lservice: LayoutService,
-      private global: Globals
+      public global: Globals
     ) { }
 
     ngOnInit() {
