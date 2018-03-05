@@ -5,15 +5,16 @@ import { Users } from './admin-intranet/users/users';
 export class Globals {
     user: Users = new Users();
     urlIntranet: string = 'http://intranet.lafar.net/';
-    //urlIntranet: string = 'http://192.168.1.213/';
+    //urlIntranet: string = 'http://192.168.1.213/lafarnet/';
+    //urlIntranet: string = 'http://localhost/lafarnet/';
 
     //urlAPI: string = 'http://intranet.lafar.net:8080/newApiLafarnet/public/';
     //urlImagenesPersonal: string = 'http://intranet.lafar.net:8080/newApiLafarnet/assets/imagenes_users/';
     //urlPublicaciones: string = 'http://intranet.lafar.net:8080/newApiLafarnet/assets/publicaciones_images/';
 
-    urlAPI: string = 'http://192.168.2.232/newapilafarnet/public/';
-    urlImagenesPersonal: string = 'http://192.168.2.232/newApiLafarnet/assets/imagenes_users/';
-    urlPublicaciones: string = 'http://192.168.2.232/newapilafarnet/assets/publicaciones_images/';
+    urlAPI: string = 'http://localhost/newapilafarnet/public/';
+    urlImagenesPersonal: string = 'http://localhost/newApiLafarnet/assets/imagenes_users/';
+    urlPublicaciones: string = 'http://localhost/newapilafarnet/assets/publicaciones_images/';
 
     //urlAPI: string = 'http://intranet.lafar.net/newapilafarnet/public/';
     //urlImagenesPersonal: string = 'http://intranet.lafar.net/newApiLafarnet/assets/imagenes_users/';

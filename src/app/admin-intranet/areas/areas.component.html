@@ -1,23 +1,41 @@
-<div class="container">
-  <div class="row">
-    <nav class="navbar">
-      <input class="form-control" type="text" name="search" [(ngModel)]="filter">
-    </nav>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nro</th>
-          <th>Nombre del Área</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let area of areas | filter:filter; let i = index">
-          <td>{{i + 1}}</td>
-          <td>{{area.nombre}}</td>
-          <td>{{area.estado}}</td>
-        </tr>
-      </tbody>
-    </table>
+<mz-parallax class="header-background" [height]="170">
+  <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+
+<div id="preview" class="header-content valign-wrapper lafar-light">
+  <img class="image-user circle" src="assets/images/userlafar.png">
+  <div class="nombre-user">AREAS DE TRABAJO</div>
+
+  <div class="box">
+    <div class="container-1">
+        <span class="icon"><i class="mdi-action-search"></i></span>
+        <input type="search" id="search" name="search" placeholder="Buscar Usuario..." [(ngModel)]="filter"/>
+    </div>
   </div>
+</div>
+
+<div class="contenido-principal">
+<div class="row">
+  <table class="bordered">
+    <thead>
+      <tr>
+        <th>Nro</th>
+        <th (click)="sort('nombre')">Nombre del Área
+          <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='nombre'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+        </th>
+        <th (click)="sort('estado')">Estado
+          <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='estado'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let area of areas | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+        <td>{{area.id}}</td>
+        <td>{{area.nombre}}</td>
+        <td>{{area.estado}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
 </div>

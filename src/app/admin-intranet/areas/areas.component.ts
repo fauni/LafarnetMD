@@ -11,55 +11,10 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 export class AreasComponent implements OnInit {
   area: Areas;
   areas: any;
-  games = [
-    {
-      'id': '1',
-      'name': 'DOTA 2',
-      'genre': 'Strategy'
-    },
-    {
-      'id': '2',
-      'name': 'AOE 3',
-      'genre': 'Strategy'
-    },
-    {
-      'id': '3',
-      'name': 'GTA 5',
-      'genre': 'RPG'
-    },
-    {
-      'id': '4',
-      'name': 'Far Cry 3',
-      'genre': 'Action'
-    },
-    {
-      'id': '5',
-      'name': 'GTA San Andreas',
-      'genre': 'RPG'
-    },
-    {
-      'id': '6',
-      'name': 'Hitman',
-      'genre': 'Action'
-    },
-    {
-      'id': '7',
-      'name': 'NFS MW',
-      'genre': 'Sport'
-    }, {
-      'id': '8',
-      'name': 'Fifa 16',
-      'genre': 'Sport'
-    }, {
-      'id': '9',
-      'name': 'NFS Sen 2',
-      'genre': 'Sport'
-    }, {
-      'id': '10',
-      'name': 'Witcher Assasins on King',
-      'genre': 'Adventure'
-    }
-  ];
+
+  // Ordenacion
+  key: string = 'nombre';
+  reverse: boolean = false;
 
   constructor(public servArea: AreasService) { }
 
@@ -87,4 +42,10 @@ export class AreasComponent implements OnInit {
     );
   }
 
+  sort(key) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  p: number = 1;
 }

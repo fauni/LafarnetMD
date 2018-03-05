@@ -20,7 +20,7 @@
     <div class="col s12">
         <div id="lista-usuarios">
             <ul class="collection">
-              <li class="collection-item avatar row" *ngFor="let user of userAll | filterBy: {username:search}" (click)="editUser(user.username)">
+              <li class="collection-item avatar row" *ngFor="let user of userAll | filterBy: {username:search} | paginate: { itemsPerPage: 10, currentPage: p };" (click)="editUser(user.username)">
                 <img src="{{ global.urlImagenesPersonal + user.foto}}" alt="" class="circle">
                 <div class="col l4">
                     <span class="email-title">{{user.first_name + ' '+ user.last_name}}</span>
@@ -36,6 +36,7 @@
               </li>
             </ul>        
         </div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
