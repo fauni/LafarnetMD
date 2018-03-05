@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HomeService } from '../home.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSmartModalService } from 'ngx-smart-modal';
-import { Globals } from '../../../globals';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeResourceUrl } from '@angular/platform-browser/src/security/dom_sanitization_service';
 import { MzModalService } from 'ng2-materialize';
+import { HomeService } from '../../home.service';
+import { Globals } from '../../../../globals';
+import { ActivatedRoute, Router } from '@angular/router';
 
 declare var $: any;
 
@@ -31,7 +32,9 @@ export class ListaPublicacionComponent implements OnInit {
     private hSer: HomeService,
     private ngxModalPublicacion: NgxSmartModalService,
     private global: Globals,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.urlImages = this.global.urlPublicaciones;
     this.urlImagesDocs = this.global.urlImagesDocs;
@@ -48,6 +51,9 @@ export class ListaPublicacionComponent implements OnInit {
     this.ngxModalPublicacion.getModal('myModalPublicacion').open();
   }
 
+  abrirDoc() {
+    this.router.navigate(['/detalle']);
+  }
   /*
   onLoadPublications(): void {
     this.hSer.getPublications().subscribe(
