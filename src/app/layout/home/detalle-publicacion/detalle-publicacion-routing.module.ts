@@ -4,7 +4,7 @@ import { DetallePublicacionComponent } from './detalle-publicacion.component';
 
 const routes: Routes = [
     {
-        path: '', component: DetallePublicacionComponent
+        path: ':name', component: DetallePublicacionComponent
     }
 ];
 

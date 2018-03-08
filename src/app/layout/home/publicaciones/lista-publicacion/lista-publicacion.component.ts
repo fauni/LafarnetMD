@@ -51,8 +51,8 @@ export class ListaPublicacionComponent implements OnInit {
     this.ngxModalPublicacion.getModal('myModalPublicacion').open();
   }
 
-  abrirDoc() {
-    this.router.navigate(['/detalle']);
+  abrirDoc(name: string) {
+    this.router.navigate(['/detalle/' + name]);
   }
   /*
   onLoadPublications(): void {

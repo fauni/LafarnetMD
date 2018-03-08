@@ -13,11 +13,12 @@ import { NotificationsService } from 'angular2-notifications';
   templateUrl: './list-user.component.html',
   styleUrls: ['./list-user.component.scss']
 })
+
 export class ListUserComponent implements OnInit {
   user: Users;
   userAll: any;
   estadoValue = true;
-
+  p: any;
   search = '';
   constructor(
     private ref: ChangeDetectorRef,

@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 export class AreasComponent implements OnInit {
   area: Areas;
   areas: any;
-
+  filter: any;
   // Ordenacion
   key: string = 'nombre';
   reverse: boolean = false;
