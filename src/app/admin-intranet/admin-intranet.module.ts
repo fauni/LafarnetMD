@@ -17,7 +17,7 @@ import { RegionalesService } from './regionales/regionales.service';
         LayoutModule
     ],
     declarations: [AdminIntranetComponent],
-    providers: [ NgxSmartModalService, UsersService, CargosService, AreasService, RegionalesService]
+    providers: [ NgxSmartModalService, UsersService, CargosService, AreasService, RegionalesService, ]
 })
 
 export class AdminIntranetModule {}

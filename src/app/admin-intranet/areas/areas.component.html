@@ -23,7 +23,7 @@
         <th (click)="sort('nombre')">Nombre del Área
           <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='nombre'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
         </th>
-        <th (click)="sort('estado')">Estado
+        <th style= "text-align:right;">Opciones
           <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='estado'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
         </th>
       </tr>
@@ -32,30 +32,16 @@
       <tr *ngFor="let area of areas | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
         <td>{{area.id}}</td>
         <td>{{area.nombre}}</td>
-        <td>
-          <div class="row">
-            <div class="col s12 m4 center">
-              <ul id="dropdown1" class="dropdown-content">
-                <li><a href="#!" class="-text">one</a>
-                </li>
-                <li><a href="#!" class="-text">two</a>
-                </li>
-                <li><a href="#!" class="-text">three</a>
-                </li>
-              </ul>
-              <a class="dropdown-button btn-floating btn-large waves-effect waves-light " href="#!" data-activates="dropdown2"><i class="mdi-editor-vertical-align-bottom"></i></a>
-              <ul id="dropdown2" class="dropdown-content">
-                <li><a href="#!" class="-text">.zip</a>
-                </li>
-                <li><a href="#!" class="-text">.tar</a>
-                </li>
-                <li><a href="#!" class="-text">.exe</a>
-                </li>
-              </ul>
-              <a class="dropdown-button btn-floating btn-flat waves-effect waves-light  pink accent-2 white-text" href="#!" data-activates="dropdown2"><i class="mdi-file-cloud-download"></i></a>
-              <p>Dropdown</p>
-            </div>
-          </div>
+        <td style="text-align:right;">
+          <a [flat]="true" mz-button id="btn-dropdown-basic{{area.id}}" href="javascript:void(0)"><i class="mdi-navigation-more-vert"></i></a>
+          <mz-dropdown
+            [id]="'dropdown-basic'"
+            [dropdownButtonId]="'btn-dropdown-basic' + area.id"
+          >
+            <mz-dropdown-item><a href="javascript:void(0)" (click)="bottomSheetModal.open()">Ver</a></mz-dropdown-item>
+            <mz-dropdown-item><a href="javascript:void(0)">Modificar</a></mz-dropdown-item>
+            <mz-dropdown-item><a href="javascript:void(0)">Eliminar</a></mz-dropdown-item>
+          </mz-dropdown>
         </td>
       </tr>
     </tbody>
@@ -63,3 +49,18 @@
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 </div>
+
+
+
+<mz-modal #bottomSheetModal [fixedFooter]="true" [bottomSheet]="true">
+  <mz-modal-header>
+    Modal Title
+  </mz-modal-header>
+  <mz-modal-content>
+    
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close>Guardar</button>
+    <button mz-button [flat]="true" mz-modal-close>Cerrar</button>
+  </mz-modal-footer>
+</mz-modal>

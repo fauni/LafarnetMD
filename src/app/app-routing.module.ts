@@ -24,6 +24,8 @@ const routes: Routes = [
     //{ path: 'repdolibarr', loadChildren: './repdolibarr/repdolibarr.module#RepdolibarrModule', canActivate: [AuthGuard] },
     //{ path: 'ghdocs', loadChildren: './ghdocs/ghdocs.module#GhdocsModule', canActivate: [AuthGuard] },
 
+    { path: 'restorepass/:id', loadChildren: './restorepass/restorepass.module#RestorePassModule' },
+    { path: 'recovery', loadChildren: './recovery/recovery.module#RecoveryModule' },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
     { path: 'error', loadChildren: 'app/server-error/server-error.module#ServerErrorModule' },
     { path: 'access-denied', loadChildren: 'app/access-denied/access-denied.module#AccessDeniedModule' },

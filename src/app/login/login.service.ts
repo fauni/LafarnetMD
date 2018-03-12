@@ -13,6 +13,10 @@ export class LoginService {
     return this.http.get(this.global.urlAPI + 'usuario/get').toPromise();
   }
 
+  getUsuarioForEmail(email): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'usuario/getforemail/' + email);
+  }
+
   getUsuarios(): Observable<any> {
     return this.http.get(this.global.urlAPI + 'usuario/get');
   }
@@ -21,4 +25,7 @@ export class LoginService {
     return this.http.post(this.global.urlAPI + 'usuario/login', data);
   }
 
+  sendEmail(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'usuario/recovery', data);
+  }
 }

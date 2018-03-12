@@ -6,8 +6,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxPaginationModule } from 'ngx-pagination'; // <-- import the module
 import { FormsModule } from '@angular/forms';
-import { MzNavbarModule, MzParallaxModule } from 'ng2-materialize';
-
+import { MzNavbarModule, MzParallaxModule, MzDropdownModule, MzModalModule, MzButtonModule } from 'ng2-materialize';
 
 @NgModule({
     imports: [
@@ -18,6 +17,9 @@ import { MzNavbarModule, MzParallaxModule } from 'ng2-materialize';
         NgxPaginationModule,
         MzNavbarModule,
         MzParallaxModule,
+        MzDropdownModule,
+        MzModalModule,
+        MzButtonModule,
         FormsModule
     ],
     declarations: [
