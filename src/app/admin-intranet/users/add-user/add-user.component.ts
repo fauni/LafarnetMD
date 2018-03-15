@@ -80,6 +80,8 @@ export class AddUserComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
     /*this.UserModel.first_name = 'Franz';
     this.UserModel.last_name = 'Aruni';
     this.UserModel.email_address = 'amrfranz@gmail.com';
