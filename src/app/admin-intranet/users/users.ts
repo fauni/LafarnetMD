@@ -1,4 +1,5 @@
 export class Users {
+
     public userid: string;
     public first_name: string;
     public last_name: string;
@@ -22,5 +23,6 @@ export class Users {
     public fecha_creacion: string;
     public usuario_modificacion: string;
     public fecha_modificacion: string;
+    
 }
 
