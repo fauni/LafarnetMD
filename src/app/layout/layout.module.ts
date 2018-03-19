@@ -10,6 +10,10 @@ import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { HeaderComponent } from './components/header/header.component';
+import { UsersService } from '../admin-intranet/users/users.service';
+import { CargosService } from '../admin-intranet/cargos/cargos.service';
+import { AreasService } from '../admin-intranet/areas/areas.service';
+import { RegionalesService } from '../admin-intranet/regionales/regionales.service';
 
 @NgModule({
     imports: [
@@ -26,7 +30,7 @@ import { HeaderComponent } from './components/header/header.component';
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
     exports: [ HeaderComponent, SidebarComponent ],
-    providers: [ NgxSmartModalService ]
+    providers: [ NgxSmartModalService, UsersService, CargosService, AreasService, RegionalesService ]
 })
 
 export class LayoutModule {}

@@ -9,7 +9,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'home' },
             { path: 'home', loadChildren: 'app/layout/home/home.module#HomeModule'},
-            { path: 'calendario', loadChildren: 'app/layout/calendario/calendario.module#CalendarioModule'}
+            { path: 'calendario', loadChildren: 'app/layout/calendario/calendario.module#CalendarioModule'},
+            { path: 'micuenta', loadChildren: 'app/layout/micuenta/micuenta.module#MiCuentaModule'}
         ]
     }
 ];

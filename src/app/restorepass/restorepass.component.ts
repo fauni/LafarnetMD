@@ -17,6 +17,7 @@ import { Users } from '../admin-intranet/users/users';
 })
 
 export class RestorePassComponent implements OnInit {
+    public pass;
     email_address: string;
     datos: any;
     user: Users;
@@ -39,12 +40,15 @@ export class RestorePassComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         public servLogin: LoginService,
-        public servUser: UsersService
+        public servUser: UsersService,
+        public servNotification: NotificationsService
     ) {
         this.email_address = '';
         this.password = '';
         this.confirmPassword = '';
+        this.pass = { username : '', password: ''};
     }
 
     ngOnInit(): void {
@@ -72,26 +76,28 @@ export class RestorePassComponent implements OnInit {
     }
 
     onSubmit() {
+        this.openLoading();
+        this.pass.username = this.username;
+        this.pass.password = this.password;
 
-    }
-
-    onSendEmail() {
-        this.datos = {'email_address': this.email_address };
-        this.servLogin.sendEmail(this.datos).subscribe(
-            data => {
-                console.log(data['body']);
-            },
-            (err: HttpErrorResponse) => {
-              if (err.error instanceof Error) {
+        console.log(this.pass);
+        this.servUser.changePasswordForUser(this.pass).subscribe(data => {
+            console.log(data);
+            this.closeLoading();
+            this.openNotificacion(1, 'Correcto!', 'Se realizo el cambio correctamente!');
+            this.router.navigate(['/home']);
+        }, (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
                 // A client-side or network error occurred. Handle it accordingly.
-                console.log('An error occurred:', err.error.message);
-              } else {
+                console.log('Ocurrio un error:', err.error.message);
+            } else {
                 // The backend returned an unsuccessful response code.
                 // The response body may contain clues as to what went wrong,
-                console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-              }
+                console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
             }
-        );
+            this.openNotificacion(3, 'Error', 'Ocurrio un Error con el Servidor');
+            this.closeLoading();
+        });
     }
 
     onLoadUser(username): void {
@@ -114,5 +120,50 @@ export class RestorePassComponent implements OnInit {
                 }
             }
         );
+    }
+
+    openNotificacion(tipo: number, titulo: string, mensaje: string) {
+        switch (tipo) {
+          case 1:
+            this.servNotification.success(
+              titulo,
+              mensaje,
+              {
+                  timeOut: 2000,
+                  showProgressBar: true,
+                  pauseOnHover: false,
+                  clickToClose: false,
+                  maxLength: 10
+              }
+            );
+          break;
+          case 2:
+            console.log('Alert');
+            this.servNotification.alert(
+              titulo,
+              mensaje,
+              {
+                  timeOut: 2000,
+                  showProgressBar: true,
+                  pauseOnHover: false,
+                  clickToClose: false,
+                  maxLength: 10
+              }
+            );
+          break;
+          case 3:
+            this.servNotification.error(
+              titulo,
+              mensaje,
+              {
+                  timeOut: 2000,
+                  showProgressBar: true,
+                  pauseOnHover: false,
+                  clickToClose: false,
+                  maxLength: 10
+              }
+            );
+          break;
+        }
     }
 }

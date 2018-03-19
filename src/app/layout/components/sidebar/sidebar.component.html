@@ -21,6 +21,10 @@
         <a [routerLink]="['/home']"><i mz-icon-mdi [icon]="'home'" class="blue-text"></i>Inicio</a>
       </mz-sidenav-link>
 
+      <mz-sidenav-link>
+        <a href="{{global.urlIntranet}}sisform" target="_blank"><i mz-icon-mdi [icon]="'laptop'" class="blue-text"></i>Sistemas</a>
+      </mz-sidenav-link>
+
       <mz-sidenav-link *ngFor="let item of items">
         <a [routerLink]="[item.url]"><i mz-icon-mdi [icon]="item.icon" class="blue-text"></i>{{item.itemName}}</a>  
       </mz-sidenav-link>
@@ -41,7 +45,7 @@
       <mz-sidenav-subheader>Mi Perfil</mz-sidenav-subheader>
   
       <mz-sidenav-link>
-        <a><i mz-icon-mdi [icon]="'account-circle'" class="blue-text"></i>Mi Cuenta</a>
+        <a [routerLink]="['/micuenta']"><i mz-icon-mdi [icon]="'account-circle'" class="blue-text"></i>Mi Cuenta</a>
       </mz-sidenav-link>
       <mz-sidenav-link>
         <a><i mz-icon-mdi [icon]="'settings'" class="blue-text"></i>Ajustes</a>

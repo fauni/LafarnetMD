@@ -147,8 +147,6 @@ export class AddUserComponent implements OnInit {
   readFile(file, reader, callback) {
     reader.onload = () => {
         callback(reader.result);
-        //this.model.student_img = reader.result;
-        //console.log(reader.result);
     }
     reader.readAsDataURL(file);
   }

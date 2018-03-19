@@ -25,12 +25,20 @@ export class UsersService {
     return this.http.put(this.global.urlAPI + 'usuario/changePassword', data);
   }
 
+  changePasswordForUser (data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'usuario/changePasswordForUser', data);
+  }
+
   updateUserInformationGeneral(data): Observable<any> {
     return this.http.put(this.global.urlAPI + 'usuario/updateInformationGeneral', data);
   }
 
   updateUserInformationLaboral(data): Observable<any> {
     return this.http.put(this.global.urlAPI + 'usuario/updateInformationLaboral', data);
+  }
+
+  updateUserImage(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'usuario/updateImage', data);
   }
 
   deleteUser(data): Observable<any> {
