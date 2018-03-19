@@ -8,7 +8,8 @@ const routes: Routes = [
         component: SaccComponent,
         children: [
             { path: '', redirectTo: 'certificados' },
-            { path: 'certificados', loadChildren: './certificados/certificados.module#CertificadosModule' }
+            { path: 'certificados', loadChildren: './certificados/certificados.module#CertificadosModule' },
+            { path: 'datos', loadChildren: './datos/datos.module#DatosModule'}
         ]
     }
 ];
