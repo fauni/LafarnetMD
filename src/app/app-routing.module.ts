@@ -27,6 +27,7 @@ const routes: Routes = [
     { path: 'restorepass/:id', loadChildren: './restorepass/restorepass.module#RestorePassModule' },
     { path: 'recovery', loadChildren: './recovery/recovery.module#RecoveryModule' },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
+    { path: 'sacc', loadChildren: './sacc/sacc.module#SaccModule' }, //Ruta del NEW SACC
     { path: 'error', loadChildren: 'app/server-error/server-error.module#ServerErrorModule' },
     { path: 'access-denied', loadChildren: 'app/access-denied/access-denied.module#AccessDeniedModule' },
     { path: 'not-found', loadChildren: 'app/not-found/not-found.module#NotFoundModule' },
