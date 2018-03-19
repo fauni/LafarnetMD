@@ -2,12 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CertificadosComponent } from './certificados.component';
 import { CertificadosRoutingModule } from './certificados-routing.module';
+import { MzNavbarModule, MzTabModule, MzCheckboxModule } from 'ng2-materialize';
+
 
 
 @NgModule({
     imports: [
         CommonModule,
-        CertificadosRoutingModule
+        CertificadosRoutingModule,
+        MzNavbarModule,
+        MzTabModule,
+        MzCheckboxModule
     ],
     declarations: [
         CertificadosComponent
