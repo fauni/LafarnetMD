@@ -2,7 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CertificadosComponent } from './certificados.component';
 import { CertificadosRoutingModule } from './certificados-routing.module';
-import { MzNavbarModule, MzTabModule, MzCheckboxModule } from 'ng2-materialize';
+import {
+    MzNavbarModule,
+    MzTabModule,
+    MzCheckboxModule,
+    MzCardModule,
+    MzButtonModule,
+    MzIconModule,
+    MzIconMdiModule
+} from 'ng2-materialize';
 
 
 
@@ -12,7 +20,11 @@ import { MzNavbarModule, MzTabModule, MzCheckboxModule } from 'ng2-materialize';
         CertificadosRoutingModule,
         MzNavbarModule,
         MzTabModule,
-        MzCheckboxModule
+        MzCheckboxModule,
+        MzCardModule,
+        MzButtonModule,
+        MzIconModule,
+        MzIconMdiModule
     ],
     declarations: [
         CertificadosComponent
