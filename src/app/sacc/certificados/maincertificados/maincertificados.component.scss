@@ -1,0 +1,37 @@
+$logo-resize: "only screen and (max-width: 650px)" !default;
+
+.contenido-menu{
+    position: absolute;
+    left: 40%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-10%, -50%);
+    
+    @media #{$logo-resize} {
+        padding-top: 190px;
+        top:50%;
+        left:50%;
+        -webkit-transform: translate(-50%, -50%);
+    }
+}
+
+.item-menu{
+    width: 350px;
+    float: left;
+    margin: 0px 5px;
+    @media #{$logo-resize} {
+        width: 335px;
+    }
+}
+
+.titulo{
+    font-weight: bold;
+}
+
+.descripcion{
+    font-weight: lighter;
+}
+
+.image-menu{
+    width: 100%;
+}

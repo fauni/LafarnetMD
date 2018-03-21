@@ -22,8 +22,8 @@ const routes: Routes = [
     */
     { path: 'proforms', loadChildren: './proforms/proforms.module#ProformsModule', canActivate: [AuthGuard] },
     //{ path: 'repdolibarr', loadChildren: './repdolibarr/repdolibarr.module#RepdolibarrModule', canActivate: [AuthGuard] },
-    //{ path: 'ghdocs', loadChildren: './ghdocs/ghdocs.module#GhdocsModule', canActivate: [AuthGuard] },
-
+    { path: 'ghdocs', loadChildren: './ghdocs/ghdocs.module#GhdocsModule', canActivate: [AuthGuard] },
+    { path: 'lafardocs', loadChildren: './lafardocs/lafardocs.module#LafardocsModule', canActivate: [AuthGuard] },
     { path: 'restorepass/:id', loadChildren: './restorepass/restorepass.module#RestorePassModule' },
     { path: 'recovery', loadChildren: './recovery/recovery.module#RecoveryModule' },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
