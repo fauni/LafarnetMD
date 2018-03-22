@@ -8,7 +8,8 @@ const routes: Routes = [
         component: AnalistaComponent,
         children: [
             { path: '', redirectTo: 'list' },
-            { path: 'list', loadChildren: './listanalista/listanalista.module#ListanalistaModule' }
+            { path: 'list', loadChildren: './listanalista/listanalista.module#ListanalistaModule' },
+            { path: 'add' , loadChildren: './addanalista/addanalista.module#AddanalistaModule'}
         ]
     }
 ];
