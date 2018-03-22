@@ -1,1 +1,58 @@
-Lista Analista
+<p>&nbsp;</p>
+<a (click)="modalNuevo.open()">.:Nuevo:.</a>
+
+<mz-modal #modalNuevo [fixedFooter]="true" [bottomSheet]="false" [options]="modalOptions">
+  <mz-modal-header>
+   <h4>Nuevo Analista</h4> 
+  </mz-modal-header>
+  <mz-modal-content>
+    <div>
+         <form >
+          <div>
+            <mz-card>
+              <mz-card-content>
+                  <div class="row"> 
+                  <mz-input-container class="col s12 m12">
+                      <input mz-input required
+                      id="codigo_analista"
+                      name="codigo_analista"
+                      type="text"
+                      length="80"
+                      width="80"
+                      [label]="'Codigo del analista'"
+                      >
+                  </mz-input-container>
+                  </div>   
+                <div class="row"> 
+                <mz-input-container class="col s12 m12">
+                    <input mz-input required
+                    id="nombre_analista"
+                    name="nombre_analista"
+                    type="text"
+                    length="150"
+                    width="150"
+                    [label]="'Nombres del analista'"
+                    >
+                </mz-input-container>
+                </div>   
+                <div class="row">
+                    <input required type="file"
+                     
+                    >
+                </div>
+                <div class="row">
+                  <button mz-button>Guardar</button>
+                  
+                </div>
+            </mz-card-content>
+            </mz-card>
+
+        </div>
+         </form>
+    </div>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close>Cerrar</button>
+  </mz-modal-footer>
+</mz-modal>
+<h3>Lista de Analistas</h3>
