@@ -4,17 +4,15 @@ import { Globals } from '../../../../globals';
 
 
 @Component({
-  selector: 'app-addcertificadosmp',
-  templateUrl: './addcertificadosmp.component.html',
-  styleUrls: ['./addcertificadosmp.component.scss']
+  selector: 'app-addproveedor',
+  templateUrl: './addproveedor.component.html',
+  styleUrls: ['./addproveedor.component.scss']
 })
-export class AddcertificadosmpComponent implements OnInit {
+export class AddproveedorComponent implements OnInit {
   protocolo: string = '12';
   constructor(public global: Globals) { }
 
   ngOnInit() {
 
   }
-
-  
 }

@@ -9,7 +9,9 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'certificados' },
             { path: 'certificados', loadChildren: './certificados/certificados.module#CertificadosModule' },
-            { path: 'datos', loadChildren: './datos/datos.module#DatosModule'}
+            { path: 'datos', loadChildren: './datos/datos.module#DatosModule'},
+            { path: 'informes', loadChildren: './informes/informes.module#InformesModule' },
+            { path: 'asignacion', loadChildren: './asignacion/asignacion.module#AsignacionModule'}
         ]
     }
 ];
