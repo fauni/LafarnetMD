@@ -11,7 +11,8 @@ const routes: Routes = [
             { path: 'main', loadChildren: './maindatos/maindatos.module#MaindatosModule' },
             { path: 'productos', loadChildren: './productos/productos.module#ProductosModule' },
             { path: 'analista', loadChildren: './analista/analista.module#AnalistaModule' },
-            { path: 'proveedor', loadChildren: './proveedor/proveedor.module#ProveedorModule' }
+            { path: 'proveedor', loadChildren: './proveedor/proveedor.module#ProveedorModule' },
+            { path: 'ingresos', loadChildren: './ingresos/ingresos.module#IngresosModule' }
         ]
     }
 ];
