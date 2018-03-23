@@ -11,8 +11,12 @@ import { Globals } from '../../../../globals';
 export class ListingresosComponent implements OnInit {
 
   constructor(public global: Globals) { }
-
+  public options: Pickadate.DateOptions = {
+    format: 'dd/mm/yyyy',
+    formatSubmit: 'yyyy-mm-dd',
+    today: 'Hoy'
+  };
+  public dateOfBirth = '2017-08-12';
   ngOnInit() {
-
   }
 }
