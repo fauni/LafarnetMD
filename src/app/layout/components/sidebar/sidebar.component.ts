@@ -92,6 +92,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onLoggedout() {
       localStorage.removeItem('isLoggedin');
+      this._cookieService.removeAll();
     }
     onLoadUserInformation() {
       this.user.userid = this._cookieService.get('userid');
