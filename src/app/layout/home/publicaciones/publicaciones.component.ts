@@ -63,17 +63,8 @@ export class PublicacionesComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this._cookieService.get('username') != null) {
-      console.log('TRUE');
-      if (this.global.user.estado == 4) {
-        this.router.navigate(['/admin/users/clave']);
-      }
-      this.onLoadPublications();
-      this.buildForm();
-    }else {
-      console.log('FALSE');
-      this.router.navigate(['/login']);
-    }
+    this.onLoadPublications();
+    this.buildForm();
   }
 
   onSubmit() {
