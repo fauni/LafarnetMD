@@ -14,6 +14,7 @@ import { UsersService } from '../admin-intranet/users/users.service';
 import { CargosService } from '../admin-intranet/cargos/cargos.service';
 import { AreasService } from '../admin-intranet/areas/areas.service';
 import { RegionalesService } from '../admin-intranet/regionales/regionales.service';
+import { CookieService } from 'angular2-cookie/core';
 
 @NgModule({
     imports: [
@@ -30,7 +31,7 @@ import { RegionalesService } from '../admin-intranet/regionales/regionales.servi
     ],
     declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
     exports: [ HeaderComponent, SidebarComponent ],
-    providers: [ NgxSmartModalService, UsersService, CargosService, AreasService, RegionalesService ]
+    providers: [ NgxSmartModalService, UsersService, CargosService, AreasService, RegionalesService, CookieService ]
 })
 
 export class LayoutModule {}

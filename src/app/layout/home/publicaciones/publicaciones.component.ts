@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { HomeService } from '../home.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { CookieService } from 'angular2-cookie/core';
 
 declare var $: any;
 @Component({
@@ -58,11 +59,11 @@ export class PublicacionesComponent implements OnInit {
     private hSer: HomeService,
     private formBuilder: FormBuilder,
     private renderer: Renderer,
-    public ngxSmartModalService: NgxSmartModalService) {
+    public ngxSmartModalService: NgxSmartModalService, private _cookieService: CookieService) {
   }
 
   ngOnInit() {
-    if (this.global.user.username) {
+    if (this._cookieService.get('username') != null) {
       console.log('TRUE');
       if (this.global.user.estado == 4) {
         this.router.navigate(['/admin/users/clave']);

@@ -23,6 +23,7 @@
     "@angular/router": "^5.2.2",
     "@jaspero/ng2-alerts": "0.0.7",
     "@swimlane/ngx-datatable": "^11.1.7",
+    "angular2-cookie": "^1.2.6",
     "angular2-notifications": "^0.9.7",
     "angular4-files-upload": "^1.0.2",
     "core-js": "^2.5.3",

@@ -6,6 +6,9 @@ import { LayoutService } from '../../layout.service';
 import { ItemForApp } from './itemforapp';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Globals } from '../../../globals';
+import { Users } from '../../../admin-intranet/users/users';
+import { CookieService } from 'angular2-cookie/core';
+import { Login } from '../../../login/login';
 
 abstract class SectionRoutesPair {
     section: string;
@@ -24,12 +27,14 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     groupedRoutes: Array<SectionRoutesPair>;
     scrollElement: JQuery;
     public itemforapp: ItemForApp;
+    user: Users = new Users();
 
     constructor(
       private router: Router,
       private mScrollbarService: MalihuScrollbarService,
       private lservice: LayoutService,
-      public global: Globals
+      public global: Globals,
+      private _cookieService: CookieService
     ) { }
 
     ngOnInit() {
@@ -37,6 +42,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.populateSideNavWithRoutesGroupedBySections();
       this.setNavigationEndEvent();
       console.log('ngOnInit');
+      this.onLoadUserInformation();
     }
 
     ngAfterViewInit() {
@@ -87,6 +93,29 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     onLoggedout() {
       localStorage.removeItem('isLoggedin');
     }
+    onLoadUserInformation() {
+      this.user.userid = this._cookieService.get('userid');
+      this.user.first_name = this._cookieService.get('first_name');
+      this.user.last_name = this._cookieService.get('last_name');
+      this.user.email_address = this._cookieService.get('email_address');
+      this.user.username = this._cookieService.get('username');
+      this.user.password = this._cookieService.get('password');
+      this.user.id_cargo = this._cookieService.get('id_cargo');
+      this.user.cargo = this._cookieService.get('cargo');
+      this.user.id_regional = this._cookieService.get('id_regional');
+      this.user.regional = this._cookieService.get('regional');
+      this.user.id_grupo = this._cookieService.get('id_grupo');
+      this.user.id_superior = this._cookieService.get('id_superior');
+      this.user.id_area = this._cookieService.get('id_area');
+      this.user.area = this._cookieService.get('area');
+      this.user.id_seccion = this._cookieService.get('id_seccion');
+      this.user.foto = this._cookieService.get('foto');
+      this.user.estado = Number(this._cookieService.get('estado'));
+      this.user.usuario_creacion = this._cookieService.get('usuario_creacion');
+      this.user.fecha_creacion = this._cookieService.get('fecha_creacion');
+      this.user.usuario_modificacion = this._cookieService.get('usuario_modificacion');
+      this.user.fecha_modificacion = this._cookieService.get('fecha_modificacion');
+  }
 
     getItemForApps(idApp): void {
       this.itemforapp = new ItemForApp(idApp);

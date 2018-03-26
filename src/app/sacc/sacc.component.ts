@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Globals } from '../globals';
+import { CookieService } from 'angular2-cookie/core';
 @Component({
   selector: 'app-sacc',
   templateUrl: './sacc.component.html',
@@ -8,9 +9,9 @@ import { Globals } from '../globals';
 })
 export class SaccComponent implements OnInit {
 
-  constructor() { }
+  constructor(private __Cookie: CookieService) { }
 
   ngOnInit() {
-
+    alert (this.__Cookie.get('nombre'));
   }
 }

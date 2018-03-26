@@ -23,6 +23,6 @@ export class Users {
     public fecha_creacion: string;
     public usuario_modificacion: string;
     public fecha_modificacion: string;
-    
+
 }
 
