@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.onLoadApps(this._cookieService.get('username');
+        this.onLoadApps(this._cookieService.get('username'));
     }
 
 
