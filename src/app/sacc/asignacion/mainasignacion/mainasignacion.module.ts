@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaincertificadosRoutingModule } from './maincertificados-routing.module';
-import { MaincertificadosComponent } from './maincertificados.component';
+import { MainasignacionRoutingModule } from './mainasignacion-routing.module';
+import { MainasignacionComponent } from './mainasignacion.component';
 import {
     MzNavbarModule,
     MzTabModule,
@@ -16,7 +16,7 @@ import {
 @NgModule({
     imports: [
         CommonModule,
-        MaincertificadosRoutingModule,
+        MainasignacionRoutingModule,
         MzNavbarModule,
         MzTabModule,
         MzCheckboxModule,
@@ -25,7 +25,7 @@ import {
         MzIconModule,
         MzIconMdiModule
     ],
-    declarations: [MaincertificadosComponent]
+    declarations: [MainasignacionComponent]
 })
 
-export class MaincertificadosModule {}
+export class MainasignacionModule {}

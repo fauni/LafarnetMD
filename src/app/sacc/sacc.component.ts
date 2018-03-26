@@ -12,6 +12,5 @@ export class SaccComponent implements OnInit {
   constructor(private __Cookie: CookieService) { }
 
   ngOnInit() {
-    //alert (this.__Cookie.get('nombre'));
   }
 }

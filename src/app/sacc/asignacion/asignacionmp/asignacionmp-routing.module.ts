@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MaincertificadosComponent } from './maincertificados.component';
+import { AsignacionmpComponent } from './asignacionmp.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: MaincertificadosComponent
+        component: AsignacionmpComponent
     }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class MaincertificadosRoutingModule {}
+export class AsignacionmpRoutingModule {}

@@ -3,16 +3,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Globals } from '../../../globals';
 
 @Component({
-  selector: 'app-certificadosmp',
-  templateUrl: './certificadosmp.component.html',
-  styleUrls: ['./certificadosmp.component.scss']
+  selector: 'app-asignacionmp',
+  templateUrl: './asignacionmp.component.html',
+  styleUrls: ['./asignacionmp.component.scss']
 })
-export class CertificadosmpComponent implements OnInit {
+export class AsignacionmpComponent implements OnInit {
 
   constructor(public global: Globals) { }
 
   ngOnInit() {
-    
+
   }
 
 }

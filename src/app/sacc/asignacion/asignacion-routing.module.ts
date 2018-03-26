@@ -5,7 +5,13 @@ import {AsignacionComponent} from './asignacion.component';
 
 const routes: Routes = [
     {
-        path: '', component: AsignacionComponent
+        path: '', component: AsignacionComponent,
+        children: [
+            { path: '', redirectTo: 'main' },
+            { path: 'main', loadChildren: './mainasignacion/mainasignacion.module#MainasignacionModule' },
+            { path: 'mp', loadChildren: './asignacionmp/asignacionmp.module#AsignacionmpModule' },
+            { path: 'pt', loadChildren: './asignacionpt/asignacionpt.module#AsignacionptModule' }
+        ]
     }
 ];
 

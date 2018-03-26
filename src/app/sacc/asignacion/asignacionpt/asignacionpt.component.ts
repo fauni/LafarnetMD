@@ -3,11 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Globals } from '../../../globals';
 
 @Component({
-  selector: 'app-maincertificados',
-  templateUrl: './maincertificados.component.html',
-  styleUrls: ['./maincertificados.component.scss']
+  selector: 'app-asignacionpt',
+  templateUrl: './asignacionpt.component.html',
+  styleUrls: ['./asignacionpt.component.scss']
 })
-export class MaincertificadosComponent implements OnInit {
+export class AsignacionptComponent implements OnInit {
 
   constructor(public global: Globals) { }
 
