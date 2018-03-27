@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
   styleUrls: ['./areas.component.scss']
 })
 export class AreasComponent implements OnInit {
-  
+
   area: Areas;
   areas: any;
   filter: any;

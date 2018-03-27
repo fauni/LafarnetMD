@@ -1,167 +1,51 @@
-
-<p>&nbsp;</p>
-<a (click)="modalNuevo.open()">.:Nuevo:.</a>
-
-<mz-modal #modalNuevo [fixedFooter]="true" [bottomSheet]="false">
-  <mz-modal-header>
-   <h4>Nuevo Ingreso</h4> 
-  </mz-modal-header>
-  <mz-modal-content>
-    <div>
-         <form >
-          <div>
-            <mz-card>
-              <mz-card-content>
-                  <div class="row"> 
-                  <mz-input-container class="col s12 m12">
-                      <input mz-input required
-                      id="codigo_ingreso"
-                      name="codigo_ingreso"
-                      type="text"
-                      length="40"
-                      width="40"
-                      [label]="'Codigo del ingreso'"
-                      >
-                  </mz-input-container>
-                  </div>   
-                  <div class="row">
-                        <mz-datepicker-container class="col s6">
-                                <input mz-datepicker
-                                  [label]="'Fecha'"
-                                  [options]="options"
-                                  [(ngModel)]="dateOfBirth"
-                                  id="fecha_ingreso"
-                                  placeholder="Fecha de Ingreso"
-                                  type="text">
-                        </mz-datepicker-container>
-                        <mz-select-container class="col s6">
-                                <select mz-select
-                                  id="proveedor"
-                                  [label]="'Proveedor:'"
-                                  [placeholder]="'Elija proveedor'"
-                                >
-                                  <option value="1" class="left circle">MUESTRA</option>
-                                   <option value="2" class="left circle">MARSING</option>
-                                   <option value="3" class="left circle">MAPRIAL S.R.L.</option>
-                                   <option value="4" class="left circle">COMSA S.A.</option>
-                                </select>
-                              </mz-select-container>
-
-                  </div>   
-                 
-                 <div class="row">
-                        <mz-textarea-container class="col s12">
-                                
-                                <textarea mz-textarea
-                                  [label]="'Glosa:'"
-                                  id="glosa"
-                                  placeholder="Ingrese la glosa"
-                                  length="150"></textarea>
-                             </mz-textarea-container>
-                </div>
-                 <div class="row" >
-                        <table class="highlight">
-                                <thead>
-                                  <tr>
-                                      <th>Item</th>      
-                                      <th>Codigo</th>
-                                      <th>Descripcion</th>
-                                      <th>Cant.</th>
-                                      <th>Lote</th>
-                                      <th>VMTO</th>
-                                      <th></th>
-                                  </tr>
-                                </thead>
-                              
-                                <tbody>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>001</td>
-                                    <td>Eclair</td>
-                                    <td>10</td>
-                                    <td>S/L</td>
-                                    <td>S/V</td>
-                                    <td><a>-</a></td>
-                                  </tr>
-                                  <tr>
-                                          <td>1</td>
-                                          <td>001</td>
-                                          <td>Eclair</td>
-                                          <td>10</td>
-                                          <td>S/L</td>
-                                          <td>S/V</td>
-                                          <td><a >-</a></td>
-                                  </tr>
-                                  <tr>
-                                          <td>1</td>
-                                          <td>001</td>
-                                          <td>Eclair</td>
-                                          <td>10</td>
-                                          <td>S/L</td>
-                                          <td>S/V</td>
-                                          <td><a >-</a></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                 </div>
-                
-                 <div class="row">
-                  <button mz-button>Guardar</button>
-                  
-                </div>
-
-            </mz-card-content>
-            </mz-card>
-
-        </div>
-         </form>
-    </div>
-  </mz-modal-content>
-  <mz-modal-footer>
-    <button mz-button [flat]="true" mz-modal-close>Cerrar</button>
-  </mz-modal-footer>
-</mz-modal>
 <h3>Listado de Ingresos</h3>
-<table class="highlight">
-  <thead>
-    <tr>
-        <th>Item</th>      
-        <th>Codigo</th>
-        <th>Descripcion</th>
-        <th>Cant.</th>
-        <th>Lote</th>
-        <th>VMTO</th>
-        <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>001</td>
-      <td>Eclair</td>
-      <th>10</th>
-      <th>S/L</th>
-      <th>S/V</th>
-      <td><a (click)="modalNuevo.open()">ver</a></td>
-    </tr>
-    <tr>
-            <td>1</td>
-            <td>001</td>
-            <td>Eclair</td>
-            <th>10</th>
-            <th>S/L</th>
-            <th>S/V</th>
-            <td><a (click)="modalNuevo.open()">ver</a></td>
-    </tr>
-    <tr>
-            <td>1</td>
-            <td>001</td>
-            <td>Eclair</td>
-            <th>10</th>
-            <th>S/L</th>
-            <th>S/V</th>
-            <td><a (click)="modalNuevo.open()">ver</a></td>
-    </tr>
-  </tbody>
-</table>
+<div id="preview" class="header-content valign-wrapper lafar-light">
+ <!-- <img class="image-user circle" src="assets/images/userlafar.png">-->
+  <div class="nombre-user">INGRESOS </div>
+<div class="box">
+  <div class="container-1">
+      <span class="icon"><i class="mdi-action-search"></i></span>
+      <input type="search" id="search" name="search" placeholder="Buscar Ingresos..." [(ngModel)]="filter"/>
+  </div>
+</div>
+</div>
+<div class="contenido-principal">
+  <div class="row">
+    <table class="bordered">
+      <thead>
+        <tr>
+          <th>Nro</th>
+          <th (click)="sort('codigo')">Codigo
+            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='codigo'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+          </th>
+          <th (click)="sort('fecha')">Fecha
+            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+          </th>
+          <th style= "text-align:right;">Opciones
+            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='estado'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ingreso of ingresos | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+          <td>{{ingreso.id_ingreso}}</td>
+          <td>{{ingreso.codigo}}</td>
+          <td>{{ingreso.fecha}}</td>
+          <td style="text-align:right;">
+            <a [flat]="true" mz-button id="btn-dropdown-basic{{ingreso.id_ingreso}}" href="javascript:void(0)"><i class="mdi-navigation-more-vert"></i></a>
+            <mz-dropdown
+              [id]="'dropdown-basic'"
+              [dropdownButtonId]="'btn-dropdown-basic' + ingreso.id_ingreso"
+            >
+              <mz-dropdown-item><a href="javascript:void(0)" >Ver</a></mz-dropdown-item>
+              <mz-dropdown-item><a href="javascript:void(0)">Modificar</a></mz-dropdown-item>
+              <mz-dropdown-item><a href="javascript:void(0)">Eliminar</a></mz-dropdown-item>
+            </mz-dropdown>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>     
+</div>
+<a [routerLink]="['/sacc/datos/ingresos/add']" mz-button float="true">+</a>
