@@ -15,7 +15,6 @@ import { Cargos } from '../../admin-intranet/cargos/cargos';
 import { Areas } from '../../admin-intranet/areas/areas';
 import { Regionales } from '../../admin-intranet/regionales/regionales';
 import { UsersService } from '../../admin-intranet/users/users.service';
-import { CookieService } from 'angular2-cookie/core';
 
 @Component({
   selector: 'app-micuenta',
@@ -81,8 +80,7 @@ elem: any;
     private servCargo: CargosService,
     private completerService: CompleterService,
     private servArea: AreasService,
-    private servRegional: RegionalesService,
-    private _cookieService: CookieService
+    private servRegional: RegionalesService
   ) {
       this.isFileCharged = false;
   }
@@ -90,7 +88,7 @@ elem: any;
   ngOnInit() {
     this.urlFotoPerfil = this.global.urlImagenUserDefault;
     this.user = new Users();
-    this.onLoadUser(this._cookieService.get('username'));
+    this.onLoadUser(localStorage.getItem('username'));
 
     this.onLoadCargos();
     this.onLoadAreas();

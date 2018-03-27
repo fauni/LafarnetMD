@@ -4,7 +4,6 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 import { AppsForUser } from './appsforuser';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Globals } from '../../../globals';
-import { CookieService } from 'angular2-cookie/core';
 
 @Component({
     selector: 'app-header',
@@ -31,12 +30,12 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private servicioLayout: LayoutService,
-        public ngxSmartModalService: NgxSmartModalService, private global: Globals, private _cookieService: CookieService) {
+        public ngxSmartModalService: NgxSmartModalService, private global: Globals) {
 
     }
 
     ngOnInit() {
-        this.onLoadApps(this._cookieService.get('username'));
+        this.onLoadApps(localStorage.getItem('username'));
     }
 
 

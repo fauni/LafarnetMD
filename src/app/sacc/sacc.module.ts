@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { LayoutModule } from '../layout/layout.module';
 import { SaccRoutingModule } from './sacc-routing.module';
 import { SaccComponent } from './sacc.component';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @NgModule({
     imports: [
@@ -11,9 +10,7 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
         SaccRoutingModule,
         LayoutModule
     ],
-    providers: [
-        CookieService
-      ],
+    providers: [],
     declarations: [SaccComponent]
 })
 

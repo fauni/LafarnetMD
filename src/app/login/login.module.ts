@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { MzIconMdiModule,
     MzValidationModule,
     MzInputModule, MzModalModule, MzInjectionModule, MzButtonModule, MzProgressModule } from 'ng2-materialize';
@@ -31,9 +30,7 @@ import { JasperoAlertsModule } from '@jaspero/ng2-alerts';
         MzSpinnerModule
     ],
     declarations: [LoginComponent],
-    providers: [
-        CookieService
-      ],
+    providers: [],
     entryComponents: []
 })
 export class LoginModule {}

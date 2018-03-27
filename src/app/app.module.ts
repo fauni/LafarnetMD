@@ -14,7 +14,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutService } from './layout/layout.service';
 import { Globals } from './globals';
 import { FunGlobalService } from './shared/services/funGlobalService';
-import { CookieService } from 'angular2-cookie/core';
 
 @NgModule({
   declarations: [
@@ -31,8 +30,7 @@ import { CookieService } from 'angular2-cookie/core';
     LoginService,
     LayoutService,
     Globals,
-    FunGlobalService,
-    CookieService
+    FunGlobalService
   ],
   bootstrap: [AppComponent]
 })

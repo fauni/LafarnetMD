@@ -10,7 +10,6 @@ import { AlertsService, AlertType } from '@jaspero/ng2-alerts';
 import { MzButtonModule, MzInputModule, MzModalService } from 'ng2-materialize';
 import { Globals } from '../globals';
 import { Users } from '../admin-intranet/users/users';
-import { CookieService } from 'angular2-cookie/core';
 
 @Component({
     selector: 'app-login',
@@ -44,8 +43,7 @@ export class LoginComponent implements OnInit {
         private _service: NotificationsService,
         private _serviceAlert: AlertsService,
         private _modalService: MzModalService,
-        private global: Globals,
-        private _cookieService: CookieService
+        private global: Globals
     ) {
     }
 
@@ -72,8 +70,6 @@ export class LoginComponent implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams['home'] || '/';
         this.returnUrlChangePassword = this.route.snapshot.queryParams['admin/users/password'] || '/';
         this.abrirLoader();
-        this._cookieService.put('nombre', 'severo');
-
     }
 
     onLoggedin() {
@@ -239,26 +235,26 @@ export class LoginComponent implements OnInit {
     }
 
     onLoadUserInformation(user: any, login: Login) {
-        this._cookieService.put('userid', user.userid);
-        this._cookieService.put('first_name', user.first_name);
-        this._cookieService.put('last_name', user.last_name);
-        this._cookieService.put('email_address', user.email_address);
-        this._cookieService.put('username', user.username);
-        this._cookieService.put('password', login.password);
-        this._cookieService.put('id_cargo', user.id_cargo);
-        this._cookieService.put('cargo', user.cargo);
-        this._cookieService.put('id_regional', user.id_regional);
-        this._cookieService.put('regional', user.regional);
-        this._cookieService.put('id_grupo', user.id_grupo);
-        this._cookieService.put('id_superior', user.id_superior);
-        this._cookieService.put('id_area', user.id_area);
-        this._cookieService.put('area', user.area);
-        this._cookieService.put('id_seccion', user.id_seccion);
-        this._cookieService.put('foto', user.foto);
-        this._cookieService.put('estado', user.estado);
-        this._cookieService.put('usuario_creacion', user.usuario_creacion);
-        this._cookieService.put('fecha_creacion', user.fecha_creacion);
-        this._cookieService.put('usuario_modificacion', user.usuario_modificacion);
-        this._cookieService.put('fecha_modificacion', user.fecha_modificacion);
+        localStorage.setItem('userid', user.userid);
+        localStorage.setItem('first_name', user.first_name);
+        localStorage.setItem('last_name', user.last_name);
+        localStorage.setItem('email_address', user.email_address);
+        localStorage.setItem('username', user.username);
+        localStorage.setItem('password', login.password);
+        localStorage.setItem('id_cargo', user.id_cargo);
+        localStorage.setItem('cargo', user.cargo);
+        localStorage.setItem('id_regional', user.id_regional);
+        localStorage.setItem('regional', user.regional);
+        localStorage.setItem('id_grupo', user.id_grupo);
+        localStorage.setItem('id_superior', user.id_superior);
+        localStorage.setItem('id_area', user.id_area);
+        localStorage.setItem('area', user.area);
+        localStorage.setItem('id_seccion', user.id_seccion);
+        localStorage.setItem('foto', user.foto);
+        localStorage.setItem('estado', user.estado);
+        localStorage.setItem('usuario_creacion', user.usuario_creacion);
+        localStorage.setItem('fecha_creacion', user.fecha_creacion);
+        localStorage.setItem('usuario_modificacion', user.usuario_modificacion);
+        localStorage.setItem('fecha_modificacion', user.fecha_modificacion);
     }
 }

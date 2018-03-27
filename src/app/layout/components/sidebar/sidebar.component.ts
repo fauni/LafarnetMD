@@ -7,7 +7,6 @@ import { ItemForApp } from './itemforapp';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Globals } from '../../../globals';
 import { Users } from '../../../admin-intranet/users/users';
-import { CookieService } from 'angular2-cookie/core';
 import { Login } from '../../../login/login';
 
 abstract class SectionRoutesPair {
@@ -33,8 +32,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       private router: Router,
       private mScrollbarService: MalihuScrollbarService,
       private lservice: LayoutService,
-      public global: Globals,
-      private _cookieService: CookieService
+      public global: Globals
     ) { }
 
     ngOnInit() {
@@ -92,30 +90,30 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onLoggedout() {
       localStorage.removeItem('isLoggedin');
-      this._cookieService.removeAll();
+      localStorage.removeAll();
     }
     onLoadUserInformation() {
-      this.user.userid = this._cookieService.get('userid');
-      this.user.first_name = this._cookieService.get('first_name');
-      this.user.last_name = this._cookieService.get('last_name');
-      this.user.email_address = this._cookieService.get('email_address');
-      this.user.username = this._cookieService.get('username');
-      this.user.password = this._cookieService.get('password');
-      this.user.id_cargo = this._cookieService.get('id_cargo');
-      this.user.cargo = this._cookieService.get('cargo');
-      this.user.id_regional = this._cookieService.get('id_regional');
-      this.user.regional = this._cookieService.get('regional');
-      this.user.id_grupo = this._cookieService.get('id_grupo');
-      this.user.id_superior = this._cookieService.get('id_superior');
-      this.user.id_area = this._cookieService.get('id_area');
-      this.user.area = this._cookieService.get('area');
-      this.user.id_seccion = this._cookieService.get('id_seccion');
-      this.user.foto = this._cookieService.get('foto');
-      this.user.estado = Number(this._cookieService.get('estado'));
-      this.user.usuario_creacion = this._cookieService.get('usuario_creacion');
-      this.user.fecha_creacion = this._cookieService.get('fecha_creacion');
-      this.user.usuario_modificacion = this._cookieService.get('usuario_modificacion');
-      this.user.fecha_modificacion = this._cookieService.get('fecha_modificacion');
+      this.user.userid = localStorage.getItem('userid');
+      this.user.first_name = localStorage.getItem('first_name');
+      this.user.last_name = localStorage.getItem('last_name');
+      this.user.email_address = localStorage.getItem('email_address');
+      this.user.username = localStorage.getItem('username');
+      this.user.password = localStorage.getItem('password');
+      this.user.id_cargo = localStorage.getItem('id_cargo');
+      this.user.cargo = localStorage.getItem('cargo');
+      this.user.id_regional = localStorage.getItem('id_regional');
+      this.user.regional = localStorage.getItem('regional');
+      this.user.id_grupo = localStorage.getItem('id_grupo');
+      this.user.id_superior = localStorage.getItem('id_superior');
+      this.user.id_area = localStorage.getItem('id_area');
+      this.user.area = localStorage.getItem('area');
+      this.user.id_seccion = localStorage.getItem('id_seccion');
+      this.user.foto = localStorage.getItem('foto');
+      this.user.estado = Number(localStorage.getItem('estado'));
+      this.user.usuario_creacion = localStorage.getItem('usuario_creacion');
+      this.user.fecha_creacion = localStorage.getItem('fecha_creacion');
+      this.user.usuario_modificacion = localStorage.getItem('usuario_modificacion');
+      this.user.fecha_modificacion = localStorage.getItem('fecha_modificacion');
   }
 
     getItemForApps(idApp): void {
