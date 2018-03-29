@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {
-
+  user: string;
   constructor() { }
 
   ngOnInit() {
+    this.user = 'Franz';
   }
 
+  onMostrar() {
+    alert(this.user);
+  }
 }

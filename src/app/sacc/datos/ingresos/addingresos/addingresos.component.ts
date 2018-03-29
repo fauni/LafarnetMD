@@ -18,8 +18,8 @@ export class AddingresosComponent implements OnInit {
  public proveedores: Array <Proveedor>;
  public productos: Array <Producto>;
  // private completerService: CompleterService;
- private proveedorData: CompleterData;
- private productoData: CompleterData;
+ public proveedorData: CompleterData;
+ public productoData: CompleterData;
   constructor(public global: Globals, private completerService: CompleterService, private completerService2: CompleterService) {
   }
   public options: Pickadate.DateOptions = {
