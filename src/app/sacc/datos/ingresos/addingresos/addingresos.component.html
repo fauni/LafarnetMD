@@ -1,40 +1,126 @@
 <h3>Adicion de Ingresos</h3>
 <div>
-    <form >
+    <form #formingresos = "ngForm" >
      <div>
        <mz-card>
          <mz-card-content>
              <div class="row"> 
-             <mz-input-container class="col s12 m4">
-                 <input mz-input required
-                 id="codigo_ingreso"
-                 name="codigo_ingreso"
-                 type="text"
-                 length="80"
-                 width="80"
-                 [label]="'Codigo de Ingreso'"
-                 >
-             </mz-input-container>
+            <mz-input-container class="col s12 m4">
+                <input mz-input required
+                id="codigo_ingreso"
+                name="codigo_ingreso"
+                type="text"
+                length="80"
+                width="80"
+                [label]="'Codigo de Ingreso'"
+                >
+            </mz-input-container>
            
             <mz-datepicker-container class="col s12 m4">
                 <input mz-datepicker
                   [label]="'Fecha de Ingreso'"
                   [options]="options"
-                  [(ngModel)]="dateOfBirth"
                   id="fecha_ingreso"
                   placeholder="Elija la fecha de Ingreso"
                   type="text">
               </mz-datepicker-container>
-              
+              <div style="padding: 10px 10px" class="col s12 m4">
+                <ng2-completer 
+                  (selected)="onSelectProveedor($event)"    
+                  [datasource]="proveedorData"
+                  [minSearchLength]="0"
+                  [maxChars]="4"
+                  [inputClass]="'form-control'"
+                  [placeholder]="'Seleccione el proveedor'"
+                  [matchClass]="'match'"
+                  [autofocus]="true"
+                  [textSearching]="false">
+                </ng2-completer>
+              </div>
+              <!--<ng2-completer [(ngModel)]="searchStr" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>-->
            </div>   
-           
-           <div class="row">
-             <button mz-button>Guardar</button>
-             
-           </div>
+
+           <div class="fixed-action-btn" style="top: 220px; right: 24px;">
+            <a class="btn-floating btn-large blue" (click) = "modalNuevoItem.open()">
+          <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+            +
+          </a>
+          </div>
+
        </mz-card-content>
        </mz-card>
-
+       <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large green">
+      <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+        <i class="large mdi-editor-mode-edit"></i>
+      </a>
+      </div>
    </div>
     </form>
 </div>
+<mz-modal #modalNuevoItem [fixedFooter]="true" [bottomSheet]="false">
+    <mz-modal-header>
+     <h4 style="text-align:center;">Nuevo Item</h4> 
+    </mz-modal-header>
+    <mz-modal-content>
+<div>
+  <div class="row">
+    <mz-input-container class="col s12 m6">
+      <input mz-input required
+      id="id_producto"
+      name="id_producto"
+      type="text"
+      length="80"
+      width="80"
+      [label]="'Producto'"
+      >
+      </mz-input-container>
+      <mz-input-container class="col s12 m6">
+      <input mz-input required
+      id="cantidad"
+      name="cantidad"
+      type="text"
+      length="80"
+      width="80"
+      [label]="'Cantidad'"
+      >
+    </mz-input-container>
+</div>
+<div class="row">
+  <mz-input-container  class="col s12 m6">
+      <input mz-input required
+      id="lote"
+      name="lote"
+      type="text"
+      length="80"
+      width="80"
+      [label]="'Lote'"
+      >
+  </mz-input-container>
+  <mz-datepicker-container class="col s12 m6">
+      <input mz-datepicker
+        [label]="'Fecha de vencimiento'"
+        [options]="options"
+        id="fecha_vmto"
+        placeholder="Elija la fecha de Vencimiento"
+        type="text">
+    </mz-datepicker-container>
+    <div style="padding: 10px 10px" class="col s12 m4">
+        <ng2-completer 
+          (selected)="onSelectProducto($event)"    
+          [datasource]="productoData"
+          [minSearchLength]="0"
+          [maxChars]="4"
+          [inputClass]="'form-control'"
+          [placeholder]="'Seleccione el producto'"
+          [matchClass]="'match'"
+          [autofocus]="true"
+          [textSearching]="false">
+        </ng2-completer>
+      </div>
+</div>
+</div>
+</mz-modal-content>
+<mz-modal-footer>
+</mz-modal-footer>
+</mz-modal>

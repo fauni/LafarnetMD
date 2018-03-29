@@ -1,4 +1,28 @@
+$logo-resize: "only screen and (max-width: 650px)" !default;
+
 .contenido-principal{
     margin-top: 0px;
     padding: 0 10px;
+  }
+  //Estilos del buscador
+
+  .box{
+    position: absolute;
+    margin: 0 auto;
+    width: 300px;
+    height: 50px;
+    top: 150px;
+    right: 50px;
+    background-color: black;
+    @media #{$logo-resize} {
+      top: 160px;
+      right: calc(50% - 185px);
+      width: 100%;
+    }
+  }
+  .container-1{
+    width: 300px;
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
   }
