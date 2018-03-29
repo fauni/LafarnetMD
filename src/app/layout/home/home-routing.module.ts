@@ -10,7 +10,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'publicaciones' },
             { path: 'publicaciones', loadChildren: './publicaciones/publicaciones.module#PublicacionesModule'},
-            { path: 'detalle', loadChildren: './detalle-publicacion/detalle-publicacion.module#DetallePublicacionModule'}
+            { path: 'detalle', loadChildren: './detalle-publicacion/detalle-publicacion.module#DetallePublicacionModule'},
+            { path: 'preview', loadChildren: './image-publicacion/image-publicacion.module#ImagePublicacionModule'}
         ]
     }
 ];

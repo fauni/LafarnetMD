@@ -52,7 +52,13 @@ export class ListaPublicacionComponent implements OnInit {
   }
 
   abrirDoc(name: string) {
-    this.router.navigate(['/detalle/' + name]);
+    let extension = name.split('.')[1];
+    if(extension == 'jpg' || extension == 'png' || extension == 'JPG' || extension == 'PNG') {
+      this.router.navigate(['/preview/' + name]);
+    }else {
+      this.router.navigate(['/detalle/' + name]);
+    }
+    //this.router.navigate(['/detalle/' + name]);
   }
   /*
   onLoadPublications(): void {
