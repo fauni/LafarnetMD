@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Globals } from '../../../../globals';
 import {Proveedor} from '../../../proveedor';
-import {Producto} from '../../../producto';
+import {DetalleIngreso} from '../../../detalle_ingreso';
 import {CompleterService, CompleterData} from 'ng2-completer';
 import { CompleterItem } from 'ng2-completer/components/completer-item';
 import { Completer } from 'readline';
+import { Producto } from '../../productos/productos';
 @Component({
   selector: 'app-addingresos',
   templateUrl: './addingresos.component.html',
@@ -17,9 +18,13 @@ export class AddingresosComponent implements OnInit {
   private dataService: CompleterData;
  public proveedores: Array <Proveedor>;
  public productos: Array <Producto>;
+ public detalle: DetalleIngreso;
+ public detallesIngreso: Array <DetalleIngreso>;
+ public detalles: any[]= [];
+ public itemdetalle: number;
  // private completerService: CompleterService;
- private proveedorData: CompleterData;
- private productoData: CompleterData;
+ public proveedorData: CompleterData;
+ public productoData: CompleterData;
   constructor(public global: Globals, private completerService: CompleterService, private completerService2: CompleterService) {
   }
   public options: Pickadate.DateOptions = {
@@ -54,6 +59,13 @@ export class AddingresosComponent implements OnInit {
  this.productoData = this.completerService.local(this.productos, 'desc_producto', 'desc_producto');
 }
 
+aadDetalle() {
+  this.itemdetalle++;
+  this.detalle.id_detin = this.itemdetalle;
+ this.detalles.push(this.detalle);
+ //console.log(this.detalles);
+  //alert('this.detallesIngreso');
+}
   onSelectProveedor(selected: CompleterItem): void {
     if (selected) {
       console.log('seleccion');

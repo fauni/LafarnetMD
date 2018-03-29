@@ -11,6 +11,6 @@ export class ProductosService {
   constructor(private http: HttpClient, private global: Globals) { }
 
   getProductos(): Observable<any> {
-    return this.http.get(this.global.urlAPISAP + 'productos');
+     return this.http.get(this.global.urlAPISAP + 'productos');
   }
 }

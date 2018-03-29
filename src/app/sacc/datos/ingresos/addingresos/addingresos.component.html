@@ -1,9 +1,10 @@
-<h3>Adicion de Ingresos</h3>
+
 <div>
     <form #formingresos = "ngForm" >
      <div>
        <mz-card>
          <mz-card-content>
+            <h3 style="text-align:center;">Adicion de Ingresos</h3>
              <div class="row"> 
             <mz-input-container class="col s12 m4">
                 <input mz-input required
@@ -39,20 +40,65 @@
               </div>
               <!--<ng2-completer [(ngModel)]="searchStr" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>-->
            </div>   
-
-           <div class="fixed-action-btn" style="top: 220px; right: 24px;">
-            <a class="btn-floating btn-large blue" (click) = "modalNuevoItem.open()">
-          <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
-            +
-          </a>
-          </div>
-
        </mz-card-content>
        </mz-card>
+       
+       <div class="contenedor-tabla">
+            <div class="fixed-action-btn" style="top: 220px; right: 24px;">
+                <a class="btn-floating btn-large blue" (click) = "modalNuevoItem.open()">
+              <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+                <i class="large mdi-content-add"></i>
+              </a>
+              </div>
+          <mz-card>
+              <mz-card-content>
+            <div class="row">
+              <table class="bordered">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th >Codigo
+                      <span></span>
+                    </th>
+                    <th >Descripcion
+                      <span></span>
+                    </th>
+                    <th >Cantidad
+                        <span></span>
+                      </th>
+                      <th >Lote
+                          <span></span>
+                      </th>
+                      <th >Fecha Vmto.
+                          <span></span>
+                      </th>
+                    <th style= "text-align:right;">Opciones
+                      <span></span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor = "let detalleing of detalles" >
+                    <td>{{detalleing.id_detin}}</td>
+                    <td>{{detalleing.id_producto}}</td>
+                    <td>descripcion</td>
+                    <td>{{detalleing.cantidad}}</td>
+                    <td>{{detalleing.lote }}</td>
+                    <td>{{detalleing.fecha_vencimiento}}</td>
+                    <td style="text-align:right;">
+                      <a mz-button id="btn-dropdown" href="javascript:void(0)"><i class="mdi-navigation-more-vert"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> 
+          </mz-card-content>
+          </mz-card>    
+      </div>
        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large green">
       <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
-        <i class="large mdi-editor-mode-edit"></i>
+        <i class="large mdi-action-done"></i>
       </a>
       </div>
    </div>
@@ -65,17 +111,22 @@
     <mz-modal-content>
 <div>
   <div class="row">
-    <mz-input-container class="col s12 m6">
-      <input mz-input required
-      id="id_producto"
-      name="id_producto"
-      type="text"
-      length="80"
-      width="80"
-      [label]="'Producto'"
-      >
-      </mz-input-container>
-      <mz-input-container class="col s12 m6">
+      <div style="padding: 10px 10px" class="col s12 m8">
+          <ng2-completer 
+            (selected)="onSelectProducto($event)"    
+            [datasource]="productoData"
+            [minSearchLength]="0"
+            [maxChars]="4"
+            [inputClass]="'form-control'"
+            [placeholder]="'Seleccione el producto'"
+            [matchClass]="'match'"
+            [autofocus]="true"
+            [textSearching]="false"
+            [(ngModel)] = "detalle.id_producto">
+            
+          </ng2-completer>
+        </div>
+      <mz-input-container class="col s12 m4">
       <input mz-input required
       id="cantidad"
       name="cantidad"
@@ -83,11 +134,12 @@
       length="80"
       width="80"
       [label]="'Cantidad'"
+      [(ngModel)] = "detalle.cantidad">
       >
     </mz-input-container>
 </div>
 <div class="row">
-  <mz-input-container  class="col s12 m6">
+  <mz-input-container  class="col s12 m8">
       <input mz-input required
       id="lote"
       name="lote"
@@ -95,32 +147,35 @@
       length="80"
       width="80"
       [label]="'Lote'"
+      [(ngModel)] = "detalle.lote"
       >
   </mz-input-container>
-  <mz-datepicker-container class="col s12 m6">
+  <mz-datepicker-container class="col s12 m4">
       <input mz-datepicker
         [label]="'Fecha de vencimiento'"
         [options]="options"
         id="fecha_vmto"
         placeholder="Elija la fecha de Vencimiento"
-        type="text">
+        type="text"
+        [(ngModel)] = "detalle.fecha_vencimiento"
+        >
     </mz-datepicker-container>
-    <div style="padding: 10px 10px" class="col s12 m4">
-        <ng2-completer 
-          (selected)="onSelectProducto($event)"    
-          [datasource]="productoData"
-          [minSearchLength]="0"
-          [maxChars]="4"
-          [inputClass]="'form-control'"
-          [placeholder]="'Seleccione el producto'"
-          [matchClass]="'match'"
-          [autofocus]="true"
-          [textSearching]="false">
-        </ng2-completer>
-      </div>
+    
 </div>
 </div>
 </mz-modal-content>
 <mz-modal-footer>
+    <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+        <a class="btn-floating btn-large green" (click) = "aadDetalle($event)" mz-modal-close>
+      <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+        <i class="large mdi-action-done"></i>
+      </a>
+      </div>
+      <div class="fixed-action-btn" style="bottom: 20px; right: 100px;">
+          <a class="btn-floating btn-large red" mz-modal-close >
+        <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+          <i class="large mdi-content-undo"></i>
+        </a>
+        </div>
 </mz-modal-footer>
 </mz-modal>

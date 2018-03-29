@@ -1,17 +1,19 @@
 <h3>Listado de Ingresos</h3>
 <div id="preview" class="header-content valign-wrapper lafar-light">
  <!-- <img class="image-user circle" src="assets/images/userlafar.png">-->
- <div class="box">
-  <div class="container-1">
-      <span class="icon"><i class="mdi-action-search"></i></span>
-      <input type="search" id="search" name="search" placeholder="Buscar Ingresos..." [(ngModel)]="filter"/>
+  <div class="box">
+    <div class="container-1">
+        <span class="icon"><i class="mdi-action-search"></i></span>
+        <input type="search" id="search" name="search" placeholder="Buscar Ingresos..." [(ngModel)]="filter"/>
+    </div>
   </div>
-</div>
- <div class="nombre-user">INGRESOS </div>
+ <div class="nombre-user"><p>&nbsp;</p></div>
 
 </div>
 <br>
 <div class="contenido-principal">
+  <mz-card>
+    <mz-card-content>
   <div class="row">
     <table class="bordered">
       <thead>
@@ -48,8 +50,10 @@
       </tbody>
     </table>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  </div>     
-</div>
+  </div> 
+</mz-card-content>
+</mz-card>    
+</div><!--contenido principal-->
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
   <a class="btn-floating btn-large red" [routerLink]="['/sacc/datos/ingresos/add']" >
 <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->

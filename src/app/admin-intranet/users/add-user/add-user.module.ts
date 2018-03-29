@@ -17,7 +17,7 @@ import {
   MzSelectModule
 } from 'ng2-materialize';
 
-import { Ng2CompleterModule } from "ng2-completer";
+import { Ng2CompleterModule } from 'ng2-completer';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 @NgModule({
   imports: [
