@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: ProductosComponent,
         children: [
-            { path: '', redirectTo: 'add' },
+            { path: '', redirectTo: 'list' },
             { path: 'add', loadChildren: './addproductos/addproductos.module#AddproductosModule' },
             { path: 'list', loadChildren: './listproductos/listproductos.module#ListproductosModule' }
         ]

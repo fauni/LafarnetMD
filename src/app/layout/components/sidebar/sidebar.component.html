@@ -41,19 +41,19 @@
 
       <mz-sidenav-subheader>Help Desk</mz-sidenav-subheader>
       <mz-sidenav-link>
-        <a href="{{global.urlIntranet}}sisform" target="_blank"><i mz-icon-mdi [icon]="'laptop'" class="blue-text"></i>Sistemas</a>
+        <a href="{{global.urlIntranet}}sisform" target="_blank"><i mz-icon-mdi [icon]="'laptop'" class="blue-text"></i>Soporte de Sistemas</a>
       </mz-sidenav-link>
       
       <mz-sidenav-subheader>Mi Perfil</mz-sidenav-subheader>
       <mz-sidenav-link>
         <a [routerLink]="['/micuenta']"><i mz-icon-mdi [icon]="'account-circle'" class="blue-text"></i>Mi Cuenta</a>
       </mz-sidenav-link>
-      <mz-sidenav-link>
+      <!--<mz-sidenav-link>
         <a><i mz-icon-mdi [icon]="'settings'" class="blue-text"></i>Ajustes</a>
       </mz-sidenav-link>
       <mz-sidenav-link>
         <a><i mz-icon-mdi [icon]="'help-circle'" class="blue-text"></i>Ayuda</a>
-      </mz-sidenav-link>
+      </mz-sidenav-link>-->
       <mz-sidenav-link>
         <a [routerLink]="['/login']" (click)="onLoggedout()">
           <i mz-icon-mdi [icon]="'logout'" class="blue-text"></i>Cerrar Sesión

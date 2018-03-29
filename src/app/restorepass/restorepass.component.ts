@@ -21,7 +21,7 @@ export class RestorePassComponent implements OnInit {
     email_address: string;
     datos: any;
     user: Users;
-    username: String;
+    username: string;
     password: String;
     confirmPassword: String;
 
@@ -56,7 +56,7 @@ export class RestorePassComponent implements OnInit {
         this.route.params
             .subscribe(params => {
                 this.username = params['id'].toString();
-                this.onLoadUser(this.username);
+                this.onLoadUser(atob(this.username));
             });
     }
 
