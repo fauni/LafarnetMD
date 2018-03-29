@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Ingresos} from '../ingresos';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Globals } from '../../../../globals';
+import { IngresosService } from '../ingresos.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -16,7 +18,7 @@ export class ListingresosComponent implements OnInit {
    // Ordenacion
    key: string = 'nombre';
    reverse: boolean = false;
-  constructor(public global: Globals) { }
+  constructor(public global: Globals, private servIngresos: IngresosService) { }
 
   public options: Pickadate.DateOptions = {
     format: 'dd/mm/yyyy',
@@ -30,16 +32,33 @@ export class ListingresosComponent implements OnInit {
     this.onLoadIngresos();
   }
   onLoadIngresos() {
-this.ingresos = [{id_ingreso: 1, codigo: 'ING0001', fecha: '10/10/2017', glosa: ' ', id_proveedor: 1},
-{id_ingreso: 2, codigo: 'ING0002', fecha: '11/10/2017', glosa: ' ', id_proveedor: 2},
-{id_ingreso: 3, codigo: 'ING0003', fecha: '12/10/2017', glosa: ' ', id_proveedor: 1},
-{id_ingreso: 4, codigo: 'ING0004', fecha: '01/01/2018', glosa: ' ', id_proveedor: 3}
-];
+    this.ingreso = new Ingresos();
+      this.servIngresos.getIngresos().subscribe(
+      data => {
+        this.ingresos = data.body;
+        //this.areas = data.body;
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
   }
+
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
   }
 
   p: number = 1;
+
+
+  
 }
