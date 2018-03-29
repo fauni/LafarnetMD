@@ -5,6 +5,7 @@ import { AddingresosComponent } from './addingresos.component';
 import { MzModalModule, MzButtonModule, MzInputModule, MzCardModule, MzDatepickerModule, MzSelectModule } from 'ng2-materialize';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { FormsModule } from '@angular/forms';
+import { ProductosService } from '../../productos/productos.service';
 @NgModule({
     imports: [
         CommonModule,
@@ -18,6 +19,8 @@ import { FormsModule } from '@angular/forms';
         MzSelectModule,
         Ng2CompleterModule
     ],
-    declarations: [AddingresosComponent]
+    declarations: [AddingresosComponent],
+    providers: [ProductosService]
+
 })
 export class AddingresosModule {}

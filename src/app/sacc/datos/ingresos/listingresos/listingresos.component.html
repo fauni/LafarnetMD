@@ -1,16 +1,18 @@
-<h3>Listado de Ingresos</h3>
+<mz-parallax class="header-background" [height]="170">
+    <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+  
 <div id="preview" class="header-content valign-wrapper lafar-light">
- <!-- <img class="image-user circle" src="assets/images/userlafar.png">-->
-  <div class="box">
-    <div class="container-1">
-        <span class="icon"><i class="mdi-action-search"></i></span>
-        <input type="search" id="search" name="search" placeholder="Buscar Ingresos..." [(ngModel)]="filter"/>
-    </div>
-  </div>
- <div class="nombre-user"><p>&nbsp;</p></div>
+    <img class="image-user circle" src="assets/images/userlafar.png">
+    <div class="nombre-user">INGRESOS</div>
 
+    <div class="box">
+        <div class="container-1">
+            <span class="icon"><i class="mdi-action-search"></i></span>
+            <input type="search" id="search" name="search" placeholder="Buscar Ingresos..." [(ngModel)]="filter"/>
+        </div>
+    </div>
 </div>
-<br>
 <div class="contenido-principal">
   <mz-card>
     <mz-card-content>

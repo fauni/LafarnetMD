@@ -1,8 +1,14 @@
 export class Productos {
-    public ItemCode: string;
+    public Cod_Producto: string;
     public ItemName: string;
-    public U_Presentacion: string;
+    public Nombre_Producto: string;
+    public Presentacion: string;
+    public Principio_Activo: string;
     public Forma_Farmaceutica: string;
+    public Concentracion: string;
+    public Reg_Sanitario: string;
+    public Peso_Nominal: string;
+    public Tipo_Productos: string;
 }
 
 export class Producto {

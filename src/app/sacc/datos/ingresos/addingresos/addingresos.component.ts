@@ -7,6 +7,8 @@ import {CompleterService, CompleterData} from 'ng2-completer';
 import { CompleterItem } from 'ng2-completer/components/completer-item';
 import { Completer } from 'readline';
 import { Producto } from '../../productos/productos';
+import { ProductosService } from '../../productos/productos.service';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-addingresos',
   templateUrl: './addingresos.component.html',
@@ -21,11 +23,12 @@ export class AddingresosComponent implements OnInit {
  public detalle: DetalleIngreso;
  public detallesIngreso: Array <DetalleIngreso>;
  public detalles: any[]= [];
- public itemdetalle: number;
+ public itemdetalle: number = 0;
  // private completerService: CompleterService;
  public proveedorData: CompleterData;
  public productoData: CompleterData;
-  constructor(public global: Globals, private completerService: CompleterService, private completerService2: CompleterService) {
+  constructor(public global: Globals, private servProductos: ProductosService,
+              private completerService: CompleterService, private completerService2: CompleterService) {
   }
   public options: Pickadate.DateOptions = {
     format: 'dd/mm/yyyy',
@@ -49,19 +52,33 @@ export class AddingresosComponent implements OnInit {
   this.proveedorData = this.completerService.local(this.proveedores, 'desc_proveedor', 'desc_proveedor');
   }
   onLoadProductos() {
-  this.productos = [
-  {id_producto: 1, cod_producto: '110100', desc_producto: 'ACETANILIDA', presentacion: 'POLVO', principio_activo: '', forma_farmaceutica: '', concentracion: '', reg_sanitario: '', peso_nominal: 0.0, id_tipo_producto: 2},
-  {id_producto: 2, cod_producto: '110101', desc_producto: 'ACETAMINOFENO', presentacion: 'POLVO', principio_activo: '', forma_farmaceutica: '', concentracion: '', reg_sanitario: '', peso_nominal: 0.0, id_tipo_producto: 2},
-  {id_producto: 3, cod_producto: '110102', desc_producto: 'ACETATO DE DL-ALFATOCOFEROL', presentacion: 'POLVO', principio_activo: '', forma_farmaceutica: '', concentracion: '', reg_sanitario: '', peso_nominal: 0.0, id_tipo_producto: 2},
-  {id_producto: 4, cod_producto: '110103', desc_producto: 'AEROSIL 200', presentacion: 'POLVO', principio_activo: '', forma_farmaceutica: '', concentracion: '', reg_sanitario: '', peso_nominal: 0.0, id_tipo_producto: 2},
-  {id_producto: 5, cod_producto: '110104', desc_producto: 'ALFAMETILDOPA (METILDOPA)', presentacion: 'POLVO', principio_activo: '', forma_farmaceutica: '', concentracion: '', reg_sanitario: '', peso_nominal: 0.0, id_tipo_producto: 2},
-  {id_producto: 6, cod_producto: '110105', desc_producto: 'AMPICILINA TRIHIDRATO COMPACTADA', presentacion: 'POLVO', principio_activo: '', forma_farmaceutica: '', concentracion: '', reg_sanitario: '', peso_nominal: 0.0, id_tipo_producto: 2}];
- this.productoData = this.completerService.local(this.productos, 'desc_producto', 'desc_producto');
-}
-
+    // this.ingreso = new Ingresos();
+      this.servProductos.getProductos().subscribe(
+      data => {
+        this.productos  = data.body;
+        this.productoData = this.completerService.local(this.productos, 'Nombre_Producto', 'Nombre_Producto');
+        //this.areas = data.body;
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+  
 aadDetalle() {
-  this.itemdetalle++;
-  this.detalle.id_detin = this.itemdetalle;
+ this.itemdetalle++;
+ alert(this.itemdetalle++);
+ this.detalle = new DetalleIngreso();
+ this.detalle.id_detin = this.itemdetalle;
+ this.detalle = { id_detin: 0, id_ingreso: 1, id_producto: 2, cantidad: 1, lote: 'string', fecha_vencimiento: 'string'};
  this.detalles.push(this.detalle);
  //console.log(this.detalles);
   //alert('this.detallesIngreso');

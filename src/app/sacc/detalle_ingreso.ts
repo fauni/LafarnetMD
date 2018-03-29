@@ -1,8 +1,8 @@
 export class DetalleIngreso {
- id_detin: number;
- id_ingreso: number;
- id_producto: number;
- cantidad: number;
- lote: string;
- fecha_vencimiento: string;
+ public id_detin: number;
+ public id_ingreso: number;
+ public id_producto: number;
+ public cantidad: number;
+ public lote: string;
+ public fecha_vencimiento: string;
 }
