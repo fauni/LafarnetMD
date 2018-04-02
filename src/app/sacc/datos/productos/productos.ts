@@ -9,6 +9,11 @@ export class Productos {
     public Reg_Sanitario: string;
     public Peso_Nominal: string;
     public Tipo_Productos: string;
+
+    public usuario_creacion: string;
+    public fecha_creacion: string;
+    public usuario_modificacion: string;
+    public fecha_modificacion: string;
 }
 
 export class Producto {
