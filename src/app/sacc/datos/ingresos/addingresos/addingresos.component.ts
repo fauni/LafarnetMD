@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Globals } from '../../../../globals';
-import {Proveedor} from '../../../proveedor';
 import {DetalleIngreso} from '../../../detalle_ingreso';
 import {CompleterService, CompleterData} from 'ng2-completer';
 import { CompleterItem } from 'ng2-completer/components/completer-item';
 import { Completer } from 'readline';
 import { Producto } from '../../productos/productos';
 import { ProductosService } from '../../productos/productos.service';
+import { Proveedor } from '../../proveedor/proveedor';
+import { ProveedoresService} from '../../proveedor/proveedor.service';
 import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-addingresos',
@@ -33,7 +34,9 @@ export class AddingresosComponent implements OnInit {
  public proveedorData: CompleterData;
  public productoData: CompleterData;
   constructor(public global: Globals, private servProductos: ProductosService,
-              private completerService: CompleterService, private completerService2: CompleterService) {
+              private completerService: CompleterService,
+              private completerService2: CompleterService,
+              private servProveedor: ProveedoresService) {
       this.itemdetalle = 0;
   }
   public options: Pickadate.DateOptions = {
@@ -49,13 +52,29 @@ export class AddingresosComponent implements OnInit {
     this.onLoadProveedores();
   }
   onLoadProveedores() {
-    this.proveedores = [{id_proveedor: 1, cod_proveedor: 'PRV001', desc_proveedor: 'MUESTRA'},
-                        {id_proveedor: 2, cod_proveedor: 'PRV002', desc_proveedor: 'MARSING'},
-                        {id_proveedor: 3, cod_proveedor: 'PRV003', desc_proveedor: 'MAPRIAL S.R.L.'},
-                        {id_proveedor: 4, cod_proveedor: 'PRV004', desc_proveedor: 'COMSA S.A'},
-                        {id_proveedor: 5, cod_proveedor: 'PRV005', desc_proveedor: 'ALPHAR CHEMO CO. LIMITED'},
-                        {id_proveedor: 6, cod_proveedor: 'PRV006', desc_proveedor: 'PAL-HARMONY'} ];
-  this.proveedorData = this.completerService.local(this.proveedores, 'desc_proveedor', 'desc_proveedor');
+   /* this.proveedores = [{Cod_Proveedor: 'PRV001', Nombre_Proveedor: 'PRV001', Tipo: 'MUESTRA'},
+                        {Cod_Proveedor: 'PRV002', Nombre_Proveedor: 'PRV002', Tipo: 'MARSING'},
+                        {Cod_Proveedor: 'PRV003', Nombre_Proveedor: 'PRV003', Tipo: 'MAPRIAL S.R.L.'},
+                        {Cod_Proveedor: 'PRV004', Nombre_Proveedor: 'PRV004', Tipo: 'COMSA S.A'},
+                        {Cod_Proveedor: 'PRV005', Nombre_Proveedor: 'PRV005', Tipo: 'ALPHAR CHEMO CO. LIMITED'},
+                        {Cod_Proveedor: 'PRV006', Nombre_Proveedor: 'PRV006', Tipo: 'PAL-HARMONY'} ];*/
+  this.servProveedor.getProveedores().subscribe(
+    data => {
+      this.proveedores = data.body;
+      this.proveedorData = this.completerService.local(this.proveedores, 'Nombre_Proveedor', 'Nombre_Proveedor');
+     console.log(data);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        // A client-side or network error occurred. Handle it accordingly.
+        console.log('Ocurrio un error:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+      }
+    }
+    );
   }
   onLoadProductos() {
     // this.ingreso = new Ingresos();

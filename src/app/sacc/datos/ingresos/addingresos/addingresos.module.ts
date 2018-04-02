@@ -12,6 +12,7 @@ import { MzModalModule,
 import { Ng2CompleterModule } from 'ng2-completer';
 import { FormsModule } from '@angular/forms';
 import { ProductosService } from '../../productos/productos.service';
+import { ProveedoresService } from '../../proveedor/proveedor.service';
 @NgModule({
     imports: [
         CommonModule,
@@ -27,7 +28,7 @@ import { ProductosService } from '../../productos/productos.service';
         MzParallaxModule
     ],
     declarations: [AddingresosComponent],
-    providers: [ProductosService]
+    providers: [ProductosService, ProveedoresService]
 
 })
 export class AddingresosModule {}
