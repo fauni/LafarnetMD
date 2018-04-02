@@ -13,4 +13,8 @@ export class IngresosService {
   getIngresos(): Observable<any> {
     return this.http.get(this.global.urlAPI + 'saccingresos/get');
   }
+
+  setIngresos(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'saccingresos/save', data);
+  }
 }
