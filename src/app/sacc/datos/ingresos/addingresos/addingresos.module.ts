@@ -2,7 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddingresosRoutingModule } from './addingresos-routing.module';
 import { AddingresosComponent } from './addingresos.component';
-import { MzModalModule, MzButtonModule, MzInputModule, MzCardModule, MzDatepickerModule, MzSelectModule } from 'ng2-materialize';
+import { MzModalModule,
+    MzButtonModule,
+    MzInputModule,
+    MzCardModule,
+    MzDatepickerModule,
+    MzSelectModule,
+    MzParallaxModule } from 'ng2-materialize';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { FormsModule } from '@angular/forms';
 import { ProductosService } from '../../productos/productos.service';
@@ -17,7 +23,8 @@ import { ProductosService } from '../../productos/productos.service';
         MzCardModule,
         MzDatepickerModule,
         MzSelectModule,
-        Ng2CompleterModule
+        Ng2CompleterModule,
+        MzParallaxModule
     ],
     declarations: [AddingresosComponent],
     providers: [ProductosService]

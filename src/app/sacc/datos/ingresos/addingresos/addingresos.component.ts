@@ -23,12 +23,18 @@ export class AddingresosComponent implements OnInit {
  public detalle: DetalleIngreso;
  public detallesIngreso: Array <DetalleIngreso>;
  public detalles: any[]= [];
- public itemdetalle: number = 0;
+ // detalle de ingreso
+ public itemdetalle: number;
+ public cantdet: number;
+ public descprod: string;
+ public loteprod: string;
+ public fechavenprod: string;
  // private completerService: CompleterService;
  public proveedorData: CompleterData;
  public productoData: CompleterData;
   constructor(public global: Globals, private servProductos: ProductosService,
               private completerService: CompleterService, private completerService2: CompleterService) {
+      this.itemdetalle = 0;
   }
   public options: Pickadate.DateOptions = {
     format: 'dd/mm/yyyy',
@@ -72,13 +78,16 @@ export class AddingresosComponent implements OnInit {
       }
     );
   }
-  
 aadDetalle() {
  this.itemdetalle++;
- alert(this.itemdetalle++);
+ alert(this.itemdetalle);
  this.detalle = new DetalleIngreso();
  this.detalle.id_detin = this.itemdetalle;
- this.detalle = { id_detin: 0, id_ingreso: 1, id_producto: 2, cantidad: 1, lote: 'string', fecha_vencimiento: 'string'};
+ this.detalle.cantidad = this.cantdet;
+ this.detalle.lote = this.loteprod;
+ this.detalle.fecha_vencimiento = this.fechavenprod;
+ this.detalle.producto = this.descprod;
+ //this.detalle = { id_detin: this.itemdetalle, id_ingreso: 1, id_producto: 2, cantidad: 1, lote: 'string', fecha_vencimiento: 'string'};
  this.detalles.push(this.detalle);
  //console.log(this.detalles);
   //alert('this.detallesIngreso');
