@@ -31,6 +31,7 @@
                           length="80"
                           width="80"
                           [label]="'Codigo de Ingreso'"
+                          [(ngModel)]="codingreso"
                           >
                       </mz-input-container>
                      
@@ -39,8 +40,8 @@
                             [label]="'Fecha de Ingreso'"
                             [options]="options"
                             id="fecha_ingreso"
-                          
-                            type="text">
+                            type="text"
+                            [(ngModel)]= "fechaingreso" >
                         </mz-datepicker-container>
                         <div style="padding: 10px 10px" class="col s12 m4">
                           <ng2-completer 
@@ -52,7 +53,8 @@
                             [placeholder]="'Seleccione el proveedor'"
                             [matchClass]="'match'"
                             [autofocus]="true"
-                            [textSearching]="false">
+                            [textSearching]="false"
+                            [(ngModel)]="descproveedor">
                           </ng2-completer>
                         </div>
                         <!--<ng2-completer [(ngModel)]="searchStr" [dataService]="dataService" [minSearchLength]="0"></ng2-completer>-->
@@ -97,12 +99,23 @@
                 </tbody>
               </table>
             </div> 
+            <hr>
+            <div class="row">
+                <mz-textarea-container class="col s12 m12">
+                    
+                    <textarea mz-textarea
+                      [label]="'Glosa'"
+                      id="glosa"
+                      length="250"
+                      [(ngModel)]="glosaingreso"></textarea>
+                  </mz-textarea-container>
+            </div>
           </mz-card-content>
           </mz-card>    
       </div>
     </div> 
       <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a class="btn-floating btn-large green">
+        <a class="btn-floating btn-large green" (click)= "guardaIngreso()">
       <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
         <i class="large mdi-action-done"></i>
       </a>

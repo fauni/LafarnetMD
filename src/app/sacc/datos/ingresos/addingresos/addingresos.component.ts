@@ -8,8 +8,11 @@ import { Completer } from 'readline';
 import { Producto } from '../../productos/productos';
 import { ProductosService } from '../../productos/productos.service';
 import { Proveedor } from '../../proveedor/proveedor';
-import { ProveedoresService} from '../../proveedor/proveedor.service';
+import { ProveedoresService } from '../../proveedor/proveedor.service';
+import { Ingresos } from '../../ingresos/ingresos';
+import { IngresosService } from '../../ingresos/ingresos.service';
 import { HttpErrorResponse } from '@angular/common/http';
+
 @Component({
   selector: 'app-addingresos',
   templateUrl: './addingresos.component.html',
@@ -24,19 +27,30 @@ export class AddingresosComponent implements OnInit {
  public detalle: DetalleIngreso;
  public detallesIngreso: Array <DetalleIngreso>;
  public detalles: any[]= [];
+ public ingresocabecera: Ingresos;
+ //cabecera ingreso
+ public codingreso: string;
+ public fechaingreso: string;
+ public idproveedor: string;
+ public descproveedor: string;
+ public glosaingreso: string;
  // detalle de ingreso
  public itemdetalle: number;
  public cantdet: number;
  public descprod: string;
  public loteprod: string;
  public fechavenprod: string;
+ //otros
+ //public respuestaaddingreso: any;
  // private completerService: CompleterService;
  public proveedorData: CompleterData;
  public productoData: CompleterData;
   constructor(public global: Globals, private servProductos: ProductosService,
               private completerService: CompleterService,
               private completerService2: CompleterService,
-              private servProveedor: ProveedoresService) {
+              private servProveedor: ProveedoresService,
+              private servIngreso: IngresosService,
+              private router: Router) {
       this.itemdetalle = 0;
   }
   public options: Pickadate.DateOptions = {
@@ -108,8 +122,51 @@ aadDetalle() {
  this.detalle.producto = this.descprod;
  //this.detalle = { id_detin: this.itemdetalle, id_ingreso: 1, id_producto: 2, cantidad: 1, lote: 'string', fecha_vencimiento: 'string'};
  this.detalles.push(this.detalle);
- //console.log(this.detalles);
-  //alert('this.detallesIngreso');
+this.cantdet = 0;
+this.loteprod = '';
+this.fechavenprod = '';
+this.descprod = '';
+}
+guardaIngreso() {
+    this.idproveedor = this.getIdprovPorNombre(this.descproveedor);
+    // alert (this.codingreso + '-' + this.fechaingreso + '-' + this.idproveedor + '-' + this.glosaingreso);
+    this.ingresocabecera = new Ingresos();
+    this.ingresocabecera.codigo = this.codingreso;
+    this.ingresocabecera.fecha = this.fechaingreso;
+    this.ingresocabecera.id_proveedor = this.idproveedor;
+    this.ingresocabecera.usuario_creacion = localStorage.getItem('username');
+    this.ingresocabecera.fecha_creacion = '2018-04-01';
+    this.ingresocabecera.usuario_modificacion = localStorage.getItem('username');
+    this.ingresocabecera.fecha_modificacion = '2018-04-01';
+    this.ingresocabecera.glosa = this.glosaingreso;
+    //console.log(this.ingresocabecera);
+    this.servIngreso.setIngresos(this.ingresocabecera).subscribe(
+      data => {
+      console.log(data);
+      
+      this.router.navigate(['/sacc/datos/ingresos/list']);
+      //this.router.navigate(['/home']);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+      );
+
+}
+
+getIdprovPorNombre(proveedor: string) {
+  let nombre: string = '';
+  this.proveedores.forEach(element => {
+  if ( proveedor == element.Nombre_Proveedor)
+  {
+      nombre = element.Cod_Proveedor;
+  }
+});
+ return nombre;
 }
   onSelectProveedor(selected: CompleterItem): void {
     if (selected) {

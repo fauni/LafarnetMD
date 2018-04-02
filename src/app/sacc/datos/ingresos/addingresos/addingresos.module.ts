@@ -8,11 +8,16 @@ import { MzModalModule,
     MzCardModule,
     MzDatepickerModule,
     MzSelectModule,
-    MzParallaxModule } from 'ng2-materialize';
+    MzParallaxModule,
+    MzTextareaModule, 
+    MzToastModule,
+    MzToastService} from 'ng2-materialize';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { FormsModule } from '@angular/forms';
 import { ProductosService } from '../../productos/productos.service';
 import { ProveedoresService } from '../../proveedor/proveedor.service';
+import { IngresosService} from '../../ingresos/ingresos.service';
+import { Ingresos } from '../ingresos';
 @NgModule({
     imports: [
         CommonModule,
@@ -25,10 +30,12 @@ import { ProveedoresService } from '../../proveedor/proveedor.service';
         MzDatepickerModule,
         MzSelectModule,
         Ng2CompleterModule,
-        MzParallaxModule
+        MzParallaxModule,
+        MzTextareaModule,
+        MzToastModule
     ],
     declarations: [AddingresosComponent],
-    providers: [ProductosService, ProveedoresService]
+    providers: [ProductosService, ProveedoresService, IngresosService]
 
 })
 export class AddingresosModule {}
