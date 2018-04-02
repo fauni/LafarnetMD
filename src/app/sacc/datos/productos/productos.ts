@@ -27,4 +27,4 @@ export class Producto {
     reg_sanitario: string;
     peso_nominal: number;
     id_tipo_producto: number;
-    }
+}
