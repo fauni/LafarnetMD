@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: ProveedorComponent,
         children: [
-            { path: '', redirectTo: 'add' },
+            { path: '', redirectTo: 'list' },
             { path: 'add', loadChildren: './addproveedor/addproveedor.module#AddproveedorModule' },
             { path: 'list', loadChildren: './listproveedor/listproveedor.module#ListproveedorModule' }
         ]
