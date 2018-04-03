@@ -9,7 +9,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'list' },
             { path: 'list' , loadChildren: './listingresos/listingresos.module#ListingresosModule'},
-            { path: 'add' , loadChildren: './addingresos/addingresos.module#AddingresosModule'}
+            { path: 'add' , loadChildren: './addingresos/addingresos.module#AddingresosModule'},
+            { path: 'ver', loadChildren: './veringreso/veringreso.module#VeringresosModule'}
         ]
     }
 ];
