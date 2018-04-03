@@ -9,7 +9,7 @@ import { MzModalModule,
     MzDatepickerModule,
     MzSelectModule,
     MzParallaxModule,
-    MzTextareaModule, 
+    MzTextareaModule,
     MzToastModule,
     MzToastService} from 'ng2-materialize';
 import { Ng2CompleterModule } from 'ng2-completer';

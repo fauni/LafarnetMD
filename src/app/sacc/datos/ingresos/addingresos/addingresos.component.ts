@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Globals } from '../../../../globals';
-import {DetalleIngreso} from '../../../detalle_ingreso';
+import {DetalleIngreso} from '../detalle_ingreso';
 import {CompleterService, CompleterData} from 'ng2-completer';
 import { CompleterItem } from 'ng2-completer/components/completer-item';
 import { Completer } from 'readline';
@@ -28,7 +28,7 @@ export class AddingresosComponent implements OnInit {
  public detallesIngreso: Array <DetalleIngreso>;
  public detalles: any[]= [];
  public ingresocabecera: Ingresos;
- //cabecera ingreso
+ // cabecera ingreso
  public codingreso: string;
  public fechaingreso: string;
  public idproveedor: string;
@@ -40,8 +40,8 @@ export class AddingresosComponent implements OnInit {
  public descprod: string;
  public loteprod: string;
  public fechavenprod: string;
- //otros
- //public respuestaaddingreso: any;
+ // otros
+ // public respuestaaddingreso: any;
  // private completerService: CompleterService;
  public proveedorData: CompleterData;
  public productoData: CompleterData;
@@ -96,7 +96,7 @@ export class AddingresosComponent implements OnInit {
       data => {
         this.productos  = data.body;
         this.productoData = this.completerService.local(this.productos, 'Nombre_Producto', 'Nombre_Producto');
-        //this.areas = data.body;
+        // this.areas = data.body;
         console.log(data);
       },
       (err: HttpErrorResponse) => {
@@ -120,7 +120,7 @@ aadDetalle() {
  this.detalle.lote = this.loteprod;
  this.detalle.fecha_vencimiento = this.fechavenprod;
  this.detalle.producto = this.descprod;
- //this.detalle = { id_detin: this.itemdetalle, id_ingreso: 1, id_producto: 2, cantidad: 1, lote: 'string', fecha_vencimiento: 'string'};
+ // this.detalle = { id_detin: this.itemdetalle, id_ingreso: 1, id_producto: 2, cantidad: 1, lote: 'string', fecha_vencimiento: 'string'};
  this.detalles.push(this.detalle);
 this.cantdet = 0;
 this.loteprod = '';
@@ -139,13 +139,12 @@ guardaIngreso() {
     this.ingresocabecera.usuario_modificacion = localStorage.getItem('username');
     this.ingresocabecera.fecha_modificacion = '2018-04-01';
     this.ingresocabecera.glosa = this.glosaingreso;
-    //console.log(this.ingresocabecera);
+    // console.log(this.ingresocabecera);
     this.servIngreso.setIngresos(this.ingresocabecera).subscribe(
       data => {
       console.log(data);
-      
       this.router.navigate(['/sacc/datos/ingresos/list']);
-      //this.router.navigate(['/home']);
+      // this.router.navigate(['/home']);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -171,7 +170,7 @@ getIdprovPorNombre(proveedor: string) {
   onSelectProveedor(selected: CompleterItem): void {
     if (selected) {
       console.log('seleccion');
-      //alert(selected);
+      // alert(selected);
     } else {
       console.log('Vacio');
     }
@@ -179,7 +178,7 @@ getIdprovPorNombre(proveedor: string) {
   onSelectProducto(selected: CompleterItem): void {
     if (selected) {
       console.log('seleccion');
-      //alert(selected);
+      // alert(selected);
     } else {
       console.log('Vacio');
     }
