@@ -5,13 +5,14 @@ import {DetalleIngreso} from '../detalle_ingreso';
 import {CompleterService, CompleterData} from 'ng2-completer';
 import { CompleterItem } from 'ng2-completer/components/completer-item';
 import { Completer } from 'readline';
-import { Producto } from '../../productos/productos';
+import { Producto, Productos } from '../../productos/productos';
 import { ProductosService } from '../../productos/productos.service';
 import { Proveedor } from '../../proveedor/proveedor';
 import { ProveedoresService } from '../../proveedor/proveedor.service';
 import { Ingresos } from '../../ingresos/ingresos';
 import { IngresosService } from '../../ingresos/ingresos.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DetalleIngresosService } from '../detalleingresos.service';
 
 @Component({
   selector: 'app-addingresos',
@@ -19,11 +20,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./addingresos.component.scss']
 })
 export class AddingresosComponent implements OnInit {
-
   private searchStr: string;
   private dataService: CompleterData;
  public proveedores: Array <Proveedor>;
- public productos: Array <Producto>;
+ public productos: Array <Productos>;
  public detalle: DetalleIngreso;
  public detallesIngreso: Array <DetalleIngreso>;
  public detalles: any[]= [];
@@ -36,8 +36,9 @@ export class AddingresosComponent implements OnInit {
  public glosaingreso: string;
  // detalle de ingreso
  public itemdetalle: number;
- public cantdet: number;
+ public cantdet: string;
  public descprod: string;
+ public codprodd: string;
  public loteprod: string;
  public fechavenprod: string;
  // otros
@@ -50,7 +51,7 @@ export class AddingresosComponent implements OnInit {
               private completerService2: CompleterService,
               private servProveedor: ProveedoresService,
               private servIngreso: IngresosService,
-              private router: Router) {
+              private router: Router, private servDetalleIngreso: DetalleIngresosService) {
       this.itemdetalle = 0;
   }
   public options: Pickadate.DateOptions = {
@@ -97,7 +98,8 @@ export class AddingresosComponent implements OnInit {
         this.productos  = data.body;
         this.productoData = this.completerService.local(this.productos, 'Nombre_Producto', 'Nombre_Producto');
         // this.areas = data.body;
-        console.log(data);
+        console.log ('productos');
+        console.log(this.productos);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -113,16 +115,24 @@ export class AddingresosComponent implements OnInit {
   }
 aadDetalle() {
  this.itemdetalle++;
- alert(this.itemdetalle);
+ //alert(this.itemdetalle);
+ this.codprodd = this.getCodprodPorNombre(this.descprod);
  this.detalle = new DetalleIngreso();
  this.detalle.id_detin = this.itemdetalle;
  this.detalle.cantidad = this.cantdet;
  this.detalle.lote = this.loteprod;
  this.detalle.fecha_vencimiento = this.fechavenprod;
  this.detalle.producto = this.descprod;
+ this.detalle.cod_producto = this.getCodprodPorNombre(this.descprod);
+ this.detalle.cod_ingreso = this.codingreso;
+ this.detalle.usuario_creacion = localStorage.getItem('username');
+ this.detalle.fecha_creacion = '0000-00-00';
+ this.detalle.usuario_modificacion = localStorage.getItem('username');
+ this.detalle.fecha_modificacion = '0000-00-00';
  // this.detalle = { id_detin: this.itemdetalle, id_ingreso: 1, id_producto: 2, cantidad: 1, lote: 'string', fecha_vencimiento: 'string'};
  this.detalles.push(this.detalle);
-this.cantdet = 0;
+ console.log(this.detalles);
+ this.cantdet = '0';
 this.loteprod = '';
 this.fechavenprod = '';
 this.descprod = '';
@@ -143,6 +153,9 @@ guardaIngreso() {
     this.servIngreso.setIngresos(this.ingresocabecera).subscribe(
       data => {
       console.log(data);
+      this.detalles.forEach(element => {
+        this.guardaDetalleIngreso(element);
+      });
       this.router.navigate(['/sacc/datos/ingresos/list']);
       // this.router.navigate(['/home']);
       },
@@ -156,7 +169,20 @@ guardaIngreso() {
       );
 
 }
-
+  guardaDetalleIngreso(detalle: DetalleIngreso) {
+    this.servDetalleIngreso.setDetalleIngresos(detalle).subscribe(
+      data => {
+        console.log(data);
+              },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log('Ocurrio un error:', err.error.message);
+          } else {
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          }
+        }
+    ) ;
+  }
 getIdprovPorNombre(proveedor: string) {
   let nombre: string = '';
   this.proveedores.forEach(element => {
@@ -167,6 +193,18 @@ getIdprovPorNombre(proveedor: string) {
 });
  return nombre;
 }
+
+getCodprodPorNombre(producto: string) {
+  let codigo = '';
+  this.productos.forEach(element => {
+  if ( producto == element.Nombre_Producto )
+   {
+  codigo = element.Cod_Producto ;
+   }
+});
+ return codigo;
+}
+
   onSelectProveedor(selected: CompleterItem): void {
     if (selected) {
       console.log('seleccion');

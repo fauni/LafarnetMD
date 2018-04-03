@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductosService } from '../../productos/productos.service';
 import { ProveedoresService } from '../../proveedor/proveedor.service';
 import { IngresosService} from '../../ingresos/ingresos.service';
+import { DetalleIngresosService } from '../detalleingresos.service';
 import { Ingresos } from '../ingresos';
 @NgModule({
     imports: [
@@ -35,7 +36,7 @@ import { Ingresos } from '../ingresos';
         MzToastModule
     ],
     declarations: [AddingresosComponent],
-    providers: [ProductosService, ProveedoresService, IngresosService]
+    providers: [ProductosService, ProveedoresService, IngresosService, DetalleIngresosService]
 
 })
 export class AddingresosModule {}

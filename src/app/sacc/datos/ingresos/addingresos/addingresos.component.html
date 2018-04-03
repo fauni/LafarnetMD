@@ -87,10 +87,10 @@
                 <tbody>
                   <tr *ngFor = "let detalleing of detalles" >
                     <td>{{detalleing.id_detin}}</td>
-                    <td>{{detalleing.id_producto}}</td>
+                    <td>{{detalleing.cod_producto}}</td>
                     <td>{{detalleing.producto}}</td>
                     <td>{{detalleing.cantidad}}</td>
-                    <td>{{detalleing.lote }}</td>
+                    <td>{{detalleing.lote}}</td>
                     <td>{{detalleing.fecha_vencimiento}}</td>
                     <td style="text-align:right;">
                       <a mz-button id="btn-dropdown" href="javascript:void(0)"><i class="mdi-navigation-more-vert"></i></a>
@@ -109,6 +109,7 @@
                       length="250"
                       [(ngModel)]="glosaingreso"></textarea>
                   </mz-textarea-container>
+                  
             </div>
           </mz-card-content>
           </mz-card>    
@@ -121,7 +122,7 @@
       </a>
       </div>
      
-    
+      
 
 <mz-modal #modalNuevoItem [fixedFooter]="true" [bottomSheet]="false">
     <mz-modal-header>
@@ -150,13 +151,13 @@
       <input mz-input required
       id="cantidad"
       name="cantidad"
-      type="text"
+      type="number"
+      step="any"
       length="80"
       width="80"
       [label]="'Cantidad'"
       [(ngModel)] = "cantdet"
      >
-      
     </mz-input-container>
 </div>
 <div class="row">
