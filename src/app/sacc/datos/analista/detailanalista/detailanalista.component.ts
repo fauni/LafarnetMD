@@ -7,31 +7,29 @@ import { HttpErrorResponse } from '@angular/common/http/src/response';
 
 
 @Component({
-  selector: 'app-listanalista',
-  templateUrl: './listanalista.component.html',
-  styleUrls: ['./listanalista.component.scss']
+  selector: 'app-detailanalista',
+  templateUrl: './detailanalista.component.html',
+  styleUrls: ['./detailanalista.component.scss']
 })
-export class ListanalistaComponent implements OnInit {
-  analista:  Analista;
-  analistas: any;
-  filter: any;
+export class DetailanalistaComponent implements OnInit {
+  public analista: Analista;
+  public codigo: string = '';
 
-  // Ordenacion
-  key: string = 'codigo';
-  reverse: boolean = false;
-
-  constructor(public global: Globals, public servAnalistas: AnalistasService) { }
+  constructor(public global: Globals, public servAnalistas: AnalistasService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.onLoadAnalistas();
+    this.route.params.subscribe(params => {
+        this.onLoadAnalista(params['id'].toString());
+    });
   }
 
-  onLoadAnalistas() {
+  onLoadAnalista(codigo) {
     this.analista = new Analista();
-    this.servAnalistas.getAnalistas().subscribe(
+    this.servAnalistas.getAnalistaForCode(codigo).subscribe(
       data => {
-        this.analistas = data.body;
-        console.log('Analistas cargados correctamente!');
+        this.analista = data.body[0];
+        console.log('La información fue cargada correctamente!');
+        console.log(this.analista);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -46,14 +44,4 @@ export class ListanalistaComponent implements OnInit {
     );
   }
 
-  sort(key) {
-    this.key = key;
-    this.reverse = !this.reverse;
-  }
-
-  p: number = 1;
-
-  abrirDetail(cod) {
-    alert(cod);
-  }
 }

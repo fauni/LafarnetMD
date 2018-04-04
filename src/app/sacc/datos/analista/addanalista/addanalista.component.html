@@ -1,1 +1,108 @@
-<h3>Adicionando analista</h3>
+<mz-parallax class="header-background" [height]="170">
+    <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+  
+<div id="preview" class="header-content valign-wrapper lafar-light">
+    <img class="image-user circle" src="assets/images/userlafar.png">
+    <div class="nombre-user">AGREGAR ANALISTA DE CC</div>
+</div>
+
+<div class="contenido-principal">
+    <form #analistaForm = "ngForm" (submit)="onSubmit()" novalidate>
+        <mz-card>
+            <mz-card-title>
+                Información Personal
+            </mz-card-title>
+            <mz-card-content>
+                <div class="row">
+                    <div style="padding: 12px 10px" class="col l4 s12 m4">
+                        <ng2-completer 
+                            (selected)="onSelectUser($event)"    
+                            [datasource]="userData"
+                            [minSearchLength]="0"
+                            [maxChars]="10"
+                            [inputClass]="'form-control'"
+                            [placeholder]="'Seleccione el Nombre de Usuario'"
+                            [matchClass]="'match'"
+                            [autofocus]="true"
+                            [textSearching]="false">
+                        </ng2-completer>
+                    </div>
+                    <mz-input-container class="col l4 s12 m4">
+                        <input mz-input required
+                            id="first_name"
+                            name="first_name"
+                            type="text"
+                            [label]="'Nombres'"
+                            [(ngModel)]="user.first_name">
+                    </mz-input-container>
+
+                    <mz-input-container class="col l4 s12 m4">
+                        <input mz-input required
+                            id="last_name"
+                            name="last_name"
+                            type="text"
+                            [label]="'Apellidos'"
+                            [(ngModel)]="user.last_name">
+                    </mz-input-container>
+                </div>
+                <div class="row">
+                    <mz-input-container class="col s12 m3">
+                        <input mz-input required
+                            id="codigo"
+                            name="codigo"
+                            type="text"
+                            [label]="'Codigo Analista'"
+                            [(ngModel)]="analista.codigo">
+                    </mz-input-container>
+                    <mz-select-container class="col s12 m3">
+                        <select mz-select required
+                            id="grado"
+                            name="grado"
+                            [label]="'Grado'"
+                            [placeholder]="'Seleccione su Grado'"
+                            [(ngModel)]="analista.grado">
+                            <option *ngFor="let grado of grados" [ngValue]="grado.sigla">{{ grado.sigla }}</option>
+                        </select>
+                    </mz-select-container>
+                    <mz-select-container class="col s12 m6">
+                        <select mz-select required
+                            id="especialidad"
+                            name="especialidad"
+                            [label]="'Especialidad'"
+                            [placeholder]="'Seleccione su Especialidad'"
+                            [(ngModel)]="analista.especialidad">
+                            <option *ngFor="let especialidad of especialidades" [ngValue]="especialidad.descripcion">{{ especialidad.descripcion }}</option>
+                        </select>
+                    </mz-select-container>
+                </div>
+
+                <div class="row">
+                    <div class="col l6 s6 m6">
+                        <label class="btn blue">
+                        <i class="large mdi-image-camera-alt"></i>
+                        Cargar Firma
+                        <input type="file" hidden (change)="uploadImageFirma($event)" required>
+                        </label>
+                        <br>
+                        <hr>
+                        <img class="image-firma" src="{{urlImagenFirma}}">
+                    </div>
+                </div>
+            </mz-card-content>
+        </mz-card>
+
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <button mz-button 
+                [float]="true" 
+                [large]="true" 
+                [disabled]="!analistaForm.valid" 
+                class="green" 
+                type="submit">
+                <i class="large mdi-action-done"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<simple-notifications></simple-notifications>

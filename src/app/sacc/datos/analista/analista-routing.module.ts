@@ -9,7 +9,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'list' },
             { path: 'list', loadChildren: './listanalista/listanalista.module#ListanalistaModule' },
-            { path: 'add' , loadChildren: './addanalista/addanalista.module#AddanalistaModule'}
+            { path: 'add' , loadChildren: './addanalista/addanalista.module#AddanalistaModule'},
+            { path: 'detail/:id' , loadChildren: './detailanalista/detailanalista.module#DetailanalistaModule'}
         ]
     }
 ];
