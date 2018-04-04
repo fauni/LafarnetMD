@@ -1,5 +1,5 @@
 export class DetalleIngreso {
- public id_detin: number;
+ public id_detalle_ingreso: number;
  public cod_ingreso: string;
  public cod_producto: string;
  public cantidad: string;

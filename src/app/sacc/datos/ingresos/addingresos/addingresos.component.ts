@@ -118,7 +118,7 @@ aadDetalle() {
  // alert(this.itemdetalle);
  this.codprodd = this.getCodprodPorNombre(this.descprod);
  this.detalle = new DetalleIngreso();
- this.detalle.id_detin = this.itemdetalle;
+ this.detalle.id_detalle_ingreso = this.itemdetalle;
  this.detalle.cantidad = this.cantdet;
  this.detalle.lote = this.loteprod;
  this.detalle.fecha_vencimiento = this.fechavenprod;

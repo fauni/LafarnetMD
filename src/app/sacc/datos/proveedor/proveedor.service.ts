@@ -13,4 +13,7 @@ export class ProveedoresService {
   getProveedores(): Observable<any> {
      return this.http.get(this.global.urlAPISAP + 'proveedores');
   }
+  getProveedor(codp): Observable<any> {
+    return this.http.get(this.global.urlAPISAP + 'proveedores/' + codp);
+ }
 }

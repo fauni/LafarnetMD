@@ -51,7 +51,12 @@ export class ListingresosComponent implements OnInit {
       }
     );
   }
-
+  cambiaFormatofecha(fecha: string) {
+    const res = fecha.split('-');
+    const fechasal = res[2] + '/' + res[1] + '/' + res[0];
+    //console.log (fechasal);
+    return fechasal;
+  }
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;

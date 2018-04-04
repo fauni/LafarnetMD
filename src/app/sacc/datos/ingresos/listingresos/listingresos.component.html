@@ -27,26 +27,18 @@
           <th (click)="sort('fecha')">Fecha
             <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
           </th>
-          <th style= "text-align:right;">Opciones
-            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='estado'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+          <th style= "text-align:right;">
+            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='opciones'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
           </th>
+          
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let ingreso of ingresos | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
           <td>{{ingreso.id_ingreso}}</td>
           <td>{{ingreso.codigo}}</td>
-          <td>{{ingreso.fecha}}</td>
-          <td style="text-align:right;">
-            <a [flat]="true" mz-button id="btn-dropdown-basic{{ingreso.id_ingreso}}" href="javascript:void(0)"><i class="mdi-navigation-more-vert"></i></a>
-            <mz-dropdown
-              [id]="'dropdown-basic'"
-              [dropdownButtonId]="'btn-dropdown-basic' + ingreso.id_ingreso"
-            >
-              <mz-dropdown-item><a [routerLink]="['/sacc/datos/ingresos/ver',ingreso.codigo]" >Ver</a></mz-dropdown-item>
-              <mz-dropdown-item><a href="javascript:void(0)">Modificar</a></mz-dropdown-item>
-              <mz-dropdown-item><a href="javascript:void(0)">Eliminar</a></mz-dropdown-item>
-            </mz-dropdown>
+          <td>{{cambiaFormatofecha(ingreso.fecha)}}</td>
+          <td ><a [routerLink]="['/sacc/datos/ingresos/ver',ingreso.id_ingreso]" >.:Ver Detalles:.</a>
           </td>
         </tr>
       </tbody>
@@ -57,8 +49,8 @@
 </mz-card>    
 </div><!--contenido principal-->
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-  <a class="btn-floating btn-large red" [routerLink]="['/sacc/datos/ingresos/add']" >
+  <a class="btn-floating btn-large green" [routerLink]="['/sacc/datos/ingresos/add']" >
 <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
-  <i class="large mdi-editor-mode-edit"></i>
+  <i class="large mdi-content-add"></i>
 </a>
 </div>
