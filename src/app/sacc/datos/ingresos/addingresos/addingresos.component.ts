@@ -20,8 +20,8 @@ import { DetalleIngresosService } from '../detalleingresos.service';
   styleUrls: ['./addingresos.component.scss']
 })
 export class AddingresosComponent implements OnInit {
-  private searchStr: string;
-  private dataService: CompleterData;
+ private searchStr: string;
+ private dataService: CompleterData;
  public proveedores: Array <Proveedor>;
  public productos: Array <Productos>;
  public detalle: DetalleIngreso;
@@ -115,7 +115,7 @@ export class AddingresosComponent implements OnInit {
   }
 aadDetalle() {
  this.itemdetalle++;
- //alert(this.itemdetalle);
+ // alert(this.itemdetalle);
  this.codprodd = this.getCodprodPorNombre(this.descprod);
  this.detalle = new DetalleIngreso();
  this.detalle.id_detin = this.itemdetalle;

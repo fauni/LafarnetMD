@@ -43,7 +43,7 @@
               [id]="'dropdown-basic'"
               [dropdownButtonId]="'btn-dropdown-basic' + ingreso.id_ingreso"
             >
-              <mz-dropdown-item><a href="javascript:void(0)" >Ver</a></mz-dropdown-item>
+              <mz-dropdown-item><a [routerLink]="['/sacc/datos/ingresos/ver',ingreso.codigo]" >Ver</a></mz-dropdown-item>
               <mz-dropdown-item><a href="javascript:void(0)">Modificar</a></mz-dropdown-item>
               <mz-dropdown-item><a href="javascript:void(0)">Eliminar</a></mz-dropdown-item>
             </mz-dropdown>

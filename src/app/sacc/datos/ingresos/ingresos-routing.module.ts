@@ -10,7 +10,7 @@ const routes: Routes = [
             { path: '', redirectTo: 'list' },
             { path: 'list' , loadChildren: './listingresos/listingresos.module#ListingresosModule'},
             { path: 'add' , loadChildren: './addingresos/addingresos.module#AddingresosModule'},
-            { path: 'ver', loadChildren: './veringreso/veringreso.module#VeringresosModule'}
+            { path: 'ver/:idi', loadChildren: './veringreso/veringreso.module#VeringresoModule'}
         ]
     }
 ];

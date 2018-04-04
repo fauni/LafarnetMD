@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Globals } from '../../../globals';
 
 @Component({
@@ -11,8 +11,7 @@ export class IngresosComponent implements OnInit {
 
   constructor(public global: Globals) { }
 
-  ngOnInit() {
-
+  ngOnInit() { 
   }
 
 }
