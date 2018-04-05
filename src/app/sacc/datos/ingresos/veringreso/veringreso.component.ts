@@ -64,6 +64,7 @@ public id_ingreso: string;
   public dateOfBirth = '2017-08-12'; // use formatSubmit format to set datepicker value
 
    ngOnInit() {
+    this.openLoading();
     this.route.params.subscribe(params => {
 
 
@@ -166,6 +167,7 @@ public id_ingreso: string;
         console.log ('productos');
         console.log(this.productos);
         this.onLoadDetallesIngreso(this.codingreso);
+        this.closeLoading();
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -207,4 +209,13 @@ return nombre;
   }
    // *************************************************************
 
+   openLoading() {
+    const loading = $('#loading');
+    loading.fadeIn();
+}
+
+closeLoading() {
+    const loading = $('#loading');
+    loading.fadeOut();
+}
 }

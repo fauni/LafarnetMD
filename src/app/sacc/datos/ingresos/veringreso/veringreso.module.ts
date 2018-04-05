@@ -11,7 +11,8 @@ import { MzModalModule,
     MzParallaxModule,
     MzTextareaModule,
     MzToastModule,
-    MzToastService} from 'ng2-materialize';
+    MzToastService,
+    MzSpinnerModule} from 'ng2-materialize';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { FormsModule } from '@angular/forms';
 import { ProductosService } from '../../productos/productos.service';
@@ -33,7 +34,8 @@ import { Ingresos } from '../ingresos';
         Ng2CompleterModule,
         MzParallaxModule,
         MzTextareaModule,
-        MzToastModule
+        MzToastModule,
+        MzSpinnerModule
     ],
     declarations: [VeringresoComponent],
     providers: [ProductosService, ProveedoresService, IngresosService, DetalleIngresosService]

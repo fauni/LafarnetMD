@@ -36,7 +36,7 @@ export class ListingresosComponent implements OnInit {
       this.servIngresos.getIngresos().subscribe(
       data => {
         this.ingresos = data.body;
-        //this.areas = data.body;
+        // this.areas = data.body;
         console.log(data);
       },
       (err: HttpErrorResponse) => {
@@ -54,7 +54,7 @@ export class ListingresosComponent implements OnInit {
   cambiaFormatofecha(fecha: string) {
     const res = fecha.split('-');
     const fechasal = res[2] + '/' + res[1] + '/' + res[0];
-    //console.log (fechasal);
+    // console.log (fechasal);
     return fechasal;
   }
   sort(key) {
@@ -63,7 +63,4 @@ export class ListingresosComponent implements OnInit {
   }
 
   p: number = 1;
-
-
-  
 }
