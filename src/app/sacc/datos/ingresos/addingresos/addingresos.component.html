@@ -32,6 +32,7 @@
                           width="80"
                           [label]="'Codigo de Ingreso'"
                           [(ngModel)]="codingreso"
+                          (change) = "update()"
                           >
                       </mz-input-container>
                      
@@ -41,6 +42,7 @@
                             [options]="options"
                             id="fecha_ingreso"
                             type="text"
+                            [autofocus]="true"
                             [(ngModel)]= "fechaingreso" >
                         </mz-datepicker-container>
                         <div style="padding: 10px 10px" class="col s12 m4">
@@ -52,7 +54,6 @@
                             [inputClass]="'form-control'"
                             [placeholder]="'Seleccione el proveedor'"
                             [matchClass]="'match'"
-                            [autofocus]="true"
                             [textSearching]="false"
                             [(ngModel)]="descproveedor">
                           </ng2-completer>
@@ -116,10 +117,13 @@
       </div>
     </div> 
       <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a class="btn-floating btn-large green" (click)= "guardaIngreso()">
+        <button class="btn-floating btn-large green" 
+         id="btnguardaingreso" 
+         (click)= "guardaIngreso()"
+         [disabled] = "esInvalido()" >
       <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
         <i class="large mdi-action-done"></i>
-      </a>
+      </button>
       </div>
      
       
@@ -188,16 +192,18 @@
 </mz-modal-content>
 <mz-modal-footer>
     <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
-        <a class="btn-floating btn-large green" (click) = "aadDetalle($event)" mz-modal-close>
+        <button class="btn-floating btn-large green" 
+               (click) = "aadDetalle($event)" mz-modal-close
+               [disabled] = "esInvalidoDet()">
       <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
         <i class="large mdi-action-done"></i>
-      </a>
+      </button>
       </div>
       <div class="fixed-action-btn" style="bottom: 20px; right: 100px;">
-          <a class="btn-floating btn-large red" mz-modal-close >
+          <button class="btn-floating btn-large red" mz-modal-close >
         <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
           <i class="large mdi-content-undo"></i>
-        </a>
+        </button>
         </div>
 </mz-modal-footer>
 </mz-modal>

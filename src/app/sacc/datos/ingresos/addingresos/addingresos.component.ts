@@ -208,7 +208,7 @@ getCodprodPorNombre(producto: string) {
   onSelectProveedor(selected: CompleterItem): void {
     if (selected) {
       console.log('seleccion');
-      // alert(selected);
+
     } else {
       console.log('Vacio');
     }
@@ -219,6 +219,26 @@ getCodprodPorNombre(producto: string) {
       // alert(selected);
     } else {
       console.log('Vacio');
+    }
+  }
+  esInvalido() {
+    if (this.codingreso && this.descproveedor && this.fechaingreso && this.glosaingreso)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+  esInvalidoDet() {
+    if (this.descprod  && this.cantdet && this.loteprod && this.fechavenprod)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
     }
   }
  }
