@@ -5,7 +5,11 @@ import { AsignacionptComponent } from './asignacionpt.component';
 const routes: Routes = [
     {
         path: '',
-        component: AsignacionptComponent
+        component: AsignacionptComponent,
+        children: [
+            { path: '', redirectTo: 'main' },
+            { path: 'main', loadChildren: './listasignacionpt/listasignacionpt.module#ListasignacionptModule' }
+        ]
     }
 ];
 

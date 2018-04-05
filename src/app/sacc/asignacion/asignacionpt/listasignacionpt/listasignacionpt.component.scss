@@ -1,0 +1,10 @@
+@import "../../../../../_variables";
+
+$logo-resize: "only screen and (max-width: 650px)" !default;
+.contenido-principal{
+  margin-top: 0px;
+  padding: 0 10px;
+  @media #{$logo-resize} {
+    margin-top: -80px;
+  }
+}

@@ -17,6 +17,7 @@ export class ListproductosComponent implements OnInit {
   // Ordenacion
   key: string = 'Nombre_Producto';
   reverse: boolean = false;
+  p: number = 1;
 
   constructor(public global: Globals, public servProductos: ProductosService) { }
 
@@ -48,6 +49,4 @@ export class ListproductosComponent implements OnInit {
     this.key = key;
     this.reverse = !this.reverse;
   }
-
-  p: number = 1;
 }

@@ -1,0 +1,71 @@
+<div class="contenido-principal">
+    <div>
+        <mz-card>
+            <mz-card-title>
+                ASIGNAR PRODUCTO TERMINADO
+            </mz-card-title>
+            <mz-card-content>
+                <div class="row">
+                    <div class="col l6 m12 s12">
+                        <mz-select-container class="col s12 m6">
+                            <select mz-select
+                                id="clasificacion"
+                                [label]="'Clasificacion'"
+                                [placeholder]="'Buscar por Clasificación'"
+                                (change)="onChangeClasificacion()"
+                                [(ngModel)]="clasificacion">
+                                <option *ngFor="let clasificacion of clasificaciones" value="{{clasificacion.name}}">{{clasificacion.name}}</option>
+                            </select>
+                        </mz-select-container>
+                    </div>
+                    <div class="col l6 m12 s12">
+                        <mz-input-container>
+                            <i mz-icon-mdi mz-input-prefix
+                                [icon]="'magnify'">
+                            </i>
+                            <input mz-input
+                                [label]="'Buscar Producto'"
+                                id="sproducto"
+                                type="text"
+                                [(ngModel)]='filter'
+                                value="">
+                        </mz-input-container>
+                    </div>
+                </div>
+            </mz-card-content>
+        </mz-card>
+
+        <div class="row">
+            <div class="col l12 m12 s12">
+                <mz-card>        
+                    <mz-card-content>
+                        <table class="bordered">
+                            <thead>
+                                <tr>
+                                    <th (click)="sort('Cod_Producto')">Codigo <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Cod_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                                    <th (click)="sort('Nombre_Producto')">Nombre del Producto <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Nombre_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                                    <th (click)="sort('Tipo_Productos')">Presentación <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Tipo_Productos'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                                    <!--<th (click)="sort('Forma_Farmaceutica')">Forma Farmacéutica <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Forma_Farmaceutica'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>-->
+                                    <!--<th (click)="sort('Principio_Activo')">Principio Activo <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Principio_Activo'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let producto of productos | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+                                    <td>{{producto.Cod_Producto}}</td>
+                                    <td>{{producto.Nombre_Producto}}</td>
+                                    <td>{{producto.Tipo_Productos}}</td>
+                                    <!--<td>{{producto.Forma_Farmaceutica}}</td>-->
+                                    <!--<td>{{producto.Principio_Activo}}</td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </mz-card-content>
+                </mz-card>
+            </div>
+            <div class="col l12 m12 s12">
+
+            </div>
+        </div>
+    </div>
+</div>
