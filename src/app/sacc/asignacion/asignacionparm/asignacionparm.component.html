@@ -1,0 +1,60 @@
+<mz-parallax class="header-background" [height]="170">
+  <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+
+<div id="preview" class="header-content valign-wrapper lafar-light">
+  <img class="image-user circle" src="assets/images/userlafar.png">
+  <div class="nombre-user">PARAMETROS DE ASIGNACION</div>
+  <div class="box">
+      <div class="container-1">
+      </div>
+  </div>
+</div>
+<div class="contenido-principal">
+    <mz-card>
+        <mz-card-content>
+            <div class="row">
+                <mz-radio-button-container class="col s12 m6">
+                    <input mz-radio-button
+                      [label]="'Materia Prima'"
+                      [withGap]="true"
+                      id="mpradio"
+                      name="tipo-prod"
+                      type="radio"
+                      checked="checked"
+                      value="MP"
+                      [ngModel] = "tipo_producto"
+                      (click)="onClicked('MP')" 
+                       >
+                      <input mz-radio-button
+                      [label]="'Producto Terminado'"
+                      [withGap]="true"
+                      id="ptradio"
+                      name="tipo-prod"
+                      type="radio"
+                      value="PT"
+                      [ngModel] = "tipo_producto"
+                      (click)="onClicked('PT')"
+                      >
+                  </mz-radio-button-container >  
+                  <mz-select-container class="col s12 m6">
+                      <select mz-select
+                        id="options-select"
+                        [label]="'Label'"
+                        
+                        [(ngModel)] = "tipoClasificacionProducto"
+                        >
+                          <option *ngFor = "let item of clasificacionesportipo" value="{{item.descripcion}}">{{item.name}}&nbsp;-&nbsp;({{item.tipo}}) </option>
+                      </select>
+                    </mz-select-container>
+            </div>
+            <div class="row">
+                <mz-tab [fixedTabWidth]="'true'">
+                    <mz-tab-item [class]="'col s12'" [label]="'Tab 7'">Tab 7</mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Tab 8'">Tab 8</mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Tab 9'">Tab 9</mz-tab-item>
+                  </mz-tab>
+            </div>
+          </mz-card-content>
+    </mz-card>
+</div>

@@ -10,7 +10,8 @@ const routes: Routes = [
             { path: '', redirectTo: 'main' },
             { path: 'main', loadChildren: './mainasignacion/mainasignacion.module#MainasignacionModule' },
             { path: 'mp', loadChildren: './asignacionmp/asignacionmp.module#AsignacionmpModule' },
-            { path: 'pt', loadChildren: './asignacionpt/asignacionpt.module#AsignacionptModule' }
+            { path: 'pt', loadChildren: './asignacionpt/asignacionpt.module#AsignacionptModule' },
+            { path: 'parm', loadChildren: './asignacionparm/asignacionparm.module#AsignacionparmModule' }
         ]
     }
 ];
