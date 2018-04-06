@@ -8,7 +8,8 @@ const routes: Routes = [
         component: AsignacionptComponent,
         children: [
             { path: '', redirectTo: 'main' },
-            { path: 'main', loadChildren: './listasignacionpt/listasignacionpt.module#ListasignacionptModule' }
+            { path: 'main', loadChildren: './listasignacionpt/listasignacionpt.module#ListasignacionptModule' },
+            { path: 'detail/:id/:code', loadChildren: './detailasignacionpt/detailasignacionpt.module#DetailasignacionptModule' }
         ]
     }
 ];
