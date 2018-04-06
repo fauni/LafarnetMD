@@ -1,0 +1,81 @@
+<div class="contenido-principal">
+    <div *ngIf="show">
+        <mz-card>
+            <mz-card-title>
+                PRODUCTO
+            </mz-card-title>
+            <mz-card-content>
+                <mz-tab [fixedTabWidth]="'true'">
+                    <mz-tab-item [class]="'col s12'" [label]="'Caracteristicas Fisicas'">
+                        <mz-input-container *ngFor="let c of lcf" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
+                        <mz-input-container *ngFor="let c of laq" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
+                        <mz-input-container *ngFor="let c of lcm" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                </mz-tab>
+            </mz-card-content>
+        </mz-card>
+    </div>
+    <div *ngIf="!show">
+        <mz-card>
+            <mz-card-title>
+                CLASIFICACION
+            </mz-card-title>
+            <mz-card-content>
+                <mz-tab [fixedTabWidth]="'true'">
+                    <mz-tab-item [class]="'col s12'" [label]="'Caracteristicas Fisicas'">
+                        <mz-input-container *ngFor="let c of lcf" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text">
+                        </mz-input-container>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
+                        <mz-input-container *ngFor="let c of laq" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text">
+                        </mz-input-container>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
+                        <mz-input-container *ngFor="let c of lcm" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text">
+                        </mz-input-container>
+                    </mz-tab-item>
+                </mz-tab>
+            </mz-card-content>
+        </mz-card>
+    </div>
+</div>
