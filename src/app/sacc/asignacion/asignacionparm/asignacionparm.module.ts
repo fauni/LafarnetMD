@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AsignacionparmRoutingModule } from './asignacionparm-routing.module';
 import { AsignacionparmComponent } from './asignacionparm.component';
-import { Clasificacion } from '../clasificacion';
 import { ClasificacionService } from '../clasificacion.service';
+import {ClasificacionCaracteristicaService} from './clasificacion_caracteristica.service';
 import {
     MzNavbarModule,
     MzTabModule,
@@ -14,7 +14,8 @@ import {
     MzIconMdiModule,
     MzParallaxModule,
     MzRadioButtonModule,
-    MzSelectModule
+    MzSelectModule,
+    
 } from 'ng2-materialize';
 import {FormsModule} from '@angular/forms';
 
@@ -36,7 +37,7 @@ import {FormsModule} from '@angular/forms';
         FormsModule
     ],
     declarations: [AsignacionparmComponent],
-    providers: [ClasificacionService]
+    providers: [ClasificacionService, ClasificacionCaracteristicaService]
 })
 
 export class AsignacionparmModule {}

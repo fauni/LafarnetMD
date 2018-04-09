@@ -50,9 +50,36 @@
             </div>
             <div class="row">
                 <mz-tab [fixedTabWidth]="'true'">
-                    <mz-tab-item [class]="'col s12'" [label]="'Tab 7'">Tab 7</mz-tab-item>
-                    <mz-tab-item [class]="'col s12'" [label]="'Tab 8'">Tab 8</mz-tab-item>
-                    <mz-tab-item [class]="'col s12'" [label]="'Tab 9'">Tab 9</mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Control Fisico'">
+                        <div class="row">
+                                <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicas">
+                                        <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'CF'" 
+                                          [label]="itm.id_caracteristica+'-'+itm.tipo_caracteristica"
+                                          id="checkbox-{{itm.id_clasificacion_caracteristica}}"
+                                          type="checkbox">
+                                </mz-checkbox-container>
+                        </div>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
+                            <div class="row">
+                                    <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicas">
+                                            <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'AQ'" 
+                                              [label]="itm.id_caracteristica+'-'+itm.tipo_caracteristica"
+                                              id="checkbox-{{itm.id_clasificacion_caracteristica}}"
+                                              type="checkbox">
+                                    </mz-checkbox-container>
+                            </div>    
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
+                            <div class="row">
+                                    <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicas">
+                                            <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'CM'" 
+                                              [label]="itm.id_caracteristica+'-'+itm.tipo_caracteristica"
+                                              id="checkbox-{{itm.id_clasificacion_caracteristica}}"
+                                              type="checkbox">
+                                    </mz-checkbox-container>
+                            </div>  
+                    </mz-tab-item>
                   </mz-tab>
             </div>
           </mz-card-content>
