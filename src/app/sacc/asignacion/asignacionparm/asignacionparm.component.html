@@ -55,7 +55,7 @@
                                 <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicasCFAQCM">
                                         <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'CF'" 
                                           [label]="itm.descripcion+'-'+itm.tipo_caracteristica"
-                                          id="checkbox-{{itm.id_clasificacion_caracteristica}}"
+                                          id="checkboxCF-{{itm.id_caracteristicas_fisicas}}"
                                           type="checkbox">
                                 </mz-checkbox-container>
                         </div>
@@ -65,7 +65,7 @@
                                     <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicasCFAQCM">
                                             <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'AQ'" 
                                               [label]="itm.descripcion+'-'+itm.tipo_caracteristica"
-                                              id="checkbox-{{itm.id_clasificacion_caracteristica}}"
+                                              id="checkboxAQ-{{itm.id_caracteristicas_fisicas}}"
                                               type="checkbox">
                                     </mz-checkbox-container>
                             </div>    
@@ -75,7 +75,7 @@
                                     <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicasCFAQCM">
                                             <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'CM'" 
                                               [label]="itm.descripcion+'-'+itm.tipo_caracteristica"
-                                              id="checkbox-{{itm.id_clasificacion_caracteristica}}"
+                                              id="checkboxCM-{{itm.id_caracteristicas_fisicas}}"
                                               type="checkbox">
                                     </mz-checkbox-container>
                             </div>  
