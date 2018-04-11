@@ -13,4 +13,7 @@ export class ClasificacionCaracteristicaService {
   getClasificacionCaracteristicaBytipoclas(id: string): Observable<any> {
     return this.http.get(this.global.urlAPI + 'clasificacion_caracteristica/getbytipoclas/' + id);
   }
+  getClasificacionCaracteristicaCFAQCM(): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'clasificacion_caracteristica/GetAlljoinCFAQCM');
+  }
 }
