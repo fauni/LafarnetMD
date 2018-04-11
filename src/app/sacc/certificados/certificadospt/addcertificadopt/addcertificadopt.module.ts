@@ -25,6 +25,7 @@ import { AddcertificadoptComponent } from './addcertificadopt.component';
 import { AnalistasService } from '../../../datos/analista/analista.service';
 import { ProductosService } from '../../../datos/productos/productos.service';
 import { AsignacionService } from '../../../asignacion/asignacion.service';
+import { CertificadosService } from '../../certificados.service';
 
 @NgModule({
     imports: [
@@ -51,6 +52,6 @@ import { AsignacionService } from '../../../asignacion/asignacion.service';
         MzSpinnerModule,
     ],
     declarations: [AddcertificadoptComponent],
-    providers: [NotificationsService, AnalistasService, ProductosService, AsignacionService]
+    providers: [NotificationsService, AnalistasService, ProductosService, AsignacionService, CertificadosService]
 })
 export class AddcertificadoptModule {}

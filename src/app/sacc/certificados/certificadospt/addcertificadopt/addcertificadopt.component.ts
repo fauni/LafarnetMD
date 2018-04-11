@@ -12,6 +12,7 @@ import { ProductosService } from '../../../datos/productos/productos.service';
 import { Productos } from '../../../datos/productos/productos';
 import { AsignacionService } from '../../../asignacion/asignacion.service';
 import { Caracteristicas } from '../../../asignacion/caracteristicas';
+import { CertificadosService } from '../../certificados.service';
 
 @Component({
   selector: 'app-addcertificadopt',
@@ -55,6 +56,7 @@ export class AddcertificadoptComponent implements OnInit {
     private router: Router,
     private servAnalista: AnalistasService,
     private servProductos: ProductosService,
+    private servCertificados: CertificadosService,
     private servNotification: NotificationsService,
     public global: Globals,
     private completerService: CompleterService,
@@ -70,8 +72,15 @@ export class AddcertificadoptComponent implements OnInit {
 
   ngOnInit() {
     this.openLoading();
+    this.loadDataDefault();
     this.onLoadAnalistas();
     this.onLoadProductos();
+  }
+
+  loadDataDefault() {
+    this.certificado.tipo_certificado = 'PT';
+    this.certificado.usuario_creacion = localStorage.getItem('username');
+    this.certificado.usuario_modificacion = localStorage.getItem('username');
   }
 
   onLoadAnalistas(): void {
@@ -124,6 +133,7 @@ export class AddcertificadoptComponent implements OnInit {
       this.producto = selected.originalObject;
       console.log(this.producto);
       this.certificado.tipo_clasificacion_producto = this.producto.Tipo_Productos;
+      this.certificado.codigo_producto = this.producto.Cod_Producto;
       this.lcf = [];
       this.laq = [];
       this.lcm = [];
@@ -191,6 +201,30 @@ export class AddcertificadoptComponent implements OnInit {
     console.log(this.lcm);
   }
 
+
+  guardarCertificado(): void {
+    this.servCertificados.setCertificados(this.certificado).subscribe(
+      data => {
+        if (data.status == 200) {
+          this.openNotificacion(1, 'Correcto!', 'Se guardo correctamente');
+          this.router.navigate(['/sacc/certificados/pt']);
+          //this.router.navigate(['/admin/users/list']);
+        }else {
+          this.openNotificacion(3, 'No se guardo', 'Intente nuevamente!');
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+        this.openNotificacion(3, 'Ocurrio un error', 'Comuniquese con el Administrador');
+      }
+    );
+  }
 
   openLoading() {
     const loading = $('#loading');
