@@ -9,7 +9,8 @@ import { MzParallaxModule,
     MzInputModule,
     MzNavbarModule,
     MzDropdownModule, 
-    MzTabModule} from 'ng2-materialize';
+    MzTabModule,
+    MzSpinnerModule} from 'ng2-materialize';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
@@ -35,6 +36,7 @@ import { AsignacionService } from '../../asignacion.service';
         MzCardModule,
         MzTabModule,
         FormsModule,
+        MzSpinnerModule,
         SimpleNotificationsModule
     ],
     declarations: [DetailasignacionptComponent],

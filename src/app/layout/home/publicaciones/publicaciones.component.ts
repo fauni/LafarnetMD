@@ -71,7 +71,7 @@ export class PublicacionesComponent implements OnInit {
     if (this.elem.files.length >= 0) {
       let formData = new FormData();
       formData.append('file', this.elem.files[0]);
-      formData.append('username', this.global.user.username);
+      formData.append('username', localStorage.getItem('username'));
       formData.append('id_area', '1');
       formData.append('tipo_publicacion', '1');
       formData.append('titulo', this.publicacion.titulo);

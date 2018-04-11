@@ -27,9 +27,9 @@ export class DetailasignacionptComponent implements OnInit {
   laq: Array<Caracteristicas>;
   lcm: Array<Caracteristicas>;
 
-  caracteristicasFisicas: Caracteristicas;
-  analisisquimico: Caracteristicas;
-  controlmicrobiologico: Caracteristicas;
+  cf: Caracteristicas;
+  aq: Caracteristicas;
+  cm: Caracteristicas;
 
   constructor(
     public global: Globals,
@@ -142,17 +142,17 @@ export class DetailasignacionptComponent implements OnInit {
     console.log('Organizando caracteristicas: ');
     this.resp.forEach(element => {
       if (element['tipo_caracteristica'] == 'CF') {
-        this.caracteristicasFisicas = new Caracteristicas();
-        this.caracteristicasFisicas = element;
-        this.lcf.push(this.caracteristicasFisicas);
+        this.cf = new Caracteristicas();
+        this.cf = element;
+        this.lcf.push(this.cf);
       }else if (element['tipo_caracteristica'] == 'AQ') {
-        this.analisisquimico = new Caracteristicas();
-        this.analisisquimico = element;
-        this.laq.push(this.analisisquimico);
+        this.aq = new Caracteristicas();
+        this.aq = element;
+        this.laq.push(this.aq);
       } else if (element['tipo_caracteristica'] == 'CM') {
-        this.controlmicrobiologico = new Caracteristicas();
-        this.controlmicrobiologico = element;
-        this.lcm.push(this.controlmicrobiologico);
+        this.cm = new Caracteristicas();
+        this.cm = element;
+        this.lcm.push(this.cm);
       }
     });
     console.log('Imprimiendo Caracteristicas Fisicas');
@@ -161,5 +161,14 @@ export class DetailasignacionptComponent implements OnInit {
     console.log(this.laq);
     console.log('Imprimiendo Control Microbiológico');
     console.log(this.lcm);
+  }
+
+  openLoading() {
+      const loading = $('#loading');
+      loading.fadeIn();
+  }
+  closeLoading() {
+      const loading = $('#loading');
+      loading.fadeOut();
   }
 }
