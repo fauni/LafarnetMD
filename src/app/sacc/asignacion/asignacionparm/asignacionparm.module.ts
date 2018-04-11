@@ -14,8 +14,7 @@ import {
     MzIconMdiModule,
     MzParallaxModule,
     MzRadioButtonModule,
-    MzSelectModule,
-    
+    MzSelectModule
 } from 'ng2-materialize';
 import {FormsModule} from '@angular/forms';
 

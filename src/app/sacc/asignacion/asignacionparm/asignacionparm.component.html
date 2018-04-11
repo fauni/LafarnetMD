@@ -22,9 +22,9 @@
                       name="tipo-prod"
                       type="radio"
                       checked="checked"
-                      value="MP"
+                      value="1"
                       [ngModel] = "tipo_producto"
-                      (click)="onClicked('MP')" 
+                      (click)="onClicked('1')" 
                        >
                       <input mz-radio-button
                       [label]="'Producto Terminado'"
@@ -32,9 +32,9 @@
                       id="ptradio"
                       name="tipo-prod"
                       type="radio"
-                      value="PT"
+                      value="2"
                       [ngModel] = "tipo_producto"
-                      (click)="onClicked('PT')"
+                      (click)="onClicked('2')"
                       >
                   </mz-radio-button-container >  
                   <mz-select-container class="col s12 m6">
@@ -52,9 +52,9 @@
                 <mz-tab [fixedTabWidth]="'true'">
                     <mz-tab-item [class]="'col s12'" [label]="'Control Fisico'">
                         <div class="row">
-                                <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicas">
+                                <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicasCFAQCM">
                                         <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'CF'" 
-                                          [label]="itm.id_caracteristica+'-'+itm.tipo_caracteristica"
+                                          [label]="itm.descripcion+'-'+itm.tipo_caracteristica"
                                           id="checkbox-{{itm.id_clasificacion_caracteristica}}"
                                           type="checkbox">
                                 </mz-checkbox-container>
@@ -62,9 +62,9 @@
                     </mz-tab-item>
                     <mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
                             <div class="row">
-                                    <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicas">
+                                    <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicasCFAQCM">
                                             <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'AQ'" 
-                                              [label]="itm.id_caracteristica+'-'+itm.tipo_caracteristica"
+                                              [label]="itm.descripcion+'-'+itm.tipo_caracteristica"
                                               id="checkbox-{{itm.id_clasificacion_caracteristica}}"
                                               type="checkbox">
                                     </mz-checkbox-container>
@@ -72,9 +72,9 @@
                     </mz-tab-item>
                     <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
                             <div class="row">
-                                    <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicas">
+                                    <mz-checkbox-container class="col s12 m4" *ngFor ="let itm of clasificacionescaracteristicasCFAQCM">
                                             <input mz-checkbox *ngIf= "itm.tipo_caracteristica == 'CM'" 
-                                              [label]="itm.id_caracteristica+'-'+itm.tipo_caracteristica"
+                                              [label]="itm.descripcion+'-'+itm.tipo_caracteristica"
                                               id="checkbox-{{itm.id_clasificacion_caracteristica}}"
                                               type="checkbox">
                                     </mz-checkbox-container>
