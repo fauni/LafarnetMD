@@ -8,7 +8,8 @@ const routes: Routes = [
         component: CertificadosptComponent,
         children: [
             { path: '', redirectTo: 'list' },
-            { path: 'list', loadChildren: './listcertificadospt/listcertificadospt.module#ListcertificadosptModule' }
+            { path: 'list', loadChildren: './listcertificadospt/listcertificadospt.module#ListcertificadosptModule' },
+            { path: 'add', loadChildren: './addcertificadopt/addcertificadopt.module#AddcertificadoptModule' }
         ]
     }
 ];

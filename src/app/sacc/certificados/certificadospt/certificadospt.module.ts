@@ -8,7 +8,7 @@ import { CertificadosptComponent } from './certificadospt.component';
         CommonModule,
         CertificadosptRoutingModule
     ],
-    declarations: [CertificadosptComponent]
+    declarations: [CertificadosptComponent],
 })
 
 export class CertificadosptModule {}

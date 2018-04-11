@@ -1,3 +1,16 @@
+<div id="loading">
+    <div id="loadingcontent">
+        <p id="loadingspinner">
+            <mz-spinner
+                class="valign center-align col s4"
+                [size]="'big'">
+            </mz-spinner>
+            <br><br>
+            Cargando Productos ... 
+        </p>
+    </div>
+</div>
+    
 <div class="contenido-principal">
     <div *ngIf="show">
         <mz-card>
@@ -53,7 +66,8 @@
                                 [label]="c.descripcion"
                                 id="basic-input-placeholder"
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
-                                type="text">
+                                type="text"
+                                [(ngModel)]="c.especificacion">
                         </mz-input-container>
                     </mz-tab-item>
                     <mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
@@ -62,7 +76,8 @@
                                 [label]="c.descripcion"
                                 id="basic-input-placeholder"
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
-                                type="text">
+                                type="text"
+                                [(ngModel)]="c.especificacion">
                         </mz-input-container>
                     </mz-tab-item>
                     <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
@@ -71,7 +86,8 @@
                                 [label]="c.descripcion"
                                 id="basic-input-placeholder"
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
-                                type="text">
+                                type="text"
+                                [(ngModel)]="c.especificacion">
                         </mz-input-container>
                     </mz-tab-item>
                 </mz-tab>

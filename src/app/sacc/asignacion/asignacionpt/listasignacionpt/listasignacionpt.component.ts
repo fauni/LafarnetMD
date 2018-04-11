@@ -23,9 +23,11 @@ export class ListasignacionptComponent implements OnInit {
   reverse: boolean = false;
   p: number = 1;
 
-  constructor(public global: Globals, public servProductos: ProductosService) { }
+  constructor(public global: Globals, public servProductos: ProductosService) {
+  }
 
   ngOnInit() {
+    this.openLoading();
     this.onLoadProductos();
     this.onLoadClasificacionPT();
   }
@@ -35,6 +37,7 @@ export class ListasignacionptComponent implements OnInit {
     this.servProductos.getProductosForTipo('PT').subscribe(
       data => {
         this.productos = data.body;
+        this.closeLoading();
         console.log('Productos cargados correctamente!');
       },
       (err: HttpErrorResponse) => {
@@ -74,5 +77,14 @@ export class ListasignacionptComponent implements OnInit {
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
+  }
+
+  openLoading() {
+    const loading = $('#loading');
+    loading.fadeIn();
+  }
+  closeLoading() {
+      const loading = $('#loading');
+      loading.fadeOut();
   }
 }

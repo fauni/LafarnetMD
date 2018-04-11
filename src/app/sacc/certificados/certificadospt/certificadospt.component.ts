@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Globals } from '../../../globals';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-certificadospt',
@@ -12,7 +13,6 @@ export class CertificadosptComponent implements OnInit {
   constructor(public global: Globals) { }
 
   ngOnInit() {
-
   }
 
 }
