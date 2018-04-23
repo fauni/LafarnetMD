@@ -8,7 +8,7 @@ import { MzParallaxModule,
     MzButtonModule,
     MzInputModule,
     MzNavbarModule,
-    MzDropdownModule, 
+    MzDropdownModule,
     MzTabModule,
     MzSpinnerModule} from 'ng2-materialize';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +35,7 @@ import { AsignacionService } from '../../asignacion.service';
         MzInputModule,
         MzCardModule,
         MzTabModule,
+        MzNavbarModule,
         FormsModule,
         MzSpinnerModule,
         SimpleNotificationsModule

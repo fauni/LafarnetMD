@@ -9,10 +9,10 @@ import { Globals } from '../../../globals';
 })
 export class MaincertificadosComponent implements OnInit {
 
-  constructor(public global: Globals) { }
+  constructor(public global: Globals, private router: Router) { }
 
   ngOnInit() {
-
+    this.router.navigate(['/sacc/certificados/pt']);
   }
 
 }

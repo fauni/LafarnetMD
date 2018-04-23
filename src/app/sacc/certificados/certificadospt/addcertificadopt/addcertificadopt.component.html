@@ -215,7 +215,7 @@
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
                                 [(ngModel)]="c.especificacion">
                             </mz-input-container>
-                            <mz-input-container *ngFor="let c of lcm" class="col l6 s12 m6">
+                            <mz-input-container *ngFor="let c of laq" class="col l6 s12 m6">
                                 <input mz-input required
                                     id="resultado_{{c.especificacion}}"
                                     name="resultado_{{c.especificacion}}"
@@ -227,7 +227,7 @@
                     </mz-tab-item>
                     <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
                         <div class="row">
-                            <mz-input-container *ngFor="let c of lcf" class="col l6 s12 m6">
+                            <mz-input-container *ngFor="let c of lcm" class="col l6 s12 m6">
                                 <input mz-input required
                                 id="{{c.especificacion}}"
                                 name="{{c.especificacion}}"
@@ -236,7 +236,7 @@
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
                                 [(ngModel)]="c.especificacion">
                             </mz-input-container>
-                            <mz-input-container *ngFor="let c of lcf" class="col l6 s12 m6">
+                            <mz-input-container *ngFor="let c of lcm" class="col l6 s12 m6">
                                 <input mz-input required
                                     id="resultado_{{c.especificacion}}"
                                     name="resultado_{{c.especificacion}}"

@@ -8,6 +8,7 @@ import { Caracteristicasfisicas } from '../../caracteristicasfisicas';
 import { Analisisquimico } from '../../analisisquimico';
 import { Controlmicrobiologico } from '../../controlmicrobiologico';
 import { Caracteristicas } from '../../caracteristicas';
+import { element } from 'protractor';
 
 
 @Component({
@@ -50,6 +51,7 @@ export class DetailasignacionptComponent implements OnInit {
   }
 
   onVerificaEspecificacion(code) {
+    this.codigo_producto = code;
     this.servAsignacion.getCaracteristicasForProducto(code).subscribe(
       data => {
         console.log(data['length']);
@@ -139,19 +141,25 @@ export class DetailasignacionptComponent implements OnInit {
   }
 
   onOrganizationCaracteristicas() {
-    console.log('Organizando caracteristicas: ');
+    console.log('Organizando caracteristicas: --->');
+    console.log(this.resp);
     this.resp.forEach(element => {
+      console.log('----------------> Nuevo Elemento');
+      console.log(element);
       if (element['tipo_caracteristica'] == 'CF') {
         this.cf = new Caracteristicas();
         this.cf = element;
+        this.cf.estado = '5';
         this.lcf.push(this.cf);
       }else if (element['tipo_caracteristica'] == 'AQ') {
         this.aq = new Caracteristicas();
         this.aq = element;
+        this.aq.estado = '5';
         this.laq.push(this.aq);
       } else if (element['tipo_caracteristica'] == 'CM') {
         this.cm = new Caracteristicas();
         this.cm = element;
+        this.cm.estado = '5';
         this.lcm.push(this.cm);
       }
     });
@@ -170,5 +178,85 @@ export class DetailasignacionptComponent implements OnInit {
   closeLoading() {
       const loading = $('#loading');
       loading.fadeOut();
+  }
+
+  guardarAsignacionProductoPR() {
+    // console.log('Guardar por Clasificacion');
+    this.lcf.forEach(element => {
+        this.guardarElemento(element, 'PR');
+    });
+    this.laq.forEach(element => {
+      this.guardarElemento(element, 'PR');
+    });
+    this.lcm.forEach(element => {
+      this.guardarElemento(element, 'PR');
+    });
+  }
+
+  guardarAsignacionProductoCL() {
+    // console.log('Guardar por Clasificacion');
+    this.lcf.forEach(element => {
+        this.guardarElemento(element, 'CL');
+    });
+    this.laq.forEach(element => {
+      this.guardarElemento(element, 'CL');
+    });
+    this.lcm.forEach(element => {
+      this.guardarElemento(element, 'CL');
+    });
+  }
+
+  // Guardando caracteristica por caracteristica
+  guardarElemento(c: Caracteristicas, tipo: string) {
+    // console.log('Guardando');
+    c.codigo_producto = this.codigo_producto;
+    c.usuario_creacion = localStorage.getItem('username');
+    c.fecha_creacion = '';
+    c.usuario_modificacion = localStorage.getItem('username');
+    c.fecha_modificacion = '';
+    console.log(c);
+    if (tipo == 'CL') {
+      this.servAsignacion.saveAsignacion(c).subscribe(
+        data => {
+          console.log(data);
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log('Ocurrio un error:', err.error.message);
+          } else {
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          }
+        }
+      );
+    }else {
+      if (c.estado == '5') {
+        console.log('Modificar');
+        /*this.servAsignacion.saveAsignacion(c).subscribe(
+          data => {
+            console.log(data);
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              console.log('Ocurrio un error:', err.error.message);
+            } else {
+              console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+          }
+        );*/
+      }else {
+        this.servAsignacion.saveAsignacion(c).subscribe(
+          data => {
+            console.log(data);
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              console.log('Ocurrio un error:', err.error.message);
+            } else {
+              console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+          }
+        );
+      }
+    }
   }
 }

@@ -11,7 +11,13 @@
     </div>
 </div>
     
-<div class="contenido-principal">
+<div class="contenido-principal" style="padding-top: 10px;">
+    <mz-navbar [navbarClass]="'blue'">
+        <mz-navbar-item-container [align]="'right'">
+            <mz-navbar-item><a href="javascript:void(0)">Agregar Nuevo</a></mz-navbar-item>
+            <mz-navbar-item><a href="javascript:void(0)">Quitar</a></mz-navbar-item>
+        </mz-navbar-item-container>
+    </mz-navbar>
     <div *ngIf="show">
         <mz-card>
             <mz-card-title>
@@ -52,6 +58,18 @@
                 </mz-tab>
             </mz-card-content>
         </mz-card>
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <button mz-button 
+                [float]="true" 
+                [large]="true" 
+                [disabled]="false" 
+                class="green" 
+                type="button"
+                (click)="guardarAsignacionProductoPR()">
+                <i class="large mdi-action-done"></i>
+            </button>
+        </div>
+        
     </div>
     <div *ngIf="!show">
         <mz-card>
@@ -93,5 +111,18 @@
                 </mz-tab>
             </mz-card-content>
         </mz-card>
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <button mz-button 
+                [float]="true" 
+                [large]="true" 
+                [disabled]="false" 
+                class="green" 
+                type="button"
+                (click)="guardarAsignacionProductoCL()">
+                <i class="large mdi-action-done"></i>
+            </button>
+        </div>
     </div>
 </div>
+
+
