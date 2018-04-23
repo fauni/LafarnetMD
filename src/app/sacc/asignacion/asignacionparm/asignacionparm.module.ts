@@ -4,6 +4,7 @@ import { AsignacionparmRoutingModule } from './asignacionparm-routing.module';
 import { AsignacionparmComponent } from './asignacionparm.component';
 import { ClasificacionService } from '../clasificacion.service';
 import {ClasificacionCaracteristicaService} from './clasificacion_caracteristica.service';
+import {CaracteristicasService} from '../caracteristicas.service';
 import {
     MzNavbarModule,
     MzTabModule,
@@ -14,7 +15,8 @@ import {
     MzIconMdiModule,
     MzParallaxModule,
     MzRadioButtonModule,
-    MzSelectModule
+    MzSelectModule,
+    MzCollapsibleModule
 } from 'ng2-materialize';
 import {FormsModule} from '@angular/forms';
 
@@ -33,10 +35,11 @@ import {FormsModule} from '@angular/forms';
         MzParallaxModule,
         MzRadioButtonModule,
         MzSelectModule,
-        FormsModule
+        FormsModule,
+        MzCollapsibleModule
     ],
     declarations: [AsignacionparmComponent],
-    providers: [ClasificacionService, ClasificacionCaracteristicaService]
+    providers: [ClasificacionService, ClasificacionCaracteristicaService, CaracteristicasService]
 })
 
 export class AsignacionparmModule {}
