@@ -35,18 +35,18 @@ export class AsignacionparmComponent implements OnInit {
     public clasificacionesCaracteristicasAQpt: Array<ClasificacionCaracteristica>;
     public clasificacionesCaracteristicasCMpt: Array<ClasificacionCaracteristica>;
     /* --------- */
-    public clasificacionesCaracteristicasParaGuardar: Array <ClasificacionCaracteristica>;
+    public clasificacionesCaracteristicasParaGuardarPT: Array <ClasificacionCaracteristica>; // Producto terminado
+    public clasificacionesCaracteristicasParaGuardarMP: Array <ClasificacionCaracteristica>; // Producto terminado
     public tipoClasificacionProductoPT = '0'; // A o B o C
     public tipoClasificacionProductoMP = '0'; // A o B o C
-    frutas = [{nombre:'manzana', color:'amarillo'},
-              {nombre:'pera', color:'verde'},
-              {nombre:'granada', color:'palido'},
-              {nombre:'mandarina', color:'naranja'}];
-  
+    frutas = [{nombre: 'manzana', color: 'amarillo'},
+              {nombre: 'pera', color: 'verde'},
+              {nombre: 'granada', color: 'palido'},
+              {nombre: 'mandarina', color: 'naranja'}];
   constructor(public global: Globals, public servClasificaciones: ClasificacionService,
                 public servClasificacionCaracteristica: ClasificacionCaracteristicaService,
-                public servCaracteristicas: CaracteristicasService ) { 
-                 this.clasificacionesCaracteristicasParaGuardar = new Array<ClasificacionCaracteristica>();
+                public servCaracteristicas: CaracteristicasService ) {
+                 this.clasificacionesCaracteristicasParaGuardarPT = new Array<ClasificacionCaracteristica>();
                 }
   ngOnInit() {
     this.onLoadClasificaciones();
@@ -58,7 +58,7 @@ export class AsignacionparmComponent implements OnInit {
       data => {
        this.clasificacionesCaracteristicas = data.body;
        this.filtrar_por_clasificacion(tipo);
-         //console.log(this.clasificacionesCaracteristicas);
+         // console.log(this.clasificacionesCaracteristicas);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -139,13 +139,13 @@ export class AsignacionparmComponent implements OnInit {
       });
    }
    filtrar_por_clasificacion(tipo: string){
-    // alert('hola mundilla ' + tipo);
+    // alert('tipo);
      if (tipo == 'A' || tipo == 'B' || tipo == 'C' ) {
       this.clasificacionesCaracteristicasCFpt = new Array<ClasificacionCaracteristica>();
       this.clasificacionesCaracteristicasAQpt = new Array<ClasificacionCaracteristica>();
       this.clasificacionesCaracteristicasCMpt = new Array<ClasificacionCaracteristica>();
       this.clasificacionesCaracteristicas.forEach(elem => {
-        switch(elem.tipo_caracteristica) {
+        switch (elem.tipo_caracteristica) {
           case 'CF':
            this.clasificacionesCaracteristicasCFpt.push(elem);
           break;
@@ -160,6 +160,7 @@ export class AsignacionparmComponent implements OnInit {
       console.log(this.clasificacionesCaracteristicasCFpt);
       console.log(this.clasificacionesCaracteristicasAQpt);
       console.log(this.clasificacionesCaracteristicasCMpt);
+      this.InsertaClasifCaracParaGuardarExistentePT();
       this.cambiaEstadosChekPorClasificacionPT();
      }
      if (tipo == 'D' || tipo == 'E' || tipo == 'F' ) {
@@ -182,6 +183,7 @@ export class AsignacionparmComponent implements OnInit {
       console.log(this.clasificacionesCaracteristicasCFmp);
       console.log(this.clasificacionesCaracteristicasAQmp);
       console.log(this.clasificacionesCaracteristicasCMmp);
+      this.InsertaClasifCaracParaGuardarExistenteMP();
       this.cambiaEstadosChekPorClasificacionMP();
      }
    }
@@ -189,111 +191,262 @@ export class AsignacionparmComponent implements OnInit {
      alert('hola mundillo ' + this.tipoClasificacionProductoPT);
      alert('hola mundillo ' + this.tipoClasificacionProductoMP);
    }
-   cambiatipocheck(check: string){
-     if(check == '0')
+   cambiatipocheck(check: string) {
+     if (check == '0')
        return false;
      else
       return true;
    }
-   cambiaEstadosChekPorClasificacionPT(){
-    //console.log('recorriendo caracteristicas .....');
+   cambiaEstadosChekPorClasificacionPT(){// cambia estados de los checkboxes dependiendo si existe la clasificacio_caracteristica
+    // console.log('recorriendo caracteristicas .....');
     this.resetcheckPT();
     this.caracteristicasPT.forEach(elementPT => {
       this.clasificacionesCaracteristicasCFpt.forEach(element => {
-        //console.log (element); 
-        if(elementPT.esp_car == "CF" && element.id_caracteristica == elementPT.id_caracteristicas_fisicas)  
+        // console.log (element);
+        if (elementPT.esp_car == 'CF' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas)
           {
-            console.log('elemento elegido CF');
-            console.log('element');
+            // console.log('elemento elegido CF');
+           // console.log('element');
             elementPT.checkeado = true;
           }
       });
       this.clasificacionesCaracteristicasAQpt.forEach(element => {
-         
-        if(elementPT.esp_car == "AQ" && element.id_caracteristica == elementPT.id_caracteristicas_fisicas)  
-          {
-            console.log('elemento elegido AQ');
-            console.log('element');
+        if(elementPT.esp_car == 'AQ' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas) {
+           // console.log('elemento elegido AQ');
+           // console.log('element');
             elementPT.checkeado = true;
           }
       });
-      this.clasificacionesCaracteristicasCMpt.forEach(element => {
-        
-       if(elementPT.esp_car == "CM" && element.id_caracteristica == elementPT.id_caracteristicas_fisicas)  
-         {
-           console.log('elemento elegido CM');
-           console.log('element');
+      this.clasificacionesCaracteristicasCMpt.forEach(element => { 
+       if(elementPT.esp_car == 'CM' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas) {
+          // console.log('elemento elegido CM');
+          // console.log('element');
            elementPT.checkeado = true;
          }
      });
-    }); 
-    
+    });
    }
 
    cambiaEstadosChekPorClasificacionMP(){
-    //console.log('recorriendo caracteristicas .....');
+    // console.log('recorriendo caracteristicas .....');
     this.resetcheckMP();
     this.caracteristicasMP.forEach(elementMP => {
       this.clasificacionesCaracteristicasCFmp.forEach(element => {
-        //console.log (element); 
-        if(elementMP.esp_car == "CF" && element.id_caracteristica == elementMP.id_caracteristicas_fisicas)  
-          {
-            console.log('elemento elegido CF');
-            console.log('element');
+        // console.log (element);
+        if (elementMP.esp_car == 'CF' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas) {
+            // console.log('elemento elegido CF');
+            // console.log('element');
             elementMP.checkeado = true;
           }
       });
       this.clasificacionesCaracteristicasAQmp.forEach(element => {
-         
-        if(elementMP.esp_car == "AQ" && element.id_caracteristica == elementMP.id_caracteristicas_fisicas)  
-          {
-            console.log('elemento elegido AQ');
-            console.log('element');
+        if(elementMP.esp_car == 'AQ' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas) {
+            // console.log('elemento elegido AQ');
+            // console.log('element');
             elementMP.checkeado = true;
           }
       });
       this.clasificacionesCaracteristicasCMmp.forEach(element => {
-        
-       if(elementMP.esp_car == "CM" && element.id_caracteristica == elementMP.id_caracteristicas_fisicas)  
-         {
-           console.log('elemento elegido CM');
-           console.log('element');
+       if (elementMP.esp_car == 'CM' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas) {
+           // console.log('elemento elegido CM');
+           // console.log('element');
            elementMP.checkeado = true;
          }
      });
-    });    
+    });
    }
-   resetcheckPT(){
+   resetcheckPT() {
     this.caracteristicasPT.forEach(element => {
-      element.checkeado=false;
+      element.checkeado = false;
     });
    }
-   resetcheckMP(){
+   resetcheckMP() {
     this.caracteristicasMP.forEach(element => {
-      element.checkeado=false;
+      element.checkeado = false;
     });
    }
-   enCambioEstadoPT(item: Caracteristicasfisicas){
+   /* ****************para almacenar cambios localmente PT************** */
+   enCambioEstadoPT(item: Caracteristicasfisicas) { // cambio de estado de los checkbox
           item.checkeado = !item.checkeado;
          let paraAgregar: ClasificacionCaracteristica;
          paraAgregar = new ClasificacionCaracteristica();
-          if(item.checkeado){
+          if (item.checkeado) {
             paraAgregar.id_clasificacion_caracteristica = 0;
             paraAgregar.id_tipo_clasificacion = this.tipoClasificacionProductoPT;
             paraAgregar.id_caracteristica = item.id_caracteristicas_fisicas;
-            paraAgregar.tipo_caracteristica = item.tipo;
-            
-            paraAgregar.estado= 1;
+            paraAgregar.tipo_caracteristica = item.esp_car;
+            paraAgregar.estado = 1;
             paraAgregar.usuario_creacion= localStorage.getItem('username');
-            paraAgregar.usuario_modificacion = localStorage.getItem('username');  
-            console.log(this.clasificacionesCaracteristicasParaGuardar);             
-          } /*else {
-          this.clasificacionesCaracteristicasParaGuardar.forEach(element => {
-              if(element.id_tipo_clasificacion == this.tipoClasificacionProductoPT && element.id_caracteristica )
-            });  
-         }*/
-          //console.log(this.clasificacionesCaracteristicasParaGuardar);
-         
+            paraAgregar.fecha_creacion = '0000-00-00 00:00:00';
+            paraAgregar.fecha_modificacion = '0000-00-00 00:00:00';
+            paraAgregar.usuario_modificacion = localStorage.getItem('username');
+            let indice = this.ExisteClasificacionCaracteristicaParaGuardarPT(paraAgregar);
+            if (indice >= 0) {
+                this.clasificacionesCaracteristicasParaGuardarPT[indice].estado = 1 ;
+              } else {
+                this.clasificacionesCaracteristicasParaGuardarPT.push(paraAgregar);
+              }
+           console.log(this.clasificacionesCaracteristicasParaGuardarPT);
+           // for (var i = 0; i < this.clasificacionesCaracteristicasParaGuardarPT.length; i++) {
+           // console.log(this.clasificacionesCaracteristicasParaGuardarPT[i].id_clasificacion_caracteristica);
+            // console.log(this.clasificacionesCaracteristicasParaGuardarPT[i]);
+           // }
+          } else {
+           this.eliminaElementoClasifCaracPT(item);
+          // for (var i = 0; i < this.clasificacionesCaracteristicasParaGuardarPT.length; i++) {
+            // console.log(this.clasificacionesCaracteristicasParaGuardarPT[i].id_clasificacion_caracteristica);
+             // console.log(this.clasificacionesCaracteristicasParaGuardarPT[i]);
+          // }
+           console.log(this.clasificacionesCaracteristicasParaGuardarPT);
+         }
+          // console.log(this.clasificacionesCaracteristicasParaGuardarPT);
    }
+   eliminaElementoClasifCaracPT(itmcc: Caracteristicasfisicas) {
+    let nuevo: Array <ClasificacionCaracteristica>;
+    nuevo = new Array <ClasificacionCaracteristica>();
+    let resp = 0;
+    for (let i = 0; i < this.clasificacionesCaracteristicasParaGuardarPT.length; i++) {
+      let itemc = this.clasificacionesCaracteristicasParaGuardarPT[i];
+      if (itemc.id_tipo_clasificacion == this.tipoClasificacionProductoPT && itemc.id_caracteristica == itmcc.id_caracteristicas_fisicas
+        && itemc.tipo_caracteristica == itmcc.esp_car && itemc.id_clasificacion_caracteristica == 0 ) {
+           resp = 1;
+           // this.clasificacionesCaracteristicasParaGuardarPT[i].estado = -1;
+        } else {
+          if (itemc.id_tipo_clasificacion == this.tipoClasificacionProductoPT && itemc.id_caracteristica == itmcc.id_caracteristicas_fisicas
+            && itemc.tipo_caracteristica == itmcc.esp_car && itemc.id_clasificacion_caracteristica != 0) {
+              this.clasificacionesCaracteristicasParaGuardarPT[i].estado = 0;
+            }
+          nuevo.push(this.clasificacionesCaracteristicasParaGuardarPT[i]);
+        }
+      }
+      this.clasificacionesCaracteristicasParaGuardarPT = nuevo;
+      return resp;
+   }
+   // insertar elementos existentes que ya estan chekeados en el array para guardar elementos en la Bd
+  InsertaClasifCaracParaGuardarExistentePT(){
+    this.clasificacionesCaracteristicasParaGuardarPT= new Array<ClasificacionCaracteristica>();
+    this.clasificacionesCaracteristicasCFpt.forEach(element=>{
+      this.clasificacionesCaracteristicasParaGuardarPT.push(element);
+    })
+    this.clasificacionesCaracteristicasAQpt.forEach(element => {
+      this.clasificacionesCaracteristicasParaGuardarPT.push(element);
+    });
+    this.clasificacionesCaracteristicasCMpt.forEach(element => {
+      this.clasificacionesCaracteristicasParaGuardarPT.push(element);
+    });
+    console.log('Clasificacion caracteristica para guardar');
+    // console.log(this.clasificacionesCaracteristicasParaGuardarPT);
+  }
+
+  ExisteClasificacionCaracteristicaParaGuardarPT(item: ClasificacionCaracteristica)
+  {
+    for (let i = 0; i < this.clasificacionesCaracteristicasParaGuardarPT.length; i++) {
+      if (item.id_tipo_clasificacion == this.clasificacionesCaracteristicasParaGuardarPT[i].id_tipo_clasificacion &&
+         item.id_caracteristica == this.clasificacionesCaracteristicasParaGuardarPT[i].id_caracteristica &&
+         item.tipo_caracteristica == this.clasificacionesCaracteristicasParaGuardarPT[i].tipo_caracteristica) {
+            return i;
+          }
+    }
+    return -1;
+  }
+   /* ****************fin para almacenar cambios localmente PT************* */
+
+    /* ****************para almacenar cambios localmente MP************** */
+    enCambioEstadoMP(item: Caracteristicasfisicas) {// cambio de estado de los checkbox
+      item.checkeado = !item.checkeado;
+     let paraAgregar: ClasificacionCaracteristica;
+     paraAgregar = new ClasificacionCaracteristica();
+      if (item.checkeado) {
+        paraAgregar.id_clasificacion_caracteristica = 0;
+        paraAgregar.id_tipo_clasificacion = this.tipoClasificacionProductoMP;
+        paraAgregar.id_caracteristica = item.id_caracteristicas_fisicas;
+        paraAgregar.tipo_caracteristica = item.esp_car;
+        paraAgregar.estado = 1;
+        paraAgregar.usuario_creacion = localStorage.getItem('username');
+        paraAgregar.fecha_creacion = '0000-00-00 00:00:00';
+        paraAgregar.fecha_modificacion = '0000-00-00 00:00:00';
+        paraAgregar.usuario_modificacion = localStorage.getItem('username');
+        let indice = this.ExisteClasificacionCaracteristicaParaGuardarMP(paraAgregar);
+        if (indice >= 0) {
+            this.clasificacionesCaracteristicasParaGuardarMP[indice].estado = 1 ;
+          } else {
+            this.clasificacionesCaracteristicasParaGuardarMP.push(paraAgregar);
+          }
+       console.log(this.clasificacionesCaracteristicasParaGuardarMP);
+       // for (var i = 0; i < this.clasificacionesCaracteristicasParaGuardarPT.length; i++) {
+       // console.log(this.clasificacionesCaracteristicasParaGuardarPT[i].id_clasificacion_caracteristica);
+        // console.log(this.clasificacionesCaracteristicasParaGuardarPT[i]);
+       // }
+      } else {
+       this.eliminaElementoClasifCaracMP(item);
+      // for (var i = 0; i < this.clasificacionesCaracteristicasParaGuardarPT.length; i++) {
+        // console.log(this.clasificacionesCaracteristicasParaGuardarPT[i].id_clasificacion_caracteristica);
+         // console.log(this.clasificacionesCaracteristicasParaGuardarPT[i]);
+      // }
+       console.log(this.clasificacionesCaracteristicasParaGuardarMP);
+     }
+      // console.log(this.clasificacionesCaracteristicasParaGuardarPT);
+   }
+   eliminaElementoClasifCaracMP(itmcc: Caracteristicasfisicas) {
+    let nuevo: Array <ClasificacionCaracteristica>;
+    nuevo = new Array <ClasificacionCaracteristica>();
+    let resp = 0;
+    for (let i = 0; i < this.clasificacionesCaracteristicasParaGuardarMP.length; i++) {
+      let itemc = this.clasificacionesCaracteristicasParaGuardarMP[i];
+      if (itemc.id_tipo_clasificacion == this.tipoClasificacionProductoMP && itemc.id_caracteristica == itmcc.id_caracteristicas_fisicas
+        && itemc.tipo_caracteristica == itmcc.esp_car && itemc.id_clasificacion_caracteristica == 0 ) {
+           resp = 1;
+           // this.clasificacionesCaracteristicasParaGuardarPT[i].estado = -1;
+        } else {
+          if (itemc.id_tipo_clasificacion == this.tipoClasificacionProductoMP && itemc.id_caracteristica == itmcc.id_caracteristicas_fisicas
+            && itemc.tipo_caracteristica == itmcc.esp_car && itemc.id_clasificacion_caracteristica != 0)
+            {
+              this.clasificacionesCaracteristicasParaGuardarMP[i].estado = 0;
+            }
+          nuevo.push(this.clasificacionesCaracteristicasParaGuardarMP[i]);
+        }
+      }
+      this.clasificacionesCaracteristicasParaGuardarMP = nuevo;
+      return resp;
+   }
+   InsertaClasifCaracParaGuardarExistenteMP() {
+    this.clasificacionesCaracteristicasParaGuardarMP = new Array<ClasificacionCaracteristica>();
+    this.clasificacionesCaracteristicasCFmp.forEach(element => {
+      this.clasificacionesCaracteristicasParaGuardarMP.push(element);
+    })
+    this.clasificacionesCaracteristicasAQmp.forEach(element => {
+      this.clasificacionesCaracteristicasParaGuardarMP.push(element);
+    });
+    this.clasificacionesCaracteristicasCMmp.forEach(element => {
+      this.clasificacionesCaracteristicasParaGuardarMP.push(element);
+    });
+    console.log('Clasificacion caracteristica para guardar');
+    console.log(this.clasificacionesCaracteristicasParaGuardarMP);
+  }
+
+  ExisteClasificacionCaracteristicaParaGuardarMP(item: ClasificacionCaracteristica) {
+    for (let i = 0; i < this.clasificacionesCaracteristicasParaGuardarMP.length; i++) {
+      if (item.id_tipo_clasificacion == this.clasificacionesCaracteristicasParaGuardarMP[i].id_tipo_clasificacion &&
+         item.id_caracteristica == this.clasificacionesCaracteristicasParaGuardarMP[i].id_caracteristica &&
+         item.tipo_caracteristica == this.clasificacionesCaracteristicasParaGuardarMP[i].tipo_caracteristica ) {
+          console.log('comparando caracteristicas');
+          console.log(item.id_tipo_clasificacion + '==' + this.clasificacionesCaracteristicasParaGuardarMP[i].id_tipo_clasificacion 
+          + ' and ' + item.id_caracteristica + '==' + this.clasificacionesCaracteristicasParaGuardarMP[i].id_caracteristica + ' and ' +
+            item.tipo_caracteristica + '==' + item.tipo_caracteristica + '--' + i);
+            return i;
+          }
+    }
+    return -1;
+  }
+    /* ****************fin para almacenar cambios localmente MP***************** */
+
+    /* *** guardar cambios en la Bd PT*** */
+    
+    /**fin guardar cambios en la Bd PT*/
+
+  /* *** guardar cambios en la Bd MP*** */
+
+    /**fin guardar cambios en la Bd MT*/
+
 }
 

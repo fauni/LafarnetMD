@@ -222,22 +222,16 @@ getCodprodPorNombre(producto: string) {
     }
   }
   esInvalido() {
-    if (this.codingreso && this.descproveedor && this.fechaingreso && this.glosaingreso)
-    {
+    if (this.codingreso && this.descproveedor && this.fechaingreso && this.glosaingreso) {
       return false;
-    }
-    else
-    {
+    } else {
       return true;
     }
   }
   esInvalidoDet() {
-    if (this.descprod  && this.cantdet && this.loteprod && this.fechavenprod)
-    {
+    if (this.descprod  && this.cantdet && this.loteprod && this.fechavenprod) {
       return false;
-    }
-    else
-    {
+    } else {
       return true;
     }
   }
