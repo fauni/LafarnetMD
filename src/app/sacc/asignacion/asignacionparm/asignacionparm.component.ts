@@ -197,13 +197,13 @@ export class AsignacionparmComponent implements OnInit {
      else
       return true;
    }
-   cambiaEstadosChekPorClasificacionPT(){// cambia estados de los checkboxes dependiendo si existe la clasificacio_caracteristica
+   cambiaEstadosChekPorClasificacionPT() {// cambia estados de los checkboxes dependiendo si existe la clasificacio_caracteristica
     // console.log('recorriendo caracteristicas .....');
     this.resetcheckPT();
     this.caracteristicasPT.forEach(elementPT => {
       this.clasificacionesCaracteristicasCFpt.forEach(element => {
         // console.log (element);
-        if (elementPT.esp_car == 'CF' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas)
+        if (elementPT.esp_car == 'CF' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas && element.estado == 1)
           {
             // console.log('elemento elegido CF');
            // console.log('element');
@@ -211,14 +211,14 @@ export class AsignacionparmComponent implements OnInit {
           }
       });
       this.clasificacionesCaracteristicasAQpt.forEach(element => {
-        if(elementPT.esp_car == 'AQ' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas) {
+        if(elementPT.esp_car == 'AQ' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas && element.estado == 1) {
            // console.log('elemento elegido AQ');
            // console.log('element');
             elementPT.checkeado = true;
           }
       });
       this.clasificacionesCaracteristicasCMpt.forEach(element => { 
-       if(elementPT.esp_car == 'CM' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas) {
+       if(elementPT.esp_car == 'CM' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas && element.estado == 1) {
           // console.log('elemento elegido CM');
           // console.log('element');
            elementPT.checkeado = true;
@@ -233,21 +233,21 @@ export class AsignacionparmComponent implements OnInit {
     this.caracteristicasMP.forEach(elementMP => {
       this.clasificacionesCaracteristicasCFmp.forEach(element => {
         // console.log (element);
-        if (elementMP.esp_car == 'CF' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas) {
+        if (elementMP.esp_car == 'CF' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas && element.estado == 1) {
             // console.log('elemento elegido CF');
             // console.log('element');
             elementMP.checkeado = true;
           }
       });
       this.clasificacionesCaracteristicasAQmp.forEach(element => {
-        if(elementMP.esp_car == 'AQ' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas) {
+        if(elementMP.esp_car == 'AQ' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas && element.estado == 1) {
             // console.log('elemento elegido AQ');
             // console.log('element');
             elementMP.checkeado = true;
           }
       });
       this.clasificacionesCaracteristicasCMmp.forEach(element => {
-       if (elementMP.esp_car == 'CM' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas) {
+       if (elementMP.esp_car == 'CM' && element.id_caracteristica == elementMP.id_caracteristicas_fisicas && element.estado == 1) {
            // console.log('elemento elegido CM');
            // console.log('element');
            elementMP.checkeado = true;
@@ -276,13 +276,15 @@ export class AsignacionparmComponent implements OnInit {
             paraAgregar.id_caracteristica = item.id_caracteristicas_fisicas;
             paraAgregar.tipo_caracteristica = item.esp_car;
             paraAgregar.estado = 1;
-            paraAgregar.usuario_creacion= localStorage.getItem('username');
+            paraAgregar.usuario_creacion = localStorage.getItem('username');
             paraAgregar.fecha_creacion = '0000-00-00 00:00:00';
             paraAgregar.fecha_modificacion = '0000-00-00 00:00:00';
             paraAgregar.usuario_modificacion = localStorage.getItem('username');
             let indice = this.ExisteClasificacionCaracteristicaParaGuardarPT(paraAgregar);
             if (indice >= 0) {
                 this.clasificacionesCaracteristicasParaGuardarPT[indice].estado = 1 ;
+                this.clasificacionesCaracteristicasParaGuardarPT[indice].usuario_modificacion = localStorage.getItem('username');
+                this.clasificacionesCaracteristicasParaGuardarPT[indice].fecha_modificacion = this.fechaactual();
               } else {
                 this.clasificacionesCaracteristicasParaGuardarPT.push(paraAgregar);
               }
@@ -369,6 +371,8 @@ export class AsignacionparmComponent implements OnInit {
         let indice = this.ExisteClasificacionCaracteristicaParaGuardarMP(paraAgregar);
         if (indice >= 0) {
             this.clasificacionesCaracteristicasParaGuardarMP[indice].estado = 1 ;
+            this.clasificacionesCaracteristicasParaGuardarMP[indice].usuario_modificacion = localStorage.getItem('username');
+            this.clasificacionesCaracteristicasParaGuardarMP[indice].fecha_modificacion = this.fechaactual();
           } else {
             this.clasificacionesCaracteristicasParaGuardarMP.push(paraAgregar);
           }
@@ -440,13 +444,72 @@ export class AsignacionparmComponent implements OnInit {
   }
     /* ****************fin para almacenar cambios localmente MP***************** */
 
-    /* *** guardar cambios en la Bd PT*** */
-    
+    /*** guardar cambios en la Bd PT*** */
+    guardaBDListaClasifCaracPT() {
+       this.clasificacionesCaracteristicasParaGuardarPT.forEach(element => {
+         this.guardar(element);
+       });
+    }
     /**fin guardar cambios en la Bd PT*/
-
-  /* *** guardar cambios en la Bd MP*** */
-
+    /* *** guardar cambios en la Bd MP*** */
+    guardaBDListaClasifCaracMP() {
+      this.clasificacionesCaracteristicasParaGuardarMP.forEach(element => {
+        this.guardar(element);
+      });
+   }
     /**fin guardar cambios en la Bd MT*/
-
+    guardar(clasifacarac: ClasificacionCaracteristica) {
+      if (clasifacarac.id_clasificacion_caracteristica == 0) {
+        this.insertBDClasifCarac(clasifacarac);
+      } else {
+        this.updateBDClasifCarac(clasifacarac);
+      }
+    }
+    insertBDClasifCarac(clasifacarac: ClasificacionCaracteristica) {
+      this.servClasificacionCaracteristica.insertClasificacionCaracteristica (clasifacarac).subscribe(
+        data => {
+          console.log(data);
+                },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              console.log('Ocurrio un error:', err.error.message);
+            } else {
+              console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+          }
+      ) ;
+     }
+     updateBDClasifCarac(clasifacarac: ClasificacionCaracteristica) {
+      this.servClasificacionCaracteristica.updateClasificacionCaracteristica (clasifacarac).subscribe(
+        data => {
+          console.log(data);
+                },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              console.log('Ocurrio un error:', err.error.message);
+            } else {
+              console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+          }
+      ) ;
+     }
+activaBoton(tipoclasif: string) {
+  if (tipoclasif == '0') { return true; } else { return false; }
+}
+ fechaactual() {
+  let fecha = new Date();
+  let fechafor = fecha.getFullYear() + '-' + this.ceros(fecha.getMonth() + 1) + '-' + this.ceros(fecha.getDate()) + ' ' +
+           this.ceros(fecha.getHours()) + ':' + this.ceros(fecha.getMinutes()) + ':' + this.ceros(fecha.getSeconds());
+  return fechafor;
+ }
+    ceros(valor) {
+       let nval = '';
+       if (valor < 10) {
+         nval = '0' + valor;
+       }else {
+          nval = '' + valor;
+       }
+     return nval;
+    }
 }
 

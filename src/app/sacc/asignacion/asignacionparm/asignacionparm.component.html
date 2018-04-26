@@ -71,7 +71,15 @@
                                                                           [checked]="cambiatipocheck(itmcm.checkeado)"
                                                                           (change)="enCambioEstadoPT(itmcm)">
                                                                 </mz-checkbox-container>
-                                                        </div>  
+                                                        </div>
+                        <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+                                <button class="btn-floating btn-large green"
+                                [disabled] = "activaBoton(tipoClasificacionProductoPT)"
+                                (click)= "guardaBDListaClasifCaracPT()"
+                                >
+                                   <i class="large mdi-action-done"></i>
+                                </button>
+                        </div>  
                                 </mz-collapsible-item-body>
                             </mz-collapsible-item>
                 <mz-collapsible-item [active]="false">
@@ -115,7 +123,14 @@
                                                           (change)="enCambioEstadoMP(itmcm2)">
                                                 </mz-checkbox-container>
                                             </div>  
-                                    
+                                            <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+                                                <button class="btn-floating btn-large green"
+                                                [disabled] = "activaBoton(tipoClasificacionProductoMP)"
+                                                (click) = "guardaBDListaClasifCaracMP()"
+                                                >
+                                                   <i class="large mdi-action-done"></i>
+                                                </button>
+                                           </div>  
                     </mz-collapsible-item-body>
                 </mz-collapsible-item>
             </mz-collapsible>

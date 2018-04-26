@@ -16,4 +16,10 @@ export class ClasificacionCaracteristicaService {
   getClasificacionCaracteristicaCFAQCM(): Observable<any> {
     return this.http.get(this.global.urlAPI + 'clasificacion_caracteristica/GetAlljoinCFAQCM');
   }
+  insertClasificacionCaracteristica(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'saccclasificacioncaracteristicas/save' , data);
+  }
+  updateClasificacionCaracteristica (data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'saccclasificacioncaracteristicas/edit' , data);
+  }
 }

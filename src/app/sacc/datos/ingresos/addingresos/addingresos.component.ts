@@ -182,12 +182,11 @@ guardaIngreso() {
           }
         }
     ) ;
-  }
+   }
 getIdprovPorNombre(proveedor: string) {
   let nombre: string = '';
   this.proveedores.forEach(element => {
-  if ( proveedor == element.Nombre_Proveedor)
-  {
+  if ( proveedor == element.Nombre_Proveedor) {
       nombre = element.Cod_Proveedor;
   }
 });
