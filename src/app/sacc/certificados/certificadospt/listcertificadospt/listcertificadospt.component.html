@@ -36,14 +36,13 @@
             <td>{{certificado.fecha_analisis}}</td>
             <td>{{certificado.codigo_producto}}</td>
             <td>{{certificado.dictamen}}</td>
-            <td><a [routerLink]="['/sacc/datos/analista/detail', certificado.codigo]">Ver mas Detalles</a> </td>
+            <td><a href="javascript:void(0)" (click)="obtenerDatosReporte(certificado.codigo_certificado)">Vista Previa</a></td>
         </tr>
       </tbody>
     </table>
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
   </div>
-  
   
   
   <mz-modal #modalVerAnalista [fixedFooter]="true" [bottomSheet]="true">

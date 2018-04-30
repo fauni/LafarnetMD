@@ -8,6 +8,7 @@ import { Globals } from '../../globals';
 @Injectable()
 export class CertificadosService {
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
+  private headerspdf = new HttpHeaders().set('Content-Type', 'application/json');
   private headers2 = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
   constructor(private http: HttpClient, private global: Globals) { }
 
@@ -17,5 +18,34 @@ export class CertificadosService {
 
   getCertificados() {
     return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/pt');
+  }
+
+  getCertificado(data) {
+    return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/get/' + data);
+  }
+
+  getCertificadoPorLote(data) {
+    let codigo: string = data;
+    return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/getl/' + codigo.replace('/', '['));
+  }
+
+  getReporteCertificados(data): Observable<any> {
+    return this.http.post(this.global.urlIntranet + 'reportessacc/reportept.php', data);
+  }
+
+  saveCertificadoCaracteristica(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'sacccertificadoanalisis/savec', data);
+  }
+
+  getCFCertificado(data) {
+    return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/getCF/' + data);
+  }
+
+  getAQCertificado(data) {
+    return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/getAQ/' + data);
+  }
+
+  getCMCertificado(data) {
+    return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/getCM/' + data);
   }
 }

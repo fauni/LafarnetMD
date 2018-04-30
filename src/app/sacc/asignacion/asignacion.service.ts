@@ -26,4 +26,21 @@ export class AsignacionService {
   saveAsignacion(data) {
     return this.http.post(this.global.urlAPI + 'saccproductosespecificacion/save', data);
   }
+
+  updateEstadoAsignacion(data) {
+    return this.http.put(this.global.urlAPI + 'saccproductosespecificacion/edit', data);
+  }
+
+  modificarAsignacion(data) {
+    return this.http.put(this.global.urlAPI + 'saccproductosespecificacion/editEspecificacion', data);
+  }
+
+  modificarTodosLosEstadosPorProducto(data) {
+    return this.http.put(this.global.urlAPI + 'saccproductosespecificacion/changeAllEstados', data);
+  }
+
+  existe(data) {
+    return this.http.post(this.global.urlAPI + 'saccproductosespecificacion/existe', data);
+  }
+
 }

@@ -13,6 +13,7 @@ import { Productos } from '../../../datos/productos/productos';
 import { AsignacionService } from '../../../asignacion/asignacion.service';
 import { Caracteristicas } from '../../../asignacion/caracteristicas';
 import { CertificadosService } from '../../certificados.service';
+import { CaracteristicasCertificado } from '../../caracteristicascertificado';
 
 @Component({
   selector: 'app-addcertificadopt',
@@ -20,6 +21,19 @@ import { CertificadosService } from '../../certificados.service';
   styleUrls: ['./addcertificadopt.component.scss']
 })
 export class AddcertificadoptComponent implements OnInit {
+  numero_lote = '';
+  // Button Switch
+  labelOff = 'Resultados en Blanco';
+  labelOn = 'Copiar Resultados';
+  esCopia = false;
+
+  // End Button Switch
+
+  // Button Switch Tipo de Impresion de Certificado
+  labelOffTC = 'Reimpresion';
+  labelOnTC = 'Nuevo';
+  reimpresion = true;
+
   analistas: Array<Analista>;
   productos: Array<Productos>;
   certificado: Certificados;
@@ -37,6 +51,15 @@ export class AddcertificadoptComponent implements OnInit {
   cf: Caracteristicas;
   aq: Caracteristicas;
   cm: Caracteristicas;
+
+  // Variables de Caracteristicas definidas para el Certificado
+  lccf: Array<CaracteristicasCertificado>;
+  lcaq: Array<CaracteristicasCertificado>;
+  lccm: Array<CaracteristicasCertificado>;
+
+  ccf: CaracteristicasCertificado;
+  caq: CaracteristicasCertificado;
+  ccm: CaracteristicasCertificado;
 
   options: Pickadate.DateOptions = {
     clear: 'Borrar', // Clear button text
@@ -62,6 +85,7 @@ export class AddcertificadoptComponent implements OnInit {
     private completerService: CompleterService,
     private servAsignacion: AsignacionService) {
       this.certificado = new Certificados();
+      this.certificado.tipo_impresion = 'nuevo';
       this.producto = new Productos();
 
       // Inicializamos lista de caracteristicas
@@ -194,21 +218,93 @@ export class AddcertificadoptComponent implements OnInit {
       }
     });
     console.log('Imprimiendo Caracteristicas Fisicas');
-    console.log(this.lcf);
+    this.lccf = this.changeCC(this.lcf);
+    console.log(this.lccf);
+
     console.log('Imprimiendo Analisis Quimico');
-    console.log(this.laq);
+    this.lcaq = this.changeCC(this.laq);
+    console.log(this.lcaq);
+
     console.log('Imprimiendo Control Microbiológico');
-    console.log(this.lcm);
+    this.lccm = this.changeCC(this.lcm);
+    console.log(this.lccm);
   }
 
+  changeCC(lc: Array<Caracteristicas>): Array<CaracteristicasCertificado> {
+    let lista: Array<CaracteristicasCertificado> = new Array<CaracteristicasCertificado>();
+    lc.forEach(element => {
+      let c: CaracteristicasCertificado = new CaracteristicasCertificado();
+      c.codigo_certificado = '';
+      c.codigo_producto = element.codigo;
+      c.id_caracteristica = element.id_caracteristica;
+      c.descripcion = element.descripcion;
+      c.especificacion = element.especificacion;
+      c.resultado = '';
+      c.tipo_caracteristica = element.tipo_caracteristica;
+      c.estado = element.estado;
+      lista.push(c);
+    });
+    return lista;
+  }
+
+  copiarResultados() {
+    //alert(this.esCopia);
+    if (this.esCopia) {
+      this.copiarEspecificacionAResultado();
+    }else {
+      this.limpiarResultados();
+    }
+    this.cambiarTipoImpresionCertificado();
+  }
+
+  cambiarTipoImpresionCertificado() {
+    //alert('Cambiando');
+    //console.log(this.certificado);
+    if (this.reimpresion) {
+      this.certificado.tipo_impresion = 'reimpresion';
+    } else {
+      this.certificado.tipo_impresion = 'nuevo';
+    }
+  }
+
+  copiarEspecificacionAResultado(): void {
+    this.lccf.forEach(element => {
+      element.resultado = element.especificacion;
+    });
+    this.lcaq.forEach(element => {
+      element.resultado = element.especificacion;
+    });
+    this.lccm.forEach(element => {
+      element.resultado = element.especificacion;
+    });
+  }
+
+  limpiarResultados(): void {
+    this.lccf.forEach(element => {
+      element.resultado = '';
+    });
+    this.lcaq.forEach(element => {
+      element.resultado = '';
+    });
+    this.lccm.forEach(element => {
+      element.resultado = '';
+    });
+  }
 
   guardarCertificado(): void {
+    //console.log(this.certificado);
     this.servCertificados.setCertificados(this.certificado).subscribe(
       data => {
         if (data.status == 200) {
+          // Guardando las caracteristicas del certificado
+          let codcertificado: string = data.body['codigo_certificado'];
+
+          this.onGuardarCaracteristicasCertificacion(codcertificado, this.lccf);
+          this.onGuardarCaracteristicasCertificacion(codcertificado, this.lcaq);
+          this.onGuardarCaracteristicasCertificacion(codcertificado, this.lccm);
+
           this.openNotificacion(1, 'Correcto!', 'Se guardo correctamente');
           this.router.navigate(['/sacc/certificados/pt']);
-          //this.router.navigate(['/admin/users/list']);
         }else {
           this.openNotificacion(3, 'No se guardo', 'Intente nuevamente!');
         }
@@ -225,6 +321,112 @@ export class AddcertificadoptComponent implements OnInit {
       }
     );
   }
+
+  onGuardarCaracteristicasCertificacion(codigocertificado: string, lista: Array<CaracteristicasCertificado>) {
+    lista.forEach(element => {
+      let cc: CaracteristicasCertificado = new CaracteristicasCertificado();
+      cc = element;
+      cc.codigo_certificado = codigocertificado;
+      this.onGuardarUnaSolaCaracteristica(cc);
+    });
+  }
+
+  onGuardarUnaSolaCaracteristica(c: CaracteristicasCertificado) {
+    this.servCertificados.saveCertificadoCaracteristica(c).subscribe(
+      data => {
+        if (data.status == 200) {
+          console.log('Guardando...');
+          console.log(this.certificado);
+        }else {
+          this.openNotificacion(3, 'No se guardo', 'Intente nuevamente!');
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+        this.openNotificacion(3, 'Ocurrio un error', 'Comuniquese con el Administrador');
+      }
+    );
+  }
+
+  onLoadCertificado() {
+    this.certificado = new Certificados();
+    this.servCertificados.getCertificadoPorLote(this.numero_lote).subscribe(data => {
+      console.log('Se cargo correctamente este certificado');
+      // console.log(data);
+      this.certificado = data['body'][0];
+      console.log(this.certificado);
+      this.onLoadCFCertificado(this.certificado.codigo_certificado);
+    }, (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log('Ocurrio un error:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+      }
+    });
+  }
+
+
+  onLoadCFCertificado(codigo_certificado: String) {
+    this.servCertificados.getCFCertificado(codigo_certificado).subscribe(data => {
+      console.log('Se cargo correctamente Lista Caracteristicas Fisicas');
+      // console.log(data);
+      this.lccf = data['body'];
+      console.log(this.lccf);
+      this.onLoadAQCertificado(codigo_certificado);
+    }, (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log('Ocurrio un error:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+      }
+    });
+  }
+
+  onLoadAQCertificado(codigo_certificado: String) {
+    this.servCertificados.getAQCertificado(codigo_certificado).subscribe(data => {
+      console.log('Se cargo correctamente Lista Analisis Quimico');
+      // console.log(data);
+      this.lcaq = data['body'];
+      console.log(this.lcaq);
+      this.onLoadCMCertificado(codigo_certificado);
+    }, (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log('Ocurrio un error:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+      }
+    });
+  }
+
+  onLoadCMCertificado(codigo_certificado: String) {
+    this.servCertificados.getCMCertificado(codigo_certificado).subscribe(data => {
+      console.log('Se cargo correctamente Lista Control Microbiologico');
+      // console.log(data);
+      this.lccm = data['body'];
+      console.log(this.lccm);
+    }, (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        console.log('Ocurrio un error:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+      }
+    });
+  }
+
 
   openLoading() {
     const loading = $('#loading');
