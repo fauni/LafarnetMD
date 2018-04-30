@@ -11,7 +11,8 @@ const routes: Routes = [
             { path: 'main', loadChildren: './mainasignacion/mainasignacion.module#MainasignacionModule' },
             { path: 'mp', loadChildren: './asignacionmp/asignacionmp.module#AsignacionmpModule' },
             { path: 'pt', loadChildren: './asignacionpt/asignacionpt.module#AsignacionptModule' },
-            { path: 'parm', loadChildren: './asignacionparm/asignacionparm.module#AsignacionparmModule' }
+            { path: 'parm', loadChildren: './asignacionparm/asignacionparm.module#AsignacionparmModule' },
+            { path: 'carac', loadChildren: './asignacioncaracteristicas/asignacioncaracteristicas.module#AsignacionCaracteristicasModule' }
         ]
     }
 ];

@@ -1,0 +1,95 @@
+<mz-parallax class="header-background" [height]="170">
+    <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+  
+<div id="preview" class="header-content valign-wrapper lafar-light">
+    <img class="image-user circle" src="assets/images/userlafar.png">
+    <div class="nombre-user">CARACTERISTICAS</div>
+
+</div>
+<div class="contenido-principal">
+  <mz-card>
+    <mz-card-content>
+      <mz-collapsible
+        [mode]="'accordion'"
+        [popout]="true">
+      <mz-collapsible-item>
+      <mz-collapsible-item-header>
+            <h5 style="color:dodgerblue;">PRODUCTO TERMINADO</h5>
+            </mz-collapsible-item-header>
+            <mz-collapsible-item-body>
+            <div class="row">
+                <table class="bordered">
+                <thead>
+                    <tr>
+                    <th>Nro</th>
+                    <th (click)="sort('descripcion')">Descripcion
+                        <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='codigo'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                    </th>
+                    <th (click)="sort('tipo')">Tipo
+                        <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                    </th>
+                    <th style= "text-align:right;">
+                        <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='opciones'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                    </th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor= "let item of caracteristicasPT" > 
+                    <td>{{item.id_caracteristicas_fisicas }}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td>{{item.esp_car}}</td>
+                    <td >.:Ver Detalles:.</td>
+                    </tr>
+                </tbody>
+                </table>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div> 
+            </mz-collapsible-item-body>
+        </mz-collapsible-item>
+        <mz-collapsible-item>
+            <mz-collapsible-item-header>
+                    <h5 style="color:red;">MATERIA PRIMA</h5>
+            </mz-collapsible-item-header>
+            <mz-collapsible-item-body>
+            <div class="row">
+                    <table class="bordered">
+                    <thead>
+                        <tr>
+                        <th>Nro</th>
+                        <th (click)="sort('descripcion')">Descripcion
+                            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='codigo'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                        </th>
+                        <th (click)="sort('tipo')">Tipo
+                            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                        </th>
+                        <th style= "text-align:right;">
+                            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='opciones'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                        </th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor= "let item of caracteristicasMP" > 
+                            <td>{{item.id_caracteristicas_fisicas }}</td>
+                            <td>{{item.descripcion}}</td>
+                            <td>{{item.esp_car}}</td>
+                            <td >.:Ver Detalles:.</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div> 
+            </mz-collapsible-item-body> 
+        </mz-collapsible-item>
+    </mz-collapsible>
+</mz-card-content>
+</mz-card>    
+</div><!--contenido principal-->
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+  <a class="btn-floating btn-large green" [routerLink]="['/sacc/datos/ingresos/add']" >
+<!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+  <i class="large mdi-content-add"></i>
+</a>
+</div>  
