@@ -24,6 +24,41 @@
     <!--<form #certificadoPTForm = "ngForm" novalidate>-->
         <mz-card>
             <mz-card-content>
+                <nav style="background: #CFD8DC; color: #0d47a1; padding-right: 10px;">
+                    <div class="nav-wrapper">
+                        <div class="col s12">
+                            <ul *ngIf="!reimpresion" id="nav-mobile" class="left hide-on-med-and-down">
+                                <form (ngSubmit)="onLoadCertificado()">
+                                <li><a href="javascript:void(0)" type="submit"><i style="color: #0d47a1;" class="mdi-action-search"></i></a></li>
+                                <li>
+                                    <mz-input-container class="col s12 m12">
+                                        <input mz-input
+                                            [label]="'Ingrese Numero de Lote'"
+                                            id="numero_lote"
+                                            name="numero_lote"
+                                            style="width: 300px;"
+                                            type="text"
+                                            [(ngModel)]="numero_lote">
+                                    </mz-input-container>
+                                </li>
+                                </form>
+                            </ul>
+                            <ul class="right hide-on-med-and-down">
+                                <li>
+                                    <mz-switch-container>
+                                    <input mz-switch
+                                        [off]="labelOffTC"
+                                        [on]="labelOnTC"
+                                        [(ngModel)]="reimpresion"
+                                        (change)="cambiarTipoImpresionCertificado()"
+                                        type="checkbox">
+                                    </mz-switch-container>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <br>
                 <div class="row">
                     <mz-input-container class="col l4 s12 m4">
                         <input mz-input required
@@ -182,10 +217,19 @@
 
         <mz-card>
             <mz-card-content>
+                <mz-switch-container>
+                <input mz-switch
+                    [off]="labelOff"
+                    [on]="labelOn"
+                    [(ngModel)]="esCopia"
+                    (change)="copiarResultados()"
+                    type="checkbox">
+                </mz-switch-container>
+                <hr>
                 <mz-tab [fixedTabWidth]="'true'">
                     <mz-tab-item [class]="'col s12'" [label]="'Caracteristicas Fisicas'">
-                        <div class="row">
-                            <mz-input-container *ngFor="let c of lcf" class="col l6 s12 m6">
+                        <div class="row" *ngFor="let c of lccf">
+                            <mz-input-container  class="col l6 s12 m12">
                                 <input mz-input required
                                 id="{{c.especificacion}}"
                                 name="{{c.especificacion}}"
@@ -194,19 +238,20 @@
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
                                 [(ngModel)]="c.especificacion">
                             </mz-input-container>
-                            <mz-input-container *ngFor="let c of lcf" class="col l6 s12 m6">
+                            <mz-input-container class="col l6 s12 m12">
                                 <input mz-input required
-                                    id="resultado_{{c.especificacion}}"
-                                    name="resultado_{{c.especificacion}}"
+                                    id="{{c.resultado}}"
+                                    name="{{c.resultado}}"
                                     type="text"
                                     [label]="'Resultado'"
-                                    placeholder="Introduzca un Resultado para {{c.descripcion}}">
+                                    placeholder="Introduzca un Resultado para {{c.descripcion}}"
+                                    [(ngModel)]="c.resultado">
                             </mz-input-container>
                         </div>
                     </mz-tab-item>
                     <mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
-                        <div class="row">
-                            <mz-input-container *ngFor="let c of laq" class="col l6 s12 m6">
+                        <div class="row" *ngFor="let c of lcaq">
+                            <mz-input-container class="col l6 s12 m12">
                                 <input mz-input required
                                 id="{{c.especificacion}}"
                                 name="{{c.especificacion}}"
@@ -215,19 +260,20 @@
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
                                 [(ngModel)]="c.especificacion">
                             </mz-input-container>
-                            <mz-input-container *ngFor="let c of laq" class="col l6 s12 m6">
+                            <mz-input-container class="col l6 s12 m12">
                                 <input mz-input required
-                                    id="resultado_{{c.especificacion}}"
-                                    name="resultado_{{c.especificacion}}"
+                                    id="{{c.resultado}}"
+                                    name="{{c.resultado}}"
                                     type="text"
                                     [label]="'Resultado'"
-                                    placeholder="Introduzca un Resultado para {{c.descripcion}}">
+                                    placeholder="Introduzca un Resultado para {{c.descripcion}}"
+                                    [(ngModel)]="c.resultado">
                             </mz-input-container>
                         </div>
                     </mz-tab-item>
                     <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
-                        <div class="row">
-                            <mz-input-container *ngFor="let c of lcm" class="col l6 s12 m6">
+                        <div class="row" *ngFor="let c of lccm">
+                            <mz-input-container class="col l6 s12 m12">
                                 <input mz-input required
                                 id="{{c.especificacion}}"
                                 name="{{c.especificacion}}"
@@ -236,13 +282,14 @@
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
                                 [(ngModel)]="c.especificacion">
                             </mz-input-container>
-                            <mz-input-container *ngFor="let c of lcm" class="col l6 s12 m6">
+                            <mz-input-container class="col l6 s12 m12">
                                 <input mz-input required
-                                    id="resultado_{{c.especificacion}}"
-                                    name="resultado_{{c.especificacion}}"
+                                    id="{{c.resultado}}"
+                                    name="{{c.resultado}}"
                                     type="text"
                                     [label]="'Resultado'"
-                                    placeholder="Introduzca un Resultado para {{c.descripcion}}">
+                                    placeholder="Introduzca un Resultado para {{c.descripcion}}"
+                                    [(ngModel)]="c.resultado">
                             </mz-input-container>
                         </div>
                     </mz-tab-item>

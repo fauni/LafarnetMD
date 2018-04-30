@@ -14,6 +14,7 @@ export class Certificados {
     public codigo_producto: string;
     public dictamen: string;
     public observaciones: string;
+    public tipo_impresion: string;
 
     public usuario_creacion: string;
     public fecha_creacion: string;

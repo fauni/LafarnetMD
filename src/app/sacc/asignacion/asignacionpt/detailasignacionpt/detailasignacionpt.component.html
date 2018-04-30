@@ -12,17 +12,23 @@
 </div>
     
 <div class="contenido-principal" style="padding-top: 10px;">
-    <mz-navbar [navbarClass]="'blue'">
-        <mz-navbar-item-container [align]="'right'">
-            <mz-navbar-item><a href="javascript:void(0)">Agregar Nuevo</a></mz-navbar-item>
-            <mz-navbar-item><a href="javascript:void(0)">Quitar</a></mz-navbar-item>
-        </mz-navbar-item-container>
-    </mz-navbar>
+
+    <nav class="lafar-bg-blue">
+        <div class="nav-wrapper">
+            <div class="col s12">
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a href="javascript:void(0)" (click)="ModalCaracteristicas.open()">
+                            <i class="mdi-av-playlist-add left"></i>Modificar Caracteristicas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div *ngIf="show">
         <mz-card>
-            <mz-card-title>
-                PRODUCTO
-            </mz-card-title>
             <mz-card-content>
                 <mz-tab [fixedTabWidth]="'true'">
                     <mz-tab-item [class]="'col s12'" [label]="'Caracteristicas Fisicas'">
@@ -65,7 +71,7 @@
                 [disabled]="false" 
                 class="green" 
                 type="button"
-                (click)="guardarAsignacionProductoPR()">
+                (click)="guardarAsignacionCaracteristicaProducto()">
                 <i class="large mdi-action-done"></i>
             </button>
         </div>
@@ -73,9 +79,6 @@
     </div>
     <div *ngIf="!show">
         <mz-card>
-            <mz-card-title>
-                CLASIFICACION
-            </mz-card-title>
             <mz-card-content>
                 <mz-tab [fixedTabWidth]="'true'">
                     <mz-tab-item [class]="'col s12'" [label]="'Caracteristicas Fisicas'">
@@ -118,7 +121,7 @@
                 [disabled]="false" 
                 class="green" 
                 type="button"
-                (click)="guardarAsignacionProductoCL()">
+                (click)="guardarAsignacionCaracteristicaProducto()">
                 <i class="large mdi-action-done"></i>
             </button>
         </div>
@@ -126,3 +129,48 @@
 </div>
 
 
+<mz-modal #ModalCaracteristicas [fixedFooter]="true" [bottomSheet]="true">
+    <mz-modal-content>
+        <div style="padding: 15px;">
+            <h5 class="light">Caracteristicas Físicas</h5>
+            <div class="row">
+                <mz-checkbox-container class="col s6 m3" *ngFor ="let itm of lcfPT" >
+                    <input mz-checkbox
+                        [label]="itm.descripcion"
+                        id="checkbox-{{itm.esp_car}}-{{itm.tipo}}-{{itm.id_caracteristicas_fisicas}}"
+                        type="checkbox"
+                        [checked]="cambiatipocheck(itm.checkeado)"
+                        (change)="cambiaEstadoAddOrRemove(itm)">
+                </mz-checkbox-container>
+            </div>
+            <h5 class="light">Analisis Químico</h5>
+            <div class="row">
+                <mz-checkbox-container class="col s6 m3" *ngFor ="let itm of laqPT" >
+                    <input mz-checkbox
+                        [label]="itm.descripcion"
+                        id="checkbox-{{itm.esp_car}}-{{itm.tipo}}-{{itm.id_caracteristicas_fisicas}}"
+                        type="checkbox"
+                        [checked]="cambiatipocheck(itm.checkeado)"
+                        (change)="cambiaEstadoAddOrRemove(itm)">
+                </mz-checkbox-container>
+            </div>
+            <h5 class="light">Control Microbiológico</h5>
+            <div class="row">
+                <mz-checkbox-container class="col s6 m3" *ngFor ="let itm of lcmPT" >
+                    <input mz-checkbox
+                        [label]="itm.descripcion"
+                        id="checkbox-{{itm.esp_car}}-{{itm.tipo}}-{{itm.id_caracteristicas_fisicas}}"
+                        type="checkbox"
+                        [checked]="cambiatipocheck(itm.checkeado)"
+                        (change)="cambiaEstadoAddOrRemove(itm)">
+                </mz-checkbox-container>
+            </div>
+        </div>          
+    </mz-modal-content>
+    <mz-modal-footer>
+        <button mz-button [flat]="true" (click)='openNotificacion(1, "Correcto!","Los cambios fueron guardados correctamente")' mz-modal-close>Aceptar</button>
+    </mz-modal-footer>
+</mz-modal>
+
+
+<simple-notifications></simple-notifications>

@@ -11,13 +11,14 @@ import { MzParallaxModule,
     MzDatepickerModule,
     MzTabModule,
     MzSpinnerModule,
-    MzTextareaModule
+    MzTextareaModule,
+    MzCheckboxModule
 } from 'ng2-materialize';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { MzCardModule } from 'ng2-materialize';
+import { MzCardModule, MzSwitchModule } from 'ng2-materialize';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
 import { AddcertificadoptRoutingModule } from './addcertificadopt-routing.module';
@@ -47,9 +48,11 @@ import { CertificadosService } from '../../certificados.service';
         MzTextareaModule,
         MzCardModule,
         MzTabModule,
+        MzCheckboxModule,
         FormsModule,
         SimpleNotificationsModule,
         MzSpinnerModule,
+        MzSwitchModule
     ],
     declarations: [AddcertificadoptComponent],
     providers: [NotificationsService, AnalistasService, ProductosService, AsignacionService, CertificadosService]
