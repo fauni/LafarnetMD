@@ -18,6 +18,7 @@ import { MzModalModule,
     MzDropdownModule,
     MzCollapsibleModule} from 'ng2-materialize';
 import { FormsModule } from '@angular/forms';
+import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
     imports: [
@@ -37,9 +38,10 @@ import { FormsModule } from '@angular/forms';
         Ng2SearchPipeModule,
         Ng2OrderModule,
         NgxPaginationModule,
-        MzCollapsibleModule
+        MzCollapsibleModule,
+        SimpleNotificationsModule
     ],
     declarations: [ListAsignacionCaracteristicasComponent],
-    providers: [CaracteristicasService]
+    providers: [CaracteristicasService, NotificationsService]
 })
 export class ListAsignacionCaracteristicasModule {}

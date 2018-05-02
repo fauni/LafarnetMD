@@ -19,6 +19,7 @@ import {
     MzCollapsibleModule
 } from 'ng2-materialize';
 import {FormsModule} from '@angular/forms';
+import { NotificationsService, SimpleNotificationsModule } from 'angular2-notifications';
 
 
 @NgModule({
@@ -36,10 +37,14 @@ import {FormsModule} from '@angular/forms';
         MzRadioButtonModule,
         MzSelectModule,
         FormsModule,
-        MzCollapsibleModule
+        MzCollapsibleModule,
+        SimpleNotificationsModule
     ],
     declarations: [AsignacionparmComponent],
-    providers: [ClasificacionService, ClasificacionCaracteristicaService, CaracteristicasService]
+    providers: [ClasificacionService,
+                ClasificacionCaracteristicaService,
+                CaracteristicasService,
+                NotificationsService]
 })
 
 export class AsignacionparmModule {}

@@ -16,4 +16,7 @@ export class CaracteristicasService {
   getCaracteristicasPT(): Observable<any> {
     return this.http.get(this.global.urlAPI + 'caracteristicas/getPT');
   }
+  addCaracteristica($data): Observable<any>{
+    return this.http.post(this.global.urlAPI + 'caracteristicas/save', $data);
+  }
 }
