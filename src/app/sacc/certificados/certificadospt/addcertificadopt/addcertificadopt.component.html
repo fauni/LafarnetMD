@@ -81,14 +81,20 @@
                         required>
                     </mz-datepicker-container>
 
-                    <mz-input-container class="col l4 s12 m4">
-                        <input mz-input required
-                            id="protocolo"
-                            name="protocolo"
-                            type="text"
-                            [label]="'Protocolo'"
-                            [(ngModel)]="certificado.protocolo">
-                    </mz-input-container>
+                    <div style="padding: 12px 10px" class="col l4 s12 m4">
+                        <ng2-completer 
+                            (selected)="onSelectProducto($event)"    
+                            [datasource]="productosData"
+                            [minSearchLength]="0"
+                            [maxChars]="10"
+                            [inputClass]="'form-control'"
+                            [placeholder]="'Codigo o Nombre del Producto'"
+                            [matchClass]="'match'"
+                            [autofocus]="true"
+                            [textSearching]="false">
+                        </ng2-completer>
+                    </div>
+                    
                 </div>
                 <div class="row">
                     <div style="padding: 12px 10px" class="col l4 s12 m4">
@@ -178,19 +184,15 @@
                 </div>
 
                 <div class="row">
-                    <div style="padding: 12px 10px" class="col l4 s12 m4">
-                        <ng2-completer 
-                            (selected)="onSelectProducto($event)"    
-                            [datasource]="productosData"
-                            [minSearchLength]="0"
-                            [maxChars]="10"
-                            [inputClass]="'form-control'"
-                            [placeholder]="'Codigo del Producto'"
-                            [matchClass]="'match'"
-                            [autofocus]="true"
-                            [textSearching]="false">
-                        </ng2-completer>
-                    </div>
+                    
+                    <mz-input-container class="col l4 s12 m4">
+                        <input mz-input required
+                            id="protocolo"
+                            name="protocolo"
+                            type="text"
+                            [label]="'Protocolo'"
+                            [(ngModel)]="certificado.protocolo">
+                    </mz-input-container>
 
                     <mz-input-container class="col l4 s12 m4">
                         <input mz-input required
@@ -211,6 +213,26 @@
                             <option>REPROBADO</option>
                         </select>
                     </mz-select-container>
+                </div>
+
+                <div class="row">
+                    <mz-input-container class="col l8 s12 m12">
+                        <input mz-input required
+                            id="concentracion"
+                            name="concentracion"
+                            type="text"
+                            [label]="'Concentración'"
+                            [(ngModel)]="certificado.concentracion">
+                    </mz-input-container>
+
+                    <mz-input-container class="col l4 s12 m12">
+                        <input mz-input required
+                            id="forma_farmaceutica"
+                            name="forma_farmaceutica"
+                            type="text"
+                            [label]="'Forma Farmaceutica'"
+                            [(ngModel)]="certificado.forma_farmaceutica">
+                    </mz-input-container>
                 </div>
             </mz-card-content>
         </mz-card>
