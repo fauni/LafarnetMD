@@ -46,6 +46,12 @@
                 </table>
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div> 
+            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                <a class="btn-floating btn-large green" (click)='modalNuevaCaracteristicaPT.open()'> <!--[routerLink]="['/sacc/datos/ingresos/add']"-->
+              <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+                <i class="large mdi-content-add" ></i>
+              </a>
+              </div>
             </mz-collapsible-item-body>
         </mz-collapsible-item>
         <mz-collapsible-item>
@@ -81,15 +87,112 @@
                     </table>
                     <pagination-controls (pageChange)="p = $event"></pagination-controls>
                 </div> 
+                <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                    <a class="btn-floating btn-large green" (click)='modalNuevaCaracteristicaMP.open()'> <!--[routerLink]="['/sacc/datos/ingresos/add']"-->
+                  <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+                    <i class="large mdi-content-add"></i>
+                  </a>
+                  </div>
             </mz-collapsible-item-body> 
         </mz-collapsible-item>
     </mz-collapsible>
 </mz-card-content>
 </mz-card>    
 </div><!--contenido principal-->
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-  <a class="btn-floating btn-large green" [routerLink]="['/sacc/datos/ingresos/add']" >
-<!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
-  <i class="large mdi-content-add"></i>
-</a>
-</div>  
+<!--modal para Producto Terminado-->
+  <mz-modal #modalNuevaCaracteristicaPT [fixedFooter]="false" [bottomSheet]="false">
+    <mz-modal-header>
+        <h4 style="text-align:center;">Nueva Caracteristica para Producto Terminado</h4> 
+       </mz-modal-header>
+       <mz-modal-content>
+            <div class="row">
+                    <mz-input-container  class="col s12 m6">
+                            <input mz-input required
+                            id="descripcionPT"
+                            name="descripcionPT"
+                            type="text"
+                            length="80"
+                            width="80"
+                            [label]="'Caracteristica'"
+                            [(ngModel)]="descripcionPT"      
+                            >
+                        </mz-input-container>
+                  <mz-select-container class="col s12 m6">
+                    <select mz-select
+                      id="tipo-clasif"
+                      [label]="'Clasificacion de Caracteristica'"
+                      [placeholder]="'Placeholder'"
+                      [(ngModel)]= "tipoclasPT">
+                        <option  class="left circle" value="CF">Caracteristicas Físicas</option>
+                        <option  class="left circle" value="AQ">Análisis Químico</option>
+                        <option  class="left circle" value="CM">Control Microbiológico</option>
+                    </select>
+                  </mz-select-container>
+            </div>
+       </mz-modal-content>
+       <mz-modal-footer>
+            <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+                    <button class="btn-floating btn-large green" 
+                            mz-modal-close (click)="guardaNuevaCaracteristicaPT()"
+                           [disabled] = "esInvalidoPT()">
+                    <i class="large mdi-action-done"></i>
+                  </button>
+                  </div>
+                  <div class="fixed-action-btn" style="bottom: 20px; right: 100px;">
+                      <button class="btn-floating btn-large red" mz-modal-close >
+                    <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+                      <i class="large mdi-content-undo"></i>
+                    </button>
+                    </div>
+       </mz-modal-footer>
+  </mz-modal>
+  <!--fin de modal Producto terminado-->
+  <!--modal para Materia Prima-->
+  <mz-modal #modalNuevaCaracteristicaMP [fixedFooter]="false" [bottomSheet]="false">
+        <mz-modal-header>
+            <h4 style="text-align:center;">Nueva Caracteristica para Materia Prima</h4> 
+           </mz-modal-header>
+           <mz-modal-content>
+                <div class="row">
+                        <mz-input-container  class="col s12 m6">
+                                <input mz-input required
+                                id="descripcionMP"
+                                name="descripcionMP"
+                                type="text"
+                                length="80"
+                                width="80"
+                                [label]="'Caracteristica'"
+                                [(ngModel)]="descripcionMP"      
+                                >
+                            </mz-input-container>
+                      <mz-select-container class="col s12 m6">
+                        <select mz-select
+                          id="tipo-clasifMP"
+                          [label]="'Clasificacion de Caracteristica'"
+                          [placeholder]="'Placeholder'"
+                          [(ngModel)]= "tipoclasMP">
+                            <option  class="left circle" value="CF">Caracteristicas Físicas</option>
+                            <option  class="left circle" value="CM">Control Microbiológico</option>
+                        </select>
+                      </mz-select-container>
+                </div>
+           </mz-modal-content>
+           <mz-modal-footer>
+                <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+                        <button class="btn-floating btn-large green" 
+                                mz-modal-close (click)="guardaNuevaCaracteristicaMP()"
+                               [disabled]="esInvalidoMP()">
+    
+                        <i class="large mdi-action-done"></i>
+                      </button>
+                      </div>
+                      <div class="fixed-action-btn" style="bottom: 20px; right: 100px;">
+                          <button class="btn-floating btn-large red" mz-modal-close >
+                        <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+                          <i class="large mdi-content-undo"></i>
+                        </button>
+                        </div>
+           </mz-modal-footer>
+      </mz-modal>
+      <!--fin de modal Producto terminado-->
+<simple-notifications></simple-notifications>

@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Caracteristicas } from '../caracteristicas';
 import {Caracteristicasfisicas } from '../caracteristicasfisicas';
 import { CaracteristicasService } from '../caracteristicas.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-asignacionparm',
@@ -16,7 +17,8 @@ import { CaracteristicasService } from '../caracteristicas.service';
   styleUrls: ['./asignacionparm.component.scss']
 })
 export class AsignacionparmComponent implements OnInit {
-
+/* contador para guardados: */
+   private cont = 0;
     public swich = 0 ; // verificacion en la llamada a la funcion onclick
     public tipo_producto = '1'; // para el radio button, puede ser 1 = MP:materia prima o 2 = PT: producto terminado
     public clasificacion: Clasificacion;
@@ -45,7 +47,8 @@ export class AsignacionparmComponent implements OnInit {
               {nombre: 'mandarina', color: 'naranja'}];
   constructor(public global: Globals, public servClasificaciones: ClasificacionService,
                 public servClasificacionCaracteristica: ClasificacionCaracteristicaService,
-                public servCaracteristicas: CaracteristicasService ) {
+                public servCaracteristicas: CaracteristicasService,
+                private servNotification: NotificationsService ) {
                  this.clasificacionesCaracteristicasParaGuardarPT = new Array<ClasificacionCaracteristica>();
                 }
   ngOnInit() {
@@ -417,7 +420,7 @@ export class AsignacionparmComponent implements OnInit {
     this.clasificacionesCaracteristicasParaGuardarMP = new Array<ClasificacionCaracteristica>();
     this.clasificacionesCaracteristicasCFmp.forEach(element => {
       this.clasificacionesCaracteristicasParaGuardarMP.push(element);
-    })
+    });
     this.clasificacionesCaracteristicasAQmp.forEach(element => {
       this.clasificacionesCaracteristicasParaGuardarMP.push(element);
     });
@@ -446,18 +449,47 @@ export class AsignacionparmComponent implements OnInit {
 
     /*** guardar cambios en la Bd PT*** */
     guardaBDListaClasifCaracPT() {
+      this.cont = 0;
+      const tam = this.clasificacionesCaracteristicasParaGuardarPT.length;
        this.clasificacionesCaracteristicasParaGuardarPT.forEach(element => {
          this.guardar(element);
-       });
+         });
+         // console.log('VALOR FINAL DEL CONTADOR------- ' + this.cont);
+      /* if (this.cont == 0) {
+        this.openNotificacion(3, 'Error', 'No se pudo guardar los cambios' );
+       }else {
+         if (this.cont < tam ) {
+          this.openNotificacion(2, 'Alerta', 'Los registros no se guardaron totalmente' );
+         }else {
+           if ( this.cont == tam) {
+            this.openNotificacion(1, 'Éxito', 'Los registros se guardaron correctamente' );
+           }
+         }
+       }*/
     }
     /**fin guardar cambios en la Bd PT*/
-    /* *** guardar cambios en la Bd MP*** */
+    /* *** guardar cambios en la Bd MP****/
     guardaBDListaClasifCaracMP() {
+      this.cont = 0;
+      const tam = this.clasificacionesCaracteristicasParaGuardarMP.length;
       this.clasificacionesCaracteristicasParaGuardarMP.forEach(element => {
         this.guardar(element);
       });
+      /*
+      if (this.cont == 0) {
+        this.openNotificacion(3, 'Error', 'No se pudo guardar los cambios' );
+       }else {
+         if (this.cont < tam ) {
+          this.openNotificacion(2, 'Alerta', 'Los registros no se guardaron totalmente' );
+         }else {
+           if ( this.cont == tam) {
+            this.openNotificacion(1, 'Éxito', 'Los registros se guardaron correctamente' );
+           }
+         }
+       }*/
    }
     /**fin guardar cambios en la Bd MT*/
+
     guardar(clasifacarac: ClasificacionCaracteristica) {
       if (clasifacarac.id_clasificacion_caracteristica == 0) {
         this.insertBDClasifCarac(clasifacarac);
@@ -469,6 +501,9 @@ export class AsignacionparmComponent implements OnInit {
       this.servClasificacionCaracteristica.insertClasificacionCaracteristica (clasifacarac).subscribe(
         data => {
           console.log(data);
+           this.cont ++;
+           console.log(this.cont);
+           this.openNotificacion(1, 'Éxito', 'Los registros se guardaron correctamente' );
                 },
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
@@ -476,6 +511,7 @@ export class AsignacionparmComponent implements OnInit {
             } else {
               console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
             }
+            this.openNotificacion(3, 'Error', 'No se pudo guardar los registros' );
           }
       ) ;
      }
@@ -483,6 +519,11 @@ export class AsignacionparmComponent implements OnInit {
       this.servClasificacionCaracteristica.updateClasificacionCaracteristica (clasifacarac).subscribe(
         data => {
           console.log(data);
+          this.cont ++;
+          console.log(this.cont);
+          if (this.cont == 1) {
+            this.openNotificacion(1, 'Éxito', 'Los registros se cambiaron correctamente' );
+          }
                 },
           (err: HttpErrorResponse) => {
             if (err.error instanceof Error) {
@@ -490,6 +531,7 @@ export class AsignacionparmComponent implements OnInit {
             } else {
               console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
             }
+            this.openNotificacion(3, 'Error', 'No se pudo guardar los cambios' );
           }
       ) ;
      }
@@ -510,6 +552,49 @@ activaBoton(tipoclasif: string) {
           nval = '' + valor;
        }
      return nval;
+    }
+    openNotificacion(tipo: number, titulo: string, mensaje: string) {
+      switch (tipo) {
+        case 1:
+          this.servNotification.success(
+            titulo,
+            mensaje,
+            {
+                timeOut: 2000,
+                showProgressBar: true,
+                pauseOnHover: false,
+                clickToClose: false,
+                maxLength: 10
+            }
+          );
+        break;
+        case 2:
+          this.servNotification.alert(
+            titulo,
+            mensaje,
+            {
+                timeOut: 2000,
+                showProgressBar: true,
+                pauseOnHover: false,
+                clickToClose: false,
+                maxLength: 10
+            }
+          );
+        break;
+        case 3:
+          this.servNotification.error(
+            titulo,
+            mensaje,
+            {
+                timeOut: 2000,
+                showProgressBar: true,
+                pauseOnHover: false,
+                clickToClose: false,
+                maxLength: 10
+            }
+          );
+        break;
+      }
     }
 }
 
