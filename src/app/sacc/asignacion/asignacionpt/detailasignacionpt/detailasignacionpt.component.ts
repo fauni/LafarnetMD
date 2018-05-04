@@ -54,6 +54,7 @@ export class DetailasignacionptComponent implements OnInit {
   constructor(
     public global: Globals,
     private route: ActivatedRoute,
+    private router: Router,
     private servAsignacion: AsignacionService,
     private servCaracteristicas: CaracteristicasService,
     private servNotification: NotificationsService
@@ -74,7 +75,7 @@ export class DetailasignacionptComponent implements OnInit {
         this.clasificacion_producto = params['id'].toString();
         this.nombre_producto = params['code'].toString();
         this.onVerificaEspecificacion(this.nombre_producto);
-        alert('Estoy entrando');
+        //alert('Estoy entrando');
         this.openNotificacion(1, 'Correcto!', 'Se cargaron correctamente los datos');
     });
   }
@@ -282,6 +283,8 @@ export class DetailasignacionptComponent implements OnInit {
     this.lcm.forEach(element => {
       this.modificarCaracteristica(element);
     });
+    this.openNotificacion(1, 'Correcto!', 'Se realizo la asignación');
+    this.router.navigate(['/sacc/certificados']);
   }
 
   // Como ya existen datos guardados modifica los valores de la especificación que se encuentran vacias

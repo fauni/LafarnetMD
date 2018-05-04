@@ -365,7 +365,7 @@ export class ListcertificadosptComponent implements OnInit {
     doc.setFontType('normal');
     doc.text(120, 20, 'DEPARTAMENTO DE CONTROL DE CALIDAD', null, null, 'center');
     doc.text(120, 25, 'CERTIFICADO DE ANALISIS', null, null, 'center');
-    doc.text(120, 30, 'MATERIA PRIMA - SOLIDOS', null, null, 'center');
+    doc.text(120, 30, c.tipo_certificado.toUpperCase() + ' - ' + c.tipo_clasificacion_producto, null, null, 'center');
     // doc.line(10, 35, 205, 35);
 
     // CABECERA PRODUCTO
@@ -395,14 +395,26 @@ export class ListcertificadosptComponent implements OnInit {
 
     doc.setFontSize(10);
     doc.setFontStyle('normal');
-    doc.text(15, 53, c.codigo_producto);
+    doc.text(15, 53, c.nombre_producto);
+    doc.setFontSize(8);
+    doc.setFontStyle('normal');
+
+    // Concentracion
+    let tamcon: number = c.concentracion.length;
+    if (tamcon / 35 <= 1) {
+      doc.text(80, 53, c.concentracion);
+    } else if (tamcon / 35 > 1 && tamcon / 35 <= 2) {
+      doc.text(80, 53, c.concentracion.substr(0, 32));
+      doc.text(80, 58, c.concentracion.substr(32, tamcon));
+    } else if (tamcon / 35 > 2) {
+      doc.text(80, 53, c.concentracion.substr(0, 32));
+      doc.text(80, 58, c.concentracion.substr(32, 32));
+      doc.text(80, 63, c.concentracion.substr(64, tamcon));
+    }
+    // doc.text(80, 57, 'Sulbactam base 62.5 mg;');
     doc.setFontSize(10);
     doc.setFontStyle('normal');
-    doc.text(80, 53, 'Amoxicilina base 25 mg;');
-    doc.text(80, 57, 'Sulbactam base 62.5 mg;');
-    doc.setFontSize(10);
-    doc.setFontStyle('normal');
-    doc.text(145, 53, 'POLVO PARA SUSPENSIÓN');
+    doc.text(145, 53, c.forma_farmaceutica);
     doc.rect(10, 49, 65, 6);
     doc.rect(75, 49, 65, 18);
     doc.rect(140, 49, 65, 6);

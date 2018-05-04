@@ -1,6 +1,47 @@
+<div class="row" style="margin-top: 10px;">
+    
+    <div class="parentCard col xl2 l2 m2 s4">
+        
+        <div class="item-menu-apps" style = "background: #fff;">
+            <!--<a style = " display:nome; color: #fff;" href="{{global.urlIntranet + item.url}}" target="_blank" class="tituloApp">-->
+            <a [routerLink]="['/sacc/datos/analista']">
+                <div class="card-content">
+                    <img src="assets/images/sacc/Analistas.png" class="imagen-app">
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="parentCard col xl2 l2 m2 s4">
+        
+        <div class="item-menu-apps" style = "background: #fff;">
+            <!--<a style = " display:nome; color: #fff;" href="{{global.urlIntranet + item.url}}" target="_blank" class="tituloApp">-->
+            <a [routerLink]="['/sacc/datos/productos']">
+                <div class="card-content">
+                    <img src="assets/images/sacc/Productos.png" class="imagen-app">
+                </div>
+            </a>
+        </div>
+    </div>
 
-<p>&nbsp;</p>
-<a [routerLink]="['/sacc/datos/analista']">|Analista|</a>
-<a [routerLink]="['/sacc/datos/productos']">|Productos|</a>
-<a [routerLink]="['/sacc/datos/proveedor']">|Proveedor|</a>
-<a [routerLink]="['/sacc/datos/ingresos']">|Ingresos|</a>
+    <div class="parentCard col xl2 l2 m2 s4">
+        <div class="item-menu-apps" style = "background: #fff;">
+            <!--<a style = " display:nome; color: #fff;" href="{{global.urlIntranet + item.url}}" target="_blank" class="tituloApp">-->
+            <a [routerLink]="['/sacc/datos/proveedor']">
+                <div class="card-content">
+                    <img src="assets/images/sacc/Proveedores.png" class="imagen-app">
+                </div>
+            </a>
+        </div>
+    </div>
+<!--
+    <div class="parentCard col xl2 l2 m2 s4">
+        <div class="item-menu-apps" style = "background: #fff;">
+            <a [routerLink]="['/sacc/datos/ingresos']">
+                <div class="card-content">
+                    <img src="assets/images/sacc/Analistas.png" class="imagen-app">
+                </div>
+            </a>
+        </div>
+    </div>
+    -->
+</div>
