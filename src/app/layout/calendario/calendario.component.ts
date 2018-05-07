@@ -6,14 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {
-  user: string;
   constructor() { }
 
   ngOnInit() {
-    this.user = 'Franz';
+    window.open('https://app.smartsheet.com/b/form/9e7355bd9cad424abbcd8342492257d0');
   }
 
-  onMostrar() {
-    alert(this.user);
-  }
 }
