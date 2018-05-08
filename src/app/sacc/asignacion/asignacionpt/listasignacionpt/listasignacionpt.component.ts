@@ -19,7 +19,7 @@ export class ListasignacionptComponent implements OnInit {
   filter: any;
 
   // Ordenacion
-  key: string = 'Nombre_Producto';
+  key: string = 'Cod_Producto';
   reverse: boolean = false;
   p: number = 1;
 
@@ -34,7 +34,7 @@ export class ListasignacionptComponent implements OnInit {
 
   onLoadProductos() {
     //this.productos = new Productos();
-    this.servProductos.getProductosForTipo('PT').subscribe(
+    this.servProductos.getProductos().subscribe(
       data => {
         this.productos = data.body;
         this.closeLoading();

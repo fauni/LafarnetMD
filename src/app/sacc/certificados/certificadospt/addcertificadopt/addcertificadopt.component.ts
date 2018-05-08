@@ -68,9 +68,9 @@ export class AddcertificadoptComponent implements OnInit {
     closeOnClear: true,
     closeOnSelect: false,
     format: 'yyyy-mm-dd',
-    //formatSubmit: 'yyyy-mm-dd',
-    //onClose: () => alert('Cerraste el picker.'),
-    //onOpen: () => alert('abriste el picker.'),
+    // formatSubmit: 'yyyy-mm-dd',
+    // onClose: () => alert('Cerraste el picker.'),
+    // onOpen: () => alert('abriste el picker.'),
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 10,    // Creates a dropdown of 10 years to control year,
   };
@@ -102,7 +102,7 @@ export class AddcertificadoptComponent implements OnInit {
   }
 
   loadDataDefault() {
-    this.certificado.tipo_certificado = 'PT';
+    //this.certificado.tipo_certificado = 'PT';
     this.certificado.usuario_creacion = localStorage.getItem('username');
     this.certificado.usuario_modificacion = localStorage.getItem('username');
   }
@@ -129,14 +129,15 @@ export class AddcertificadoptComponent implements OnInit {
       }
     );
   }
+
   onLoadProductos() {
     this.productos = new Array<Productos>();
-    this.servProductos.getProductosForTipo('PT').subscribe(
+    this.servProductos.getProductosCompleter().subscribe(
       data => {
         this.closeLoading();
         this.productos = data.body;
         console.log('Productos cargados correctamente! ---->');
-        this.productosData = this.completerService.local(this.productos, 'Cod_Producto', 'Cod_Producto');
+        this.productosData = this.completerService.local(this.productos, 'Reg_Sanitario', 'Reg_Sanitario');
       },
       (err: HttpErrorResponse) => {
         this.openNotificacion(3, 'Error', 'No se pudo cargar los datos!');
@@ -153,11 +154,25 @@ export class AddcertificadoptComponent implements OnInit {
   }
 
   onSelectProducto(selected: CompleterItem): void {
+    debugger;
     if (selected) {
       this.producto = selected.originalObject;
       console.log(this.producto);
+
+      let nombreP: String = this.producto.Cod_Producto;
+
       this.certificado.tipo_clasificacion_producto = this.producto.Tipo_Productos;
       this.certificado.codigo_producto = this.producto.Cod_Producto;
+      this.certificado.concentracion = this.producto.Concentracion;
+      this.certificado.forma_farmaceutica = this.producto.Forma_Farmaceutica;
+      this.certificado.nombre_producto = this.producto.Nombre_Producto;
+      if (nombreP.substr(0, 2) == 'PT') {
+        this.certificado.tipo_certificado = 'Producto Terminado';
+      }else if (nombreP.substr(0, 2) == 'MP') {
+        this.certificado.tipo_certificado = 'Materia Prima';
+      } else {
+        this.certificado.tipo_certificado = '';
+      }
       this.lcf = [];
       this.laq = [];
       this.lcm = [];
@@ -248,7 +263,7 @@ export class AddcertificadoptComponent implements OnInit {
   }
 
   copiarResultados() {
-    //alert(this.esCopia);
+    // alert(this.esCopia);
     if (this.esCopia) {
       this.copiarEspecificacionAResultado();
     }else {
@@ -258,8 +273,8 @@ export class AddcertificadoptComponent implements OnInit {
   }
 
   cambiarTipoImpresionCertificado() {
-    //alert('Cambiando');
-    //console.log(this.certificado);
+    // alert('Cambiando');
+    // console.log(this.certificado);
     if (this.reimpresion) {
       this.certificado.tipo_impresion = 'reimpresion';
     } else {
@@ -292,7 +307,7 @@ export class AddcertificadoptComponent implements OnInit {
   }
 
   guardarCertificado(): void {
-    //console.log(this.certificado);
+    // console.log(this.certificado);
     this.servCertificados.setCertificados(this.certificado).subscribe(
       data => {
         if (data.status == 200) {
@@ -427,15 +442,16 @@ export class AddcertificadoptComponent implements OnInit {
     });
   }
 
-
   openLoading() {
     const loading = $('#loading');
     loading.fadeIn();
   }
+
   closeLoading() {
       const loading = $('#loading');
       loading.fadeOut();
   }
+
   openNotificacion(tipo: number, titulo: string, mensaje: string) {
     switch (tipo) {
       case 1:

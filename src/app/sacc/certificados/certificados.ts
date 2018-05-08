@@ -15,6 +15,9 @@ export class Certificados {
     public dictamen: string;
     public observaciones: string;
     public tipo_impresion: string;
+    public nombre_producto: string;
+    public concentracion: string;
+    public forma_farmaceutica: string;
 
     public usuario_creacion: string;
     public fecha_creacion: string;
