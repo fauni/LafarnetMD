@@ -195,10 +195,11 @@ export class AsignacionparmComponent implements OnInit {
      alert('hola mundillo ' + this.tipoClasificacionProductoMP);
    }
    cambiatipocheck(check: string) {
-     if (check == '0')
+     if (check == '0') {
        return false;
-     else
+     } else {
       return true;
+     }
    }
    cambiaEstadosChekPorClasificacionPT() {// cambia estados de los checkboxes dependiendo si existe la clasificacio_caracteristica
     // console.log('recorriendo caracteristicas .....');
@@ -220,8 +221,8 @@ export class AsignacionparmComponent implements OnInit {
             elementPT.checkeado = true;
           }
       });
-      this.clasificacionesCaracteristicasCMpt.forEach(element => { 
-       if(elementPT.esp_car == 'CM' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas && element.estado == 1) {
+      this.clasificacionesCaracteristicasCMpt.forEach(element => {
+       if (elementPT.esp_car == 'CM' && element.id_caracteristica == elementPT.id_caracteristicas_fisicas && element.estado == 1) {
           // console.log('elemento elegido CM');
           // console.log('element');
            elementPT.checkeado = true;
@@ -230,7 +231,7 @@ export class AsignacionparmComponent implements OnInit {
     });
    }
 
-   cambiaEstadosChekPorClasificacionMP(){
+   cambiaEstadosChekPorClasificacionMP() {
     // console.log('recorriendo caracteristicas .....');
     this.resetcheckMP();
     this.caracteristicasMP.forEach(elementMP => {
@@ -328,9 +329,9 @@ export class AsignacionparmComponent implements OnInit {
       return resp;
    }
    // insertar elementos existentes que ya estan chekeados en el array para guardar elementos en la Bd
-  InsertaClasifCaracParaGuardarExistentePT(){
-    this.clasificacionesCaracteristicasParaGuardarPT= new Array<ClasificacionCaracteristica>();
-    this.clasificacionesCaracteristicasCFpt.forEach(element=>{
+  InsertaClasifCaracParaGuardarExistentePT() {
+    this.clasificacionesCaracteristicasParaGuardarPT = new Array<ClasificacionCaracteristica>();
+    this.clasificacionesCaracteristicasCFpt.forEach(element =>  {
       this.clasificacionesCaracteristicasParaGuardarPT.push(element);
     })
     this.clasificacionesCaracteristicasAQpt.forEach(element => {
@@ -522,7 +523,7 @@ export class AsignacionparmComponent implements OnInit {
           this.cont ++;
           console.log(this.cont);
           if (this.cont == 1) {
-            this.openNotificacion(1, 'Éxito', 'Los registros se cambiaron correctamente' );
+            this.openNotificacion(1, 'Éxito', 'Los registros se cambiaron correctamente');
           }
                 },
           (err: HttpErrorResponse) => {
