@@ -10,7 +10,7 @@ export class HomeService {
   constructor(private http: HttpClient, private global: Globals) { }
 
   upload(data): Observable<any> {
-    //return this.http.post('http://localhost:8888/script.php', data);
+    // return this.http.post('http://localhost:8888/script.php', data);
     return this.http.post(this.global.urlAPI + 'publicacion/upload', data);
   }
 

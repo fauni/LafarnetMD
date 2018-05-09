@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PublicacionesRoutingModule } from './publicaciones-routing.module';
 import { PublicacionesComponent } from './publicaciones.component';
+import { BotonesService } from '../botones.service';
 import { MzModalModule,
   MzNavbarModule,
   MzInputModule,
@@ -42,6 +43,9 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     PublicacionesComponent,
     ListaPublicacionComponent,
     LoadingComponent
+  ],
+  providers: [
+    BotonesService
   ]
 })
 

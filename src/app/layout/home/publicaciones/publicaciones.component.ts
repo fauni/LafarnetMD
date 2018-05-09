@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { HomeService } from '../home.service';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { BotonesService } from '../botones.service';
 
 declare var $: any;
 @Component({
@@ -25,6 +26,7 @@ export class PublicacionesComponent implements OnInit {
   publicacion: Publicacion = new Publicacion();
   elem: any;
   elemDoc: any;
+   botonesActivos: Array<any> ;
   options: Pickadate.DateOptions = {
     clear: 'Borrar', // Clear button text
     close: 'Ok',    // Ok button text
@@ -32,9 +34,9 @@ export class PublicacionesComponent implements OnInit {
     closeOnClear: true,
     closeOnSelect: false,
     format: 'yyyy-mm-dd',
-    //formatSubmit: 'yyyy-mm-dd',
-    //onClose: () => alert('Cerraste el picker.'),
-    //onOpen: () => alert('abriste el picker.'),
+    // formatSubmit: 'yyyy-mm-dd',
+    // onClose: () => alert('Cerraste el picker.'),
+    // onOpen: () => alert('abriste el picker.'),
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 10,    // Creates a dropdown of 10 years to control year,
   };
@@ -58,11 +60,13 @@ export class PublicacionesComponent implements OnInit {
     private hSer: HomeService,
     private formBuilder: FormBuilder,
     private renderer: Renderer,
-    public ngxSmartModalService: NgxSmartModalService) {
+    public ngxSmartModalService: NgxSmartModalService,
+    private servBotones: BotonesService ) {
   }
 
   ngOnInit() {
     this.onLoadPublications();
+    this.onLoadBotonesAcivo(localStorage.getItem('username'));
     this.buildForm();
   }
 
@@ -126,6 +130,34 @@ export class PublicacionesComponent implements OnInit {
           }
         }
     );
+  }
+  /*madificacion 8-5-18 */
+  onLoadBotonesAcivo(user: string): void {
+    this.servBotones.getBotonesActivos(user).subscribe(
+      data => {
+            this.botonesActivos = data.body;
+            console.log(this.botonesActivos);
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('Ocurrio un error:', err.error.message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          }
+        }
+    );
+  }
+  activacionBoton(nombrebtn: string ) {
+    let resp = false;
+    this.botonesActivos.forEach(element => {
+      if (element.estado == '1' && element.buttonActivo == '1' && element.butonName == nombrebtn ) {
+         resp = true;
+      }
+    });
+    return resp;
   }
 
 }

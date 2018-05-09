@@ -44,4 +44,8 @@ export class UsersService {
   deleteUser(data): Observable<any> {
     return this.http.put(this.global.urlAPI + 'usuario/delete', data);
   }
+
+  resetPassword (data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'usuario/resetPassword', data);
+  }
 }

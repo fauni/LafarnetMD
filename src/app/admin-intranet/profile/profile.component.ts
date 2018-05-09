@@ -300,4 +300,34 @@ export class ProfileComponent implements OnInit {
       break;
     }
   }
+
+  resetPassword() {
+   let model = {
+      usernameUpdate: localStorage.getItem('username'),
+      username: this.user.username,
+    };
+    const resp = confirm('Se asignara una contraseña por defecto para ' + model.username + '?');
+    // alert (resp);
+    if (resp) {
+    this.servUser.resetPassword(model).subscribe(
+      data => {
+        console.log('ingresando a reset de contraseña');
+        console.log(data);
+        this.openNotificacion(1, 'Éxito', 'La contraseña fue reasignada');
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+          this.openNotificacion(3, 'Error', 'No se pudo reasignar la contraseña ' + err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          this.openNotificacion(3, 'Error', 'No se pudo reasignar la contraseña ' + err.status + ' ' + err.error);
+        }
+      }
+    );
+  }
+  }
 }
