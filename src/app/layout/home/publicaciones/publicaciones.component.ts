@@ -16,7 +16,7 @@ declare var $: any;
   styleUrls: ['./publicaciones.component.scss']
 })
 export class PublicacionesComponent implements OnInit {
-
+  est_btn_add_pub = false;
   publications: any;
   scrollElement: JQuery;
   formPublicacion: FormGroup;
@@ -66,7 +66,7 @@ export class PublicacionesComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadPublications();
-    this.onLoadBotonesAcivo(localStorage.getItem('username'));
+    this.onLoadBotonesAcivo('pub-add');
     this.buildForm();
   }
 
@@ -132,10 +132,11 @@ export class PublicacionesComponent implements OnInit {
     );
   }
   /*madificacion 8-5-18 */
-  onLoadBotonesAcivo(user: string): void {
-    this.servBotones.getBotonesActivos(user).subscribe(
+  onLoadBotonesAcivo(nombrebtn): void {
+    this.servBotones.getBotonesActivos(localStorage.getItem('username')).subscribe(
       data => {
             this.botonesActivos = data.body;
+            this.activacionBoton(nombrebtn);
             console.log(this.botonesActivos);
         },
         (err: HttpErrorResponse) => {
@@ -152,12 +153,13 @@ export class PublicacionesComponent implements OnInit {
   }
   activacionBoton(nombrebtn: string ) {
     let resp = false;
-    this.botonesActivos.forEach(element => {
-      if (element.estado == '1' && element.buttonActivo == '1' && element.butonName == nombrebtn ) {
-         resp = true;
-      }
-    });
-    return resp;
+    if (!(this.botonesActivos == undefined)) {
+      this.botonesActivos.forEach(element => {
+        if (element.estado == '1' && element.buttonActivo == '1' && element.butonName == nombrebtn ) {
+           this.est_btn_add_pub = true;
+        }
+      });
+    }
   }
 
 }
