@@ -26,7 +26,7 @@ export class PublicacionesComponent implements OnInit {
   publicacion: Publicacion = new Publicacion();
   elem: any;
   elemDoc: any;
-   botonesActivos: Array<any> ;
+   botonesActivos: Array<any> = new Array() ;
   options: Pickadate.DateOptions = {
     clear: 'Borrar', // Clear button text
     close: 'Ok',    // Ok button text
@@ -153,13 +153,12 @@ export class PublicacionesComponent implements OnInit {
   }
   activacionBoton(nombrebtn: string ) {
     let resp = false;
-    if (!(this.botonesActivos == undefined)) {
       this.botonesActivos.forEach(element => {
         if (element.estado == '1' && element.buttonActivo == '1' && element.butonName == nombrebtn ) {
-           this.est_btn_add_pub = true;
+           resp = true;
         }
       });
-    }
+      return resp;
   }
 
 }
