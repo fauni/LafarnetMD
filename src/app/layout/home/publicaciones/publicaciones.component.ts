@@ -66,7 +66,7 @@ export class PublicacionesComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadPublications();
-    this.onLoadBotonesAcivo('pub-add');
+    this.onLoadBotonesAcivo();
     this.buildForm();
   }
 
@@ -132,11 +132,12 @@ export class PublicacionesComponent implements OnInit {
     );
   }
   /*madificacion 8-5-18 */
-  onLoadBotonesAcivo(nombrebtn): void {
+  onLoadBotonesAcivo(): void {
     this.servBotones.getBotonesActivos(localStorage.getItem('username')).subscribe(
       data => {
             this.botonesActivos = data.body;
-            this.activacionBoton(nombrebtn);
+            // this.activacionBoton(nombrebtn);
+            console.log ('botones activos');
             console.log(this.botonesActivos);
         },
         (err: HttpErrorResponse) => {
