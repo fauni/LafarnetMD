@@ -8,6 +8,7 @@ import { MzParallaxModule, MzSpinnerModule, MzCardModule,
 import { SeccionesService } from '../../admin-intranet/secciones/secciones.service';
 import { EtapasProcesoService } from '../etapasproceso.service';
 import { PpService } from '../pp.service';
+import { HigrotermometroService } from '../../metrologia/higrotermometro.service';
 
 @NgModule({
     imports: [
@@ -24,7 +25,7 @@ import { PpService } from '../pp.service';
         MzButtonModule
     ],
     declarations: [FormTHRProcesoComponent],
-    providers: [SeccionesService, EtapasProcesoService, PpService]
+    providers: [SeccionesService, EtapasProcesoService, PpService, HigrotermometroService]
 })
 
 export class FormTHRProcesoModule {}
