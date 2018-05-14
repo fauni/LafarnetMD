@@ -10,6 +10,8 @@ import { EtapasProcesoService } from '../etapasproceso.service';
 import { Etapasproceso } from '../etapasproceso';
 import { PpService } from '../pp.service';
 import { ProductoProceso } from '../productoproceso';
+import { Higrotermometro } from '../../metrologia/higrotermometro';
+import { HigrotermometroService } from '../../metrologia/higrotermometro.service';
 
 @Component({
   selector: 'app-formthrproceso',
@@ -25,6 +27,8 @@ export class FormTHRProcesoComponent implements OnInit {
   productosprocesos: Array<ProductoProceso> = new Array<ProductoProceso>();
   monitoreo: Monitoreothrproceso = new Monitoreothrproceso();
 
+  higrotermometros: Array<Higrotermometro> = new Array<Higrotermometro>();
+  higrotermometro: Higrotermometro = new Higrotermometro();
 
   // Proceso
   procesoValue: any = 'PP';
@@ -33,7 +37,8 @@ export class FormTHRProcesoComponent implements OnInit {
   constructor(private servArea: AreasService,
     private servSeccion: SeccionesService,
     private servEtapaProceso: EtapasProcesoService,
-    private servProducto: PpService) { }
+    private servProducto: PpService,
+    private servHigrotermometro: HigrotermometroService) { }
 
   ngOnInit() {
     this.onLoadAreas();
@@ -185,5 +190,26 @@ export class FormTHRProcesoComponent implements OnInit {
   onCorrigueTemperaturaHumedad() {
     this.monitoreo.temperatura_corregido = this.monitoreo.temperatura_original;
     this.monitoreo.humedad_relativa_corregido = this.monitoreo.humedad_relativa_original;
+  }
+
+
+  // Higrotermometro
+  onLoadHigrotermometroForSeccion(seccion) {
+    this.servHigrotermometro.getHigrotermometro(seccion).subscribe(
+      data => {
+        this.higrotermometro = data['body'][0];
+        console.log(this.higrotermometro);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
   }
 }

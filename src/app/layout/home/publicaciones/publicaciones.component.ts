@@ -132,12 +132,7 @@ export class PublicacionesComponent implements OnInit {
     );
   }
   /*madificacion 8-5-18 */
-<<<<<<< HEAD
-  onLoadBotonesAcivo(nombrebtn): void {
-    debugger;
-=======
   onLoadBotonesAcivo(): void {
->>>>>>> 272e2f8804f43f9b9d050fb942714d19da1aded6
     this.servBotones.getBotonesActivos(localStorage.getItem('username')).subscribe(
       data => {
             this.botonesActivos = data.body;
