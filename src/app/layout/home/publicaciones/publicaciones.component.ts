@@ -26,7 +26,7 @@ export class PublicacionesComponent implements OnInit {
   publicacion: Publicacion = new Publicacion();
   elem: any;
   elemDoc: any;
-   botonesActivos: Array<any> ;
+   botonesActivos: Array<any> = new Array() ;
   options: Pickadate.DateOptions = {
     clear: 'Borrar', // Clear button text
     close: 'Ok',    // Ok button text
@@ -66,7 +66,7 @@ export class PublicacionesComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadPublications();
-    this.onLoadBotonesAcivo('pub-add');
+    this.onLoadBotonesAcivo();
     this.buildForm();
   }
 
@@ -132,12 +132,17 @@ export class PublicacionesComponent implements OnInit {
     );
   }
   /*madificacion 8-5-18 */
+<<<<<<< HEAD
   onLoadBotonesAcivo(nombrebtn): void {
     debugger;
+=======
+  onLoadBotonesAcivo(): void {
+>>>>>>> 272e2f8804f43f9b9d050fb942714d19da1aded6
     this.servBotones.getBotonesActivos(localStorage.getItem('username')).subscribe(
       data => {
             this.botonesActivos = data.body;
-            this.activacionBoton(nombrebtn);
+            // this.activacionBoton(nombrebtn);
+            console.log ('botones activos');
             console.log(this.botonesActivos);
         },
         (err: HttpErrorResponse) => {
@@ -154,13 +159,12 @@ export class PublicacionesComponent implements OnInit {
   }
   activacionBoton(nombrebtn: string ) {
     let resp = false;
-    if (!(this.botonesActivos == undefined)) {
       this.botonesActivos.forEach(element => {
         if (element.estado == '1' && element.buttonActivo == '1' && element.butonName == nombrebtn ) {
-           this.est_btn_add_pub = true;
+           resp = true;
         }
       });
-    }
+      return resp;
   }
 
 }
