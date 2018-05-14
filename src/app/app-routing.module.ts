@@ -23,13 +23,14 @@ const routes: Routes = [
     { path: 'dvisita1617', loadChildren: './dvisita1617/dvisita1617.module#Dvisita1617Module', canActivate: [AuthGuard] },
     */
     { path: 'proforms', loadChildren: './proforms/proforms.module#ProformsModule', canActivate: [AuthGuard] },
-    //{ path: 'repdolibarr', loadChildren: './repdolibarr/repdolibarr.module#RepdolibarrModule', canActivate: [AuthGuard] },
+    { path: 'repdolibarr', loadChildren: './rdolibar/rdolibar.module#RdolibarModule', canActivate: [AuthGuard] },
     { path: 'ghdocs', loadChildren: './ghdocs/ghdocs.module#GhdocsModule', canActivate: [AuthGuard] },
     { path: 'lafardocs', loadChildren: './lafardocs/lafardocs.module#LafardocsModule', canActivate: [AuthGuard] },
     { path: 'restorepass/:id', loadChildren: './restorepass/restorepass.module#RestorePassModule' },
     { path: 'recovery', loadChildren: './recovery/recovery.module#RecoveryModule' },
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
-    { path: 'sacc', loadChildren: './sacc/sacc.module#SaccModule', canActivate: [AuthGuard] }, //Ruta del NEW SACC
+    { path: 'sacc', loadChildren: './sacc/sacc.module#SaccModule', canActivate: [AuthGuard] }, // Ruta del NEW SACC
+    { path: 'procprod', loadChildren: './pp/pp.module#PpModule', canActivate: [AuthGuard] }, // Procesos Productivos
     { path: 'error', loadChildren: 'app/server-error/server-error.module#ServerErrorModule' },
     { path: 'access-denied', loadChildren: 'app/access-denied/access-denied.module#AccessDeniedModule' },
     { path: 'not-found', loadChildren: 'app/not-found/not-found.module#NotFoundModule' },

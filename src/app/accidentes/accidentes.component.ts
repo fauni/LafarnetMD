@@ -13,7 +13,7 @@ export class AccidentesComponent implements OnInit {
   ngOnInit() {
     //window.location.href = 'http://192.168.1.213/lafarnet/proforms_dos/';
     //window.open(this.global.urlIntranet + 'lafarnet/proforms_dos/', '_blank');
-    window.open(this.global.urlIntranet + 'proforms_dos/', '_blank');
+    window.open(this.global.urlIntranet + 'accidentes/', '_blank');
     this.router.navigate(['/home']);
   }
 

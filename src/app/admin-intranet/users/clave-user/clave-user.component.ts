@@ -13,11 +13,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ClaveUserComponent implements OnInit {
   model = {
-    password1: this.global.user.password,
+    password1: localStorage.getItem('password'),
     oldPassword: '',
     password: '',
     confirmPassword: '',
-    usernameUpdate: this.global.user.username,
+    usernameUpdate: localStorage.getItem('username'),
     username: ''
   };
   returnUrl: string;
@@ -33,17 +33,17 @@ export class ClaveUserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.model.username = this.global.user.username;
-    this.model.usernameUpdate = this.global.user.username;
-    //this.returnUrl = this.route.snapshot.queryParams['list'] || '/';
-    
-    //this.router.navigate(['/home']);
-    
+    this.model.username = localStorage.getItem('username');
+    this.model.usernameUpdate = localStorage.getItem('username');
+    // this.returnUrl = this.route.snapshot.queryParams['list'] || '/';
+
+    // this.router.navigate(['/home']);
+
     this.onChangePassword();
   }
 
   ngOnInit() {
-    
+
   }
   onChangePassword() {
     this.servUser.changePassword(this.model).subscribe(

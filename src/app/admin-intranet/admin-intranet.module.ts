@@ -8,6 +8,7 @@ import { UsersService } from './users/users.service';
 import { CargosService } from './cargos/cargos.service';
 import { AreasService } from './areas/areas.service';
 import { RegionalesService } from './regionales/regionales.service';
+import { SeccionesService } from './secciones/secciones.service';
 
 @NgModule({
     imports: [
@@ -17,7 +18,7 @@ import { RegionalesService } from './regionales/regionales.service';
         LayoutModule
     ],
     declarations: [AdminIntranetComponent],
-    providers: [ NgxSmartModalService, UsersService, CargosService, AreasService, RegionalesService, ]
+    providers: [ NgxSmartModalService, UsersService, CargosService, AreasService, RegionalesService, SeccionesService]
 })
 
 export class AdminIntranetModule {}

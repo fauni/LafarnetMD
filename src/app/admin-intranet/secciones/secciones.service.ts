@@ -5,20 +5,17 @@ import { RequestOptions } from '@angular/http';
 import { Globals } from '../../globals';
 
 @Injectable()
-export class AreasService {
+export class SeccionesService {
   private headers = new HttpHeaders().set('Content-Type', 'multipart/form-data');
   constructor(private http: HttpClient, private global: Globals ) { }
 
-  getAreas(): Observable<any> {
-    return this.http.get(this.global.urlAPI + '/area/get');
+  getSecciones(): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'seccion/get');
   }
 
-  getAreasForProduccion(): Observable<any> {
-    return this.http.get(this.global.urlAPI + '/area/getprod');
-  }
-
-  getArea(id: string): Observable<any> {
-    return this.http.get(this.global.urlAPI + '/area/get/' + id);
+  getSeccionForArea(data) {
+    debugger;
+    return this.http.get(this.global.urlAPI + 'seccion/get/' + data);
   }
 
 }
