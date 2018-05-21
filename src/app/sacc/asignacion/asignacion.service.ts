@@ -23,6 +23,10 @@ export class AsignacionService {
     return this.http.get(this.global.urlAPI + 'saccclasificacioncaracteristicas/clasificacion/' + data);
   }
 
+  getClasificacionmp(data) {
+    return this.http.get(this.global.urlAPI + 'saccclasificacioncaracteristicas/clasificacionmp/' + data);
+  }
+
   saveAsignacion(data) {
     return this.http.post(this.global.urlAPI + 'saccproductosespecificacion/save', data);
   }

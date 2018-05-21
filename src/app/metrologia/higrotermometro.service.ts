@@ -14,7 +14,7 @@ export class HigrotermometroService {
   }*/
 
   getHigrotermometro(data): Observable<any> {
-    return this.http.get(this.global.urlAPI + 'higrotermometro/' + data);
+    return this.http.get(this.global.urlAPI + 'higrotermometro/get/' + data);
   }
 
 }

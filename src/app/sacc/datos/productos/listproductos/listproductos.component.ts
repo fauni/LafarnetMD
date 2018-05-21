@@ -15,7 +15,7 @@ export class ListproductosComponent implements OnInit {
   filter: any;
 
   // Ordenacion
-  key: string = 'Nombre_Producto';
+  key: string = 'Cod_Producto';
   reverse: boolean = false;
   p: number = 1;
 

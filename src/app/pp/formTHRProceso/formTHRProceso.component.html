@@ -23,6 +23,11 @@
 <div class="contenido-principal">
     <mz-card>
         <mz-card-content>
+            <div class="card red darken-1" *ngIf="existHigrotermometro">
+                <div class="card-content white-text">
+                    {{ mensaje }}
+                </div>
+            </div>
             <div class="row">
                 <mz-select-container class="col s12 m6 l6">
                     <select mz-select
@@ -94,6 +99,7 @@
                         id="numero_lote"
                         name="numero_lote"
                         placeholder="Ingrese su numero de Lote"
+                        (blur)="onLoadProductoForLote()"
                         [(ngModel)]="monitoreo.lote"
                         type="text">
                     </mz-input-container>
@@ -133,7 +139,7 @@
                         [label]="'Temperatura'"
                         id="temperatura_original"
                         name="temperatura_original"
-                        (change)="onCorrigueTemperaturaHumedad()"
+                        (change)="onCorrigueTemperatura()"
                         [(ngModel)]="monitoreo.temperatura_original"
                         placeholder="Ingrese la Temperatura"
                         type="number">
@@ -150,7 +156,7 @@
                         [label]="'Humedad Relativa'"
                         id="humedad_relativa_original"
                         name="humedad_relativa_original"
-                        (change)="onCorrigueTemperaturaHumedad()"
+                        (change)="onCorrigueHumedad()"
                         [(ngModel)]="monitoreo.humedad_relativa_original"
                         placeholder="Ingrese la Humedad Relativa"
                         type="number">

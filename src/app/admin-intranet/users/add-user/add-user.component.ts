@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.scss']
 })
+
 export class AddUserComponent implements OnInit {
   elem: any;
   userForm: FormGroup;
@@ -136,7 +137,7 @@ export class AddUserComponent implements OnInit {
 
   uploadImageUser(event) {
     this.elem = event.target;
-    //console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
     let img = document.querySelector('#preview img');
     let reader = new FileReader();
     this.readFile(event.target.files[0], reader, (result) => {

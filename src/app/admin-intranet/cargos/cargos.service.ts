@@ -16,5 +16,4 @@ export class CargosService {
   getCargo(id: string): Observable<any> {
     return this.http.get(this.global.urlAPI + '/cargo/get/' + id);
   }
-
 }

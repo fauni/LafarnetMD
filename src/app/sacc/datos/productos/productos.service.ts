@@ -14,8 +14,12 @@ export class ProductosService {
      return this.http.get(this.global.urlAPISAP + 'productos');
   }
 
+  getProductosMP(): Observable<any> {
+    return this.http.get(this.global.urlAPISAP + 'productosmp');
+  }
+
   getProductosCompleter(): Observable<any> {
-    return this.http.get(this.global.urlAPISAP + 'productospt/');
+    return this.http.get(this.global.urlAPISAP + 'productos/');
   }
 
   getProductosForTipo(tipo): Observable<any> {
@@ -24,6 +28,10 @@ export class ProductosService {
 
   getClasificacionPT(): Observable<any> {
     return this.http.get(this.global.urlAPI + 'productos/clasificacionPT');
+  }
+
+  getClasificacionmp(): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'productos/clasificacionMP');
   }
 }
 

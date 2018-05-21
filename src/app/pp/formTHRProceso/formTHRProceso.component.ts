@@ -33,6 +33,10 @@ export class FormTHRProcesoComponent implements OnInit {
   // Proceso
   procesoValue: any = 'PP';
   productoAll: string;
+  existHigrotermometro: Boolean = false;
+
+  // Error
+  mensaje: any = '';
 
   constructor(private servArea: AreasService,
     private servSeccion: SeccionesService,
@@ -42,19 +46,9 @@ export class FormTHRProcesoComponent implements OnInit {
 
   ngOnInit() {
     this.onLoadAreas();
-    this.monitoreo.id_monitoreo_thr_proceso = 1;
-    this.monitoreo.id_seccion = 1;
-    this.monitoreo.id_etapa = 1;
-    this.monitoreo.lote =  '';
-    this.monitoreo.hora =  '';
-    this.monitoreo.fecha =  '';
-    this.monitoreo.higroscopico = false;
     this.monitoreo.username = localStorage.getItem('username');
-    this.monitoreo.estado = '';
     this.monitoreo.usuario_creacion = localStorage.getItem('username');
-    this.monitoreo.fecha_creacion = '';
     this.monitoreo.usuario_modificacion = localStorage.getItem('username');
-    this.monitoreo.fecha_modificacion = '';
   }
 
   // Carga de informacion de areas productivas
@@ -71,7 +65,7 @@ export class FormTHRProcesoComponent implements OnInit {
           } else {
             // The backend returned an unsuccessful response code.
             // The response body may contain clues as to what went wrong,
-            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            console.log(`El servidor respondio: {err.status}, body was: {err.error}`);
           }
         }
       );
@@ -90,7 +84,7 @@ export class FormTHRProcesoComponent implements OnInit {
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
-          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          console.log(`El servidor respondio: {err.status}, body was: {err.error}`);
         }
       }
     );
@@ -109,7 +103,7 @@ export class FormTHRProcesoComponent implements OnInit {
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
-          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          console.log(`El servidor respondio: {err.status}, body was: {err.error}`);
         }
       }
     );
@@ -124,6 +118,7 @@ export class FormTHRProcesoComponent implements OnInit {
 
   onSelectSeccion() {
     console.log(this.monitoreo);
+    this.onLoadHigrotermometroForSeccion(this.monitoreo.id_seccion);
   }
 
   onSelectProceso(valor: string) {
@@ -148,6 +143,7 @@ export class FormTHRProcesoComponent implements OnInit {
 
   onLoadProductoForLote() {
     console.log(this.monitoreo.lote);
+    this.productosprocesos = [];
     this.onLoadProductoProceso(this.monitoreo.lote);
   }
 
@@ -166,7 +162,7 @@ export class FormTHRProcesoComponent implements OnInit {
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
-          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          console.log(`El servidor respondio: {err.status}, body was: {err.error}`);
         }
       }
     );
@@ -184,14 +180,25 @@ export class FormTHRProcesoComponent implements OnInit {
   }
 
   onSaveMonitoreoTHRProceso() {
+    if (this.verificaSiEsHigroscopico()) {
+      this.existHigrotermometro = false;
+      this.mensaje = '';
+    } else {
+      this.existHigrotermometro = true;
+      this.mensaje = 'NO PUEDE INICIAR O CONTINUAR CON EL PROCESO, Los valores de la Humedad estan fuera de Rango';
+    }
     console.log(this.monitoreo);
   }
 
-  onCorrigueTemperaturaHumedad() {
-    this.monitoreo.temperatura_corregido = this.monitoreo.temperatura_original;
-    this.monitoreo.humedad_relativa_corregido = this.monitoreo.humedad_relativa_original;
+  onCorrigueTemperatura() {
+    this.monitoreo.temperatura_corregido =
+    Number((this.devuelveTemparaturaCorregida(this.monitoreo.temperatura_original, this.higrotermometro)).toFixed(2));
   }
 
+  onCorrigueHumedad() {
+    this.monitoreo.humedad_relativa_corregido =
+    Number((this.devuelveHRCorregida(this.monitoreo.humedad_relativa_original, this.higrotermometro)).toFixed(2));
+  }
 
   // Higrotermometro
   onLoadHigrotermometroForSeccion(seccion) {
@@ -199,6 +206,13 @@ export class FormTHRProcesoComponent implements OnInit {
       data => {
         this.higrotermometro = data['body'][0];
         console.log(this.higrotermometro);
+        let n: number = data['length'];
+        if (n == 0) {
+          this.existHigrotermometro = true;
+          this.mensaje = 'Esta sección no tiene un higrotermómetro asignado';
+        } else {
+          this.existHigrotermometro = false;
+        }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -207,9 +221,290 @@ export class FormTHRProcesoComponent implements OnInit {
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
-          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          console.log(`El servidor respondio: {err.status}, body was: {err.error}`);
         }
       }
     );
+  }
+
+  devuelveTemparaturaCorregida(temperatura: number, h: Higrotermometro): number {
+    let t0: number = 0;
+    let t1: number = 0;
+    let t2: number = 0;
+    let x2: number = 0;
+    let x1: number = 0;
+    let x0: number = 0;
+    let temperatura_corregida: number = 0;
+
+    if (h.ipt_5 > 0) { // Determina la validación en caso de que contenga 5 intervalos de referencia
+      if (temperatura < h.ipt_1 || temperatura > h.ipt_5) { // Valida si el valor de la temperatura esta fuera de rango
+        // si esta fuera de rango
+      }else {
+        if (temperatura == h.ipt_1 || temperatura == h.ipt_2 || temperatura == h.ipt_3 ||
+          temperatura == h.ipt_4 || temperatura == h.ipt_5) {
+            // Valida si los valores ingresados son iguales por lo tanto retorna el mismo valor
+            temperatura_corregida = temperatura;
+        } else {
+          if (temperatura > h.ipt_1 && temperatura < h.ipt_2) {
+            t2 = h.ipt_2;
+            t0 = h.ipt_1;
+            x2 = h.ct_2;
+            x0 = h.ct_1;
+          } else if (temperatura > h.ipt_2 && temperatura < h.ipt_3) {
+            t2 = h.ipt_3;
+            t0 = h.ipt_2;
+            x2 = h.ct_3;
+            x0 = h.ct_2;
+          } else if (temperatura > h.ipt_3 && temperatura < h.ipt_4) {
+            t2 = h.ipt_4;
+            t0 = h.ipt_3;
+            x2 = h.ct_4;
+            x0 = h.ct_3;
+          } else if (temperatura > h.ipt_4 && temperatura < h.ipt_5) {
+            t2 = h.ipt_5;
+            t0 = h.ipt_4;
+            x2 = h.ct_5;
+            x0 = h.ct_4;
+          }
+          x1 = ((x2 * (temperatura - t0)) + (x0 * (t2 - temperatura))) / (t2 - t0);
+          temperatura_corregida = x1 + temperatura; // REdondear el decimal
+        }
+      }
+    } else {
+      if (temperatura == h.ipt_1 || temperatura == h.ipt_2 || temperatura == h.ipt_3 ||
+        temperatura == h.ipt_4) {
+          // Valida si los valores ingresados son iguales por lo tanto retorna el mismo valor
+          temperatura_corregida = temperatura;
+      } else {
+        if (temperatura > h.ipt_1 && temperatura < h.ipt_2) {
+          t2 = h.ipt_2;
+          t0 = h.ipt_1;
+          x2 = h.ct_2;
+          x0 = h.ct_1;
+        } else if (temperatura > h.ipt_2 && temperatura < h.ipt_3) {
+          t2 = h.ipt_3;
+          t0 = h.ipt_2;
+          x2 = h.ct_3;
+          x0 = h.ct_2;
+        } else if (temperatura > h.ipt_3 && temperatura < h.ipt_4) {
+          t2 = h.ipt_4;
+          t0 = h.ipt_3;
+          x2 = h.ct_4;
+          x0 = h.ct_3;
+        }
+        x1 = ((x2 * (temperatura - t0)) + (x0 * (t2 - temperatura))) / (t2 - t0);
+        temperatura_corregida = x1 + temperatura; // REdondear el decimal
+      }
+    }
+
+    return temperatura_corregida;
+  }
+
+  devuelveHRCorregida(hr: number, h: Higrotermometro): number {
+    let h0: number = 0;
+    let h1: number = 0;
+    let h2: number = 0;
+    let xhr2: number = 0;
+    let xhr1: number = 0;
+    let xhr0: number = 0;
+    let humedad_corregida: number = 0;
+
+
+    if (this.validaPromedioTemperaturaHR(h.tempHR1, h.tempHR2, this.monitoreo.temperatura_original) == true) {
+      if (hr == h.iphr_1_1 || hr == h.iphr_1_2 || hr == h.iphr_1_3 || hr == h.iphr_1_4 || hr == h.iphr_1_5) {
+        humedad_corregida = hr;
+      }else {
+        if (hr > h.iphr_1_1 && hr < h.iphr_1_2) {
+          h2 = h.iphr_1_2;
+          h0 = h.iphr_1_1;
+          xhr2 = h.chr_1_2;
+          xhr0 = h.chr_1_1;
+        } else if (hr > h.iphr_1_2 && hr < h.iphr_1_3) {
+          h2 = h.iphr_1_3;
+          h0 = h.iphr_1_2;
+          xhr2 = h.chr_1_3;
+          xhr0 = h.chr_1_2;
+        } else if (hr > h.iphr_1_3 && hr < h.iphr_1_4) {
+          h2 = h.iphr_1_4;
+          h0 = h.iphr_1_3;
+          xhr2 = h.chr_1_4;
+          xhr0 = h.chr_1_3;
+        } else if (hr > h.iphr_1_4 && hr < h.iphr_1_5) {
+          h2 = h.iphr_1_5;
+          h0 = h.iphr_1_4;
+          xhr2 = h.chr_1_5;
+          xhr0 = h.chr_1_4;
+        }
+        xhr1 = ((xhr2 * (hr - h0)) + (xhr0 * (h2 - hr))) / (h2 - h0);
+        humedad_corregida = xhr1 + hr; // REdondear el decimal
+      }
+    }
+    if (this.validaPromedioTemperaturaHR(h.tempHR1, h.tempHR2, this.monitoreo.temperatura_original) == false) {
+      if (hr == h.iphr_2_1 || hr == h.iphr_2_2 || hr == h.iphr_2_3 || hr == h.iphr_2_4 || hr == h.iphr_2_5) {
+        humedad_corregida = hr;
+      }else {
+        if (hr > h.iphr_2_1 && hr < h.iphr_2_2) {
+          h2 = h.iphr_2_2;
+          h0 = h.iphr_2_1;
+          xhr2 = h.chr_2_2;
+          xhr0 = h.chr_2_1;
+        } else if (hr > h.iphr_2_2 && hr < h.iphr_2_3) {
+          h2 = h.iphr_2_3;
+          h0 = h.iphr_2_2;
+          xhr2 = h.chr_2_3;
+          xhr0 = h.chr_2_2;
+        } else if (hr > h.iphr_2_3 && hr < h.iphr_2_4) {
+          h2 = h.iphr_2_4;
+          h0 = h.iphr_2_3;
+          xhr2 = h.chr_2_4;
+          xhr0 = h.chr_2_3;
+        } else if (hr > h.iphr_2_4 && hr < h.iphr_2_5) {
+          h2 = h.iphr_2_5;
+          h0 = h.iphr_2_4;
+          xhr2 = h.chr_2_5;
+          xhr0 = h.chr_2_4;
+        }
+        xhr1 = ((xhr2 * (hr - h0)) + (xhr0 * (h2 - hr))) / (h2 - h0);
+        humedad_corregida = xhr1 + hr; // REdondear el decimal
+      }
+    }
+    if (this.monitoreo.temperatura_original == h.tempHR2) {
+      if (hr == h.iphr_2_1 || hr == h.iphr_2_2 || hr == h.iphr_2_3 || hr == h.iphr_2_4 || hr == h.iphr_2_5) {
+        humedad_corregida = hr;
+      }else {
+        if (hr > h.iphr_2_1 && hr < h.iphr_2_2) {
+          h2 = h.iphr_2_2;
+          h0 = h.iphr_2_1;
+          xhr2 = h.chr_2_2;
+          xhr0 = h.chr_2_1;
+        } else if (hr > h.iphr_2_2 && hr < h.iphr_2_3) {
+          h2 = h.iphr_2_3;
+          h0 = h.iphr_2_2;
+          xhr2 = h.chr_2_3;
+          xhr0 = h.chr_2_2;
+        }else if (hr > h.iphr_2_3 && hr < h.iphr_2_4) {
+          h2 = h.iphr_2_4;
+          h0 = h.iphr_2_3;
+          xhr2 = h.chr_2_4;
+          xhr0 = h.chr_2_3;
+        } else if (hr > h.iphr_2_4 && hr < h.iphr_2_5) {
+          h2 = h.iphr_2_5;
+          h0 = h.iphr_2_4;
+          xhr2 = h.chr_2_5;
+          xhr0 = h.chr_2_4;
+        }
+        xhr1 = ((xhr2 * (hr - h0)) + (xhr0 * (h2 - hr))) / (h2 - h0);
+        humedad_corregida = xhr1 + hr; // REdondear el decimal
+      }
+    }
+    if (this.validaPromedioTemperaturaHR(h.tempHR2, h.tempHR3, this.monitoreo.temperatura_original)) {
+      if (hr == h.iphr_2_1 || hr == h.iphr_2_2 || hr == h.iphr_2_3 || hr == h.iphr_2_4 || hr == h.iphr_2_5) {
+        humedad_corregida = hr;
+      }else {
+        if (hr > h.iphr_2_1 && hr < h.iphr_2_2) {
+          h2 = h.iphr_2_2;
+          h0 = h.iphr_2_1;
+          xhr2 = h.chr_2_2;
+          xhr0 = h.chr_2_1;
+        }else if (hr > h.iphr_2_2 && hr < h.iphr_2_3) {
+          h2 = h.iphr_2_3;
+          h0 = h.iphr_2_2;
+          xhr2 = h.chr_2_3;
+          xhr0 = h.chr_2_2;
+        }else if (hr > h.iphr_2_3 && hr < h.iphr_2_4){
+          h2 = h.iphr_2_4;
+          h0 = h.iphr_2_3;
+          xhr2 = h.chr_2_4;
+          xhr0 = h.chr_2_3;
+        }else if (hr > h.iphr_2_4 && hr < h.iphr_2_5){
+          h2 = h.iphr_2_5;
+          h0 = h.iphr_2_4;
+          xhr2 = h.chr_2_5;
+          xhr0 = h.chr_2_4;
+        }
+        xhr1 = ((xhr2 * (hr - h0)) + (xhr0 * (h2 - hr))) / (h2 - h0);
+        humedad_corregida = xhr1 + hr; // REdondear el decimal
+      }
+    }
+    if (this.validaPromedioTemperaturaHR(h.tempHR2, h.tempHR3, this.monitoreo.temperatura_original) == false) {
+      if (hr == h.iphr_3_1 || hr == h.iphr_3_2 || hr == h.iphr_3_3 || hr == h.iphr_3_4 || hr == h.iphr_3_5) {
+        humedad_corregida =  hr;
+      }else {
+        if (hr > h.iphr_3_1 && hr < h.iphr_3_2) {
+          h2 = h.iphr_3_2;
+          h0 = h.iphr_3_1;
+          xhr2 = h.chr_3_2;
+          xhr0 = h.chr_3_1;
+        }else if (hr > h.iphr_3_2 && hr < h.iphr_3_3) {
+          h2 = h.iphr_3_3;
+          h0 = h.iphr_3_2;
+          xhr2 = h.chr_3_3;
+          xhr0 = h.chr_3_2;
+        }else if (hr > h.iphr_3_3 && hr < h.iphr_3_4) {
+          h2 = h.iphr_3_4;
+          h0 = h.iphr_3_3;
+          xhr2 = h.chr_3_4;
+          xhr0 = h.chr_3_3;
+        }else if (hr > h.iphr_3_4 && hr < h.iphr_3_5) {
+          h2 = h.iphr_3_5;
+          h0 = h.iphr_3_4;
+          xhr2 = h.chr_3_5;
+          xhr0 = h.chr_3_4;
+        }
+        xhr1 = ((xhr2 * (hr - h0)) + (xhr0 * (h2 - hr))) / (h2 - h0);
+        humedad_corregida = xhr1 + hr; // REdondear el decimal
+      }
+    }
+    if (this.monitoreo.temperatura_original == h.tempHR3) {
+      if (hr == h.iphr_3_1 || hr == h.iphr_3_2 || hr == h.iphr_3_3 || hr == h.iphr_3_4 || hr == h.iphr_3_5) {
+        humedad_corregida = hr;
+      }else {
+        if (hr > h.iphr_3_1 && hr < h.iphr_3_2) {
+          h2 = h.iphr_3_2;
+          h0 = h.iphr_3_1;
+          xhr2 = h.chr_3_2;
+          xhr0 = h.chr_3_1;
+        }else if (hr > h.iphr_3_2 && hr < h.iphr_3_3) {
+          h2 = h.iphr_3_3;
+          h0 = h.iphr_3_2;
+          xhr2 = h.chr_3_3;
+          xhr0 = h.chr_3_2;
+        }else if (hr > h.iphr_3_3 && hr < h.iphr_3_4) {
+          h2 = h.iphr_3_4;
+          h0 = h.iphr_3_3;
+          xhr2 = h.chr_3_4;
+          xhr0 = h.chr_3_3;
+        }else if (hr > h.iphr_3_4 && hr < h.iphr_3_5) {
+          h2 = h.iphr_3_5;
+          h0 = h.iphr_3_4;
+          xhr2 = h.chr_3_5;
+          xhr0 = h.chr_3_4;
+        }
+        xhr1 = ((xhr2 * (hr - h0)) + (xhr0 * (h2 - hr))) / (h2 - h0);
+        humedad_corregida = xhr1 + hr; // REdondear el decimal
+      }
+    }
+
+    return humedad_corregida;
+  }
+
+  validaPromedioTemperaturaHR(temp1: number, temp2: number, temperatura: number): Boolean {
+    let suma1: number = Number(temp1) + Number(temp2);
+    let promedio: number = (suma1) / 2;
+    if (temperatura < promedio) {
+        return true;
+    }else {
+        return false;
+    }
+  }
+
+  verificaSiEsHigroscopico(): Boolean {
+    if (this.monitoreo.higroscopico && this.monitoreo.humedad_relativa_corregido > 45) {
+      return false;
+    }else if (this.monitoreo.humedad_relativa_corregido > 60) {
+      return false;
+    }else {
+      return true;
+    }
   }
 }
