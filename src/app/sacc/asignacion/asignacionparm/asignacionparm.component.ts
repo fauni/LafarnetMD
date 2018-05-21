@@ -333,7 +333,7 @@ export class AsignacionparmComponent implements OnInit {
     this.clasificacionesCaracteristicasParaGuardarPT = new Array<ClasificacionCaracteristica>();
     this.clasificacionesCaracteristicasCFpt.forEach(element =>  {
       this.clasificacionesCaracteristicasParaGuardarPT.push(element);
-    })
+    });
     this.clasificacionesCaracteristicasAQpt.forEach(element => {
       this.clasificacionesCaracteristicasParaGuardarPT.push(element);
     });

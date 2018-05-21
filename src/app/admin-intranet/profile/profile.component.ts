@@ -80,7 +80,6 @@ export class ProfileComponent implements OnInit {
     this.user = new Users();
     this.onLoadUser();
     this.onLoadApps(this.user.username);
-
     this.onLoadCargos();
     this.onLoadAreas();
     this.onLoadRegionales();
@@ -300,7 +299,7 @@ export class ProfileComponent implements OnInit {
       break;
     }
   }
-
+// scn resetear contraseña a una por defecto
   resetPassword() {
    let model = {
       usernameUpdate: localStorage.getItem('username'),

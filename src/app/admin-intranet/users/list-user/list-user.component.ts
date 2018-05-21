@@ -103,7 +103,7 @@ export class ListUserComponent implements OnInit {
       data => {
         this.onLoadUsers();
         this.openNotificacion(1, 'Su registro', 'fue eliminado Correctamente');
-        //this.router.navigate(['/admin/profile', this.user]);
+        // this.router.navigate(['/admin/profile', this.user]);
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
