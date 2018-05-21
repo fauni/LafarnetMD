@@ -157,7 +157,7 @@ export class AdminUsersAppsComponent implements OnInit {
   eliminaruserapp(usap: UsersApps) {
     this.servusapp.remove(usap).subscribe(
       data => {
-        alert ('se eliminó...');
+       console.log ('se eliminó...');
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
