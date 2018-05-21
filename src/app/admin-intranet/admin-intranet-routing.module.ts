@@ -12,7 +12,9 @@ const routes: Routes = [
             { path: 'apps', loadChildren: './apps/apps.module#AppsModule' },
             { path: 'areas', loadChildren: './areas/areas.module#AreasModule' },
             { path: 'secciones', loadChildren: './secciones/secciones.module#SeccionesModule' },
-            { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' }
+            { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' },
+            { path: 'admusersapps/:id', loadChildren: './adminusersapps/adminusersapps.module#AdminUsersAppsModule' }
+
         ]
     }
 ];

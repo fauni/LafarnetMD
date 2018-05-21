@@ -78,8 +78,8 @@ export class LoginComponent implements OnInit {
         this.login = new Login(this.model.username, this.model.password);
         // let urlOLDL = this.global.urlIntranet + 'sesionactiva.php' + '?username=' +
         // this.model.username + '&password=' + this.model.password;
-        let urlOLDL = this.global.urlIntranet + 'sesionactiva.php' + '?username=' + this.model.username;
-        window.open(urlOLDL, '_blank');
+        let urlOLDL = this.global.urlIntranet + 'sesionactiva3.php' + '?username=' + this.model.username;
+        window.open(urlOLDL, '_blank', 'top=1000 ,left=1000 ,width=1, height=1, scrollbars=no, menubar=no, location=no, resizable=no');
         this.srvLogin.login(this.login).subscribe(
             data => {
                 this.closeLoading();
