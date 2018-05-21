@@ -13,13 +13,14 @@
       <div class="contenido-principal">
           <mz-card>
               <mz-card-content>
-                <h5>Aplicaciones de {{username}} </h5>
                                                 
                 <div class="row">
                         <mz-checkbox-container class="col s4 m2" *ngFor ="let itmcm of aplicaciones" style="background-color: rgb(221, 214, 214); margin: 3px;">
                             <input mz-checkbox   
                                   id="checkbox-{{itmcm.id}}"
                                   type="checkbox"
+                                  [checked]="cambiatipocheck(itmcm.checked)"
+                                  (change) = "enCambioEstado(itmcm)"
                                   >
                         <img src="assets/images/apps/{{itmcm.code}}.png" class="imagen-app">
                             

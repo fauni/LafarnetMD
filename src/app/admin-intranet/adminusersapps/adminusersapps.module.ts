@@ -16,6 +16,7 @@ import {
     MzSelectModule,
     MzCollapsibleModule
 } from 'ng2-materialize';
+import { UsersAppsService } from './usersapps.service';
 
 @NgModule({
     imports: [
@@ -37,7 +38,7 @@ import {
         AdminUsersAppsComponent
     ],
 providers: [
-     AppsService
+     AppsService, UsersAppsService
 ]
 })
 export class AdminUsersAppsModule {}
