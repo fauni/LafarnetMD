@@ -22,9 +22,12 @@ import { Router } from '@angular/router';
 })
 
 export class AddUserComponent implements OnInit {
+
+  usuarios: Array<Users>;
   elem: any;
   userForm: FormGroup;
   cargoData: CompleterData;
+  userData: CompleterData;
   cargo: Cargos;
   cargos: any;
   area: Areas;
@@ -71,6 +74,7 @@ export class AddUserComponent implements OnInit {
     private global: Globals,
     private servCargo: CargosService,
     private completerService: CompleterService,
+    private completerServiceUser: CompleterService,
     private servArea: AreasService,
     private servRegional: RegionalesService,
     private servUser: UsersService
@@ -88,6 +92,7 @@ export class AddUserComponent implements OnInit {
     this.UserModel.email_address = 'amrfranz@gmail.com';
     this.UserModel.id_area = '1';
     this.UserModel.id_regional = '1';*/
+    this.onLoadUsuarios();
     this.urlFotoPerfil = this.global.urlImagenUserDefault;
   }
 
@@ -176,6 +181,29 @@ export class AddUserComponent implements OnInit {
     );
   }
 
+  onLoadUsuarios(): void {
+    this.usuarios = new Array<Users>();
+    this.servUser.getUsersCompleter().subscribe(
+    data => {
+      this.usuarios = data.body;
+      console.log('Usuarios cargados correctamente');
+      this.userData = this.completerService.local(this.usuarios, 'email_address', 'email_address');
+      console.log('------------------------------------>');
+      console.log(this.userData);
+    },
+    (err: HttpErrorResponse) => {
+      if (err.error instanceof Error) {
+        // A client-side or network error occurred. Handle it accordingly.
+        console.log('Ocurrio un error:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+      }
+    }
+  );
+}
+
   onLoadAreas() {
     this.area = new Areas();
       this.servArea.getAreas().subscribe(
@@ -229,6 +257,9 @@ export class AddUserComponent implements OnInit {
     }
   }
 
+  onSelectUsuario() {
+
+  }
   openNotificacion(tipo: number, titulo: string, mensaje: string) {
     switch (tipo) {
       case 1:

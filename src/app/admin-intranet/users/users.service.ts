@@ -13,6 +13,11 @@ export class UsersService {
     return this.http.get(this.global.urlAPI + 'usuario/get');
   }
 
+  getUsersCompleter(): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'usuario/getc');
+  }
+
+
   getUser(username: string): Observable<any> {
     return this.http.get(this.global.urlAPI + 'usuario/get/' + username);
   }

@@ -31,6 +31,7 @@ const routes: Routes = [
     { path: 'login', loadChildren: './login/login.module#LoginModule' },
     { path: 'sacc', loadChildren: './sacc/sacc.module#SaccModule', canActivate: [AuthGuard] }, // Ruta del NEW SACC
     { path: 'procprod', loadChildren: './pp/pp.module#PpModule', canActivate: [AuthGuard] }, // Procesos Productivos
+    { path: 'gh', loadChildren: './gh/gh.module#GhModule', canActivate: [AuthGuard] }, // Gestión Humana
     { path: 'error', loadChildren: 'app/server-error/server-error.module#ServerErrorModule' },
     { path: 'access-denied', loadChildren: 'app/access-denied/access-denied.module#AccessDeniedModule' },
     { path: 'not-found', loadChildren: 'app/not-found/not-found.module#NotFoundModule' },
