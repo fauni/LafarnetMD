@@ -11,6 +11,7 @@ import {
     MzIconModule,
     MzIconMdiModule
 } from 'ng2-materialize';
+import { AnalistasService } from '../analista/analista.service';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {
         MzIconModule,
         MzIconMdiModule
     ],
-    declarations: [MaindatosComponent]
+    declarations: [MaindatosComponent],
+    providers: [AnalistasService]
 })
 
 export class MaindatosModule {}
