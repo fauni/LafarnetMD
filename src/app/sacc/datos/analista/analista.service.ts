@@ -21,4 +21,7 @@ export class AnalistasService {
   getAnalistaForCode(data): Observable<any> {
     return this.http.get(this.global.urlAPI + 'analista/get/' + data);
   }
+  getAnalistaForUserName(data): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'analista/getbyusrnm/' + data);
+  }
 }
