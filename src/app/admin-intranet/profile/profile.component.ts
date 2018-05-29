@@ -15,6 +15,9 @@ import { Cargos } from '../cargos/cargos';
 import { Areas } from '../areas/areas';
 import { Regionales } from '../regionales/regionales';
 import { CompleterItem } from 'ng2-completer/components/completer-item';
+import { MzToastService } from 'ng2-materialize';
+import { Superarea } from '../superarea/superarea';
+import { SuperareaService } from '../superarea/superarea.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +25,10 @@ import { CompleterItem } from 'ng2-completer/components/completer-item';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  // id_super_area: number;
+  lsuperareas: Array<Superarea> = new Array<Superarea>();
+
+  p: any = 1;
   user: Users;
   private sub: any;
   public apps: any;
@@ -35,6 +42,14 @@ export class ProfileComponent implements OnInit {
   public regional: Regionales;
   public regionales: any;
   public descripcionCargo: string = 'SECRETARIA DE GERENC';
+
+  public lsuperior: Array<Users> = new Array<Users>();
+  public userSuperior: Array<Users>;
+  public u_superior: any = {
+    name : '',
+    cargo : '',
+    foto : ''
+  };
   errorMessages = {
     first_name: {
       required: 'Es necesario que ingrese su(s) Nombre(s)',
@@ -63,6 +78,11 @@ export class ProfileComponent implements OnInit {
     }
   };
 
+
+  // asignar superior
+
+  superior: Boolean = false;
+
   constructor(
     private router: Router,
     private servNotification: NotificationsService,
@@ -74,15 +94,21 @@ export class ProfileComponent implements OnInit {
     private completerService: CompleterService,
     private servArea: AreasService,
     private servRegional: RegionalesService,
+    private servSuperArea: SuperareaService,
+    private toastService: MzToastService
   ) { }
 
   ngOnInit() {
     this.user = new Users();
+    this.onLoadSuperiores();
     this.onLoadUser();
     this.onLoadApps(this.user.username);
     this.onLoadCargos();
     this.onLoadAreas();
     this.onLoadRegionales();
+    this.onSuperior();
+    this.onValidaSuperior();
+    this.onLoadSuperAreas();
   }
 
   onLoadUser() {
@@ -105,11 +131,17 @@ export class ProfileComponent implements OnInit {
       this.user.foto = params['foto'];
       this.user.estado = params['estado'];
       this.user.nombre_estado = params['nombre_estado'];
+      this.user.id_super_area = params['id_super_area'];
       this.user.usuario_creacion = params['usuario_creacion'];
       this.user.fecha_creacion = params['fecha_creacion'];
       this.user.usuario_modificacion = params['usuario_modificacion'];
       this.user.fecha_modificacion = params['fecha_modificacion'];
     });
+  }
+
+  OnSelectSuperArea() {
+    this.user.usuario_modificacion = localStorage.getItem('username');
+    this.onUpdateSuperAreas();
   }
 
   onLoadApps(username): void {
@@ -247,6 +279,121 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  onLoadSuperAreas() {
+      this.servSuperArea.getSuperArea().subscribe(
+      data => {
+        this.lsuperareas = data.body;
+        console.log(this.lsuperareas);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  onSuperior() {
+    this.userSuperior = new Array<Users>();
+      this.servUser.getUser(this.user.id_superior).subscribe(
+      data => {
+        this.userSuperior = data.body;
+        console.log(this.userSuperior);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  onLoadSuperiores() {
+    // debugger;
+    this.servUser.getUsersCompleter().subscribe(
+      data => {
+        this.lsuperior = data.body;
+        console.log(this.lsuperior);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  onUpdateSuperiorForUser(username: string) {
+    this.user.id_superior = username;
+    this.user.usuario_modificacion = localStorage.getItem('username');
+    this.servUser.updateSuperiorForUser(this.user).subscribe(
+      data => {
+        if (data.status == '200') {
+          this.toastService.show('Se asigno el Inmediato Superior Correctamente! ', 4000, 'green round');
+          this.superior = true;
+
+        } else {
+          this.toastService.show('No se asigno. Intente nuevamente!', 4000, 'red round');
+          this.superior = false;
+        }
+        console.log(this.lsuperior);
+      },
+      (err: HttpErrorResponse) => {
+        this.toastService.show('Ocurrio un error, comuniquese con el Administrador!', 4000, 'red round');
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+    // this.toastService.show(username, 4000, 'green round');
+  }
+
+  onUpdateSuperAreas() {
+    debugger;
+    this.user.usuario_modificacion = localStorage.getItem('username');
+    this.servUser.updateSuperAreaForUser(this.user).subscribe(
+      data => {
+        if (data.status == '200') {
+          this.toastService.show('Se asigno correctamente al Área!', 4000, 'green round');
+        } else {
+          this.toastService.show('No se asigno. Intente nuevamente!', 4000, 'red round');
+        }
+      },
+      (err: HttpErrorResponse) => {
+        this.toastService.show('Ocurrio un error, comuniquese con el Administrador!', 4000, 'red round');
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+    // this.toastService.show(username, 4000, 'green round');
+  }
+
   onSelectCargo(selected: CompleterItem): void {
     if (selected) {
       this.user.id_cargo = selected.originalObject['id'];
@@ -299,6 +446,15 @@ export class ProfileComponent implements OnInit {
       break;
     }
   }
+
+  onValidaSuperior() {
+    if (this.user.id_superior == '0' || this.user.id_superior == '1') {
+      this.superior = false;
+    } else {
+      this.superior = true;
+    }
+  }
+
 // scn resetear contraseña a una por defecto
   resetPassword() {
    let model = {
@@ -329,4 +485,5 @@ export class ProfileComponent implements OnInit {
     );
   }
   }
+
 }

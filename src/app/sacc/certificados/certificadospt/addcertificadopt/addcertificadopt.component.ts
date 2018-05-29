@@ -14,6 +14,9 @@ import { AsignacionService } from '../../../asignacion/asignacion.service';
 import { Caracteristicas } from '../../../asignacion/caracteristicas';
 import { CertificadosService } from '../../certificados.service';
 import { CaracteristicasCertificado } from '../../caracteristicascertificado';
+import { Lote } from '../lote';
+import { Proveedor } from '../../../datos/proveedor/proveedor';
+import { MzToastService } from 'ng2-materialize';
 
 @Component({
   selector: 'app-addcertificadopt',
@@ -75,7 +78,15 @@ export class AddcertificadoptComponent implements OnInit {
     selectYears: 10,    // Creates a dropdown of 10 years to control year,
   };
   resp: any;
+
+  // Lotes
+  listalote: Array<Lote> = new Array<Lote>();
+
+  // Proveedores
+  proveedores: Array<Proveedor> = new Array<Proveedor>();
+
   constructor(
+    private toast: MzToastService,
     private router: Router,
     private servAnalista: AnalistasService,
     private servProductos: ProductosService,
@@ -98,11 +109,11 @@ export class AddcertificadoptComponent implements OnInit {
     this.openLoading();
     this.loadDataDefault();
     this.onLoadAnalistas();
-    this.onLoadProductos();
+    // this.onLoadProductos();
   }
 
   loadDataDefault() {
-    //this.certificado.tipo_certificado = 'PT';
+    // this.certificado.tipo_certificado = 'PT';
     this.certificado.usuario_creacion = localStorage.getItem('username');
     this.certificado.usuario_modificacion = localStorage.getItem('username');
   }
@@ -114,6 +125,7 @@ export class AddcertificadoptComponent implements OnInit {
         this.analistas = data.body;
         console.log('Analistas cargados correctamente');
         this.analistaData = this.completerService.local(this.analistas, 'nombre_completo', 'nombre_completo');
+        this.closeLoading();
         console.log('------------------------------------>');
         console.log(this.analistaData);
       },
@@ -440,6 +452,67 @@ export class AddcertificadoptComponent implements OnInit {
         console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
       }
     });
+  }
+
+
+  getLote(event: any) {
+    if (event.keyCode == 13) {
+      this.openLoading();
+      this.onLoadLotePT(this.certificado.lote);
+    }
+  }
+
+  onLoadLotePT(nlote: String) {
+    let l: Lote = new Lote();
+    this.servCertificados.getLotePT(nlote.replace('/', '|')).subscribe(data => {
+      this.closeLoading();
+      console.log('Datos de Lote extraidos');
+      console.log(data);
+      this.listalote = data['body'];
+      this.listalote.forEach(element => {
+        l = element;
+      });
+      this.certificado.codigo_certificado = this.onGeneraCodigoCertificado();
+      this.certificado.codigo_producto = l.ItemCode;
+      this.certificado.nombre_producto = l.ItemName;
+      this.certificado.fecha_fabricacion = l.PrdDate;
+      this.certificado.fecha_vencimiento = l.ExpDate;
+      this.certificado.concentracion = l.Concentracion;
+      this.certificado.forma_farmaceutica = l.FormaFarmaceutica;
+      this.certificado.protocolo = l.BatchNum;
+      this.certificado.tipo_clasificacion_producto = l.Tipo_Productos;
+
+      if (this.certificado.codigo_producto.substr(0, 2) == 'PT') {
+        this.certificado.tipo_certificado = 'Producto Terminado';
+      }else if (this.certificado.codigo_producto.substr(0, 2) == 'MP') {
+        this.certificado.tipo_certificado = 'Materia Prima';
+      } else {
+        this.certificado.tipo_certificado = '';
+      }
+
+      this.lcf = [];
+      this.laq = [];
+      this.lcm = [];
+      this.onLoadCaracteristicasForProducto(l.ItemCode);
+
+    }, (err: HttpErrorResponse) => {
+      this.toast.show('Ocurrio un error no se trajo información del Lote', 2000, 'red round');
+      if (err.error instanceof Error) {
+        console.log('Ocurrio un error:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+      }
+    });
+  }
+
+  onGeneraCodigoCertificado(): string {
+    let cod: string = '';
+    let f = new Date();
+    cod = this.certificado.lote + '-' +
+    f.getDate() + '' + f.getMonth() + '' + f.getFullYear() + '' + f.getHours() + '' + f.getMinutes() + '' + f.getSeconds();
+    return cod;
   }
 
   openLoading() {

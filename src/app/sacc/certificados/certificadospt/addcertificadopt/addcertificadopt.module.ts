@@ -12,7 +12,8 @@ import { MzParallaxModule,
     MzTabModule,
     MzSpinnerModule,
     MzTextareaModule,
-    MzCheckboxModule
+    MzCheckboxModule,
+    MzToastService
 } from 'ng2-materialize';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -27,6 +28,7 @@ import { AnalistasService } from '../../../datos/analista/analista.service';
 import { ProductosService } from '../../../datos/productos/productos.service';
 import { AsignacionService } from '../../../asignacion/asignacion.service';
 import { CertificadosService } from '../../certificados.service';
+import { ProveedoresService } from '../../../datos/proveedor/proveedor.service';
 
 @NgModule({
     imports: [
@@ -55,6 +57,7 @@ import { CertificadosService } from '../../certificados.service';
         MzSwitchModule
     ],
     declarations: [AddcertificadoptComponent],
-    providers: [NotificationsService, AnalistasService, ProductosService, AsignacionService, CertificadosService]
+    providers: [NotificationsService, AnalistasService, ProductosService, AsignacionService,
+        CertificadosService, ProveedoresService, MzToastService]
 })
 export class AddcertificadoptModule {}

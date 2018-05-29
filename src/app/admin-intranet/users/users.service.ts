@@ -53,4 +53,12 @@ export class UsersService {
   resetPassword (data): Observable<any> {
     return this.http.put(this.global.urlAPI + 'usuario/resetPassword', data);
   }
+
+  updateSuperiorForUser(data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'usuario/updateSuperiorForUser', data);
+  }
+
+  updateSuperAreaForUser(data): Observable<any> {
+    return this.http.put(this.global.urlAPI + 'usuario/updateSuperAreaForUser', data);
+  }
 }

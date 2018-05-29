@@ -55,6 +55,9 @@
             </li>
           </ul>
           <!--/ Profile About Details  -->  
+          <button mz-button (click)="passwordModal.open()" class="blue">
+              Cambiar Contraseña
+          </button>
       </mz-card-content>
     </mz-card>
 
@@ -322,5 +325,61 @@
   </mz-modal>  
 
 </form>
-  
+
+<mz-modal #passwordModal [fixedFooter]="true" [bottomSheet]="true">
+    <mz-modal-header>
+      <div class="title-modal"><h3>Cambiar Contraseña</h3></div>
+    </mz-modal-header>
+    <mz-modal-content>
+        <div class="form-group content-modal">
+            <mz-input-container class="col s6 m12">
+              <input mz-input
+                required
+                type="password"
+                validateEqual="password1"
+                (input)="validaClaveOLD()"
+                [(ngModel)]="model.oldPassword" name="oldPassword"
+                [label]="'Contraseña Actual'"
+                #oldPassword="ngModel">
+                <div class="message-error" *ngIf="vpas1">
+                  No coincide con su Contraseña Actual
+                </div> 
+            </mz-input-container>
+          </div>
+          <div class="form-group content-modal">
+            <mz-input-container class="col s6 m12">
+              <input mz-input
+                required
+                type="password"
+                (input)="validaClaveNueva()"
+                [(ngModel)]="model.password" name="password"
+                [label]="'Nueva Contraseña'"
+                #password="ngModel">
+                <div class="message-error" *ngIf="vpas2">
+                    {{ msgpas2 }}
+                </div>
+            </mz-input-container>
+          </div>
+          <div class="form-group content-modal">
+            <mz-input-container class="col s6 m12">
+              <input mz-input
+                type="password"
+                required
+                validateEqual="password"
+                (input)="validaClaveConfirmacionNueva()"
+                [(ngModel)]="model.confirmPassword" name="confirmPassword"
+                [label]="'Confirm Password'"
+                #confirmPassword="ngModel">
+                <div class="message-error" *ngIf="vpas3">
+                  La contraseñas no coinciden!
+                </div> 
+            </mz-input-container>
+          </div>
+    </mz-modal-content>
+    <mz-modal-footer>
+      <button mz-button [disabled]="bchangepassword" [flat]="true" mz-modal-close (click)="onChangePassword()">Cambiar</button>
+      <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+    </mz-modal-footer>
+</mz-modal>
+
 <simple-notifications></simple-notifications>

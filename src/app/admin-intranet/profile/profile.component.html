@@ -94,6 +94,40 @@
   <div class="col l4 s12"> 
     <mz-card>
       <mz-card-title>
+        Inmediato Superior
+      </mz-card-title>
+      <mz-card-content>
+        <button mz-button (click)="usersModal.open()" class="blue center" *ngIf="!superior">
+            Asignar Inmediato Sup 
+        </button>
+        <div class="email-lista" *ngIf="superior">
+          <ul class="collection">
+            <li class="collection-item avatar selected">
+              <img src="{{global.urlImagenesPersonal+userSuperior[0].foto}}" alt="" class="circle">
+              <span class="email-title">{{ userSuperior[0].first_name + userSuperior[0].last_name }} </span>
+              <p class="truncate grey-text ultra-small">{{ userSuperior[0].cargo }}</p>
+            </li>
+          </ul>
+        </div>
+      </mz-card-content>
+    </mz-card>
+    <mz-card>
+      <mz-card-content>
+        <mz-select-container>
+          <select mz-select
+            id="id_super_area"
+            name="id_super_area"
+            [label]="'Super Area'"
+            (change) = "OnSelectSuperArea()" 
+            [placeholder]="'Seleccione una Super Area'"
+            [(ngModel)]="user.id_super_area">
+            <option *ngFor="let sa of lsuperareas" [ngValue]="sa.id_super_area">{{ sa.nombre }}</option>
+          </select>
+        </mz-select-container>
+      </mz-card-content>
+    </mz-card>
+    <mz-card>
+      <mz-card-title>
         Aplicaciones LAFAR
       </mz-card-title>
       <mz-card-content>
@@ -317,5 +351,31 @@
     </mz-modal-footer>
   </mz-modal>  
 </form>
-  
+
+<mz-modal #usersModal [fixedFooter]="true" [bottomSheet]="false" [fullscreen]="false" >
+    <mz-modal-header>
+      Seleccione un Usuario
+    </mz-modal-header>
+    <mz-modal-content>
+        <table class="bordered">
+          <thead>
+            <tr>
+              <th>Nombres</th>
+              <th>Cargo</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of lsuperior">
+              <td>{{u.first_name + ' ' + u.last_name}}</td>
+              <td>{{u.cargo}}</td>
+              <td><a mz-button [flat]="false" href="javascript:void(0)" (click)="onUpdateSuperiorForUser(u.username)" mz-modal-close>Asignar</a></td>
+            </tr>
+          </tbody>
+        </table>
+    </mz-modal-content>
+    <mz-modal-footer>
+      <button type="reset" mz-button [flat]="true" mz-modal-close>Cancelar</button>
+    </mz-modal-footer>
+  </mz-modal>  
 <simple-notifications></simple-notifications>

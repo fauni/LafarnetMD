@@ -23,28 +23,23 @@
                 <thead>
                     <tr>
                     <th>Nro</th>
-                    <th (click)="sort('descripcion')">Descripcion
-                        <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='codigo'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                    <th>Descripcion
+                        <span class="mdi-hardware-keyboard-arrow-down" ></span>
                     </th>
-                    <th (click)="sort('tipo')">Tipo
-                        <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
-                    </th>
-                    <th style= "text-align:right;">
-                        <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='opciones'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                    <th>Tipo
+                        <span class="mdi-hardware-keyboard-arrow-down"></span>
                     </th>
                     
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor= "let item of caracteristicasPT" > 
-                    <td>{{item.id_caracteristicas_fisicas }}</td>
-                    <td>{{item.descripcion}}</td>
-                    <td>{{item.esp_car}}</td>
-                    <td >.:Ver Detalles:.</td>
+                        <td>{{item.id_caracteristicas_fisicas }}</td>
+                        <td>{{item.descripcion}}</td>
+                        <td>{{item.esp_car}}</td>
                     </tr>
                 </tbody>
                 </table>
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div> 
             <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                 <a class="btn-floating btn-large green" (click)='modalNuevaCaracteristicaPT.open()'> <!--[routerLink]="['/sacc/datos/ingresos/add']"-->
@@ -64,14 +59,14 @@
                     <thead>
                         <tr>
                         <th>Nro</th>
-                        <th (click)="sort('descripcion')">Descripcion
-                            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='codigo'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                        <th>Descripcion
+                            <span class="mdi-hardware-keyboard-arrow-down"></span>
                         </th>
-                        <th (click)="sort('tipo')">Tipo
-                            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                        <th>Tipo
+                            <span class="mdi-hardware-keyboard-arrow-down"></span>
                         </th>
-                        <th style= "text-align:right;">
-                            <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='opciones'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+                        <th>
+                            <span class="mdi-hardware-keyboard-arrow-down"></span>
                         </th>
                         
                         </tr>
@@ -85,7 +80,6 @@
                         </tr>
                     </tbody>
                     </table>
-                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
                 </div> 
                 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                     <a class="btn-floating btn-large green" (click)='modalNuevaCaracteristicaMP.open()'> <!--[routerLink]="['/sacc/datos/ingresos/add']"-->
@@ -98,7 +92,8 @@
     </mz-collapsible>
 </mz-card-content>
 </mz-card>    
-</div><!--contenido principal-->
+</div>
+<!--contenido principal-->
 <!--modal para Producto Terminado-->
   <mz-modal #modalNuevaCaracteristicaPT [fixedFooter]="false" [bottomSheet]="false">
     <mz-modal-header>
@@ -121,7 +116,7 @@
                     <select mz-select
                       id="tipo-clasif"
                       [label]="'Clasificacion de Caracteristica'"
-                      [placeholder]="'Placeholder'"
+                      [placeholder]="'Seleccione Tipo de Caracteristica'"
                       [(ngModel)]= "tipoclasPT">
                         <option  class="left circle" value="CF">Caracteristicas Físicas</option>
                         <option  class="left circle" value="AQ">Análisis Químico</option>

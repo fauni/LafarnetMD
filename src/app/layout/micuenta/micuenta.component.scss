@@ -90,3 +90,19 @@ $logo-resize: "only screen and (max-width: 650px)" !default;
 .linkEdit{
   font-size: 15px;
 }
+
+.message-error {
+  color: red;
+  font-size: 12px;
+  margin-top: -15px;
+  margin-bottom: 25px;
+}
+
+.title-modal {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.content-modal {
+  margin: 15px 50px;
+}

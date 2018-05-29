@@ -233,7 +233,7 @@ export class ListcertificadosptComponent implements OnInit {
 
   onLoadCertificados() {
     this.certificados = new Array<Certificados>();
-    this.servCertificados.getCertificados().subscribe(data => {
+    this.servCertificados.getCertificadosPT().subscribe(data => {
       console.log('Se cargo corredctamente los Certificados de Producto Terminado');
       // console.log(data);
       this.certificados = data['body'];
@@ -251,7 +251,7 @@ export class ListcertificadosptComponent implements OnInit {
 
   onLoadCertificado(cod: string) {
     this.certificado = new Certificados();
-    this.servCertificados.getCertificado(cod).subscribe(data => {
+    this.servCertificados.getCertificado(cod.replace('/', '|')).subscribe(data => {
       console.log('Se cargo correctamente este certificado');
       // console.log(data);
       this.certificado = data['body'][0];
@@ -269,7 +269,7 @@ export class ListcertificadosptComponent implements OnInit {
   }
 
   onLoadCFCertificado(codigo_certificado: String) {
-    this.servCertificados.getCFCertificado(codigo_certificado).subscribe(data => {
+    this.servCertificados.getCFCertificado(codigo_certificado.replace('/', '|')).subscribe(data => {
       console.log('Se cargo correctamente Lista Caracteristicas Fisicas');
       // console.log(data);
       this.lcf = data['body'];
@@ -287,7 +287,7 @@ export class ListcertificadosptComponent implements OnInit {
   }
 
   onLoadAQCertificado(codigo_certificado: String) {
-    this.servCertificados.getAQCertificado(codigo_certificado).subscribe(data => {
+    this.servCertificados.getAQCertificado(codigo_certificado.replace('/', '|')).subscribe(data => {
       console.log('Se cargo correctamente Lista Analisis Quimico');
       // console.log(data);
       this.laq = data['body'];
@@ -305,7 +305,7 @@ export class ListcertificadosptComponent implements OnInit {
   }
 
   onLoadCMCertificado(codigo_certificado: String) {
-    this.servCertificados.getCMCertificado(codigo_certificado).subscribe(data => {
+    this.servCertificados.getCMCertificado(codigo_certificado.replace('/', '|')).subscribe(data => {
       console.log('Se cargo correctamente Lista Control Microbiologico');
       // console.log(data);
       this.lcm = data['body'];

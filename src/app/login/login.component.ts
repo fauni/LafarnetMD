@@ -78,8 +78,9 @@ export class LoginComponent implements OnInit {
         this.login = new Login(this.model.username, this.model.password);
         // let urlOLDL = this.global.urlIntranet + 'sesionactiva.php' + '?username=' +
         // this.model.username + '&password=' + this.model.password;
-        let urlOLDL = this.global.urlIntranet + 'sesionactiva3.php' + '?username=' + this.model.username;
-        window.open(urlOLDL, '_blank', 'top=1000 ,left=1000 ,width=1, height=1, scrollbars=no, menubar=no, location=no, resizable=no');
+        let urlOLDL = this.global.urlIntranet + 'sesionactiva.php' + '?username=' + this.model.username;
+        window.open(urlOLDL, '_blank');
+        // , 'top=1000 ,left=1000 ,width=1, height=1, scrollbars=no, menubar=no, location=no, resizable=no');
         this.srvLogin.login(this.login).subscribe(
             data => {
                 this.closeLoading();
@@ -140,8 +141,8 @@ export class LoginComponent implements OnInit {
                                 maxLength: 10
                             }
                         );
-                        localStorage.setItem('isLoggedin', 'true');
-                        this.router.navigate([this.returnUrl]);
+                        //localStorage.setItem('isLoggedin', 'true');
+                        this.router.navigate(['/restorepass/' + btoa(this.login.userid)]);
                     } else {}
                 }else {
                     console.log('Usuario o Contraseña Incorrecta');

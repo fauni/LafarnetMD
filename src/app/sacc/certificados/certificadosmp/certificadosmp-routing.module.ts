@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: CertificadosmpComponent,
         children: [
-            { path: '', redirectTo: 'add' },
+            { path: '', redirectTo: 'list' },
             { path: 'add', loadChildren: './addcertificadosmp/addcertificadosmp.module#AddcertificadosmpModule' },
             { path: 'list', loadChildren: './listcertificadosmp/listcertificadosmp.module#ListcertificadosmpModule' }
         ]

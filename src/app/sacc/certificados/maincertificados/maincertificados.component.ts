@@ -12,7 +12,7 @@ export class MaincertificadosComponent implements OnInit {
   constructor(public global: Globals, private router: Router) { }
 
   ngOnInit() {
-    this.router.navigate(['/sacc/certificados/pt']);
+    //this.router.navigate(['/sacc/certificados/pt']);
   }
 
 }

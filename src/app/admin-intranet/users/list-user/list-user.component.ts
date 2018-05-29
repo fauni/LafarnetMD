@@ -75,6 +75,7 @@ export class ListUserComponent implements OnInit {
         this.user.foto = data.body[0].foto;
         this.user.estado = data.body[0].estado;
         this.user.nombre_estado = data.body[0].nombre_estado;
+        this.user.id_super_area = data.body[0].id_super_area;
         this.user.usuario_creacion = data.body[0].usuario_creacion;
         this.user.fecha_creacion = data.body[0].fecha_creacion;
         this.user.usuario_modificacion = data.body[0].usuario_modificacion;

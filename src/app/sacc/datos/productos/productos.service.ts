@@ -18,6 +18,10 @@ export class ProductosService {
     return this.http.get(this.global.urlAPISAP + 'productosmp');
   }
 
+  getProductosPT(): Observable<any> {
+    return this.http.get(this.global.urlAPISAP + 'productospt');
+  }
+
   getProductosCompleter(): Observable<any> {
     return this.http.get(this.global.urlAPISAP + 'productos/');
   }

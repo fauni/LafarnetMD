@@ -18,6 +18,9 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     FormsModule,
     SimpleNotificationsModule.forRoot(),
   ],
+  exports: [
+    ClaveUserComponent
+  ],
   declarations: [ClaveUserComponent, EqualValidator]
 })
 

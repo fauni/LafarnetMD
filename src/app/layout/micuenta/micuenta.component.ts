@@ -15,6 +15,7 @@ import { Cargos } from '../../admin-intranet/cargos/cargos';
 import { Areas } from '../../admin-intranet/areas/areas';
 import { Regionales } from '../../admin-intranet/regionales/regionales';
 import { UsersService } from '../../admin-intranet/users/users.service';
+import { MzToastService } from 'ng2-materialize';
 
 @Component({
   selector: 'app-micuenta',
@@ -22,6 +23,24 @@ import { UsersService } from '../../admin-intranet/users/users.service';
   styleUrls: ['./micuenta.component.scss']
 })
 export class MiCuentaComponent implements OnInit {
+  // cambiar contraseña
+  model = {
+    password1: localStorage.getItem('password'),
+    oldPassword: '',
+    password: '',
+    confirmPassword: '',
+    usernameUpdate: localStorage.getItem('username'),
+    username: ''
+  };
+
+  vpas1: Boolean = false;
+  vpas2: Boolean = false;
+  vpas3: Boolean = false;
+  msgpas2: string = '';
+  bchangepassword: Boolean = true;
+
+  // End cambiar contraseña
+
   user: Users;
   private sub: any;
   public apps: any;
@@ -70,6 +89,8 @@ elem: any;
     }
   };
 
+  
+
   constructor(
     private router: Router,
     private servNotification: NotificationsService,
@@ -80,7 +101,8 @@ elem: any;
     private servCargo: CargosService,
     private completerService: CompleterService,
     private servArea: AreasService,
-    private servRegional: RegionalesService
+    private servRegional: RegionalesService,
+    private toastService: MzToastService
   ) {
       this.isFileCharged = false;
   }
@@ -138,6 +160,37 @@ onLoadApps(username): void {
 
 enviarMensaje() {
     alert('Enviar Mensaje');
+}
+
+validaClaveOLD() {
+  if (this.model.oldPassword == localStorage.getItem('password')) {
+    this.vpas1 = false;
+  } else {
+    this.vpas1 = true;
+  }
+}
+
+validaClaveNueva() {
+  if (this.model.confirmPassword == '') {
+    if (this.model.password == '') {
+      this.msgpas2 = 'Ingrese su nueva contraseña';
+      this.vpas2 = true;
+    } else {
+      this.vpas2 = false;
+    }
+  }else {
+    this.validaClaveConfirmacionNueva();
+  }
+}
+
+validaClaveConfirmacionNueva() {
+  if (this.model.confirmPassword != this.model.password) {
+    this.vpas3 = true;
+    this.bchangepassword = true;
+  } else {
+    this.vpas3 = false;
+    this.bchangepassword = false;
+  }
 }
 
 onSubmit() {
@@ -213,6 +266,28 @@ guardarInformacionLaboral() {
 
 guardarEstadoUsuario() {
     this.user.usuario_creacion = this.global.user.username;
+}
+
+onChangePassword() {
+  this.model.username = localStorage.getItem('username');
+  this.model.usernameUpdate = localStorage.getItem('username');
+  this.servUser.changePassword(this.model).subscribe(
+    data => {
+      this.toastService.show('Se cambio la contraseña correctamente!!', 4000, 'green rounded');
+      this.global.user.estado = 1;
+      this.router.navigate(['/home']);
+    }, (err: HttpErrorResponse) => {
+        this.toastService.show('Error: No se produjo el cambio!!', 4000, 'red rounded');
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
 }
 
 onLoadCargos() {

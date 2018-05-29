@@ -17,14 +17,14 @@
 
 <div id="preview" class="header-content valign-wrapper lafar-light">
     <img class="image-user circle" src="assets/images/userlafar.png">
-    <div class="nombre-user">AGREGAR NUEVO CERTIFICADO</div>
+    <div class="nombre-user">CERTIFICADOS DE PRODUCTO TERMINADO</div>
 </div>
 
 <div class="contenido-principal">
     <!--<form #certificadoPTForm = "ngForm" novalidate>-->
         <mz-card>
             <mz-card-content>
-                <nav style="background: #CFD8DC; color: #0d47a1; padding-right: 10px;">
+                <nav style="background: #CFD8DC; color: #0d47a1; padding-right: 10px;" *ngIf="false">
                     <div class="nav-wrapper">
                         <div class="col s12">
                             <ul *ngIf="!reimpresion" id="nav-mobile" class="left hide-on-med-and-down">
@@ -60,16 +60,17 @@
                 </nav>
                 <br>
                 <div class="row">
-                    <mz-input-container class="col l4 s12 m4">
+                    <mz-input-container class="col l3 s12 m3">
                         <input mz-input required
-                            id="codigo_certificado"
-                            name="codigo_certificado"
+                            id="lote"
+                            name="lote"
                             type="text"
-                            [label]="'Codigo de Certificado'"
-                            [(ngModel)]="certificado.codigo_certificado">
+                            [label]="'Nro Lote'"
+                            [(ngModel)]="certificado.lote"
+                            (keydown)="getLote($event)">
                     </mz-input-container>
 
-                    <mz-datepicker-container class="col l4 s12 m4">
+                    <mz-datepicker-container class="col l3 s12 m3">
                         <input mz-datepicker
                         id="fecha_analisis"
                         name="fecha_analisis"
@@ -81,7 +82,15 @@
                         required>
                     </mz-datepicker-container>
 
-                    <div style="padding: 12px 10px" class="col l4 s12 m4">
+                    <mz-input-container class="col l6 s12 m6">
+                        <input mz-input required
+                            id="nombre_producto"
+                            name="nombre_producto"
+                            type="text"
+                            [label]="'Nombre del Producto'"
+                            [(ngModel)]="certificado.nombre_producto">
+                    </mz-input-container>
+                    <!-- <div style="padding: 12px 10px" class="col l4 s12 m4">
                         <ng2-completer 
                             (selected)="onSelectProducto($event)"    
                             [datasource]="productosData"
@@ -93,7 +102,7 @@
                             [autofocus]="true"
                             [textSearching]="false">
                         </ng2-completer>
-                    </div>
+                    </div> -->
                     
                 </div>
                 <div class="row">
@@ -146,7 +155,7 @@
                 </div>
 
                 <div class="row">
-                    <mz-input-container class="col l3 s12 m3">
+                    <mz-input-container class="col l4 s12 m4">
                         <input mz-input required
                             id="tipo_certificado"
                             name="tipo_certificado"
@@ -155,16 +164,7 @@
                             [(ngModel)]="certificado.tipo_certificado">
                     </mz-input-container>
 
-                    <mz-input-container class="col l3 s12 m3">
-                        <input mz-input required
-                            id="lote"
-                            name="lote"
-                            type="text"
-                            [label]="'Nro Lote'"
-                            [(ngModel)]="certificado.lote">
-                    </mz-input-container>
-
-                    <mz-input-container class="col l3 s12 m3">
+                    <mz-input-container class="col l4 s12 m4">
                         <input mz-input required
                             id="cantidad_fabricada"
                             name="cantidad_fabricada"
@@ -173,7 +173,7 @@
                             [(ngModel)]="certificado.cantidad_fabricada">
                     </mz-input-container>
 
-                    <mz-input-container class="col l3 s12 m3">
+                    <mz-input-container class="col l4 s12 m4">
                         <input mz-input required
                             id="cantidad_liberada"
                             name="cantidad_liberada"

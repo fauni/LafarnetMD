@@ -18,6 +18,7 @@ export class Users {
     public foto: string;
     public estado: number;
     public nombre_estado: string;
+    public id_super_area: string;
 
     public usuario_creacion: string;
     public fecha_creacion: string;

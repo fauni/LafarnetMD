@@ -13,7 +13,8 @@ import {
     MzValidationModule,
     MzSelectModule,
     MzCheckboxModule,
-    MzRadioButtonModule
+    MzRadioButtonModule,
+    MzToastService
  } from 'ng2-materialize';
 
 
@@ -23,6 +24,7 @@ import { ProfileComponent } from './profile.component';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { CodeSnippetModule } from '../../layout/shared/code-snippet/code-snippet.module';
+import { SuperareaService } from '../superarea/superarea.service';
 
 
 @NgModule({
@@ -50,6 +52,7 @@ import { CodeSnippetModule } from '../../layout/shared/code-snippet/code-snippet
         ],
     declarations: [
         ProfileComponent
-    ]
+    ],
+    providers: [MzToastService, SuperareaService]
 })
 export class ProfileModule {}

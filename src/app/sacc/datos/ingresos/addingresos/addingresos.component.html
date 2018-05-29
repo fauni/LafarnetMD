@@ -32,7 +32,6 @@
                           width="80"
                           [label]="'Codigo de Ingreso'"
                           [(ngModel)]="codingreso"
-                          (change) = "update()"
                           >
                       </mz-input-container>
                      
@@ -192,8 +191,7 @@
 </mz-modal-content>
 <mz-modal-footer>
     <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
-        <button class="btn-floating btn-large green" 
-               (click) = "aadDetalle($event)" mz-modal-close
+        <button class="btn-floating btn-large green" mz-modal-close
                [disabled] = "esInvalidoDet()">
       <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
         <i class="large mdi-action-done"></i>

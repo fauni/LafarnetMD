@@ -23,6 +23,8 @@ import { Ng2CompleterModule } from 'ng2-completer';
 import { CodeSnippetModule } from '../../layout/shared/code-snippet/code-snippet.module';
 import { MiCuentaRoutingModule } from './micuenta-routing.module';
 import { MiCuentaComponent } from './micuenta.component';
+import { ClaveUserModule } from '../../admin-intranet/users/clave-user/clave-user.module';
+import { MzToastService } from 'ng2-materialize';
 
 
 @NgModule({
@@ -47,9 +49,10 @@ import { MiCuentaComponent } from './micuenta.component';
         FormsModule,
         CodeSnippetModule,
         Ng2CompleterModule
-        ],
+    ],
     declarations: [
         MiCuentaComponent
-    ]
+    ],
+    providers: [MzToastService]
 })
 export class MiCuentaModule {}

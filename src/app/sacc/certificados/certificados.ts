@@ -18,6 +18,7 @@ export class Certificados {
     public nombre_producto: string;
     public concentracion: string;
     public forma_farmaceutica: string;
+    public nombre_proveedor: string;
 
     public usuario_creacion: string;
     public fecha_creacion: string;

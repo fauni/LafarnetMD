@@ -16,8 +16,20 @@ export class CertificadosService {
     return this.http.post(this.global.urlAPI + 'sacccertificadoanalisis/save', data);
   }
 
+  setCertificadosMP(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'sacccertificadoanalisis/saveMP', data);
+  }
+
   getCertificados() {
     return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/pt');
+  }
+
+  getCertificadosPT() {
+    return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/pt');
+  }
+
+  getCertificadosMP() {
+    return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/mp');
   }
 
   getCertificado(data) {
@@ -48,4 +60,15 @@ export class CertificadosService {
   getCMCertificado(data) {
     return this.http.get(this.global.urlAPI + 'sacccertificadoanalisis/getCM/' + data);
   }
+
+  // Traer lote Materia Prima
+  getLoteMP(data) {
+    return this.http.get(this.global.urlAPISAP + 'lotesmp/' + data);
+  }
+
+  // Traer lote Producto Terminado
+  getLotePT(data) {
+    return this.http.get(this.global.urlAPISAP + 'lotespt/' + data);
+  }
+
 }
