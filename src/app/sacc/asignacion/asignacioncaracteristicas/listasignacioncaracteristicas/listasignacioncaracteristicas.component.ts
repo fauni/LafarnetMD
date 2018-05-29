@@ -110,7 +110,7 @@ export class ListAsignacionCaracteristicasComponent implements OnInit {
         console.log(this.caracteristica);
         this.servcaracteristicas.addCaracteristica(this.caracteristica).subscribe(data => {
           console.log(data);
-          this.caracteristicasPT.push(data.body);
+          this.caracteristicasMP.push(data.body);
           this.openNotificacion(1, 'Éxito' , 'El registro se guardó con éxito');
           },
           (err: HttpErrorResponse) => {
