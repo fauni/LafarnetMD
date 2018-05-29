@@ -97,6 +97,7 @@ export class AddanalistaComponent implements OnInit {
   onSelectUser(selected: CompleterItem): void {
     if (selected) {
       this.user = selected.originalObject;
+      this.analista.codigo = this.generaCodigo();
       console.log(this.user);
       /*this.UserModel.id_cargo = selected.originalObject['id'];
       */
@@ -135,13 +136,12 @@ export class AddanalistaComponent implements OnInit {
           formData.append('id_firma', this.user.username);
           formData.append('usuario_creacion', localStorage.getItem('username'));
           formData.append('usuario_modificacion', localStorage.getItem('username'));
-
           this.servAnalista.setAnalistas(formData).subscribe(
             data => {
               if (data.status == 200) {
                 this.openNotificacion(1, 'Correcto!', 'Se guardo correctamente');
                 this.router.navigate(['/sacc/datos/analista']);
-                //this.router.navigate(['/admin/users/list']);
+                // this.router.navigate(['/admin/users/list']);
               }else {
                 this.openNotificacion(3, 'No se guardo', 'Intente nuevamente!');
               }
@@ -207,5 +207,13 @@ export class AddanalistaComponent implements OnInit {
         );
       break;
     }
+  }
+  generaCodigo(): string  {
+    let cod = this.user.first_name.substring(0, 1);
+    cod = cod + this.user.last_name.split(' ')[0].substring(0, 1);
+    cod = cod + this.user.last_name.split(' ')[1].substring(0, 1);
+    const f = new Date();
+    cod = cod + f.getFullYear() + (f.getMonth() + 1) + f.getDate() + f.getHours() + f.getMinutes() + f.getSeconds();
+   return cod;
   }
 }

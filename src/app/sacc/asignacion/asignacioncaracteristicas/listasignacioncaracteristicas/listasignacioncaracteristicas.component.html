@@ -26,17 +26,29 @@
                     <th>Descripcion
                         <span class="mdi-hardware-keyboard-arrow-down" ></span>
                     </th>
+<<<<<<< HEAD
                     <th>Tipo
                         <span class="mdi-hardware-keyboard-arrow-down"></span>
+=======
+                    <th (click)="sort('tipo')">Tipo
+                        <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span>
+>>>>>>> fd4be7cfd372bb91b33207575b8bdd190f24caed
                     </th>
                     
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor= "let item of caracteristicasPT" > 
+<<<<<<< HEAD
                         <td>{{item.id_caracteristicas_fisicas }}</td>
                         <td>{{item.descripcion}}</td>
                         <td>{{item.esp_car}}</td>
+=======
+                    <td>{{item.id_caracteristicas_fisicas }}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td>{{item.esp_car}}</td>
+                    
+>>>>>>> fd4be7cfd372bb91b33207575b8bdd190f24caed
                     </tr>
                 </tbody>
                 </table>
@@ -65,9 +77,13 @@
                         <th>Tipo
                             <span class="mdi-hardware-keyboard-arrow-down"></span>
                         </th>
+<<<<<<< HEAD
                         <th>
                             <span class="mdi-hardware-keyboard-arrow-down"></span>
                         </th>
+=======
+                       
+>>>>>>> fd4be7cfd372bb91b33207575b8bdd190f24caed
                         
                         </tr>
                     </thead>
@@ -76,7 +92,7 @@
                             <td>{{item.id_caracteristicas_fisicas }}</td>
                             <td>{{item.descripcion}}</td>
                             <td>{{item.esp_car}}</td>
-                            <td >.:Ver Detalles:.</td>
+                           
                         </tr>
                     </tbody>
                     </table>
@@ -97,8 +113,8 @@
 <!--modal para Producto Terminado-->
   <mz-modal #modalNuevaCaracteristicaPT [fixedFooter]="false" [bottomSheet]="false">
     <mz-modal-header>
-        <h4 style="text-align:center;">Nueva Caracteristica para Producto Terminado</h4> 
-       </mz-modal-header>
+        <h4 style = "padding : 30px; text-align :center;">Nueva Caracteristica para Producto Terminado</h4> 
+    </mz-modal-header>
        <mz-modal-content>
             <div class="row">
                     <mz-input-container  class="col s12 m6">
@@ -145,7 +161,7 @@
   <!--modal para Materia Prima-->
   <mz-modal #modalNuevaCaracteristicaMP [fixedFooter]="false" [bottomSheet]="false">
         <mz-modal-header>
-            <h4 style="text-align:center;">Nueva Caracteristica para Materia Prima</h4> 
+            <h4 style = "padding : 30px; text-align : center;">Nueva Caracteristica para Materia Prima</h4> 
            </mz-modal-header>
            <mz-modal-content>
                 <div class="row">
@@ -164,7 +180,7 @@
                         <select mz-select
                           id="tipo-clasifMP"
                           [label]="'Clasificacion de Caracteristica'"
-                          [placeholder]="'Placeholder'"
+                          [placeholder]="'Elija una opción'"
                           [(ngModel)]= "tipoclasMP">
                             <option  class="left circle" value="CF">Caracteristicas Físicas</option>
                             <option  class="left circle" value="CM">Control Microbiológico</option>

@@ -55,17 +55,17 @@
                             [label]="'Codigo Analista'"
                             [(ngModel)]="analista.codigo">
                     </mz-input-container>
-                    <mz-select-container class="col s12 m3">
+                    <mz-select-container class="col s12 m2">
                         <select mz-select required
                             id="grado"
                             name="grado"
                             [label]="'Grado'"
-                            [placeholder]="'Seleccione su Grado'"
+                            [placeholder]="'Seleccione Grado'"
                             [(ngModel)]="analista.grado">
                             <option *ngFor="let grado of grados" [ngValue]="grado.sigla">{{ grado.sigla }}</option>
                         </select>
                     </mz-select-container>
-                    <mz-select-container class="col s12 m6">
+                    <mz-select-container class="col s12 m4">
                         <select mz-select required
                             id="especialidad"
                             name="especialidad"
@@ -73,6 +73,17 @@
                             [placeholder]="'Seleccione su Especialidad'"
                             [(ngModel)]="analista.especialidad">
                             <option *ngFor="let especialidad of especialidades" [ngValue]="especialidad.descripcion">{{ especialidad.descripcion }}</option>
+                        </select>
+                    </mz-select-container>
+                    <mz-select-container class="col s12 m3">
+                        <select mz-select required
+                            id="rol"
+                            name="rol"
+                            [label]="'Especialidad'"
+                            [placeholder]="'Seleccione Rol'"
+                            [(ngModel)]="analista.rol">
+                            <option  value="admin">Administrador</option>
+                            <option  value="estandar">Estandar</option>
                         </select>
                     </mz-select-container>
                 </div>

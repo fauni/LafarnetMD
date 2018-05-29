@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div class="parentCard col xl2 l2 m2 s4">
+    <div class="parentCard col xl2 l2 m2 s4" *ngIf="botones()">
         <div class="item-menu-apps" style = "background: #fff;">
             <a [routerLink]="['/sacc/asignacion/parm']">
                 <div class="card-content">
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="parentCard col xl2 l2 m2 s4">
+    <div class="parentCard col xl2 l2 m2 s4" *ngIf="botones()">
         <div class="item-menu-apps" style = "background: #fff;">
             <a [routerLink]="['/sacc/asignacion/carac']">
                 <div class="card-content">

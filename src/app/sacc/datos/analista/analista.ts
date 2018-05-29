@@ -6,7 +6,7 @@ export class Analista {
     public nombre_completo: string;
     public especialidad: string;
     public id_firma: string;
-
+    public rol: string;
     public usuario_creacion: string;
     public fecha_creacion: string;
     public usuario_modificacion: string;
