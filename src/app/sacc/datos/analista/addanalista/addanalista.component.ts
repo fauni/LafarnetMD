@@ -133,6 +133,7 @@ export class AddanalistaComponent implements OnInit {
           formData.append('username', this.user.username);
           formData.append('grado', this.analista.grado);
           formData.append('especialidad', this.analista.especialidad);
+          formData.append('rol', this.analista.rol);
           formData.append('id_firma', this.user.username);
           formData.append('usuario_creacion', localStorage.getItem('username'));
           formData.append('usuario_modificacion', localStorage.getItem('username'));
@@ -209,11 +210,14 @@ export class AddanalistaComponent implements OnInit {
     }
   }
   generaCodigo(): string  {
-    let cod = this.user.first_name.substring(0, 1);
-    cod = cod + this.user.last_name.split(' ')[0].substring(0, 1);
-    cod = cod + this.user.last_name.split(' ')[1].substring(0, 1);
+    // debugger;
+     let cod = this.user.first_name.substring(0, 1);
+     const apellidos = this.user.last_name.split(' ');
+      apellidos.forEach(element => {
+       cod = cod + element.substring(0, 1);
+      });
     const f = new Date();
     cod = cod + f.getFullYear() + (f.getMonth() + 1) + f.getDate() + f.getHours() + f.getMinutes() + f.getSeconds();
-   return cod;
+    return cod;
   }
 }
