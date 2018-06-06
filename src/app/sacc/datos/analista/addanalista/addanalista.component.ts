@@ -142,7 +142,7 @@ export class AddanalistaComponent implements OnInit {
               if (data.status == 200) {
                 this.openNotificacion(1, 'Correcto!', 'Se guardo correctamente');
                 this.router.navigate(['/sacc/datos/analista']);
-                // this.router.navigate(['/admin/users/list']);
+                
               }else {
                 this.openNotificacion(3, 'No se guardo', 'Intente nuevamente!');
               }
