@@ -90,7 +90,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     onLoggedout() {
       localStorage.removeItem('isLoggedin');
-      localStorage.removeAll();
+      // localStorage.removeAll();
     }
     onLoadUserInformation() {
       this.user.userid = localStorage.getItem('userid');

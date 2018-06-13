@@ -9,6 +9,7 @@ import { SeccionesService } from '../../admin-intranet/secciones/secciones.servi
 import { EtapasProcesoService } from '../etapasproceso.service';
 import { PpService } from '../pp.service';
 import { HigrotermometroService } from '../../metrologia/higrotermometro.service';
+import { MzIconMdiModule, MzIconModule, MzToastService } from 'ng2-materialize';
 
 @NgModule({
     imports: [
@@ -22,10 +23,12 @@ import { HigrotermometroService } from '../../metrologia/higrotermometro.service
         MzInputModule,
         MzRadioButtonModule,
         MzCheckboxModule,
-        MzButtonModule
+        MzButtonModule,
+        MzIconMdiModule,
+        MzIconModule
     ],
     declarations: [FormTHRProcesoComponent],
-    providers: [SeccionesService, EtapasProcesoService, PpService, HigrotermometroService]
+    providers: [SeccionesService, EtapasProcesoService, PpService, HigrotermometroService, MzToastService]
 })
 
 export class FormTHRProcesoModule {}

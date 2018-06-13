@@ -17,4 +17,8 @@ export class PpService {
     return this.http.get(this.global.urlAPISAP + 'procesoproducto/' + data);
   }
 
+  getProductoForTipoLote(data): Observable<any> {
+    return this.http.post(this.global.urlAPISAP + 'procesoproducto', data);
+  }
+
 }

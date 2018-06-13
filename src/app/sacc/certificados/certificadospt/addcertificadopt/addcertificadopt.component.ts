@@ -319,6 +319,7 @@ export class AddcertificadoptComponent implements OnInit {
   }
 
   guardarCertificado(): void {
+    debugger;
     // console.log(this.certificado);
     this.servCertificados.setCertificados(this.certificado).subscribe(
       data => {

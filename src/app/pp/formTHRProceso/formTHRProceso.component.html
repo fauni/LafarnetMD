@@ -92,20 +92,25 @@
             </div>
 
             <div class="row">
-                <form (ngSubmit)="onLoadProductoForLote()">
-                    <mz-input-container class="col s12 m6 l3">
+                <div class="col s12 m12 l1" style="text-align: right;">
+                    <button mz-button class="boton_busqueda_lote" [float]="true" [disabled]="btnBusquedaLote" (click)="onLoadProductoForLoteButton()">
+                        <i mz-icon-mdi  [icon]="'magnify'"></i>
+                    </button>
+                </div>
+                <mz-input-container class="col s12 m2 l3">
                     <input mz-input
                         [label]="'Numero de Lote'"
                         id="numero_lote"
                         name="numero_lote"
+                        class="numero_lote"
                         placeholder="Ingrese su numero de Lote"
-                        (blur)="onLoadProductoForLote()"
+                        (change)="onValidaCampoLote()"
+                        (keyup)="onLoadProductoForLote($event)"
                         [(ngModel)]="monitoreo.lote"
                         type="text">
-                    </mz-input-container>
-                </form>
+                </mz-input-container>
 
-                <mz-select-container class="col s12 m6 l7">
+                <!--<mz-select-container class="col s12 m6 l6">
                     <select mz-select
                         id="basic-select"
                         [label]="'Producto'"
@@ -115,7 +120,20 @@
                     >
                     <option *ngFor="let pp of productosprocesos" [ngValue]="pp.ItemCode +'|'+ pp.ItemName">{{ pp.ItemCode +' - '+ pp.ItemName }}</option>
                     </select>
-                </mz-select-container>
+                </mz-select-container>-->
+
+                <mz-input-container class="col s12 m6 l6">
+                    <input mz-input
+                        [label]="'Producto'"
+                        id="producto"
+                        name="producto"
+                        class="producto"
+                        readonly="true"
+                        placeholder="Seleccione un Producto"
+                        [(ngModel)]="monitoreo.nombre_producto"
+                        (change)="onSelectProducto()"
+                        type="text">
+                </mz-input-container>
 
                 <div class="col s12 m6 l2">
                     <mz-checkbox-container>

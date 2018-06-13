@@ -354,7 +354,7 @@ export class AddcertificadosmpComponent implements OnInit {
           this.onGuardarCaracteristicasCertificacion(codcertificado, this.lccm);
 
           this.openNotificacion(1, 'Correcto!', 'Se guardo correctamente');
-          this.router.navigate(['/sacc/certificados/pt']);
+          this.router.navigate(['/sacc/certificados/mp']);
         }else {
           this.openNotificacion(3, 'No se guardo', 'Intente nuevamente!');
         }

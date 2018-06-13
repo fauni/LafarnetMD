@@ -9,9 +9,10 @@ import { Secciones } from '../../admin-intranet/secciones/secciones';
 import { EtapasProcesoService } from '../etapasproceso.service';
 import { Etapasproceso } from '../etapasproceso';
 import { PpService } from '../pp.service';
-import { ProductoProceso } from '../productoproceso';
+import { ProductoProceso, RequestProductoProceso } from '../productoproceso';
 import { Higrotermometro } from '../../metrologia/higrotermometro';
 import { HigrotermometroService } from '../../metrologia/higrotermometro.service';
+import { MzToastService } from 'ng2-materialize';
 
 @Component({
   selector: 'app-formthrproceso',
@@ -19,6 +20,9 @@ import { HigrotermometroService } from '../../metrologia/higrotermometro.service
   styleUrls: ['./formTHRProceso.component.scss']
 })
 export class FormTHRProcesoComponent implements OnInit {
+  // Busqueda por Lote
+  btnBusquedaLote: Boolean = true;
+
   // Area
   selectArea: any;
   areas: Array<Areas> = new Array<Areas>();
@@ -42,7 +46,9 @@ export class FormTHRProcesoComponent implements OnInit {
     private servSeccion: SeccionesService,
     private servEtapaProceso: EtapasProcesoService,
     private servProducto: PpService,
-    private servHigrotermometro: HigrotermometroService) { }
+    private servHigrotermometro: HigrotermometroService,
+    private servToast: MzToastService
+  ) { }
 
   ngOnInit() {
     this.onLoadAreas();
@@ -140,20 +146,53 @@ export class FormTHRProcesoComponent implements OnInit {
     console.log(valorPP);
   }
 
+  onValidaCampoLote() {
+    console.log('--->  ' +  this.monitoreo.lote);
+  }
 
-  onLoadProductoForLote() {
+  onLoadProductoForLote(event: any) {
     console.log(this.monitoreo.lote);
+    if (!this.verificaSiBuscaLote()) {
+      this.existHigrotermometro = true;
+      this.mensaje = 'Ingrese un número de Lote';
+    } else {
+      this.existHigrotermometro = false;
+      if (event.keyCode == 13) {
+        console.log(this.monitoreo.lote);
+        this.productosprocesos = [];
+        this.onLoadProductoProceso(this.monitoreo.lote);
+      }
+    }
+  }
+
+  onLoadProductoForLoteButton() {
     this.productosprocesos = [];
     this.onLoadProductoProceso(this.monitoreo.lote);
   }
 
-
   onLoadProductoProceso(lote) {
+    let prod: ProductoProceso = new ProductoProceso();
+    let req: RequestProductoProceso = new RequestProductoProceso();
+    req.lote = lote;
+    req.tipo = this.procesoValue;
+    this.openLoading();
     let nLote: string = lote;
-    this.servProducto.getProductoForLote(nLote.replace('/', '|')).subscribe(
+    // this.servProducto.getProductoForLote(nLote.replace('/', '|')).subscribe(
+    this.servProducto.getProductoForTipoLote(req).subscribe(
       data => {
-        this.productosprocesos = data['body'];
-        console.log(this.productosprocesos);
+        this.closeLoading();
+        if (data['length'] > 0) {
+          prod = data['body'][0];
+          this.monitoreo.codigo_producto = prod.ItemCode;
+          this.monitoreo.nombre_producto = prod.ItemName;
+          console.log(this.productosprocesos);
+          this.existHigrotermometro = false;
+        } else {
+          this.monitoreo.codigo_producto = '';
+          this.monitoreo.nombre_producto = '';
+          this.mensaje = 'El numero de Lote introducido no trajo ningun producto';
+          this.existHigrotermometro = true;
+        }
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -182,7 +221,7 @@ export class FormTHRProcesoComponent implements OnInit {
   onSaveMonitoreoTHRProceso() {
     if (this.verificaSiEsHigroscopico()) {
       this.existHigrotermometro = false;
-      this.mensaje = '';
+      this.onGuardarTHRProceso();
     } else {
       this.existHigrotermometro = true;
       this.mensaje = 'NO PUEDE INICIAR O CONTINUAR CON EL PROCESO, Los valores de la Humedad estan fuera de Rango';
@@ -190,14 +229,43 @@ export class FormTHRProcesoComponent implements OnInit {
     console.log(this.monitoreo);
   }
 
+  onGuardarTHRProceso() {
+    this.servEtapaProceso.saveTHRProceso(this.monitoreo).subscribe(
+      data => {
+        if (data.status == 200) {
+          this.servToast.show('Su registro fue realizado correctamente ', 4000, 'green rounded');
+        }else {
+          this.servToast.show('No se guardo el registro!', 4000, 'red rounded');
+        }
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+        this.servToast.show('No se guardo. Ocurrio un error en el Servidor ', 4000, 'red rounded');
+      }
+    );
+  }
+
   onCorrigueTemperatura() {
     this.monitoreo.temperatura_corregido =
     Number((this.devuelveTemparaturaCorregida(this.monitoreo.temperatura_original, this.higrotermometro)).toFixed(2));
+    this.existHigrotermometro = false;
+    if (this.monitoreo.temperatura_corregido == 10000) {
+      this.monitoreo.temperatura_corregido = 0;
+      this.mensaje = 'Los valores de la temperatura se encuentran fuera de rango.';
+      this.existHigrotermometro = true;
+    }
   }
 
   onCorrigueHumedad() {
     this.monitoreo.humedad_relativa_corregido =
     Number((this.devuelveHRCorregida(this.monitoreo.humedad_relativa_original, this.higrotermometro)).toFixed(2));
+    this.existHigrotermometro = false;
   }
 
   // Higrotermometro
@@ -239,6 +307,7 @@ export class FormTHRProcesoComponent implements OnInit {
     if (h.ipt_5 > 0) { // Determina la validación en caso de que contenga 5 intervalos de referencia
       if (temperatura < h.ipt_1 || temperatura > h.ipt_5) { // Valida si el valor de la temperatura esta fuera de rango
         // si esta fuera de rango
+        return 10000;
       }else {
         if (temperatura == h.ipt_1 || temperatura == h.ipt_2 || temperatura == h.ipt_3 ||
           temperatura == h.ipt_4 || temperatura == h.ipt_5) {
@@ -411,12 +480,12 @@ export class FormTHRProcesoComponent implements OnInit {
           h0 = h.iphr_2_2;
           xhr2 = h.chr_2_3;
           xhr0 = h.chr_2_2;
-        }else if (hr > h.iphr_2_3 && hr < h.iphr_2_4){
+        }else if (hr > h.iphr_2_3 && hr < h.iphr_2_4) {
           h2 = h.iphr_2_4;
           h0 = h.iphr_2_3;
           xhr2 = h.chr_2_4;
           xhr0 = h.chr_2_3;
-        }else if (hr > h.iphr_2_4 && hr < h.iphr_2_5){
+        }else if (hr > h.iphr_2_4 && hr < h.iphr_2_5) {
           h2 = h.iphr_2_5;
           h0 = h.iphr_2_4;
           xhr2 = h.chr_2_5;
@@ -507,4 +576,26 @@ export class FormTHRProcesoComponent implements OnInit {
       return true;
     }
   }
+
+  verificaSiBuscaLote(): Boolean {
+    console.log(this.monitoreo.lote);
+    if (this.monitoreo.lote.length > 0) {
+      this.btnBusquedaLote = false;
+      return true;
+    } else {
+      this.btnBusquedaLote = true;
+      return false;
+    }
+  }
+
+  openLoading() {
+    const loading = $('#loading');
+    loading.fadeIn();
+  }
+
+  closeLoading() {
+      const loading = $('#loading');
+      loading.fadeOut();
+  }
+
 }

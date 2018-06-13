@@ -17,4 +17,7 @@ export class EtapasProcesoService {
     return this.http.post(this.global.urlAPI + 'etapaproceso/getEtapaForProceso/', data);
   }
 
+  saveTHRProceso(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'etapaproceso/save', data);
+  }
 }
