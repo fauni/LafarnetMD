@@ -4,6 +4,7 @@ import { AnalistaRoutingModule } from './analista-routing.module';
 import { AnalistaComponent } from './analista.component';
 import { AnalistasService } from './analista.service';
 import { NotificationsService } from 'angular2-notifications';
+import { MzToastService } from 'ng2-materialize';
 
 @NgModule({
     imports: [
@@ -11,7 +12,7 @@ import { NotificationsService } from 'angular2-notifications';
         AnalistaRoutingModule
     ],
     declarations: [AnalistaComponent],
-    providers: [AnalistasService, NotificationsService]
+    providers: [AnalistasService, NotificationsService, MzToastService]
 })
 
 export class AnalistaModule {}

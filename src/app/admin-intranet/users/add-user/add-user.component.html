@@ -4,7 +4,8 @@
 <form #userForm = "ngForm" (submit)="onSubmit()" novalidate>
   <div id="preview" class="header-content valign-wrapper lafar-light">
     <img class="image-user circle" src="{{urlFotoPerfil}}">
-    <div class="nombre-user">Agregar Nuevo Usuario</div>
+    <div class="nombre-user">Agregar Nuevo Usuario 
+    </div>
     <label class="btn github-button blue">
       <i class="large mdi-image-camera-alt"></i>
       Cargar Nueva Foto
@@ -68,7 +69,8 @@
                   type="text"
                   [errorMessageResource]="errorMessages.username"
                   [label]="'Nombre de Usuario'"
-                  [(ngModel)]="UserModel.username">
+                  [(ngModel)]="UserModel.username"
+                  (change)="onCambioUsername(UserModel.username)" >
               </mz-input-container>
               <mz-input-container class="col s12 m4">
                 <input mz-input mz-validation required

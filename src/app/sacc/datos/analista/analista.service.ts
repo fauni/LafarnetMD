@@ -24,4 +24,7 @@ export class AnalistasService {
   getAnalistaForUserName(data): Observable<any> {
     return this.http.get(this.global.urlAPI + 'analista/getbyusrnm/' + data);
   }
+  borranalista(data): Observable<any> {
+    return this.http.delete(this.global.urlAPI + 'analista/delete/' + data);
+  }
 }

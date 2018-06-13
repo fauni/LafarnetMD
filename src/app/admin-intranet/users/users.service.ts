@@ -21,7 +21,9 @@ export class UsersService {
   getUser(username: string): Observable<any> {
     return this.http.get(this.global.urlAPI + 'usuario/get/' + username);
   }
-
+  getCountUsersByUsername(username: string): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'usuario/countbyusername/' + username);
+  }
   setUser(data): Observable<any> {
     return this.http.post(this.global.urlAPI + 'usuario/save', data);
   }

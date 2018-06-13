@@ -4,6 +4,7 @@ import { Globals } from '../../../../globals';
 import { Analista } from '../analista';
 import { AnalistasService } from '../analista.service';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { MzToastService } from 'ng2-materialize';
 
 
 @Component({
@@ -20,7 +21,9 @@ export class ListanalistaComponent implements OnInit {
   key: string = 'codigo';
   reverse: boolean = false;
 
-  constructor(public global: Globals, public servAnalistas: AnalistasService) { }
+  constructor(public global: Globals,
+              public servAnalistas: AnalistasService,
+              private servToast: MzToastService) { }
 
   ngOnInit() {
     this.onLoadAnalistas();
@@ -44,6 +47,35 @@ export class ListanalistaComponent implements OnInit {
         }
       }
     );
+  }
+  borranalista(usr: string) {
+    let resp = confirm('Esta seguro de eliminar a ' + usr);
+    if (resp) {
+    this.servAnalistas.borranalista(usr).subscribe(
+      data => {
+        if ( data.status == 200 ) {
+          // alert ('Analista Eliminado');
+          this.servToast.show('Analista Eliminado', 4000, 'green rounded');
+          this.onLoadAnalistas();
+        } else {
+          // alert ('No se pudo eliminar el analista');
+          this.servToast.show('No se pudo eliminar el analista', 4000, 'red rounded');
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          // console.log('Ocurrio un error:', err.error.message);
+          this.servToast.show('Ocurrio un error: ' + err.error.message, 4000, 'red rounded');
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          this.servToast.show('El servidor respondio: ' + err.status, 4000, 'red rounded');
+        }
+      }
+    );
+  }
   }
 
   sort(key) {
