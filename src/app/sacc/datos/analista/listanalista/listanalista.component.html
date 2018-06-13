@@ -4,7 +4,7 @@
 
 <div id="preview" class="header-content valign-wrapper lafar-light">
   <img class="image-user circle" src="assets/images/userlafar.png">
-  <div class="nombre-user">ANALISTAS DE CONTROL DE CALIDAD</div>
+  <div class="nombre-user">ANALISTAS DE CONTROL DE CALIDAD </div>
 
   <div class="box">
       <div class="container-1">
@@ -26,6 +26,7 @@
         <th (click)="sort('especialidad')">ESPECIALIDAD<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='especialidad'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
         <th (click)="sort('id_firma')" hidden>FIRMA<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='id_firma'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -37,6 +38,7 @@
         <td>{{analista.especialidad}}</td>
         <td hidden>{{analista.id_firma}}</td>
         <td><a [routerLink]="['/sacc/datos/analista/detail', analista.codigo]">Ver mas Detalles</a> </td>
+        <td><a href="javascript:void(0)" (click)="borranalista(analista.username)">Eliminar</a></td>
       </tr>
     </tbody>
   </table>

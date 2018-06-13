@@ -14,6 +14,7 @@ import { CompleterItem } from 'ng2-completer/components/completer-item';
 import { NotificationsService } from 'angular2-notifications';
 import { UsersService } from '../users.service';
 import { Router } from '@angular/router';
+import { MzToastService } from 'ng2-materialize';
 
 @Component({
   selector: 'app-add-user',
@@ -77,7 +78,8 @@ export class AddUserComponent implements OnInit {
     private completerServiceUser: CompleterService,
     private servArea: AreasService,
     private servRegional: RegionalesService,
-    private servUser: UsersService
+    private servUser: UsersService,
+    private servToast: MzToastService
   ) {
     this.onLoadCargos();
     this.onLoadAreas();
@@ -94,6 +96,7 @@ export class AddUserComponent implements OnInit {
     this.UserModel.id_regional = '1';*/
     this.onLoadUsuarios();
     this.urlFotoPerfil = this.global.urlImagenUserDefault;
+    
   }
 
   onSubmit() {
@@ -224,6 +227,39 @@ export class AddUserComponent implements OnInit {
     );
   }
 
+  onCambioUsername(user: string) {
+    // alert(user);
+    let c ;
+      this.servUser.getCountUsersByUsername(user).subscribe(
+      data => {
+        // this.areas = data.body;
+        console.log('conteo de usuarios');
+        data.body.forEach(element => {
+          c = parseInt (element.cant);
+          if ( c > 0 ) {
+            // this.openNotificacion(3, 'Alerta',  this.UserModel.username + ' ya esta en uso');
+            this.servToast.show('El nombre de usuario \"' + this.UserModel.username + '\" ya esta en uso', 10000, 'red rounded');
+            this.UserModel.username = '';
+            document.getElementById('username').focus();
+          } else {
+            this.servToast.show('El nombre de usuario \"' + this.UserModel.username + '\" esta disponible', 10000, 'green rounded');
+          }
+          console.log(c);
+
+        });
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
   onLoadRegionales() {
     this.regional = new Regionales();
       this.servRegional.getRegionales().subscribe(

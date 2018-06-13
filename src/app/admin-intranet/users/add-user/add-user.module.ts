@@ -14,7 +14,8 @@ import {
   MzCardModule,
   MzInputModule,
   MzValidationModule,
-  MzSelectModule
+  MzSelectModule,
+  MzToastService
 } from 'ng2-materialize';
 
 import { Ng2CompleterModule } from 'ng2-completer';
@@ -38,6 +39,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
     MzValidationModule,
     Ng2CompleterModule
   ],
-  declarations: [AddUserComponent]
+  declarations: [AddUserComponent],
+  providers: [MzToastService]
 })
 export class AddUserModule { }
