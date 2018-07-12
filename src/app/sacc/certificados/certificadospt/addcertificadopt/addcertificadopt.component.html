@@ -256,6 +256,7 @@
                                 id="{{c.especificacion}}"
                                 name="{{c.especificacion}}"
                                 type="text"
+                                readonly="true"
                                 [label]="c.descripcion"
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
                                 [(ngModel)]="c.especificacion">
@@ -279,6 +280,7 @@
                                 name="{{c.especificacion}}"
                                 type="text"
                                 [label]="c.descripcion"
+                                readonly="true"
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
                                 [(ngModel)]="c.especificacion">
                             </mz-input-container>
@@ -300,6 +302,7 @@
                                 id="{{c.especificacion}}"
                                 name="{{c.especificacion}}"
                                 type="text"
+                                readonly="true"
                                 [label]="c.descripcion"
                                 placeholder="Introduzca un valor para {{c.descripcion}}"
                                 [(ngModel)]="c.especificacion">
@@ -319,6 +322,51 @@
             </mz-card-content>
         </mz-card>
 
+        <mz-card>
+            <mz-card-content>
+                <mz-textarea-container class="col s12">
+                    <textarea mz-textarea
+                    id="presentacion"
+                    name="presentacion"
+                    type="text"
+                    [label]="'Presentación'"
+                    placeholder="Introduzca información de la Presentación"
+                    [(ngModel)]="certificado.presentacion"
+                    [length]="255">
+                    </textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
+        <mz-card>
+            <mz-card-content>
+                <mz-textarea-container class="col s12">
+                    <textarea mz-textarea
+                    id="conservacionyalm"
+                    name="conservacionyalm"
+                    type="text"
+                    [label]="'Conservación y Almacenamiento'"
+                    placeholder="Introduzca la forma de Conservación y Almacenamiento"
+                    [(ngModel)]="certificado.conservacionyalm"
+                    [length]="255">
+                    </textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
+        <mz-card>
+            <mz-card-content>
+                <mz-textarea-container class="col s12">
+                    <textarea mz-textarea
+                    id="referencias"
+                    name="referencias"
+                    type="text"
+                    [label]="'Referencias'"
+                    placeholder="Introduzca sus Referencias"
+                    [(ngModel)]="certificado.referencias"
+                    [length]="255">
+                    </textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
         <mz-card>
             <mz-card-content>
                 <mz-textarea-container class="col s12">

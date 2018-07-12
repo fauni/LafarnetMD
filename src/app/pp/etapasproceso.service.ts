@@ -13,6 +13,10 @@ export class EtapasProcesoService {
     return this.http.get(this.global.urlAPI + 'etapaproceso/get');
   }
 
+  getEtapasForLote(lote): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'etapaproceso/getetapaforlote/' + lote);
+  }
+
   getEtapaProceso(data): Observable<any> {
     return this.http.post(this.global.urlAPI + 'etapaproceso/getEtapaForProceso/', data);
   }

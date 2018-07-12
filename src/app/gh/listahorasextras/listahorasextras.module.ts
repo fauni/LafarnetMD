@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HorasextrasComponent } from './horasextras.component';
-import { HorasextrasRoutingModule } from './horasextras-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MzParallaxModule, MzSpinnerModule, MzCardModule, MzSelectModule, MzInputModule,
-    MzCheckboxModule, MzButtonModule, MzIconMdiModule, MzIconModule, MzRadioButtonModule, MzDatepickerModule, MzToastService, MzToastModule } from 'ng2-materialize';
-import { HorasExtrasService } from './horasextras.service';
+    MzCheckboxModule, MzButtonModule, MzIconMdiModule, MzIconModule, MzRadioButtonModule,
+    MzDatepickerModule, MzToastService, MzToastModule } from 'ng2-materialize';
 import { MzSwitchModule } from 'ng2-materialize';
-
 import { AmazingTimePickerModule } from 'amazing-time-picker';
+import { ListahorasextrasRoutingModule } from './listahorasextras-routing.module';
+import { ListahorasextrasComponent } from './listahorasextras.component';
+import { HorasExtrasService } from '../horasextras/horasextras.service';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
     imports: [
         CommonModule,
-        HorasextrasRoutingModule,
+        ListahorasextrasRoutingModule,
         FormsModule,
         MzParallaxModule,
         MzSpinnerModule,
@@ -28,10 +31,13 @@ import { AmazingTimePickerModule } from 'amazing-time-picker';
         MzIconModule,
         MzSwitchModule,
         AmazingTimePickerModule,
-        MzToastModule
+        MzToastModule,
+        Ng2SearchPipeModule,
+        Ng2OrderModule,
+        NgxPaginationModule,
     ],
-    declarations: [HorasextrasComponent],
+    declarations: [ListahorasextrasComponent],
     providers: [HorasExtrasService, MzToastService]
 })
 
-export class HorasextrasModule {}
+export class ListahorasextrasModule {}

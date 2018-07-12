@@ -8,7 +8,8 @@ const routes: Routes = [
         component: GhComponent,
         children: [
             { path: '', redirectTo: 'he'},
-            { path: 'he', loadChildren: './horasextras/horasextras.module#HorasextrasModule'}
+            { path: 'he', loadChildren: './horasextras/horasextras.module#HorasextrasModule'},
+            { path: 'lhe', loadChildren: './listahorasextras/listahorasextras.module#ListahorasextrasModule'}
         ]
     }
 ];

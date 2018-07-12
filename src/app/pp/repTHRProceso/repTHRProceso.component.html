@@ -1,26 +1,61 @@
-<h1>Reportes de Registro</h1>
+<div class="contenido-principal">
+    <mz-card>
+        <mz-card-content>
+            <div class="row">
+                <div class="col s2 m2 l1" style="text-align: right;">
+                    <button mz-button class="boton_busqueda_lote" [float]="true" (click)="onLoadProcesoForLote()">
+                        <i mz-icon-mdi  [icon]="'magnify'"></i>
+                    </button>
+                </div>
+                <mz-input-container class="col s10 m5 l3">
+                    <input mz-input
+                        [label]="'Numero de Lote'"
+                        id="numero_lote"
+                        name="numero_lote"
+                        class="numero_lote"
+                        placeholder="Ingrese su numero de Lote"
+                        [(ngModel)]="numero_lote"
+                        type="text">
+                </mz-input-container>
+            </div>
+        </mz-card-content>
+    </mz-card>
 
-<table id="testTable">
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Points</th>
-    </tr>
-    <tr>
-      <td>Jill</td>
-      <td>Smith</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <td>Eve</td>
-      <td>Jackson</td>
-      <td>94</td>
-    </tr>
-    <tr>
-      <td>Adam</td>
-      <td>Johnson</td>
-      <td>67</td>
-    </tr>
-  </table>
+    <mz-collapsible class="col s12 m8 l6" mode="accordion">
+        <mz-collapsible-item *ngFor="let item of etapasforlote">
+          <mz-collapsible-item-header>{{ item.etapa }}</mz-collapsible-item-header>
+          <mz-collapsible-item-body>
+                <table id="testTable">
+                    <tr>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Points</th>
+                    </tr>
+                    <tr>
+                      <td>Jill</td>
+                      <td>Smith</td>
+                      <td>50</td>
+                    </tr>
+                    <tr>
+                      <td>Eve</td>
+                      <td>Jackson</td>
+                      <td>94</td>
+                    </tr>
+                    <tr>
+                      <td>Adam</td>
+                      <td>Johnson</td>
+                      <td>67</td>
+                    </tr>
+                </table>          
+          </mz-collapsible-item-body>
+        </mz-collapsible-item>
+      
+      </mz-collapsible>
+      
+</div>
   
-<input type="button" value="Export" (click)="export()">
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="export()">
+        <i class="large mdi-file-file-download"></i>
+    </a>
+</div>

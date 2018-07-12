@@ -9,3 +9,8 @@ export class Etapasproceso {
     public usuario_modificacion: string;
     public fecha_modificacion: string;
 }
+
+export class EtapasForLote {
+    public etapa: string;
+    public icon: string;
+}
