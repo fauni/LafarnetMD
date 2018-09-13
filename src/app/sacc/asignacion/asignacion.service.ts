@@ -47,4 +47,12 @@ export class AsignacionService {
     return this.http.post(this.global.urlAPI + 'saccproductosespecificacion/existe', data);
   }
 
+  //#region Especificacion
+  getEspecificacion(data) {
+    return this.http.get(this.global.urlAPI + 'saccproductosespecificacion/getespecificacionforcode/' + data);
+  }
+  saveEspecificacion(data) {
+    return this.http.post(this.global.urlAPI + 'saccproductosespecificacion/savee', data);
+  }
+  //#endregion
 }

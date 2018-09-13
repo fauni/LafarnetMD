@@ -6,22 +6,23 @@ export class Globals {
     user: Users = new Users();
 
 
-    /*urlIntranet: string = 'http://intranet.lafar.net/lafarnet/';
+    urlIntranet: string = 'http://intranet.lafar.net/lafarnet/';
     urlAPI: string = 'http://intranet.lafar.net/newApiLafarnet/public/';
+    // urlAPISAP: string = 'http://intranet.lafar.net:8082/apilafarnet/api/';
     urlAPISAP: string = 'http://192.168.1.230/apilafarnet/api/';
     urlImagenesPersonal: string = 'http://intranet.lafar.net/newApiLafarnet/assets/imagenes_users/';
     urlImagenesFirmas: string = 'http://intranet.lafar.net/newApiLafarnet/assets/imagenes_firmas/';
-    urlPublicaciones: string = 'http://intranet.lafar.net/newApiLafarnet/assets/publicaciones_images/';*/
+    urlPublicaciones: string = 'http://intranet.lafar.net/newApiLafarnet/assets/publicaciones_images/';
+/*
 
-
-    urlIntranet: string = 'http://localhost:8080/lafarnet/';
-    urlAPI: string = 'http://localhost:8080/newapilafarnet/public/';
-    // urlAPISAP: string = 'http://intranet.lafar.net:8082/apilafarnet/api/';
+    urlIntranet: string = 'http://localhost:80/lafarnet/';
+    urlAPI: string = 'http://localhost:80/newapilafarnet/public/';
+    //urlAPISAP: string = 'http://intranet.lafar.net:8082/apilafarnet/api/';
     urlAPISAP: string = 'http://192.168.1.230/apilafarnet/api/';
-    urlImagenesPersonal: string = 'http://localhost:8080/newApiLafarnet/assets/imagenes_users/';
-    urlImagenesFirmas: string = 'http://localhost:8080/newApiLafarnet/assets/imagenes_firmas/';
-    urlPublicaciones: string = 'http://localhost:8080/newapilafarnet/assets/publicaciones_images/';
-
+    urlImagenesPersonal: string = 'http://localhost:80/newApiLafarnet/assets/imagenes_users/';
+    urlImagenesFirmas: string = 'http://localhost:80/newApiLafarnet/assets/imagenes_firmas/';
+    urlPublicaciones: string = 'http://localhost:80/newapilafarnet/assets/publicaciones_images/';
+*/
     urlImagesDocs: string = 'assets/images/notices/';
     urlImagenUserDefault: string = 'assets/images/usuario.jpg';
     urlImagenFirmaDefault: string = 'assets/images/firmas.jpg';

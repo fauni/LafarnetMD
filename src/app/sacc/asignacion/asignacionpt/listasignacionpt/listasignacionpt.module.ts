@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
         MzInputModule,
         MzIconMdiModule,
         MzSpinnerModule,
-        FormsModule
+        FormsModule,
     ],
     declarations: [ListasignacionptComponent]
 })

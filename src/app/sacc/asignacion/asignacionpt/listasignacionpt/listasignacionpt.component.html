@@ -62,7 +62,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let producto of productos | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+                                <tr *ngFor="let producto of newproductos | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 10, currentPage: p }; let i = index" [ngClass]="producto.Estado == 1 ? 'fondoSiRegistro':'fondoNoRegistro'">
                                     <td>{{producto.Cod_Producto}}</td>
                                     <td>{{producto.Nombre_Producto}}</td>
                                     <td>{{producto.Concentracion}}</td>

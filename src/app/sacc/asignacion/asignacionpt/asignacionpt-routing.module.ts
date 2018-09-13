@@ -9,7 +9,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'main' },
             { path: 'main', loadChildren: './listasignacionpt/listasignacionpt.module#ListasignacionptModule' },
-            { path: 'detail/:id/:code', loadChildren: './detailasignacionpt/detailasignacionpt.module#DetailasignacionptModule' }
+            { path: 'detail/:id/:code', loadChildren: './detailasignacionpt/detailasignacionpt.module#DetailasignacionptModule' },
+            { path: 'listadd/:code', loadChildren: './listaadd/listaadd.module#ListaaddModule' }
         ]
     }
 ];

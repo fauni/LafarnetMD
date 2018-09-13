@@ -13,8 +13,17 @@ export class EtapasProcesoService {
     return this.http.get(this.global.urlAPI + 'etapaproceso/get');
   }
 
-  getEtapasForLote(lote): Observable<any> {
-    return this.http.get(this.global.urlAPI + 'etapaproceso/getetapaforlote/' + lote);
+
+  getEtapaLote(data): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'etapaproceso/getforlote/'+ data);
+  }
+
+  getMonitoreoForLote(data): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'etapaproceso/getmonitoreoforlote/'+ data);
+  }
+  
+  getthretapalote(data): Observable<any> {
+    return this.http.post(this.global.urlAPI + 'etapaproceso/getthretapalote/', data);
   }
 
   getEtapaProceso(data): Observable<any> {

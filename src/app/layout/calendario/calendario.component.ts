@@ -9,7 +9,8 @@ export class CalendarioComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    window.open('https://app.smartsheet.com/b/form/9e7355bd9cad424abbcd8342492257d0');
+    // window.open('https://app.smartsheet.com/b/form/9e7355bd9cad424abbcd8342492257d0'); // Formulario de Registro
+    window.open('https://app.smartsheet.com/b/home?lx=WAULvew8kPp23wG8BEK6cg');
   }
 
 }

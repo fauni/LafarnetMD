@@ -11,6 +11,9 @@ import { Caracteristicas } from '../../caracteristicas';
 import { element } from 'protractor';
 import { CaracteristicasService } from '../../caracteristicas.service';
 import { NotificationsService } from 'angular2-notifications';
+import { Productos, ProductosC } from '../../../datos/productos/productos';
+import { ProductosService } from '../../../datos/productos/productos.service';
+import { MzToastService } from '../../../../../../node_modules/ng2-materialize';
 
 
 @Component({
@@ -51,13 +54,33 @@ export class DetailasignacionmpComponent implements OnInit {
   aqPT:  Caracteristicasfisicas;
   cmPT:  Caracteristicasfisicas;
 
+  //#region  Variables Lista de Productos
+  productos:  Array<Productos> = new Array<Productos>();
+  newproductos: Array<ProductosC> = new Array<ProductosC>();
+  clasificaciones: Array<Clasificacion>;
+  clasificacion: any;
+
+  filter: any;
+
+  // Ordenacion
+  key: string = 'Concentracion';
+  reverse: boolean = false;
+  p: number = 1;
+  //#endregion
+  
+  //#region VARIABLES ASIGNACIÓN MASIVA
+  lcodigoproducto: Array<String> = new Array<String>();
+  //#endregion
+
   constructor(
     public global: Globals,
     private route: ActivatedRoute,
     private router: Router,
     private servAsignacion: AsignacionService,
     private servCaracteristicas: CaracteristicasService,
-    private servNotification: NotificationsService
+    private servNotification: NotificationsService,
+    public servProductos: ProductosService, 
+    private toast:MzToastService
   ) {
     this.lcf = new  Array<Caracteristicas>();
     this.laq = new  Array<Caracteristicas>();
@@ -80,6 +103,46 @@ export class DetailasignacionmpComponent implements OnInit {
     });
   }
 
+  onLlenarNuevaListaProductos(lproductos: Array<Productos>){
+    let producto: Productos = new Productos();
+    lproductos.forEach(element => {
+      let productoc: ProductosC = new ProductosC();
+      productoc.Cod_Producto= element['Cod_Producto'];
+      productoc.Nombre_Producto= element['Nombre_Producto'];
+      productoc.Presentacion= element['Presentacion'];
+      productoc.Principio_Activo= element['Principio_Activo'];
+      productoc.Forma_Farmaceutica= element['Forma_Farmaceutica'];
+      productoc.Concentracion= element['Concentracion'];
+      productoc.Reg_Sanitario= element['Reg_Sanitario'];
+      productoc.Peso_Nominal= element['Peso_Nominal'];
+      productoc.Tipo_Productos= element['Tipo_Productos'];
+      
+      this.servProductos.verificaSiExiste(element['Cod_Producto']).subscribe(
+        data => {
+          console.log('Se verifico existencia de registro!');
+          if(data['length'] == 0){
+            productoc.Estado = '0';
+          }else{
+            productoc.Estado = '1';
+          }
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('Ocurrio un error:', err.error.message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          }
+          this.toast.show('No se pudo validar los productos! Error en el Servidor.', 3000, 'red');
+        }
+      );
+      this.newproductos.push(productoc);
+    });
+    this.closeLoading();
+  }
+// End Lista de Productos
   onVerificaEspecificacion(code) {
     this.codigo_producto = code;
     this.servAsignacion.getCaracteristicasForProducto(code).subscribe(
@@ -284,8 +347,7 @@ export class DetailasignacionmpComponent implements OnInit {
     this.lcm.forEach(element => {
       this.modificarCaracteristica(element);
     });
-    this.openNotificacion(1, 'Correcto!', 'Se realizo la asignación');
-    this.router.navigate(['/sacc/certificados']);
+    this.toast.show('Se realizo la asignación Correctamente!', 3000, 'green', () => this.router.navigate(['/sacc/asignacion/mp/listadd', this.codigo_producto]));
   }
 
   // Como ya existen datos guardados modifica los valores de la especificación que se encuentran vacias

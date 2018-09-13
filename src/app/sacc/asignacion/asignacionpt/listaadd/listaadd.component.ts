@@ -6,18 +6,19 @@ import { ProductosService } from '../../../datos/productos/productos.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Clasificacion } from '../../clasificacion';
 import { MzToastService } from '../../../../../../node_modules/ng2-materialize';
+import { AsignacionService } from '../../asignacion.service';
+import { Especificacion } from '../../especificacion';
 
 @Component({
-  selector: 'app-listasignacionpt',
-  templateUrl: './listasignacionpt.component.html',
-  styleUrls: ['./listasignacionpt.component.scss']
+  selector: 'app-listaadd',
+  templateUrl: './listaadd.component.html',
+  styleUrls: ['./listaadd.component.scss']
 })
-export class ListasignacionptComponent implements OnInit {
+export class ListaaddComponent implements OnInit {
   productos:  Array<Productos> = new Array<Productos>();
   newproductos: Array<ProductosC> = new Array<ProductosC>();
   clasificaciones: Array<Clasificacion>;
   clasificacion: any;
-
   filter: any;
 
   // Ordenacion
@@ -25,13 +26,31 @@ export class ListasignacionptComponent implements OnInit {
   reverse: boolean = false;
   p: number = 1;
 
-  constructor(public global: Globals, public servProductos: ProductosService, private toast:MzToastService) {
+  //#region VARIABLES ASIGNACIÓN MASIVA
+  especificacion: Especificacion = new Especificacion();
+  lespecificacion: Array<Especificacion> = new Array<Especificacion>();
+  codigo_producto:String;
+  lcodigoproducto: Array<String> = new Array<String>();
+
+  btndisabled:Boolean = false;
+  //#endregion
+
+  constructor(
+    public global: Globals, 
+    public servProductos: ProductosService, 
+    public servAsignacion: AsignacionService,
+    private toast:MzToastService,
+    private _route:ActivatedRoute,
+    private route: Router
+  ) {
+      this.codigo_producto = _route.snapshot.paramMap.get('code');
   }
 
   ngOnInit() {
     this.openLoading();
     this.onLoadProductos();
     this.onLoadClasificacionPT();
+    this.onLoadEspecificacion(this.codigo_producto);
   }
 
   onLoadProductos() {
@@ -94,7 +113,6 @@ export class ListasignacionptComponent implements OnInit {
     });
     this.closeLoading();
   }
-  
 
   onLoadClasificacionPT() {
     this.servProductos.getClasificacionPT().subscribe(
@@ -146,7 +164,6 @@ export class ListasignacionptComponent implements OnInit {
     return resp;
   } 
 
-
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
@@ -156,8 +173,93 @@ export class ListasignacionptComponent implements OnInit {
     const loading = $('#loading');
     loading.fadeIn();
   }
+
   closeLoading() {
       const loading = $('#loading');
       loading.fadeOut();
   }
+
+  //#region FUNCIONES PARA SELECCIONAR PRODUCTOS RELACIONADOS
+  
+  agregarLProductos(val, prod) {
+    if(val.target.checked){
+      this.adicionarCodigoLista(prod.Cod_Producto);
+    }else {
+      this.quitarCodigoLista(prod.Cod_Producto);
+    }
+    console.log(this.lcodigoproducto);
+  }
+  adicionarCodigoLista(codigo: String){
+    this.lcodigoproducto.push(codigo);
+  }
+  quitarCodigoLista(codigo: String){
+    let laux: Array<String>= new Array<String>();
+    this.lcodigoproducto.forEach(element => {
+      if(element != codigo){
+        laux.push(element);
+      }
+    });
+    this.lcodigoproducto = laux;
+  }
+
+  cambiaEstadoCheck(estado:number): Boolean{
+    if(estado == 0){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  onLoadEspecificacion(code) {
+    this.servAsignacion.getEspecificacion(code).subscribe(
+      data => {
+        this.lespecificacion = data['body'];
+        console.log(this.lespecificacion);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+        this.toast.show('Ocurrio un error al cargar la especificacion del producto', 3000, 'green');
+      }
+    );
+  }
+
+  guardarEspecificacionProductos(){
+    this.btndisabled = true;
+    if(this.lcodigoproducto.length <= 0){
+      this.toast.show('No seleccionó ningún producto!', 3000, 'red', () => { this.route.navigate(['/sacc/asignacion/pt/']); });
+    } else {
+      this.lcodigoproducto.forEach(element => {
+        let p: Especificacion = new Especificacion();
+        this.lespecificacion.forEach(prod => {
+          p = prod;
+          p.codigo_producto = element.toString();
+          this.onSaveEspecificacionProducto(p);
+        });
+      });
+      this.toast.show('Se guardo los datos adicionales correctamente!', 3000, 'green', () => { this.route.navigate(['/sacc/asignacion/pt/']); });
+    }
+  }
+
+  onSaveEspecificacionProducto(p: Especificacion){
+    this.servAsignacion.saveEspecificacion(p).subscribe(
+      data => {
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+  //#endregion
 }

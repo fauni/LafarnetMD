@@ -1,0 +1,79 @@
+<div id="loading">
+    <div id="loadingcontent">
+        <p id="loadingspinner">
+            <mz-spinner
+                class="valign center-align col s4"
+                [size]="'big'">
+            </mz-spinner>
+            <br><br>
+            Cargando Productos ... 
+        </p>
+    </div>
+</div>
+
+<div class="contenido-principal">
+    <div style="padding-top: 0px; padding-left: 15px; padding-right: 15px;">
+        <mz-card>
+            <mz-card-title>
+                Seleccione los productos relacionados al Codigo: {{codigo_producto}} si se requiere.
+            </mz-card-title>
+            <mz-card-content>
+                <div class="row">
+                    <div class="col l6 m12 s12">
+                        <mz-input-container>
+                            <i mz-icon-mdi mz-input-prefix
+                                [icon]="'magnify'">
+                            </i>
+                            <input mz-input
+                                [label]="'Buscar Producto'"
+                                id="sproducto"
+                                type="text"
+                                [(ngModel)]='filter'
+                                value="">
+                        </mz-input-container>
+                    </div>
+                </div>
+            </mz-card-content>
+        </mz-card>
+        <mz-card>        
+            <mz-card-content>
+                <table class="bordered">
+                    <thead>
+                        <tr>
+                            <th (click)="sort('Cod_Producto')">Codigo <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Cod_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                            <th (click)="sort('Nombre_Producto')">Nombre del Producto <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Nombre_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                            <th (click)="sort('Concentracion')">Concentración <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Nombre_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let producto of newproductos | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 20, currentPage: p }; let i = index" [ngClass]="producto.Estado == 1 ? 'fondoSiRegistro':'fondoNoRegistro'">
+                            <td>
+                                <mz-checkbox-container>
+                                <input mz-checkbox
+                                    [label]="producto.Cod_Producto"
+                                    id="c-{{producto.Cod_Producto}}"
+                                    type="checkbox"
+                                    (change)="agregarLProductos($event, producto)">
+                                </mz-checkbox-container>
+                            </td>
+                            <td>{{producto.Nombre_Producto}}</td>
+                            <td>{{producto.Concentracion}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </mz-card-content>
+        </mz-card>
+    </div>
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <button mz-button 
+            [float]="true" 
+            [large]="true" 
+            [disabled]="btndisabled" 
+            class="green" 
+            type="button"
+            (click)="guardarEspecificacionProductos()">
+            <i class="large mdi-action-done"></i>
+        </button>
+    </div>
+</div>

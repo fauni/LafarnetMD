@@ -360,6 +360,8 @@ export class AddcertificadoptComponent implements OnInit {
   }
 
   onGuardarUnaSolaCaracteristica(c: CaracteristicasCertificado) {
+    c.usuario_creacion = localStorage.getItem('username');
+    c.usuario_modificacion = localStorage.getItem('username');
     this.servCertificados.saveCertificadoCaracteristica(c).subscribe(
       data => {
         if (data.status == 200) {

@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListasignacionmpRoutingModule } from './listasignacionmp-routing.module';
-import { ListasignacionmpComponent } from './listasignacionmp.component';
-import { MzCardModule, MzButtonModule, MzSelectModule, MzInputModule, MzIconMdiModule, MzSpinnerModule, MzToastService } from 'ng2-materialize';
+import { MzCardModule, MzButtonModule, MzSelectModule, MzInputModule, MzIconMdiModule, MzSpinnerModule, MzCheckboxModule } from 'ng2-materialize';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
+import { ListaaddRoutingModule } from './listaadd-routing.module';
+import { ListaaddComponent } from './listaadd.component';
+import { AsignacionService } from '../../asignacion.service';
 
 @NgModule({
     imports: [
         CommonModule,
-        ListasignacionmpRoutingModule,
+        ListaaddRoutingModule,
         Ng2SearchPipeModule,
         Ng2OrderModule,
         NgxPaginationModule,
@@ -21,10 +22,11 @@ import { FormsModule } from '@angular/forms';
         MzInputModule,
         MzIconMdiModule,
         MzSpinnerModule,
-        FormsModule
+        MzCheckboxModule,
+        FormsModule,
     ],
-    declarations: [ListasignacionmpComponent],
-    providers:[MzToastService]
+    declarations: [ListaaddComponent],
+    providers: [AsignacionService]
 })
 
-export class ListasignacionmpModule {}
+export class ListaaddModule {}

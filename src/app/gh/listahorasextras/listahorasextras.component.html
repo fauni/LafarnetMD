@@ -22,7 +22,7 @@
 
         <mz-card>
             <mz-card-content>
-                <table class="bordered">
+                <table id="tHE" class="bordered">
                     <thead>
                         <tr>
                             <th (click)="sort('nombre_usuario')">NOMBRES Y APELLIDOS<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='nombre_usuario'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
@@ -61,7 +61,7 @@
 
 
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a href="javascript:void(0)" class="btn-floating btn-large blue">
+        <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="exportar()">
             <i class="large mdi-file-file-download"></i>
         </a>
     </div>

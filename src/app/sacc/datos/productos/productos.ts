@@ -1,6 +1,5 @@
 export class Productos {
     public Cod_Producto: string;
-    public ItemName: string;
     public Nombre_Producto: string;
     public Presentacion: string;
     public Principio_Activo: string;
@@ -9,12 +8,21 @@ export class Productos {
     public Reg_Sanitario: string;
     public Peso_Nominal: string;
     public Tipo_Productos: string;
-
-    public usuario_creacion: string;
-    public fecha_creacion: string;
-    public usuario_modificacion: string;
-    public fecha_modificacion: string;
 }
+
+export class ProductosC {
+    public Cod_Producto: string;
+    public Nombre_Producto: string;
+    public Presentacion: string;
+    public Principio_Activo: string;
+    public Forma_Farmaceutica: string;
+    public Concentracion: string;
+    public Reg_Sanitario: string;
+    public Peso_Nominal: string;
+    public Tipo_Productos: string;
+    public Estado: string;
+}
+
 
 export class Producto {
     id_producto: number;

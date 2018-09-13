@@ -373,6 +373,7 @@ export class AddcertificadosmpComponent implements OnInit {
   }
 
   onGuardarCaracteristicasCertificacion(codigocertificado: string, lista: Array<CaracteristicasCertificado>) {
+    debugger;
     lista.forEach(element => {
       let cc: CaracteristicasCertificado = new CaracteristicasCertificado();
       cc = element;
@@ -382,8 +383,11 @@ export class AddcertificadosmpComponent implements OnInit {
   }
 
   onGuardarUnaSolaCaracteristica(c: CaracteristicasCertificado) {
+    c.usuario_creacion = localStorage.getItem('username');
+    c.usuario_modificacion = localStorage.getItem('username');
     this.servCertificados.saveCertificadoCaracteristica(c).subscribe(
       data => {
+        debugger;
         if (data.status == 200) {
           console.log('Guardando...');
           console.log(this.certificado);

@@ -3,6 +3,7 @@ import { HorasExtrasService } from '../horasextras/horasextras.service';
 import { MzToastService } from 'ng2-materialize';
 import { Lhorasextras } from './lhorasextras';
 import { HttpErrorResponse } from '@angular/common/http';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-listahorasextras',
@@ -45,5 +46,14 @@ export class ListahorasextrasComponent implements OnInit {
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
+  }
+
+  exportar():void {
+    let sheetName1 = 'Horas Extras';
+    var tbhe = document.getElementById('tHE');
+    var ws1: XLSX.WorkSheet = XLSX.utils.table_to_sheet(tbhe, {raw:true});
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws1, sheetName1);
+    XLSX.writeFile(wb, 'horasextras.xlsx', {type: 'base64'});
   }
 }

@@ -9,7 +9,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'main' },
             { path: 'main', loadChildren: './listasignacionmp/listasignacionmp.module#ListasignacionmpModule' },
-            { path: 'detail/:id/:code', loadChildren: './detailasignacionmp/detailasignacionmp.module#DetailasignacionmpModule' }
+            { path: 'detail/:id/:code', loadChildren: './detailasignacionmp/detailasignacionmp.module#DetailasignacionmpModule' },
+            { path: 'listadd/:code', loadChildren: './listaaddmp/listaaddmp.module#ListaaddmpModule' }
         ]
     }
 ];

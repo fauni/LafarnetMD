@@ -37,5 +37,9 @@ export class ProductosService {
   getClasificacionmp(): Observable<any> {
     return this.http.get(this.global.urlAPI + 'productos/clasificacionMP');
   }
+
+  verificaSiExiste(data): Observable<any> {
+    return this.http.get(this.global.urlAPI + 'productos/validasifueregistrada/'+ data);
+  }
 }
 

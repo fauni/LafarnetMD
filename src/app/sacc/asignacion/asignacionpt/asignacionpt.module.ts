@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AsignacionptRoutingModule } from './asignacionpt-routing.module';
 import { AsignacionptComponent } from './asignacionpt.component';
 import { ProductosService } from '../../datos/productos/productos.service';
+import { MzToastService } from '../../../../../node_modules/ng2-materialize';
 
 @NgModule({
     imports: [
@@ -10,7 +11,7 @@ import { ProductosService } from '../../datos/productos/productos.service';
         AsignacionptRoutingModule
     ],
     declarations: [AsignacionptComponent],
-    providers: [ProductosService]
+    providers: [ProductosService, MzToastService]
 })
 
 export class AsignacionptModule {}

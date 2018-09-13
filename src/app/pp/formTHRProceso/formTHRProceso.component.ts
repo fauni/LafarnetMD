@@ -47,7 +47,8 @@ export class FormTHRProcesoComponent implements OnInit {
     private servEtapaProceso: EtapasProcesoService,
     private servProducto: PpService,
     private servHigrotermometro: HigrotermometroService,
-    private servToast: MzToastService
+    private servToast: MzToastService,
+    private route: Router
   ) { }
 
   ngOnInit() {
@@ -233,7 +234,7 @@ export class FormTHRProcesoComponent implements OnInit {
     this.servEtapaProceso.saveTHRProceso(this.monitoreo).subscribe(
       data => {
         if (data.status == 200) {
-          this.servToast.show('Su registro fue realizado correctamente ', 4000, 'green rounded');
+          this.servToast.show('Su registro fue realizado correctamente ', 4000, 'green rounded', () => { this.route.navigate(['/procprod/repthrproceso']); });
         }else {
           this.servToast.show('No se guardo el registro!', 4000, 'red rounded');
         }
