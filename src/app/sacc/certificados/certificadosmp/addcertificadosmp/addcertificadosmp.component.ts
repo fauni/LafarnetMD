@@ -16,7 +16,7 @@ import { CertificadosService } from '../../certificados.service';
 import { CaracteristicasCertificado } from '../../caracteristicascertificado';
 import { MzToastService } from 'ng2-materialize';
 import { Lote } from '../../certificadospt/lote';
-import { Proveedor } from '../../../datos/proveedor/proveedor';
+import { Proveedor, Fabricante } from '../../../datos/proveedor/proveedor';
 import { ProveedoresService } from '../../../datos/proveedor/proveedor.service';
 
 @Component({
@@ -86,6 +86,9 @@ export class AddcertificadosmpComponent implements OnInit {
   // Proveedores
   proveedores: Array<Proveedor> = new Array<Proveedor>();
 
+  //Fabricantes
+  fabricantes: Array<Fabricante> = new Array<Fabricante>();
+
   constructor(
     private router: Router,
     private servAnalista: AnalistasService,
@@ -112,6 +115,7 @@ export class AddcertificadosmpComponent implements OnInit {
     this.loadDataDefault();
     this.onLoadAnalistas();
     this.onLoadProveedores();
+    this.onLoadFabricantes();
     // this.onLoadProductos();
   }
 
@@ -153,6 +157,26 @@ export class AddcertificadosmpComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         this.openNotificacion(3, 'Error', 'No se pudo cargar los datos!');
+        if (err.error instanceof Error) {
+          // A client-side or network error occurred. Handle it accordingly.
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          // The backend returned an unsuccessful response code.
+          // The response body may contain clues as to what went wrong,
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  onLoadFabricantes() {
+    this.servProveedor.getFabricantes().subscribe(
+      data => {
+        this.fabricantes = data.body;
+        console.log('Fabricantes cargados correctamente! ---->');
+      },
+      (err: HttpErrorResponse) => {
+        this.openNotificacion(3, 'Error', 'No se pudo cargar los Fabricantes!');
         if (err.error instanceof Error) {
           // A client-side or network error occurred. Handle it accordingly.
           console.log('Ocurrio un error:', err.error.message);
@@ -538,6 +562,29 @@ export class AddcertificadosmpComponent implements OnInit {
     cod = this.certificado.lote + '-' +
     f.getDate() + '' + f.getMonth() + '' + f.getFullYear() + '' + f.getHours() + '' + f.getMinutes() + '' + f.getSeconds();
     return cod;
+  }
+
+  guardarFabricante(){
+    let nombre_fabricante = prompt("Introduzca el nombre del Fabricante:", " ");
+    let f: Fabricante = new Fabricante();
+    f.id_fabricante='0';
+    f.nombre_fabricante= nombre_fabricante;
+    f.usuario_creacion = localStorage.getItem('username');
+    f.usuario_modificacion = localStorage.getItem('username');
+    this.servProveedor.saveFabricante(f).subscribe(data => {
+      console.log('Se agrego el Fabricante Correctamente!');
+      this.toast.show('Se agrego el Fabricante Correctamente!', 3000);
+      this.onLoadFabricantes();
+    }, (err: HttpErrorResponse) => {
+      this.toast.show('Ocurrio un error al guardar!', 3000, 'red');
+      if (err.error instanceof Error) {
+        console.log('Ocurrio un error:', err.error.message);
+      } else {
+        // The backend returned an unsuccessful response code.
+        // The response body may contain clues as to what went wrong,
+        console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+      }
+    });
   }
 
   openLoading() {

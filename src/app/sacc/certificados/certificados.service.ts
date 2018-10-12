@@ -71,4 +71,9 @@ export class CertificadosService {
     return this.http.get(this.global.urlAPISAP + 'lotespt/' + data);
   }
 
+  // Traer lote Producto Terminado
+  getCertificadoPTPDF(data) {
+    const responseType: 'json' | 'arraybuffer' | 'blob' | 'text' = 'json';
+    return this.http.get('http://localhost:1925/api/certificadopt/' + data, { responseType:'arraybuffer' });
+  }
 }

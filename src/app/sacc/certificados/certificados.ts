@@ -22,6 +22,7 @@ export class Certificados {
     public presentacion: string;
     public conservacionyalm: string;
     public referencias: string;
+    public nombre_fabricante: string = '';
 
     public usuario_creacion: string;
     public fecha_creacion: string;

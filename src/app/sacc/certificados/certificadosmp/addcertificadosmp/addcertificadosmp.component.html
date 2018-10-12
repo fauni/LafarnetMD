@@ -121,7 +121,7 @@
 
                 
                 <div class="row">    
-                    <mz-input-container class="col l3 s12 m3">
+                    <mz-input-container class="col l4 s12 m3">
                         <input mz-input required
                             id="protocolo"
                             name="protocolo"
@@ -130,7 +130,7 @@
                             [(ngModel)]="certificado.protocolo">
                     </mz-input-container>
 
-                    <mz-select-container class="col l3 s12 m3">
+                    <!--<mz-select-container class="col l3 s12 m3">
                         <select mz-select
                             id="nombre_proveedor"
                             [label]="'Proveedor'"
@@ -138,9 +138,9 @@
                             [(ngModel)]="certificado.nombre_proveedor">
                             <option *ngFor="let proveedor of proveedores" value="{{ proveedor.Nombre_Proveedor }}">{{proveedor.Nombre_Proveedor}}</option>
                         </select>
-                    </mz-select-container>
+                    </mz-select-container>-->
 
-                    <mz-input-container class="col l3 s12 m3">
+                    <mz-input-container class="col l4 s12 m3">
                         <input mz-input required
                             id="tipo_clasificacion_producto"
                             name="tipo_clasificacion_producto"
@@ -149,7 +149,7 @@
                             [(ngModel)]="certificado.tipo_clasificacion_producto">
                     </mz-input-container>
 
-                    <mz-select-container class="col l3 s12 m3">
+                    <mz-select-container class="col l4 s12 m3">
                         <select mz-select
                             id="dictamen"
                             [label]="'Dictamen'"
@@ -159,9 +159,31 @@
                             <option>RECHAZADO</option>
                         </select>
                     </mz-select-container>
+
+                </div>
+                <div class="row">
+                    <div class="col l6 x6 s6">
+                        <span class="title_select">Proveedor</span>
+                        <ng-select [items]="proveedores"
+                                bindLabel="Nombre_Proveedor"
+                                bindValue="Nombre_Proveedor"
+                                [(ngModel)]="certificado.nombre_proveedor">
+                        </ng-select>
+                    </div>
+                    <div class="col l6 x6 s6">
+                        <span class="title_select">Fabricante</span>
+                        <ng-select [items]="fabricantes"
+                                bindLabel="nombre_fabricante"
+                                bindValue="nombre_fabricante"
+                                [(ngModel)]="certificado.nombre_fabricante">
+                        </ng-select>
+                        <span><a href="javascript:void(0)" (click)="guardarFabricante()">Agregar Fabricante</a></span>
+                    </div>
                 </div>
             </mz-card-content>
         </mz-card>
+
+        
 
         <mz-card>
             <mz-card-content>
@@ -245,7 +267,7 @@
             </mz-card-content>
         </mz-card>
 
-        <mz-card>
+        <mz-card style="display:none;">
             <mz-card-content>
                 <mz-textarea-container class="col s12">
                     <textarea mz-textarea

@@ -16,7 +16,7 @@
   
   <div class="contenido-principal" style="background: #ffffff;">
   <div class="row">
-    <table class="bordered">
+    <table class="bordered responsive-table">
       <thead>
         <tr>
           <th (click)="sort('codigo_certificado')">COD. CER.<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha_analisis'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
@@ -29,14 +29,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let certificado of certificados | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
-            <td>{{certificado.codigo_certificado}}</td>
-            <td>{{certificado.fecha_analisis}}</td>
-            <td>{{certificado.nombre_producto}}</td>
-            <td>{{certificado.lote}}</td>
-            <td>{{certificado.tipo_certificado}}</td>
-            <td>{{certificado.dictamen}}</td>
-            <td><a href="javascript:void(0)" (click)="obtenerDatosReporte(certificado.codigo_certificado)">Vista Previa</a></td>
+        <tr *ngFor="let certificado of certificados | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+          <td>{{certificado.codigo_certificado}}</td>
+          <td>{{certificado.fecha_analisis}}</td>
+          <td>{{certificado.nombre_producto}}</td>
+          <td>{{certificado.lote}}</td>
+          <td>{{certificado.tipo_certificado}}</td>
+          <td>{{certificado.dictamen}}</td>
+          <!--<td><a href="javascript:void(0)" (click)="obtenerDatosReporte(certificado.codigo_certificado)">Vista Previa</a></td>-->
+          <!--<td><a href="javascript:void(0)" (click)="obtenerPDF()">Vista Previa</a></td>-->
+          <td><a [routerLink]="['/sacc/certificados/mp/detail/', certificado.codigo_certificado.replace('/','|')]">Ver Detalle</a></td>
         </tr>
       </tbody>
     </table>

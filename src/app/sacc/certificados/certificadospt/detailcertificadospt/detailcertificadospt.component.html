@@ -1,0 +1,178 @@
+<div class="contenido-principal">
+    <!--<mz-card>
+        <mz-card-content>
+            <div class="row">
+                <div class="col s2 m2 l1" style="text-align: right;">
+                    <button mz-button class="boton_busqueda_lote" [float]="true" (click)="onLoadProcesoForLote()">
+                        <i mz-icon-mdi  [icon]="'magnify'"></i>
+                    </button>
+                </div>
+                <mz-input-container class="col s10 m5 l3">
+                    <input mz-input
+                        [label]="'Numero de Lote'"
+                        id="numero_lote"
+                        name="numero_lote"
+                        class="numero_lote"
+                        placeholder="Ingrese su numero de Lote"
+                        [(ngModel)]="numero_lote"
+                        type="text">
+                </mz-input-container>
+            </div>
+        </mz-card-content>
+    </mz-card>-->
+
+    <mz-card>
+        <mz-card-content>
+            <div class="row">
+                <div class="col x6 l6 titulo_codigo">
+                    Codigo Certificado: {{ codigo_certificado }}
+                </div>
+                <div class="col x6 l6" style="text-align: right;">
+                    <button *ngIf="certificado.dictamen !== 'ANULADO'" mz-button (click)="onAnularCertificado()" id="btnAnularCertificado" class="red btn">
+                        Anular Certificado 2
+                    </button>
+                </div>    
+            </div>
+            <div class="dictamen" [ngStyle]="{'background-color': certificado.dictamen === 'APROBADO' ? 'green':'red' }"> {{ certificado.dictamen }} </div>
+        </mz-card-content>
+    </mz-card>
+
+    <mz-card>
+        <mz-card-content>
+            <!--<table>
+                <tr>
+                    <td colspan="2" class="titulo_celda">LOTE</td>
+                    <td class="titulo_celda">NOMBRE DEL PRODUCTO</td>
+                    <td colspan="2" class="titulo_celda">NOMBRE DEL PROVEEDOR</td>
+                </tr>
+                <tr>
+                    <td colspan="2">{{ certificado.lote }}</td>
+                    <td rowspan="3">{{ certificado.nombre_producto }}</td>
+                    <td colspan="2">{{ certificado.nombre_proveedor }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="titulo_celda">FECHA DE ANALISIS</td>
+                    <td class="titulo_celda">FECHA DE FAB.</td>
+                    <td class="titulo_celda">FECHA DE VMTO.</td>
+                </tr>
+                <tr>
+                    <td colspan="2">{{ certificado.fecha_analisis }}</td>
+                    <td>{{ certificado.fecha_fabricacion }}</td>
+                    <td>{{ certificado.fecha_vencimiento }}</td>
+                </tr>
+            </table>-->
+
+            <table>
+                <tr>
+                    <td colspan="2" class="titulo_celda">NOMBRE PRODUCTO</td>
+                    <td class="titulo_celda">CONCENTRACIÓN</td>
+                    <td colspan="2" class="titulo_celda">FORMA FARMACÉUTICA</td>
+                </tr>
+                <tr>
+                    <td colspan="2">{{ certificado.nombre_producto }}</td>
+                    <td rowspan="3">{{ certificado.concentracion }}</td>
+                    <td colspan="2">{{ certificado.forma_farmaceutica }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo_celda">CANTIDAD FAB.</td>
+                    <td class="titulo_celda">NRO. DE LOTE</td>
+                    <td class="titulo_celda">FECHA DE FAB.</td>
+                    <td class="titulo_celda">FECHA DE VMTO.</td>
+                </tr>
+                <tr>
+                    <td>{{ certificado.cantidad_fabricada }}</td>
+                    <td>{{ certificado.lote }}</td>
+                    <td>{{ certificado.fecha_fabricacion }}</td>
+                    <td>{{ certificado.fecha_vencimiento }}</td>
+                </tr>
+            </table>
+        </mz-card-content>
+    </mz-card>
+
+    <mz-card>
+        <mz-card-title>CARACTERÍSTICAS FÍSICAS</mz-card-title>
+        <mz-card-content>
+            <table class="striped responsive-table">
+                <tr>
+                    <th>ENSAYO</th>
+                    <th>ESPECIFICACIONES</th>
+                    <th>RESULTADO</th>
+                </tr>
+                <tr *ngFor="let c of lcf">
+                    <td class="letra-bold">{{ c.id_caracteristica }}</td>
+                    <td>{{ c.especificacion }}</td>
+                    <td>{{ c.resultado }}</td>
+                </tr>
+            </table>
+        </mz-card-content>
+    </mz-card>
+
+    <mz-card>
+        <mz-card-title>ANÁLISIS QUÍMICO</mz-card-title>
+        <mz-card-content>
+            <table class="striped responsive-table">
+                <tr>
+                    <th>ENSAYO</th>
+                    <th>ESPECIFICACIONES</th>
+                    <th>RESULTADO</th>
+                </tr>
+                <tr *ngFor="let c of laq">
+                    <td class="letra-bold">{{ c.id_caracteristica }}</td>
+                    <td>{{ c.especificacion }}</td>
+                    <td>{{ c.resultado }}</td>
+                </tr>
+            </table>
+        </mz-card-content>
+    </mz-card>
+
+    <mz-card>
+        <mz-card-title>CONTROL MICROBIOLÓGICO</mz-card-title>
+        <mz-card-content>
+            <table class="striped responsive-table">
+                <tr>
+                    <th>ENSAYO</th>
+                    <th>ESPECIFICACIONES</th>
+                    <th>RESULTADO</th>
+                </tr>
+                <tr *ngFor="let c of lcm">
+                    <td class="letra-bold">{{ c.id_caracteristica }}</td>
+                    <td>{{ c.especificacion }}</td>
+                    <td>{{ c.resultado }}</td>
+                </tr>
+            </table>
+        </mz-card-content>
+    </mz-card>
+
+    <mz-card>
+        <mz-card-title>Presentación</mz-card-title>
+        <mz-card-content>
+            {{certificado.presentacion}}
+        </mz-card-content>
+    </mz-card>
+    <mz-card>
+        <mz-card-title>Conservación y Almacenamiento</mz-card-title>
+        <mz-card-content>
+            {{certificado.conservacionyalm}}
+        </mz-card-content>
+    </mz-card>
+    <mz-card>
+        <mz-card-title>Referencias</mz-card-title>
+        <mz-card-content>
+            {{certificado.referencias}}
+        </mz-card-content>
+    </mz-card>
+    <mz-card>
+        <mz-card-title>Observación</mz-card-title>
+        <mz-card-content>
+            {{certificado.observaciones}}
+        </mz-card-content>
+    </mz-card>
+</div>
+  
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="export(certificado.codigo_certificado)">
+        <i class="large mdi-file-file-download"></i>
+    </a>
+</div>
+
+

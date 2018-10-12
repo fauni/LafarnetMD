@@ -21,19 +21,20 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MzCardModule, MzSwitchModule, MzToastService } from 'ng2-materialize';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
-import { AddcertificadosmpRoutingModule } from './addcertificadosmp-routing.module';
-import { AddcertificadosmpComponent } from './addcertificadosmp.component';
 import { AnalistasService } from '../../../datos/analista/analista.service';
 import { ProductosService } from '../../../datos/productos/productos.service';
 import { AsignacionService } from '../../../asignacion/asignacion.service';
 import { CertificadosService } from '../../certificados.service';
 import { ProveedoresService } from '../../../datos/proveedor/proveedor.service';
+import { AddcertificadoscmpRoutingModule } from './addcertificadoscmp-routing.module';
+import { AddcertificadoscmpComponent } from './addcertificadoscmp.component';
+import { CertificadosnService } from '../../certificadosn.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     imports: [
         CommonModule,
-        AddcertificadosmpRoutingModule,
+        AddcertificadoscmpRoutingModule,
         Ng2CompleterModule,
         Ng2SearchPipeModule,
         Ng2OrderModule,
@@ -57,8 +58,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
         MzSwitchModule,
         NgSelectModule
     ],
-    declarations: [AddcertificadosmpComponent],
+    declarations: [AddcertificadoscmpComponent],
     providers: [NotificationsService, AnalistasService,
-        ProductosService, AsignacionService, CertificadosService, MzToastService, ProveedoresService]
+        ProductosService, AsignacionService, CertificadosService, MzToastService, ProveedoresService, CertificadosnService]
 })
-export class AddcertificadosmpModule {}
+export class AddcertificadoscmpModule {}

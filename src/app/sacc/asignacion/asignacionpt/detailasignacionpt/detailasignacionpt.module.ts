@@ -20,6 +20,7 @@ import { MzCardModule, } from 'ng2-materialize';
 import { SimpleNotificationsModule, NotificationsService } from 'angular2-notifications';
 import { AsignacionService } from '../../asignacion.service';
 import { CaracteristicasService } from '../../caracteristicas.service';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 @NgModule({
     imports: [
@@ -41,7 +42,10 @@ import { CaracteristicasService } from '../../caracteristicas.service';
         MzCheckboxModule,
         FormsModule,
         MzSpinnerModule,
-        SimpleNotificationsModule
+        SimpleNotificationsModule,
+        ConfirmationPopoverModule.forRoot({
+            confirmButtonType: 'danger'
+        })
     ],
     declarations: [DetailasignacionptComponent],
     providers: [AsignacionService, CaracteristicasService, NotificationsService]

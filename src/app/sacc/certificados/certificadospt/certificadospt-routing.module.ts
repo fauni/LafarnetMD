@@ -9,7 +9,9 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'list' },
             { path: 'list', loadChildren: './listcertificadospt/listcertificadospt.module#ListcertificadosptModule' },
-            { path: 'add', loadChildren: './addcertificadopt/addcertificadopt.module#AddcertificadoptModule' }
+            { path: 'add', loadChildren: './addcertificadopt/addcertificadopt.module#AddcertificadoptModule' },
+            { path: 'addcpt/:id', loadChildren: './addcertificadoscpt/addcertificadoscpt.module#AddcertificadoscptModule' },
+            { path: 'detail/:id', loadChildren: './detailcertificadospt/detailcertificadospt.module#DetailcertificadosptModule' }
         ]
     }
 ];

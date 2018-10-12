@@ -15,5 +15,17 @@ export class ProveedoresService {
   }
   getProveedor(codp): Observable<any> {
     return this.http.get(this.global.urlAPISAP + 'proveedores/' + codp);
- }
+  }
+
+  getFabricantes(): Observable<any> {
+    return this.http.get(this.global.urlAPICORE + 'fabricante');
+  }
+
+  saveFabricante(data): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json'}),
+      withCredentials: true
+    }
+    return this.http.post(this.global.urlAPICORE + 'fabricante/', data);
+  }
 }
