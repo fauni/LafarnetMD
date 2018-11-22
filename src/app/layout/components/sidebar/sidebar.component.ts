@@ -118,7 +118,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     getItemForApps(idApp): void {
       this.itemforapp = new ItemForApp(idApp);
-      this.lservice.ItemForApps(this.itemforapp).subscribe(
+      this.lservice.ItemForAppsW(idApp).subscribe(
         data => {
           console.log(data.body);
           this.items = data.body;

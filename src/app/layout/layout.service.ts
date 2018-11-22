@@ -16,4 +16,8 @@ export class LayoutService {
   ItemForApps(data): Observable<any> {
     return this.http.post(this.global.urlAPI + 'itemapps/getitemforapps', data);
   }
+
+  ItemForAppsW(data): Observable<any> {
+    return this.http.get(this.global.urlAPICORE + 'itemapp/'+ data);
+  }
 }

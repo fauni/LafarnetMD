@@ -19,9 +19,8 @@ const routes: Routes = [
     { path: 'dvisita1819', loadChildren: './dvisita1819/dvisita1819.module#Dvisita1819Module', canActivate: [AuthGuard] },
     { path: 'glv', loadChildren: './glv/glv.module#GlvModule', canActivate: [AuthGuard] },
     { path: 'dolibarrlcc', loadChildren: './dolibarrlcc/dolibarrlcc.module#DolibarrlccModule', canActivate: [AuthGuard] },
-    /*{ path: 'solcompras', loadChildren: './solcompras/solcompras.module#SolcomprasModule', canActivate: [AuthGuard] },
+    { path: 'sc', loadChildren: './sc/sc.module#ScModule', canActivate: [AuthGuard] },
     { path: 'dvisita1617', loadChildren: './dvisita1617/dvisita1617.module#Dvisita1617Module', canActivate: [AuthGuard] },
-    */
     { path: 'proforms', loadChildren: './proforms/proforms.module#ProformsModule', canActivate: [AuthGuard] },
     { path: 'repdolibarr', loadChildren: './rdolibar/rdolibar.module#RdolibarModule', canActivate: [AuthGuard] },
     { path: 'ghdocs', loadChildren: './ghdocs/ghdocs.module#GhdocsModule', canActivate: [AuthGuard] },

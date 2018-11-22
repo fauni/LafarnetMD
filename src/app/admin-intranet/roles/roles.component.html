@@ -1,0 +1,17 @@
+<mz-card>
+  <mz-card-title>
+    ROLES DE USUARIO
+  </mz-card-title>
+  <mz-card-content>
+    <mz-checkbox-container *ngFor="let rol of lrol">
+        <input mz-checkbox
+            [label]="rol.nombre_rol"
+            id="{{rol.id_rol}}"
+            type="checkbox">
+    </mz-checkbox-container>
+  </mz-card-content>
+  <mz-card-action>
+    <a href="#">This is a link</a>
+    <a href="#">This is a link</a>
+  </mz-card-action>
+</mz-card>

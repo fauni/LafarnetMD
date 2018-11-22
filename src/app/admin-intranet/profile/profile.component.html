@@ -126,6 +126,8 @@
         </mz-select-container>
       </mz-card-content>
     </mz-card>
+
+    <!--AQUI COMIENZA LAS APLICACIONES LAFAR -->
     <mz-card>
       <mz-card-title>
         Aplicaciones LAFAR
@@ -135,7 +137,7 @@
           <div *ngFor="let app of apps" class="parentCard col xl4 l4 m2 s4">
             <div class="item-menu-apps">
               <!--<a style = " display:nome; color: #fff;" href="{{global.urlIntranet + item.url}}" target="_blank" class="tituloApp">-->
-              <a style = "color: #fff;" href="javascript:void(0)" class="tituloApp">
+              <a [routerLink]="['/admin/roles', app.code]" style = "color: #fff;" href="javascript:void(0)" class="tituloApp">
               <div class="card-content">
                   <img src="assets/images/apps/{{app.code}}.png" class="imagen-app">
               </div>
@@ -154,6 +156,8 @@
         </div>
       </mz-card-content>
     </mz-card>
+
+    <!--AQUI TERMINA LAS APLICACIONES LAFAR -->
   </div>
 </div>
 

@@ -6,6 +6,7 @@ export class Caracteristicas {
     public especificacion: string;
     public tipo_caracteristica: string;
     public estado: string;
+    public orden: string;
     public usuario_creacion: string;
     public fecha_creacion: string;
     public usuario_modificacion: string;

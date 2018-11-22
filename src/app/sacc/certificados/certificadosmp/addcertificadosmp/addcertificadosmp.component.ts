@@ -316,6 +316,7 @@ export class AddcertificadosmpComponent implements OnInit {
       c.resultado = '';
       c.tipo_caracteristica = element.tipo_caracteristica;
       c.estado = element.estado;
+      c.orden = element.orden;
       lista.push(c);
     });
     return lista;

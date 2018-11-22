@@ -21,9 +21,23 @@
         <a [routerLink]="['/home']"><i mz-icon-mdi [icon]="'home'" class="blue-text"></i>Inicio</a>
       </mz-sidenav-link>
 
+      <!--
       <mz-sidenav-link *ngFor="let item of items">
         <a [routerLink]="[item.url]"><i mz-icon-mdi [icon]="item.icon" class="blue-text"></i>{{item.itemName}}</a>  
       </mz-sidenav-link>
+      -->
+
+      <mz-sidenav-collapsible *ngFor="let item of items">
+        <mz-sidenav-collapsible-header>
+            <i mz-icon-mdi [icon]="item.icon" class="icono"></i><span class="item">{{item.itemName}}</span>
+        </mz-sidenav-collapsible-header>
+        <mz-sidenav-collapsible-content>
+            <mz-sidenav-link *ngFor="let subitem of item.items">
+              <a [routerLink]="[subitem.url]"><i mz-icon-mdi [icon]="subitem.icon" class="blue-text"></i>{{subitem.itemName}}</a>  
+            </mz-sidenav-link>
+        </mz-sidenav-collapsible-content>
+      </mz-sidenav-collapsible>
+      
       <!--
       <mz-sidenav-link>
         <a [routerLink]="['/home']"><i mz-icon-mdi [icon]="'home'" class="blue-text"></i>Inicio</a>

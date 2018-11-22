@@ -13,8 +13,8 @@ const routes: Routes = [
             { path: 'areas', loadChildren: './areas/areas.module#AreasModule' },
             { path: 'secciones', loadChildren: './secciones/secciones.module#SeccionesModule' },
             { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' },
-            { path: 'admusersapps/:id', loadChildren: './adminusersapps/adminusersapps.module#AdminUsersAppsModule' }
-
+            { path: 'admusersapps/:id', loadChildren: './adminusersapps/adminusersapps.module#AdminUsersAppsModule' },
+            { path: 'roles/:id', loadChildren: './roles/roles.module#RolesModule'}
         ]
     }
 ];
