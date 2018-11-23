@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddscRoutingModule } from './addsc-routing.module';
 import { AddscComponent } from './addsc.component';
-import { MzCardModule, MzButtonModule, MzIconModule, MzNavbarModule, MzInputModule, MzSelectModule, MzDatepickerModule, MzIconMdiModule, MzTextareaModule } from 'ng2-materialize';
+import { MzCardModule, MzButtonModule, MzIconModule, MzNavbarModule, MzInputModule, MzSelectModule, MzDatepickerModule,
+    MzIconMdiModule, MzTextareaModule, MzModalModule } from 'ng2-materialize';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { MzCardModule, MzButtonModule, MzIconModule, MzNavbarModule, MzInputModu
         MzInputModule,
         MzSelectModule,
         MzDatepickerModule,
-        MzTextareaModule
+        MzTextareaModule,
+        MzModalModule
     ],
     declarations: [
         AddscComponent

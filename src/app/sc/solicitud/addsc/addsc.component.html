@@ -2,7 +2,7 @@
     <div class="nav-wrapper">
         <div class="left col s12 m5 l5">
             <ul>
-                <li><a href="javascript:void(0);" (click)="AddViewPublicacion.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+                <li><a href="javascript:void(0);" [routerLink]="['/sc/solicitud/list']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
                 </li>
                 <li><a href="javascript:void(0);" class="email-type">Crear Solicitud</a>
                 </li>
@@ -10,7 +10,7 @@
         </div>
         <div class="col s12 m7 l7 hide-on-med-and-down">
             <ul class="right">
-                <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                <li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>
                 <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-content-send"></i></a></li>-->
             </ul>
         </div>
@@ -69,7 +69,17 @@
                     type="text">
             </mz-input-container>
 
-            <mz-datepicker-container class="col s12 m4">
+            <mz-select-container class="col s12 m4">
+                <select mz-select
+                    id="basic-select"
+                    [label]="'Tipo de Compra'"
+                    [placeholder]="'Seleccione un Tipo de Compra'">
+                    <option>Local</option>
+                    <option>Importación</option>
+                    <option>General</option>
+                </select>
+            </mz-select-container>
+            <!--<mz-datepicker-container class="col s12 m4">
                 <i mz-icon-mdi mz-input-prefix
                     [icon]="'calendar'">
                 </i>
@@ -77,7 +87,7 @@
                     [label]="'Fecha Necesaria'"
                     id="prefix-datepicker"
                     type="tel" />
-            </mz-datepicker-container>
+            </mz-datepicker-container>-->
         </div>
         <div class="row">
             <mz-input-container class="col s12 m9">
@@ -89,7 +99,7 @@
             </mz-input-container>
             <div class="col s12 m3">
                 <br>
-                <button mz-button>
+                <button mz-button (click)="AddItemModal.open()">
                     <i mz-icon-mdi [icon]="'cart-plus'" [align]="'left'"></i>
                     Agregar Items
                 </button>
@@ -98,10 +108,166 @@
     </mz-card-content>
 </mz-card>
 
+<mz-card>
+    <mz-card-content>
+        <table id="table-items" class="highlight responsive-table">
+            <tr>
+                <th>Codigo</th>
+                <th>Descripción</th>
+                <th>Unidad</th>
+                <th>Cantidad</th>
+                <th>Fec. Requerida</th>
+                <th>Opciones</th>
+            </tr>
+            <tr class="border_bottom">
+                <td>CC030135</td>
+                <td>EMBUDO FILTRACIÓN AL VACIO  250mL (HPLC)</td>
+                <td>Pieza</td>
+                <td>5</td>
+                <td>22/11/2018</td>
+                <td>
+                    <button mz-button
+                          [float]="true" class="orange">
+                          <i mz-icon-mdi [icon]="'pencil'"></i>
+                    </button>
+                    <button mz-button
+                          [float]="true" class="red">
+                          <i mz-icon-mdi [icon]="'minus'"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr class="border_bottom">
+                <td>MN010833</td>
+                <td>Correa sincrónica dentada de 38 mm de ancho</td>
+                <td>Kilo</td>
+                <td>15</td>
+                <td>30/11/2018</td>
+                <td>
+                    <button mz-button
+                          [float]="true" class="orange">
+                          <i mz-icon-mdi [icon]="'pencil'"></i>
+                    </button>
+                    <button mz-button
+                          [float]="true" class="red">
+                          <i mz-icon-mdi [icon]="'minus'"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </mz-card-content>
+</mz-card>
+
+<mz-modal #AddItemModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
+    <mz-modal-header>
+        <nav class="lafar-bg-blue">
+            <div class="nav-wrapper">
+                <div class="left col s12 m5 l5">
+                <ul>
+                    <li><a href="javascript:void(0);" (click)="AddItemModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                    <li><a href="javascript:void(0);" class="email-type">Agregar Nuevo Item</a></li>
+                </ul>
+                </div>
+                <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right">
+                    <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                    <li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+    </mz-modal-header>
+    <mz-modal-content>
+        <div class="row">
+            <mz-datepicker-container class="col s12 m4">
+                <i mz-icon-mdi mz-input-prefix
+                    [icon]="'calendar'">
+                </i>
+                <input mz-datepicker
+                    [label]="'Fecha Necesaria'"
+                    id="prefix-datepicker"
+                    type="tel" />
+            </mz-datepicker-container>
+            <div class="col s12 m5"></div>
+            <mz-input-container class="col s12 m3">
+                <input mz-input
+                    [label]="'Numero de Solicitud'"
+                    id="basic-input-placeholder"
+                    placeholder="SCA0001"
+                    type="text">
+            </mz-input-container>
+        </div>
+        <div class="row">
+            <mz-select-container class="col s12 m4">
+                <select mz-select
+                    id="basic-select"
+                    [label]="'Codigo Item'"
+                    [placeholder]="'Seleccione un Item'">
+                    <option>IT00XXXX</option>
+                    <option>IT01XXXX</option>
+                </select>
+            </mz-select-container>
+            <mz-input-container class="col s12 m8">
+                <input mz-input
+                    [label]="'Descripción del Item'"
+                    id="basic-input-placeholder"
+                    placeholder="EMBUDO FILTRACIÓN AL VACIO  250mL (HPLC)"
+                    type="text">
+            </mz-input-container>
+        </div>
+        <div class="row">
+            <mz-input-container class="col s12 m4">
+                <input mz-input
+                    id="input-length"
+                    [label]="'Cantidad'"
+                    type="number">
+            </mz-input-container>
+            <mz-select-container class="col s12 m4">
+                <select mz-select
+                    id="basic-select"
+                    [label]="'Unidad'"
+                    [placeholder]="'Seleccione una Unidad'">
+                    <option>Kilos</option>
+                    <option>Libras</option>
+                </select>
+            </mz-select-container>
+            <mz-input-container class="col s12 m4">
+                <input mz-input
+                    [label]="'Descripción de la Unidad'"
+                    id="basic-input-placeholder"
+                    placeholder="Especifique la unidad ..."
+                    type="text">
+            </mz-input-container>
+        </div>
+        <div class="row">
+            <mz-select-container class="col s12 m6">
+                <select mz-select
+                    id="basic-select"
+                    [label]="'Arte'"
+                    [placeholder]="'Seleccione un Arte'">
+                    <option>Arte 1</option>
+                    <option>Arte 2</option>
+                </select>
+            </mz-select-container>
+            <mz-datepicker-container class="col s12 m6">
+                <i mz-icon-mdi mz-input-prefix
+                    [icon]="'calendar'">
+                </i>
+                <input mz-datepicker
+                    [label]="'Fecha de Arte'"
+                    id="prefix-datepicker"
+                    type="tel" />
+            </mz-datepicker-container>
+        </div>
+    </mz-modal-content>
+    <mz-modal-footer>
+      <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+      <button mz-button [flat]="true" mz-modal-close>Agregar</button>
+    </mz-modal-footer>
+  </mz-modal>
 
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="export()">
-        <i class="large mdi-file-file-download"></i>
+        <i class="large mdi-navigation-check"></i>
     </a>
 </div>
