@@ -37,8 +37,8 @@
                     id="basic-select"
                     [label]="'Tipo de Solicitud'"
                     [placeholder]="'Seleccione un Tipo'">
-                    <option>Articulo</option>
-                    <option>Servicio</option>
+                    <option value="a">Articulo</option>
+                    <option value="s">Servicio</option>
                 </select>
             </mz-select-container>
 
@@ -99,7 +99,7 @@
             </mz-input-container>
             <div class="col s12 m3">
                 <br>
-                <button mz-button (click)="AddItemModal.open()">
+                <button *ngIf="tipo_solicitud" mz-button (click)="AddItemModal.open()">
                     <i mz-icon-mdi [icon]="'cart-plus'" [align]="'left'"></i>
                     Agregar Items
                 </button>

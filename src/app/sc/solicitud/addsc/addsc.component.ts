@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./addsc.component.scss'],
 })
 export class AddscComponent implements OnInit {
-
+  tipo_solicitud: string;
   constructor() { }
 
   ngOnInit() {
+    this.tipo_solicitud = 'a';
   }
 
 }

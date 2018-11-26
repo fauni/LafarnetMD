@@ -17,7 +17,11 @@ export class LayoutService {
     return this.http.post(this.global.urlAPI + 'itemapps/getitemforapps', data);
   }
 
+  getRolForUser (data): Observable<any> {
+    return this.http.post(this.global.urlAPICORE + 'userrol/', data);
+  }
+
   ItemForAppsW(data): Observable<any> {
-    return this.http.get(this.global.urlAPICORE + 'itemapp/'+ data);
+    return this.http.get(this.global.urlAPICORE + 'itemapp/' + data);
   }
 }

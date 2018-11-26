@@ -3,7 +3,7 @@ import { MzSidenavComponent } from 'ng2-materialize';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { NavigationEnd, Route, Router } from '@angular/router';
 import { LayoutService } from '../../layout.service';
-import { ItemForApp } from './itemforapp';
+import { ItemForApp, RequestUserRol } from './itemforapp';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Globals } from '../../../globals';
 import { Users } from '../../../admin-intranet/users/users';
@@ -28,6 +28,8 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     public itemforapp: ItemForApp;
     user: Users = new Users();
 
+    public ura: RequestUserRol = new RequestUserRol();
+
     constructor(
       private router: Router,
       private mScrollbarService: MalihuScrollbarService,
@@ -36,7 +38,10 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-      this.getItemForApps(this.idapp);
+      this.ura.id_app = this.idapp;
+      this.ura.username = localStorage.getItem('username');
+      // this.getItemForApps(this.idapp);
+      this.getRolForUser(this.ura);
       this.populateSideNavWithRoutesGroupedBySections();
       this.setNavigationEndEvent();
       console.log('ngOnInit');
@@ -122,6 +127,48 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
         data => {
           console.log(data.body);
           this.items = data.body;
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('Ocurrio un error:', err.error.message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          }
+        }
+      );
+    }
+
+    getRolForUser(datos: RequestUserRol): void {
+      this.lservice.getRolForUser(datos).subscribe(
+        data => {
+          let id_rol: number = data.body.id_rol;
+          console.log(id_rol);
+          this.getItemForRol(id_rol);
+          //this.items = data.body;
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('Ocurrio un error:', err.error.message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          }
+        }
+      );
+    }
+
+    getItemForRol(id_rol): void {
+      this.itemforapp = new ItemForApp(id_rol);
+      this.lservice.ItemForAppsW(id_rol).subscribe(
+        data => {
+          console.log(id_rol);
+          this.items = data.body;
+          //this.items = data.body;
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
