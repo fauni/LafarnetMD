@@ -9,7 +9,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'main' },
             { path: 'main', loadChildren: './mainsc/mainsc.module#MainscModule' },
-            { path: 'solicitud', loadChildren: './solicitud/solicitud.module#SolicitudModule' }
+            { path: 'solicitud', loadChildren: './solicitud/solicitud.module#SolicitudModule' },
+            { path: 'orden', loadChildren: './orden/orden.module#OrdenModule' }
         ]
     }
 ];

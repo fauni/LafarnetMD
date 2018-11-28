@@ -1,0 +1,162 @@
+<nav class="lafar-bg-blue">
+    <div class="nav-wrapper">
+        <div class="left col s12 m5 l5">
+            <ul>
+                <li><a href="javascript:void(0);" [routerLink]="['/sc/main/']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+                </li>
+                <li><a href="javascript:void(0);" class="email-type">Lista de Ordenes de Compra</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col s12 m7 l7 hide-on-med-and-down">
+            <ul class="right">
+                <li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>
+                <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-content-send"></i></a></li>-->
+            </ul>
+        </div>
+    </div>
+</nav>
+<mz-card style="margin-bottom:0px;">
+        <mz-card-content>
+    
+        </mz-card-content>
+    </mz-card>
+
+    <mz-card>
+            <mz-card-content>
+                    <table id="table-items" class="highlight responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Nro.</th>
+                                <th class="center">
+                                        <i mz-icon-mdi mz-input-prefix class="green-text"
+                                            [icon]="'wechat'">
+                                        </i>
+                                </th>
+                                <th>Cod. OC</th>
+                                <th>Fecha</th>
+                                <th>Solicitante</th>
+                                <th>Fecha de Entrega</th>
+                                <th>Tipo</th>
+                                <th>Estado</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                
+                                    <tr class="border_bottom">
+                                        <td>1</td>
+                                        <td class="center">
+                                            <mz-badge
+                                                [value]="4"
+                                                [caption]="'News'"
+                                                [badgeClass]="'red'"
+                                                [new]="true">
+                                            </mz-badge>
+                                        </td>
+                                        <td>OC-001</td>
+                                        <td>23/11/2018</td>
+                                        <td>Dra. Aixa Carranza</td>
+                                        <td>25/11/2018</td>
+                                        <td>Servicio</td>
+                                        <i mz-icon-mdi mz-input-prefix class="green-text"
+                                        [icon]="'thumb-up-outline'">
+                                        </i>
+                                        <td>
+                                            <button mz-button (click)="SolicitudCompraModal.open()"
+                                                    [float]="true" class="blue">
+                                                <i mz-icon-mdi [icon]="'file-find'"></i>
+                                            </button>
+                                            <button mz-button
+                                                    [float]="true" class="orange">
+                                                    <i mz-icon-mdi [icon]="'pencil'"></i>
+                                            </button>
+                                            <button mz-button
+                                                    [float]="true" class="red">
+                                                <i mz-icon-mdi [icon]="'cancel'"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="border_bottom">
+                                            <td>2</td>
+                                            <td class="center">
+                                                <mz-badge
+                                                    [value]="10"
+                                                    [caption]="'News'"
+                                                    [badgeClass]="'red'"
+                                                    [new]="true">
+                                                </mz-badge>
+                                            </td>
+                                            <td>OC-002</td>
+                                            <td>23/11/2018</td>
+                                            <td>Dra. Aixa Carranza</td>
+                                            <td>23/11/2018</td>
+                                            <td>Articulo</td>
+                                            <td>
+                                                <i mz-icon-mdi mz-input-prefix class="red-text"
+                                                    [icon]="'thumb-down-outline'">
+                                                </i>
+                                            </td>
+                                            <td>
+                                                <button mz-button (click)="SolicitudCompraModal.open()"
+                                                    [float]="true" class="blue">
+                                                    <i mz-icon-mdi [icon]="'file-find'"></i>
+                                                </button>
+                                                <button mz-button
+                                                    [float]="true" class="orange">
+                                                    <i mz-icon-mdi [icon]="'pencil'"></i>
+                                                </button>
+                                                <button mz-button
+                                                    [float]="true" class="red">
+                                                    <i mz-icon-mdi [icon]="'cancel'"></i>
+                                                </button>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                            <td class="center">
+                                                <mz-badge
+                                                    [value]="0"
+                                                    [caption]="'News'"
+                                                    [badgeClass]="'green'"
+                                                    [new]="true">
+                                                </mz-badge>
+                                            </td>
+                                                <td>OC-003</td>
+                                                <td>23/11/2018</td>
+                                                <td>Dra. Aixa Carranza</td>
+                                                <td>01/12/2018</td>
+                                                <td>Servicio</td>
+                                                <td>
+                                                    <i mz-icon-mdi mz-input-prefix class="orange-text"
+                                                        [icon]="'clock'">
+                                                    </i>
+                                                </td>
+                                            <td>
+                                                <button mz-button (click)="SolicitudCompraModal.open()"
+                                                        [float]="true" class="blue">
+                                                        <i mz-icon-mdi [icon]="'file-find'"></i>
+                                                </button>
+                                                <button mz-button
+                                                    [float]="true" class="orange">
+                                                    <i mz-icon-mdi [icon]="'pencil'"></i>
+                                                </button>
+                                                <button mz-button
+                                                        [float]="true" class="red">
+                                                        <i mz-icon-mdi [icon]="'cancel'"></i>
+                                                </button>
+                                            </td>
+                                    </tr>
+                               
+                            </tbody>
+                    </table>
+            </mz-card-content>
+    </mz-card>
+        
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a href="javascript:void(0)" class="btn-floating btn-large green" (click)="export()">
+                <i class="large mdi-navigation-check"></i>
+            </a>
+    </div>
+

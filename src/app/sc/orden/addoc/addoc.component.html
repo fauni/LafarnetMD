@@ -1,0 +1,192 @@
+<nav class="lafar-bg-blue">
+    <div class="nav-wrapper">
+        <div class="left col s12 m5 l5">
+            <ul>
+                <li><a href="javascript:void(0);" [routerLink]="['/sc/orden/list']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+                </li>
+                <li><a href="javascript:void(0);" class="email-type">Crear Orden de Compra</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col s12 m7 l7 hide-on-med-and-down">
+            <ul class="right">
+                <li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>
+                <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-content-send"></i></a></li>-->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<mz-card>
+    <mz-card-content>
+        <div class="row">
+             <mz-input-container class="col s2 m2">
+             <input mz-input
+                    [label]="'Nro. de Orden'"
+                    id="phone-input"
+                    type="text"
+                    value="OR-0001">
+            </mz-input-container>
+            <mz-input-container class="col s3 m3">
+                <i mz-icon-mdi mz-input-prefix
+                     [icon]="'cart-arrow-right'">
+                 </i>
+                <input mz-input
+                    [label]="'Tipo de Orden de Compra'"
+                    id="phone-input"
+                    type="text"
+                    value="Articulo">
+             </mz-input-container>
+
+             <mz-input-container class="col s4 m4">
+                    <input mz-input
+                        [label]="'Nombre del solicitante:'"
+                        id="basic-input-placeholder"
+                        placeholder="Ingrese el Codigo del Proveedor"
+                        type="text">
+                </mz-input-container>
+
+                <div class="col s2 m2">Fecha de Entrega:</div>
+
+                <mz-datepicker-container class="col s3 m3">
+                    <i mz-icon-mdi mz-input-prefix
+                         [icon]="'calendar'">
+                     </i>
+                     <input mz-datepicker
+                        [label]="'Fecha de Solicitud'"
+                        id="prefix-datepicker"
+                         type="tel" />
+            </mz-datepicker-container>  
+
+        </div>
+
+      
+
+
+            <div class="row">
+                    <mz-input-container class="col s3 m3">
+                        <input mz-input
+                            [label]="'Codigo Proveedor:'"
+                            id="basic-input-placeholder"
+                            placeholder="CodigoProveedor"
+                            type="text">
+                    </mz-input-container>
+                    <mz-input-container class="col s4 m4">
+                            <input mz-input
+                                [label]="'Nombre Proveedor:'"
+                                id="basic-input-placeholder"
+                                placeholder="Nombre Proveedor"
+                                type="text">
+                    </mz-input-container>
+                    <mz-input-container class="col s5 m5">
+                            <input mz-input
+                                [label]="'Direccion'"
+                                id="basic-input-placeholder"
+                                placeholder="Direccion"
+                                type="text">
+                    </mz-input-container> 
+                </div>
+
+                <div class="row">
+                        <mz-input-container class="col s12 m10">
+                            <input mz-input
+                                [label]="'Motivo de la Solicitud'"
+                                id="basic-input-placeholder"
+                                placeholder="Ingrese el Motivo de la Solicitud"
+                                type="text">
+                        </mz-input-container>
+                        <div class="col s12 m2">
+                            <br>
+                        <button mz-button
+                             [float]="true" class="blue">
+                            <i mz-icon-mdi [icon]="'plus'"></i>
+                        </button>
+                        </div>
+                </div>
+    </mz-card-content>
+</mz-card>
+
+
+<mz-card>
+        <mz-card-content>
+            <table id="table-items" class="highlight responsive-table">
+                <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Descripción</th>
+                    <th>Solicitante</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Sub Total</th>
+                </tr>
+                </thead>
+                <thead>
+                <tr class="border_bottom">
+                    <td>CC030135</td>
+                    <td>EMBUDO FILTRACIÓN AL VACIO  250mL (HPLC)</td>
+                    <td>Dra. Aixa Carranza</td>
+                    <td>5</td>
+                    <td>2</td>
+                    <td>10</td>
+                    <td>
+                        <button mz-button
+                              [float]="true" class="orange">
+                              <i mz-icon-mdi [icon]="'pencil'"></i>
+                        </button>
+                        <button mz-button
+                              [float]="true" class="red">
+                              <i mz-icon-mdi [icon]="'minus'"></i>
+                        </button>
+                    </td>
+                </tr>
+                </thead>
+                <thead>
+                <tr class="border_bottom">
+                    <td>MN010833</td>
+                    <td>Correa sincrónica dentada de 38 mm de ancho</td>
+                    <td>Dra. Aixa Carranza</td>
+                    <td>25</td>
+                    <td>7</td>
+                    <td>175</td>
+                    <td>
+                        <button mz-button
+                              [float]="true" class="orange">
+                              <i mz-icon-mdi [icon]="'pencil'"></i>
+                        </button>
+                        <button mz-button
+                              [float]="true" class="red">
+                              <i mz-icon-mdi [icon]="'minus'"></i>
+                        </button>
+                    </td>
+                </tr>
+            </thead>
+            </table>
+
+            <div class="row">
+                    <div class="col s5 m5"></div>
+                    <div class="col s4 m4"></div>
+                    <mz-input-container class="col s2 m2">
+                        <input mz-input
+                            [label]="'Total'"
+                            id="id"
+                            placeholder="Total"
+                            type="text">
+                    </mz-input-container>
+                    <div class="col s1 m1"></div>
+            </div>
+        </mz-card-content>
+    </mz-card>
+    
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="export()">
+                <i class="large mdi-navigation-check"></i>
+            </a>
+    </div>
+
+
+<!--
+<mz-card>
+    <mz-card-content>
+        
+    </mz-card-content>
+</mz-card>-->
