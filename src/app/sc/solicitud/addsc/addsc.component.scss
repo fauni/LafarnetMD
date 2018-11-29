@@ -7,3 +7,9 @@ tr.border_bottom td{
     border-bottom: 1pt solid #808080;
     border-top: 1pt solid #808080;
 }
+
+.ng-dropdown-panel {
+    min-width: 100%;
+}
+
+.ng-select.custom .ng-value-container { height: 10px; }

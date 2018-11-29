@@ -20,25 +20,23 @@
 <mz-card>
     <mz-card-content>
         <div class="row">
-            <div class="col s12 m4">
-                Codigo de Solicitud:
-                <mz-input-container [inline]="true">
-                    <input mz-input
-                    [label]="'Codigo Solicitud'"
-                    id="inline-input"
-                    type="text"
-                    value="SCS001"
-                    readonly>
-                </mz-input-container>
-            </div>
+            <mz-input-container class="col s12 m4">
+                <input mz-input
+                [label]="'Codigo de Solicitud'"
+                id="codigo"
+                [(ngModel)]="solicitud.codigo"
+                placeholder="Codigo de Solicitud"
+                type="text">
+            </mz-input-container>
 
             <mz-select-container class="col s12 m4">
                 <select mz-select
-                    id="basic-select"
+                    id="tipo"
+                    [(ngModel)]="solicitud.tipo"
                     [label]="'Tipo de Solicitud'"
-                    [placeholder]="'Seleccione un Tipo'">
-                    <option value="a">Articulo</option>
-                    <option value="s">Servicio</option>
+                    [placeholder]="'Seleccione el Tipo de Solicitud'">
+                    <option value="A">Articulo</option>
+                    <option value="S">Servicio</option>
                 </select>
             </mz-select-container>
 
@@ -47,8 +45,9 @@
                     [icon]="'calendar'">
                 </i>
                 <input mz-datepicker
-                    [label]="'Fecha de Entrega'"
-                    id="prefix-datepicker"
+                    [label]="'Fecha de Solicitud'"
+                    [(ngModel)]="solicitud.fecha"
+                    id="fecha"
                     type="tel" />
             </mz-datepicker-container>
         </div>
@@ -56,27 +55,29 @@
             <mz-input-container class="col s12 m3">
                 <input mz-input
                     [label]="'Codigo Proveedor'"
-                    id="basic-input-placeholder"
+                    id="codigo_proveedor"
+                    [(ngModel)]="solicitud.codigo_proveedor"
                     placeholder="Ingrese el Codigo del Proveedor"
                     type="text">
             </mz-input-container>
 
-            <mz-input-container class="col s12 m5">
-                <input mz-input
-                    [label]="'Nombre del Proveedor'"
-                    id="basic-input-placeholder"
-                    placeholder="Ingrese el Nombre del Proveedor"
-                    type="text">
-            </mz-input-container>
+            <div class="col s12 m5">
+                <span class="title_select">Nombre del Proveedor</span>
+                <ng-select [items]="proveedores"
+                        bindLabel="CardName"
+                        bindValue="CardCode">
+                </ng-select>
+            </div>
 
             <mz-select-container class="col s12 m4">
                 <select mz-select
-                    id="basic-select"
+                    id="tipo_compra"
+                    [(ngModel)]="solicitud.tipo_compra"
                     [label]="'Tipo de Compra'"
                     [placeholder]="'Seleccione un Tipo de Compra'">
-                    <option>Local</option>
-                    <option>Importación</option>
-                    <option>General</option>
+                    <option value="L">Local</option>
+                    <option value="I">Importación</option>
+                    <option value="G">General</option>
                 </select>
             </mz-select-container>
             <!--<mz-datepicker-container class="col s12 m4">
@@ -93,7 +94,8 @@
             <mz-input-container class="col s12 m9">
                 <input mz-input
                     [label]="'Motivo de la Solicitud'"
-                    id="basic-input-placeholder"
+                    id="motivo"
+                    [(ngModel)]="solicitud.motivo"
                     placeholder="Ingrese el Motivo de la Solicitud"
                     type="text">
             </mz-input-container>
@@ -266,8 +268,8 @@
   </mz-modal>
 
 
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="export()">
-        <i class="large mdi-navigation-check"></i>
-    </a>
-</div>
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;" *ngIf="botonSave">
+        <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="onValidaCabeceraSolicitud()">
+            <i class="large mdi-navigation-check"></i>
+        </a>
+    </div>
