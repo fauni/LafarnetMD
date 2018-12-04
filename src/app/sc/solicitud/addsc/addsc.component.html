@@ -17,68 +17,88 @@
     </div>
 </nav>
 
+<form #form="ngForm" (ngSubmit)="onValidaCabeceraSolicitud()" novalidate>
+
 <mz-card>
     <mz-card-content>
         <div class="row">
-            <div class="col s12 m4">
-                Codigo de Solicitud:
-                <mz-input-container [inline]="true">
-                    <input mz-input
-                    [label]="'Codigo Solicitud'"
-                    id="inline-input"
-                    type="text"
-                    value="SCS001"
-                    readonly>
-                </mz-input-container>
-            </div>
+            <mz-input-container class="col s12 m3">
+                <input mz-input disabled
+                [label]="'Codigo de Solicitud'"
+                id="codigo"
+                [(ngModel)]="solicitud.codigo"
+                name="codigo"
+                placeholder="Codigo de Solicitud"
+                type="text">
+            </mz-input-container>
 
-            <mz-select-container class="col s12 m4">
-                <select mz-select
-                    id="basic-select"
+            <mz-select-container class="col s12 m3">
+                <select mz-select mz-validation required
+                    id="tipo"
+                    [errorMessageResource]="errorMessagesSolicitud.tipo"
+                    [(ngModel)]="solicitud.tipo"
+                    name="tipo"
                     [label]="'Tipo de Solicitud'"
-                    [placeholder]="'Seleccione un Tipo'">
-                    <option value="a">Articulo</option>
-                    <option value="s">Servicio</option>
+                    [placeholder]="'Tipo de Solicitud'">
+                    <option value="I">Articulo</option>
+                    <option value="S">Servicio</option>
                 </select>
             </mz-select-container>
 
-            <mz-datepicker-container class="col s12 m4">
+            <mz-datepicker-container class="col s12 m3">
                 <i mz-icon-mdi mz-input-prefix
                     [icon]="'calendar'">
                 </i>
-                <input mz-datepicker
-                    [label]="'Fecha de Entrega'"
-                    id="prefix-datepicker"
+                <input mz-datepicker mz-validation required
+                    [errorMessageResource]="errorMessagesSolicitud.fecha"
+                    [label]="'Fecha de Solicitud'"
+                    [options]="opcionesDatePicker"
+                    [(ngModel)]="solicitud.fecha"
+                    name="fecha"
+                    id="fecha"
                     type="tel" />
             </mz-datepicker-container>
-        </div>
-        <div class="row">
-            <mz-input-container class="col s12 m3">
-                <input mz-input
-                    [label]="'Codigo Proveedor'"
-                    id="basic-input-placeholder"
-                    placeholder="Ingrese el Codigo del Proveedor"
-                    type="text">
-            </mz-input-container>
 
-            <mz-input-container class="col s12 m5">
-                <input mz-input
-                    [label]="'Nombre del Proveedor'"
-                    id="basic-input-placeholder"
-                    placeholder="Ingrese el Nombre del Proveedor"
-                    type="text">
-            </mz-input-container>
-
-            <mz-select-container class="col s12 m4">
+            <mz-select-container class="col s12 m3">
                 <select mz-select
-                    id="basic-select"
+                    id="tipo_compra"
+                    [(ngModel)]="solicitud.tipo_compra"
+                    name="tipo_compra"
                     [label]="'Tipo de Compra'"
-                    [placeholder]="'Seleccione un Tipo de Compra'">
-                    <option>Local</option>
-                    <option>Importación</option>
-                    <option>General</option>
+                    [placeholder]="'Tipo de Compra'">
+                    <option value="L">Local</option>
+                    <option value="I">Importación</option>
+                    <option value="G">General</option>
                 </select>
             </mz-select-container>
+        </div>
+        <div class="row">
+            <div class="col s12 m4">
+                <span class="title_select">Codigo de Proveedor</span>
+                <ng-select required
+                    #SelectCodigoProveedor
+                    [items]="proveedores"
+                    bindLabel="CardCode"
+                    bindValue="CardCode"
+                    (change) = "OnLoadDatosProveedor($event)"
+                    [(ngModel)]="solicitud.codigo_proveedor"
+                    name="codigo_proveedor">
+                </ng-select>
+            </div>
+
+            <div class="col s12 m8">
+                <span class="title_select">Nombre de Proveedor</span>
+                <ng-select required
+                    #SelectNombreProveedor
+                    [items]="proveedores"
+                    bindLabel="CardName"
+                    bindValue="CardName"
+                    (change) = "OnLoadDatosProveedor($event)"
+                    [(ngModel)]="solicitud.nombre_proveedor"
+                    name="nombre_proveedor">
+                </ng-select>
+            </div>
+
             <!--<mz-datepicker-container class="col s12 m4">
                 <i mz-icon-mdi mz-input-prefix
                     [icon]="'calendar'">
@@ -93,7 +113,9 @@
             <mz-input-container class="col s12 m9">
                 <input mz-input
                     [label]="'Motivo de la Solicitud'"
-                    id="basic-input-placeholder"
+                    id="motivo"
+                    [(ngModel)]="solicitud.motivo"
+                    name="motivo"
                     placeholder="Ingrese el Motivo de la Solicitud"
                     type="text">
             </mz-input-container>
@@ -119,35 +141,18 @@
                 <th>Fec. Requerida</th>
                 <th>Opciones</th>
             </tr>
-            <tr class="border_bottom">
-                <td>CC030135</td>
-                <td>EMBUDO FILTRACIÓN AL VACIO  250mL (HPLC)</td>
-                <td>Pieza</td>
-                <td>5</td>
-                <td>22/11/2018</td>
+            <tr class="border_bottom" *ngFor="let ds of ldetallesolicitud">
+                <td>{{ ds.codigo_item }}</td>
+                <td>{{ ds.descripcion_item }}</td>
+                <td>{{ ds.unidad }}</td>
+                <td>{{ ds.cantidad }}</td>
+                <td>{{ ds.fecha_requerida }}</td>
                 <td>
                     <button mz-button
                           [float]="true" class="orange">
                           <i mz-icon-mdi [icon]="'pencil'"></i>
                     </button>
-                    <button mz-button
-                          [float]="true" class="red">
-                          <i mz-icon-mdi [icon]="'minus'"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr class="border_bottom">
-                <td>MN010833</td>
-                <td>Correa sincrónica dentada de 38 mm de ancho</td>
-                <td>Kilo</td>
-                <td>15</td>
-                <td>30/11/2018</td>
-                <td>
-                    <button mz-button
-                          [float]="true" class="orange">
-                          <i mz-icon-mdi [icon]="'pencil'"></i>
-                    </button>
-                    <button mz-button
+                    <button mz-button (click)="onQuitarItemSolicitud(ds.codigo_item)"
                           [float]="true" class="red">
                           <i mz-icon-mdi [icon]="'minus'"></i>
                     </button>
@@ -157,117 +162,134 @@
     </mz-card-content>
 </mz-card>
 
-<mz-modal #AddItemModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
-    <mz-modal-header>
-        <nav class="lafar-bg-blue">
-            <div class="nav-wrapper">
-                <div class="left col s12 m5 l5">
-                <ul>
-                    <li><a href="javascript:void(0);" (click)="AddItemModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
-                    <li><a href="javascript:void(0);" class="email-type">Agregar Nuevo Item</a></li>
-                </ul>
-                </div>
-                <div class="col s12 m7 l7 hide-on-med-and-down">
-                <ul class="right">
-                    <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
-                    <li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>
-                </ul>
-                </div>
-            </div>
-        </nav>
-    </mz-modal-header>
-    <mz-modal-content>
-        <div class="row">
-            <mz-datepicker-container class="col s12 m4">
-                <i mz-icon-mdi mz-input-prefix
-                    [icon]="'calendar'">
-                </i>
-                <input mz-datepicker
-                    [label]="'Fecha Necesaria'"
-                    id="prefix-datepicker"
-                    type="tel" />
-            </mz-datepicker-container>
-            <div class="col s12 m5"></div>
-            <mz-input-container class="col s12 m3">
-                <input mz-input
-                    [label]="'Numero de Solicitud'"
-                    id="basic-input-placeholder"
-                    placeholder="SCA0001"
-                    type="text">
-            </mz-input-container>
-        </div>
-        <div class="row">
-            <mz-select-container class="col s12 m4">
-                <select mz-select
-                    id="basic-select"
-                    [label]="'Codigo Item'"
-                    [placeholder]="'Seleccione un Item'">
-                    <option>IT00XXXX</option>
-                    <option>IT01XXXX</option>
-                </select>
-            </mz-select-container>
-            <mz-input-container class="col s12 m8">
-                <input mz-input
-                    [label]="'Descripción del Item'"
-                    id="basic-input-placeholder"
-                    placeholder="EMBUDO FILTRACIÓN AL VACIO  250mL (HPLC)"
-                    type="text">
-            </mz-input-container>
-        </div>
-        <div class="row">
-            <mz-input-container class="col s12 m4">
-                <input mz-input
-                    id="input-length"
-                    [label]="'Cantidad'"
-                    type="number">
-            </mz-input-container>
-            <mz-select-container class="col s12 m4">
-                <select mz-select
-                    id="basic-select"
-                    [label]="'Unidad'"
-                    [placeholder]="'Seleccione una Unidad'">
-                    <option>Kilos</option>
-                    <option>Libras</option>
-                </select>
-            </mz-select-container>
-            <mz-input-container class="col s12 m4">
-                <input mz-input
-                    [label]="'Descripción de la Unidad'"
-                    id="basic-input-placeholder"
-                    placeholder="Especifique la unidad ..."
-                    type="text">
-            </mz-input-container>
-        </div>
-        <div class="row">
-            <mz-select-container class="col s12 m6">
-                <select mz-select
-                    id="basic-select"
-                    [label]="'Arte'"
-                    [placeholder]="'Seleccione un Arte'">
-                    <option>Arte 1</option>
-                    <option>Arte 2</option>
-                </select>
-            </mz-select-container>
-            <mz-datepicker-container class="col s12 m6">
-                <i mz-icon-mdi mz-input-prefix
-                    [icon]="'calendar'">
-                </i>
-                <input mz-datepicker
-                    [label]="'Fecha de Arte'"
-                    id="prefix-datepicker"
-                    type="tel" />
-            </mz-datepicker-container>
-        </div>
-    </mz-modal-content>
-    <mz-modal-footer>
-      <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
-      <button mz-button [flat]="true" mz-modal-close>Agregar</button>
-    </mz-modal-footer>
-  </mz-modal>
 
-
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="export()">
+<!--<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="onValidaCabeceraSolicitud()">
         <i class="large mdi-navigation-check"></i>
     </a>
+</div>-->
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <button 
+        [float]="true" mz-button 
+        [disabled]="!form.valid" 
+        [large]="true" 
+        class="blue"
+        type="submit"><i class="large mdi-action-done"></i>
+    </button>
 </div>
+</form>
+
+
+<form  #formDS="ngForm" novalidate>
+    <mz-modal #AddItemModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
+        <mz-modal-header>
+            <nav class="lafar-bg-blue">
+                <div class="nav-wrapper">
+                    <div class="left col s12 m5 l5">
+                    <ul>
+                        <li><a href="javascript:void(0);" (click)="AddItemModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                        <li><a href="javascript:void(0);" class="email-type">Agregar Nuevo Item</a></li>
+                    </ul>
+                    </div>
+                    <div class="col s12 m7 l7 hide-on-med-and-down">
+                    <ul class="right">
+                        <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                        <li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        </mz-modal-header>
+        <mz-modal-content>
+            <div class="row">
+                <mz-datepicker-container class="col s12 m4">
+                    <i mz-icon-mdi mz-input-prefix
+                        [icon]="'calendar'">
+                    </i>
+                    <input mz-datepicker
+                        [label]="'Fecha Necesaria'"
+                        id="fecha_requerida"
+                        [(ngModel)]="detallesolicitud.fecha_requerida"
+                        name="fecha_requerida"
+                        [options]= "opcionesDatePicker"
+                        type="tel" />
+                </mz-datepicker-container>
+                <div class="col s12 m5"></div>
+                <mz-input-container class="col s12 m3">
+                    <input mz-input
+                        [label]="'Numero de Solicitud'"
+                        id="dc_codigo_solicitud"
+                        placeholder="Codigo de Solicitud"
+                        [(ngModel)]="solicitud.codigo"
+                        name="codigo"
+                        type="text">
+                </mz-input-container>
+            </div>
+    
+            <div class="row">
+                <div class="col s12 m4">
+                    <span class="title_select">Codigo de Item</span>
+                    <ng-select
+                        [items]="articulos"
+                        bindLabel="ItemCode"
+                        bindValue="ItemCode"
+                        (change) = "OnLoadDatosArticulo($event)"
+                        [(ngModel)]="detallesolicitud.codigo_item"
+                        name="codigo_item">
+                    </ng-select>
+                </div>
+    
+                <div class="col s12 m8">
+                    <span class="title_select">Nombre del Articulo</span>
+                    <ng-select
+                        [items]="articulos"
+                        bindLabel="ItemName"
+                        bindValue="ItemName"
+                        (change) = "OnLoadDatosArticulo($event)"
+                        [(ngModel)]="detallesolicitud.descripcion_item"
+                        name="descripcion_item">
+                    </ng-select>
+                </div>
+            </div>
+    
+            <div class="row">
+                <mz-input-container class="col s12 m4">
+                    <input mz-input
+                        id="unidad"
+                        [(ngModel)]="detallesolicitud.unidad"
+                        name="unidad"
+                        [label]="'Unidad'"
+                        type="text">
+                </mz-input-container>
+                <mz-input-container class="col s12 m4">
+                    <input mz-input
+                        id="cantidad"
+                        [(ngModel)]="detallesolicitud.cantidad"
+                        name="cantidad"
+                        [label]="'Cantidad'"
+                        type="number">
+                </mz-input-container>
+                <div class="row">
+                    <mz-datepicker-container class="col s12 m4">
+                        <i mz-icon-mdi mz-input-prefix
+                            [icon]="'calendar'">
+                        </i>
+                        <input mz-datepicker
+                            [label]="'Fecha de Arte'"
+                            id="fecha_arte"
+                            [(ngModel)]="detallesolicitud.fecha_arte"
+                            name="fecha_arte"
+                            [options]= "opcionesDatePicker"
+                            type="tel" />
+                    </mz-datepicker-container>
+                </div>
+            </div>
+            
+        </mz-modal-content>
+        <mz-modal-footer>
+          <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+          <button mz-button [flat]="true" mz-modal-close (click)="onAddItemSolicitud()">Agregar</button>
+        </mz-modal-footer>
+      </mz-modal>
+</form>

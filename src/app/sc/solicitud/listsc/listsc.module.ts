@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ListscRoutingModule } from './listsc-routing.module';
 import { ListscComponent } from './listsc.component';
 import { MzCardModule, MzIconMdiModule, MzBadgeModule,
-    MzButtonModule, MzModalModule, MzDatepickerModule, MzInputModule, MzSelectModule } from 'ng2-materialize';
+    MzButtonModule, MzModalModule, MzDatepickerModule, MzInputModule, MzSelectModule, MzToastService, MzToastModule } from 'ng2-materialize';
+import { SolicitudService } from '../solicitud.service';
 
 @NgModule({
     imports: [
@@ -16,10 +17,14 @@ import { MzCardModule, MzIconMdiModule, MzBadgeModule,
         MzModalModule,
         MzDatepickerModule,
         MzInputModule,
-        MzSelectModule
+        MzSelectModule,
+        MzToastModule
     ],
     declarations: [
         ListscComponent
+    ],
+    providers: [
+        SolicitudService, MzToastService
     ]
 })
 

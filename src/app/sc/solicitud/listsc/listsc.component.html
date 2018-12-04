@@ -25,115 +25,55 @@
 <mz-card>
     <mz-card-content>
         <table class="highlight responsive-table">
-            <thead>
-                <tr>
-                    <th>Codigo</th>
-                    <th class="center">
-                        <i mz-icon-mdi mz-input-prefix class="green-text"
-                            [icon]="'wechat'">
-                        </i>
-                    </th>
-                    <th>Fecha de Solicitud</th>
-                    <th>Tipo de Solicitud</th>
-                    <th>Motivo</th>
-                    <th>Fecha Requerida</th>
-                    <th>Estado</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
+            <tr>
+                <th>Codigo</th>
+                <th class="center">
+                    <i mz-icon-mdi mz-input-prefix class="green-text"
+                        [icon]="'wechat'">
+                    </i>
+                </th>
+                <th>Fecha de Solicitud</th>
+                <th>Tipo de Solicitud</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+                <th>Opciones</th>
+            </tr>
     
-            <tbody>
-                <tr class="border_bottom">
-                    <td>SCA001</td>
-                    <td class="center">
-                        <mz-badge
-                            [value]="4"
-                            [caption]="'News'"
-                            [badgeClass]="'red'"
-                            [new]="true">
-                        </mz-badge>
-                    </td>
-                    <td>23/11/2018</td>
-                    <td>Articulo</td>
-                    <td>Para calibrar la balanza OHAUSS</td>
-                    <td>27/11/2018</td>
-                    <td>
-                        <i mz-icon-mdi mz-input-prefix class="green-text"
-                            [icon]="'thumb-up-outline'">
-                        </i>
-                    </td>
-                    <td>
-                        <button mz-button (click)="SolicitudCompraModal.open()"
-                            [float]="true" class="blue">
-                            <i mz-icon-mdi [icon]="'file-find'"></i>
-                        </button>
-                        <button mz-button
-                            [float]="true" class="red">
-                            <i mz-icon-mdi [icon]="'cancel'"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr class="border_bottom">
-                    <td>SCA002</td>
-                    <td class="center">
-                        <mz-badge
-                            [value]="0"
-                            [caption]="'News'"
-                            [badgeClass]="'red'"
-                            [new]="true">
-                        </mz-badge>
-                    </td>
-                    <td>23/11/2018</td>
-                    <td>Articulo</td>
-                    <td>Higrotermometro OHAUSS</td>
-                    <td>27/11/2018</td>
-                    <td>
-                        <i mz-icon-mdi mz-input-prefix class="red-text"
-                            [icon]="'thumb-down-outline'">
-                        </i>
-                    </td>
-                    <td>
-                        <button mz-button (click)="SolicitudCompraModal.open()"
-                            [float]="true" class="blue">
-                            <i mz-icon-mdi [icon]="'file-find'"></i>
-                        </button>
-                        <button mz-button
-                            [float]="true" class="red">
-                            <i mz-icon-mdi [icon]="'cancel'"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>SCS003</td>
-                    <td class="center">
-                        <mz-badge
-                            [value]="1"
-                            [caption]="'News'"
-                            [badgeClass]="'red'"
-                            [new]="true">
-                        </mz-badge>
-                    </td>
-                    <td>23/11/2018</td>
-                    <td>Articulo</td>
-                    <td>Servicio Hosting para Página Web</td>
-                    <td>01/12/2018</td>
-                    <td>
-                        <i mz-icon-mdi mz-input-prefix class="yellow-text"
-                            [icon]="'clock'">
-                        </i>
-                    </td>
-                    <td>
-                        <button mz-button (click)="SolicitudCompraModal.open()"
-                            [float]="true" class="blue">
-                            <i mz-icon-mdi [icon]="'file-find'"></i>
-                        </button>
-                        <button mz-button
-                            [float]="true" class="red">
-                            <i mz-icon-mdi [icon]="'cancel'"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
+            <tr class="border_bottom" *ngFor="let solicitud of lsolicitud">
+                <td>{{solicitud.codigo}}</td>
+                <td class="center">
+                    <mz-badge
+                        [value]="solicitud.conversacion"
+                        [caption]="'Sms'"
+                        [badgeClass]="'red'"
+                        [new]="true">
+                    </mz-badge>
+                </td>
+                <td>{{solicitud.fecha}}</td>
+                <td>{{solicitud.tipo}}</td>
+                <td>{{solicitud.motivo}}</td>
+                <td>
+                    <i *ngIf="solicitud.estado_autorizacion_superior ==='A'"  mz-icon-mdi mz-input-prefix class="green-text"
+                        [icon]="'thumb-up-outline'">
+                    </i>
+                    <i *ngIf="solicitud.estado_autorizacion_superior ==='R'"  mz-icon-mdi mz-input-prefix class="red-text"
+                        [icon]="'thumb-down-outline'">
+                    </i>
+                    <i *ngIf="solicitud.estado_autorizacion_superior ==='P'"  mz-icon-mdi mz-input-prefix class="orange-text"
+                        [icon]="'clock'">
+                    </i>
+                </td>
+                <td>
+                    <button mz-button (click)="SolicitudCompraModal.open()"
+                        [float]="true" class="blue">
+                        <i mz-icon-mdi [icon]="'file-find'"></i>
+                    </button>
+                    <button mz-button
+                        [float]="true" class="red">
+                        <i mz-icon-mdi [icon]="'cancel'"></i>
+                    </button>
+                </td>
+            </tr>
         </table>
     </mz-card-content>
 </mz-card>
@@ -409,7 +349,7 @@
 
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a [routerLink]="['/sc/solicitud/add']" href="javascript:void(0)" class="btn-floating btn-large green" (click)="export()">
+    <a [routerLink]="['/sc/solicitud/add']" href="javascript:void(0)" class="btn-floating btn-large green">
         <i class="large mdi-content-add"></i>
     </a>
 </div>
