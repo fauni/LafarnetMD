@@ -4,7 +4,7 @@
             <ul>
                 <li><a href="javascript:void(0);" [routerLink]="['/sc/main/']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
                 </li>
-                <li><a href="javascript:void(0);" class="email-type">Lista de Ordenes de Compra</a>
+                <li><a href="javascript:void(0);" class="email-type">MI LISTA DE ORDENES DE COMPRA</a>
                 </li>
             </ul>
         </div>
@@ -18,7 +18,7 @@
 </nav>
 <mz-card style="margin-bottom:0px;">
         <mz-card-content>
-    
+            
         </mz-card-content>
     </mz-card>
 
@@ -153,6 +153,28 @@
                     </table>
             </mz-card-content>
     </mz-card>
+
+    <mz-modal #AddItemModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
+            <mz-modal-header>
+                    <nav class="lafar-bg-blue">
+                        <div class="nav-wrapper">
+                            <div class="left col s12 m5 l5">
+                            <ul>
+                                <li><a href="javascript:void(0);" (click)="SolicitudCompraModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                                <li><a href="javascript:void(0);" class="email-type">Orden de Compra</a></li>
+                            </ul>
+                            </div>
+                            <div class="col s12 m7 l7 hide-on-med-and-down">
+                            <ul class="right">
+                                <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                                <li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>
+                            </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </mz-modal-header>
+    </mz-modal>
+
         
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
             <a href="javascript:void(0)" class="btn-floating btn-large green" (click)="export()">

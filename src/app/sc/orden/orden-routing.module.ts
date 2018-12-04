@@ -9,7 +9,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'add' },
             { path: 'add', loadChildren: './addoc/addoc.module#AddocModule' },
-            { path: 'list', loadChildren: './listoc/listoc.module#ListocModule' }
+            { path: 'list', loadChildren: './listoc/listoc.module#ListocModule' },
+            { path: 'notify', loadChildren: './notifyoc/notifyoc.module#NotifyocModule' }
         ]
     }
 ];

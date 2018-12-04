@@ -1,0 +1,63 @@
+<nav class="lafar-bg-blue">
+        <div class="nav-wrapper">
+            <div class="left col s12 m5 l5">
+                <ul>
+                    <li><a href="javascript:void(0);" [routerLink]="['/sc/orden/list']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+                    </li>
+                    <li><a href="javascript:void(0);" class="email-type">CODIGO DE SOLICITUD</a>
+                    </li>
+                        <input mz-input
+                        [label]="'Nro. de Orden'"
+                        id="phone-input"
+                        type="text"
+                        value="OR-0001">
+                </ul>
+            </div>
+
+            <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right">
+                    <li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>
+                    <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-content-send"></i></a></li>-->
+                    <!--<a class="btn-floating btn-large waves-effect waves-dark blue"><i class="material-icons">add</i></a>-->
+                    <a class="btn-floating btn-large waves-effect waves-dark blue"><i class="material-icons"><i class="mdi mdi-account-box"></i></i></a>
+                </ul>
+            </div>
+        </div>
+</nav>
+
+    <mz-card>
+        <mz-card-content>
+            <mz-input-container class="col s10 m10">
+                <div class="row">
+                    <div class="input-field col s10">
+                        <i class="material-icons prefix"><i class="material-icons"><i class="mdi mdi-speaker-notes"></i></i></i>
+                        <input id="icon_telephone" type="tel" class="validate">
+                        <label for="icon_telephone">Escribe tu mensaje</label>
+                    </div>
+                    <div class="input-field col s2">
+                            <i class="material-icons prefix"></i>
+                            <input id="icon_telephone" type="tel" class="validate">
+                            <label for="icon_telephone">12/140</label>
+                    </div>
+                </div>
+
+            </mz-input-container>
+                   
+        </mz-card-content>
+    </mz-card>
+
+    <mz-card>
+        <mz-card-content>
+                <div class="fixed-action-btn">
+                        <a class="btn-floating btn-large blue">
+                          <i class="large material-icons"><i class="mdi mdi-account-box"></i><i class="mdi mdi-contact-mail"></i></i>
+                        </a>
+                        <ul>
+                          <!--<li><a class="btn-floating red"><i class="material-icons"><i class="mdi-editor-attach-file"></i></i></a></li>-->
+                          <!--<li><a class="btn-floating orange"><i class="material-icons"><i class="mdi mdi-mail"></i></i></a></li>-->
+                          <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+                          <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+                        </ul>
+                      </div>
+        </mz-card-content>           
+    </mz-card>

@@ -13,7 +13,7 @@ import { ListocComponent } from './listoc.component';
         MzCardModule,
         MzIconMdiModule,
         MzBadgeModule,
-        MzButtonModule
+        MzButtonModule ,
 
     ],
     declarations: [
