@@ -17,7 +17,7 @@
     </div>
 </nav>
 
-<form #form="ngForm" (ngSubmit)="onValidaCabeceraSolicitud()" novalidate>
+<form #form="ngForm" novalidate>
 
 <mz-card>
     <mz-card-content>
@@ -175,6 +175,7 @@
         [disabled]="!form.valid" 
         [large]="true" 
         class="blue"
+        (click)="onValidaCabeceraSolicitud()"
         type="submit"><i class="large mdi-action-done"></i>
     </button>
 </div>
