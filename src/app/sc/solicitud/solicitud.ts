@@ -23,3 +23,14 @@ export class SolicitudCompra {
     public usuario_modificacion: string;
     public fecha_modificacion: Date;
 }
+
+
+export class Solicitudcompralistado {
+    public codigo: string;
+    public conversacion: number;
+    public tipo: string;
+    public fecha: Date;
+    public motivo: string;
+    public estado_autorizacion_superior: string;
+    public estado: string;
+}

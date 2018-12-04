@@ -17,11 +17,25 @@ export class SolicitudService {
     return this.http.get(this.global.urlAPICORE + 'scproveedor/');
   }
 
+  getItemArticuloSC() {
+    return this.http.get(this.global.urlAPICORE + 'scitemarticulo/');
+  }
+
   getSolicitudCompraSolicitante(username) {
     return this.http.get(this.global.urlAPICORE + 'certificadoanalisismp/' + username);
   }
 
   saveSolicitudCompra(data): Observable<any> {
     return this.http.post(this.global.urlAPICORE + 'solicitudcompra/', data);
+  }
+
+  // Funciones Guardar Detalle de Solicitud de Compra
+  saveDetalleSolicitudCompra(data): Observable<any> {
+    return this.http.post(this.global.urlAPICORE + 'scdetallesolicitud/', data);
+  }
+
+  // Funciones para Listado de Solicitud por usuario
+  getListadoSolicitudXUsuario(data) {
+    return this.http.get(this.global.urlAPICORE + 'solicitudcompra/' + data);
   }
 }
