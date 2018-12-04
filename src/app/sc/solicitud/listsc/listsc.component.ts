@@ -17,6 +17,7 @@ export class ListscComponent implements OnInit {
     this.onGetSolicitudes();
   }
 
+  // Esta funcion obtiene las solicitudes del Solicitante
   onGetSolicitudes(): void {
     let username = localStorage.getItem('username');
     this.servSC.getListadoSolicitudXUsuario(username).subscribe(
@@ -38,5 +39,11 @@ export class ListscComponent implements OnInit {
         }
       }
     );
+  }
+
+
+  // Esta funcion obtiene una solicitud por su codigo
+  onOpenSolicitud(codigo_solicitud: string): void {
+    alert(codigo_solicitud);
   }
 }

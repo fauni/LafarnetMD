@@ -49,8 +49,8 @@
                         [new]="true">
                     </mz-badge>
                 </td>
-                <td>{{solicitud.fecha}}</td>
-                <td>{{solicitud.tipo}}</td>
+                <td class="center">{{ solicitud.fecha | date:'yyyy-MM-dd' }}</td>
+                <td class="center">{{solicitud.tipo}}</td>
                 <td>{{solicitud.motivo}}</td>
                 <td>
                     <i *ngIf="solicitud.estado_autorizacion_superior ==='A'"  mz-icon-mdi mz-input-prefix class="green-text"
@@ -64,7 +64,7 @@
                     </i>
                 </td>
                 <td>
-                    <button mz-button (click)="SolicitudCompraModal.open()"
+                    <button mz-button (click)="onOpenSolicitud(solicitud.codigo)"
                         [float]="true" class="blue">
                         <i mz-icon-mdi [icon]="'file-find'"></i>
                     </button>
