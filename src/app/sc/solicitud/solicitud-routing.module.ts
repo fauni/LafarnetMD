@@ -9,7 +9,9 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'add' },
             { path: 'add', loadChildren: './addsc/addsc.module#AddscModule' },
-            { path: 'list', loadChildren: './listsc/listsc.module#ListscModule' }
+            { path: 'list', loadChildren: './listsc/listsc.module#ListscModule' },
+            { path: 'detail/:id', loadChildren: './detailsc/detailsc.module#DetailscModule' },
+            { path: 'list_aut', loadChildren: './listscsup/listscsup.module#ListscsupModule' }
         ]
     }
 ];

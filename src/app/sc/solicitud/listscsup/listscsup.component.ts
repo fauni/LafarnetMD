@@ -6,11 +6,11 @@ import { Solicitudcompralistado } from '../solicitud';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-listsc',
-  templateUrl: './listsc.component.html',
-  styleUrls: ['./listsc.component.scss'],
+  selector: 'app-listscsup',
+  templateUrl: './listscsup.component.html',
+  styleUrls: ['./listscsup.component.scss'],
 })
-export class ListscComponent implements OnInit {
+export class ListscsupComponent implements OnInit {
   lsolicitud: Array<Solicitudcompralistado> = new Array<Solicitudcompralistado>();
   constructor(private servSC: SolicitudService, private toast: MzToastService, private router: Router) { }
 
@@ -21,13 +21,13 @@ export class ListscComponent implements OnInit {
   // Esta funcion obtiene las solicitudes del Solicitante
   onGetSolicitudes(): void {
     let username = localStorage.getItem('username');
-    this.servSC.getListadoSolicitudXUsuario(username).subscribe(
+    this.servSC.getListadoSolicitudXAutorizador(username).subscribe(
       data => {
         if (data['length'] > 0) {
           this.lsolicitud = data['body'];
           this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
         }else {
-          this.toast.show('No tiene solicitudes!', 2000, 'red');
+          this.toast.show('No tiene solicitudes para autorizar!', 2000, 'red');
         }
         console.log(data);
       },

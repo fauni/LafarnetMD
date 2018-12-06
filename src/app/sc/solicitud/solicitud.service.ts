@@ -25,6 +25,10 @@ export class SolicitudService {
     return this.http.get(this.global.urlAPICORE + 'certificadoanalisismp/' + username);
   }
 
+  getSolicitudXCodigo(data) {
+    return this.http.get(this.global.urlAPICORE + 'scsolicitud/' + data);
+  }
+
   saveSolicitudCompra(data): Observable<any> {
     return this.http.post(this.global.urlAPICORE + 'solicitudcompra/', data);
   }
@@ -34,8 +38,18 @@ export class SolicitudService {
     return this.http.post(this.global.urlAPICORE + 'scdetallesolicitud/', data);
   }
 
+  getDetalleSolicitudXCodigo(data) {
+    return this.http.get(this.global.urlAPICORE + 'scdetallesolicitud/' + data);
+  }
+
   // Funciones para Listado de Solicitud por usuario
   getListadoSolicitudXUsuario(data) {
     return this.http.get(this.global.urlAPICORE + 'solicitudcompra/' + data);
   }
+
+  // Funciones para Listado de Solicitud por usuario
+  getListadoSolicitudXAutorizador(data) {
+    return this.http.get(this.global.urlAPICORE + 'scsolicitudautorizador/' + data);
+  }
+
 }

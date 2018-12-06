@@ -3,21 +3,25 @@ import { SolicitudCompra } from '../solicitud';
 import { SolicitudService } from '../solicitud.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MzToastService } from 'ng2-materialize';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Proveedorsc } from '../../proveedorsc';
 import { DetalleSolicitud } from '../detallesolicitud';
 import { ItemArticuloSc } from '../../itemarticulosc';
 import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-addsc',
-  templateUrl: './addsc.component.html',
-  styleUrls: ['./addsc.component.scss'],
+  selector: 'app-detailsc',
+  templateUrl: './detailsc.component.html',
+  styleUrls: ['./detailsc.component.scss'],
 })
-export class AddscComponent implements OnInit {
-  // Variables para subir archivos
+export class DetailscComponent implements OnInit {
 
+//#region VARIABLES PARA MODIFICACIÓN
+    modificar: Boolean = false;
 
+//#endregion
+
+    codigo_solicitud: string;
 //#region VARIABLES DE VALIDACIÓN
   @ViewChild('form') form: FormGroup;
   submitted = false;
@@ -59,10 +63,13 @@ export class AddscComponent implements OnInit {
   detallesolicitud: DetalleSolicitud = new DetalleSolicitud();
   ldetallesolicitud: Array<DetalleSolicitud> = new Array<DetalleSolicitud>();
   numero_item: number;
-  constructor(
-    private servSC: SolicitudService,
-    private toast: MzToastService,
-    private router: Router) {
+  constructor(private servSC: SolicitudService, private toast: MzToastService, private router: Router, private route: ActivatedRoute) { 
+    this.route.params
+    .subscribe(params => {
+        this.codigo_solicitud = params['id'].toString();
+        // this.onLoadUser(atob(this.username));
+    });
+    this.modificar = false;
   }
 
   ngOnInit() {
@@ -70,70 +77,48 @@ export class AddscComponent implements OnInit {
     this.onGetProveedores();
     this.onGetItemArticulo();
     this.tipo_solicitud = 'a';
-    // this.onLoadSolicitudCompra();
+    this.onLoadSolicitudCompra(this.codigo_solicitud);
     // this.onLoadDetalleSolicitudCompra();
     this.onLoadListaDetalleSolicitud();
     this.onLimpiaListaDetalleSolicitud();
     // alert(localStorage.getItem('id_superior'));
     // alert(localStorage.getItem('username'));
-
-  // Variables para subir archivos
-    this._fileUp.setOptions({
-      classes: {
-        buttonAdd: 'button cyan',
-        buttonRemoveAll: 'ui button red tiny',
-        iconButtonAdd: 'add-test',
-        iconButtonRemoveAll: 'remove-test'
-      },
-      texts: {
-        buttonAdd: 'Adicionar <i class="ui icon plus"></i>',
-        buttonRemoveAll: 'Quitar Todos <i class="ui icon plus"></i>',
-        placeholderOnDragOver: 'Suelte en este lugar los archivos',
-        placeholder: 'Arrastre los elementos aqui',
-        placeholderSub: 'o haga click aqui para seleccionar los archivos'
-      }
-    });
-
-    this.filSer.onValidate$.subscribe(validation => {
-      const individualIsNotUndefined = validation.individualValidation.info !== undefined;
-      const hasIndividualValidation = individualIsNotUndefined && validation.individualValidation.info.length > 0;
-      const validationIsNotUndefined = validation.validation.tags !== undefined;
-      const hasValidation = validationIsNotUndefined && validation.validation.tags.length > 0;
-
-      if ( hasIndividualValidation || hasValidation ) {
-        this._hasValidationException = true;
-      }
-    });
-    this.filSer.setMaxSize(3072);
-    this.filSer.setMaxSizePerFile(3072);
   }
 
-  onLoadSolicitudCompra() {
-    this.solicitud.codigo = 'SCA003';
-    this.solicitud.tipo = 'A';
-    this.solicitud.estado = 'C';
-    this.solicitud.estado_transferencia = 'N';
-    this.solicitud.fecha = new Date('2018-11-27');
-    this.solicitud.motivo = 'URGENTE';
-    this.solicitud.usuario_anulacion = 'NA';
-    this.solicitud.motivo_anulacion = 'NA';
-    this.solicitud.fecha_anulacion = new Date('2018-11-27');
-    this.solicitud.solicitante = 'faruni';
-    this.solicitud.autorizador = 'mfloresr';
-    this.solicitud.estado_autorizacion_superior = 'P';
-    this.solicitud.fecha_autorizacion_superior = new Date('2018-11-27');
-    this.solicitud.motivo_autorizacion = 'NA';
-    this.solicitud.tipo_compra = 'I';
-    this.solicitud.codigo_proveedor = '911000001';
-    this.solicitud.nombre_proveedor = 'PROVEEDORE PRUEBA';
-    this.solicitud.usuario_creacion = 'faruni';
-    this.solicitud.fecha_creacion = new Date('2018-11-27');
-    this.solicitud.usuario_modificacion = 'faruni';
-    this.solicitud.fecha_modificacion = new Date('2018-11-27');
+  onLoadSolicitudCompra(codigo: string) {
+    this.servSC.getSolicitudXCodigo(codigo).subscribe(
+        data => {
+            this.solicitud = data['body'];
+            this.onLoadDetalleSolicitudCompra(codigo)
+        },
+        (err: HttpErrorResponse) => {
+            this.toast.show('No se obtuvo ninguna solicitud, Ocurrio un error!', 3000, 'red');
+            if (err.error instanceof Error) {
+            console.log('Ocurrio un error:', err.error.message);
+            } else {
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+        }
+    );
+  }
+
+  onLoadDetalleSolicitudCompra(codigo: string) {
+    this.servSC.getDetalleSolicitudXCodigo(codigo).subscribe(
+        data => {
+            this.ldetallesolicitud = data['body'];
+        },
+        (err: HttpErrorResponse) => {
+            this.toast.show('No se pudo traer el detalle de esta solicitud, intente nuevamente!', 3000, 'red');
+            if (err.error instanceof Error) {
+            console.log('Ocurrio un error:', err.error.message);
+            } else {
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+        }
+    );
   }
 
 // Funcion para Guardar la Cabecera de la solicitud
-
   onSaveSolicitudCompra(s: SolicitudCompra): void {
     s.autorizador = localStorage.getItem('id_superior');
     s.estado = 'A';
@@ -326,7 +311,4 @@ export class AddscComponent implements OnInit {
     });
   }
   */
-
-  
-
 }
