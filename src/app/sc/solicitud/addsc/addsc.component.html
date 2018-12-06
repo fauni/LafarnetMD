@@ -52,7 +52,6 @@
 </mz-modal>
 
 <form #form="ngForm" novalidate>
-
 <mz-card>
     <mz-card-content>
         <div class="row">
@@ -90,12 +89,13 @@
                     [(ngModel)]="solicitud.fecha"
                     name="fecha"
                     id="fecha"
-                    type="tel" />
+                    type="tel"/>
             </mz-datepicker-container>
 
             <mz-select-container class="col s12 m3">
-                <select mz-select
+                <select mz-select mz-validation required
                     id="tipo_compra"
+                    [errorMessageResource]="errorMessagesSolicitud.tipo_compra"
                     [(ngModel)]="solicitud.tipo_compra"
                     name="tipo_compra"
                     [label]="'Tipo de Compra'"
@@ -106,8 +106,10 @@
                 </select>
             </mz-select-container>
         </div>
+
         <div class="row">
             <div class="col s12 m4">
+                <div *ngIf="solicitud.codigo_proveedor"></div>
                 <span class="title_select">Codigo de Proveedor</span>
                 <ng-select required
                     #SelectCodigoProveedor
@@ -118,9 +120,11 @@
                     [(ngModel)]="solicitud.codigo_proveedor"
                     name="codigo_proveedor">
                 </ng-select>
-            </div>
+                <div *ngIf="!solicitud.codigo_proveedor" class="mensaje-error">Seleccione un Codigo</div>
+            </div> 
 
             <div class="col s12 m8">
+                <div *ngIf="solicitud.nombre_proveedor"></div>
                 <span class="title_select">Nombre de Proveedor</span>
                 <ng-select required
                     #SelectNombreProveedor
@@ -131,7 +135,11 @@
                     [(ngModel)]="solicitud.nombre_proveedor"
                     name="nombre_proveedor">
                 </ng-select>
+                <div *ngIf="!solicitud.nombre_proveedor" class="mensaje-error">Seleccione el Nombre del Proveedor</div>
             </div>
+        </div>
+                
+            
 
             <!--<mz-datepicker-container class="col s12 m4">
                 <i mz-icon-mdi mz-input-prefix
@@ -142,11 +150,12 @@
                     id="prefix-datepicker"
                     type="tel" />
             </mz-datepicker-container>-->
-        </div>
+        
         <div class="row">
             <mz-input-container class="col s12 m9">
-                <input mz-input
+                <input mz-input mz-validation required
                     [label]="'Motivo de la Solicitud'"
+                    [errorMessageResource]="errorMessagesSolicitud.motivo"
                     id="motivo"
                     [(ngModel)]="solicitud.motivo"
                     name="motivo"
@@ -242,7 +251,8 @@
                     <i mz-icon-mdi mz-input-prefix
                         [icon]="'calendar'">
                     </i>
-                    <input mz-datepicker
+                    <input mz-datepicker mz-validation required
+                        [errorMessageResource]="errorMessagesSolicitud.fecha_requerida"
                         [label]="'Fecha Necesaria'"
                         id="fecha_requerida"
                         [(ngModel)]="detallesolicitud.fecha_requerida"
@@ -250,9 +260,10 @@
                         [options]= "opcionesDatePicker"
                         type="tel" />
                 </mz-datepicker-container>
+
                 <div class="col s12 m5"></div>
                 <mz-input-container class="col s12 m3">
-                    <input mz-input
+                    <input mz-input disabled
                         [label]="'Numero de Solicitud'"
                         id="dc_codigo_solicitud"
                         placeholder="Codigo de Solicitud"
@@ -264,6 +275,7 @@
     
             <div class="row">
                 <div class="col s12 m4">
+                    <div *ngIf="detallesolicitud.codigo_item"></div>
                     <span class="title_select">Codigo de Item</span>
                     <ng-select
                         [items]="articulos"
@@ -273,9 +285,11 @@
                         [(ngModel)]="detallesolicitud.codigo_item"
                         name="codigo_item">
                     </ng-select>
+                    <div *ngIf="!detallesolicitud.codigo_item"class="mensaje-error">Seleccione un Codigo</div>
                 </div>
     
                 <div class="col s12 m8">
+                    <div *ngIf="detallesolicitud.descripcion_item"></div>
                     <span class="title_select">Nombre del Articulo</span>
                     <ng-select
                         [items]="articulos"
@@ -285,12 +299,13 @@
                         [(ngModel)]="detallesolicitud.descripcion_item"
                         name="descripcion_item">
                     </ng-select>
+                    <div *ngIf="!detallesolicitud.descripcion_item"class="mensaje-error">Seleccione el Nombre del Articulo</div>
                 </div>
             </div>
     
             <div class="row">
                 <mz-input-container class="col s12 m4">
-                    <input mz-input
+                    <input mz-input disabled
                         id="unidad"
                         [(ngModel)]="detallesolicitud.unidad"
                         name="unidad"
@@ -298,19 +313,23 @@
                         type="text">
                 </mz-input-container>
                 <mz-input-container class="col s12 m4">
-                    <input mz-input
+                    <input mz-input mz-validation required
+                    [errorMessageResource]="errorMessagesSolicitud. cantidad"
                         id="cantidad"
                         [(ngModel)]="detallesolicitud.cantidad"
                         name="cantidad"
                         [label]="'Cantidad'"
                         type="number">
+
                 </mz-input-container>
+
+
                 <div class="row">
                     <mz-datepicker-container class="col s12 m4">
                         <i mz-icon-mdi mz-input-prefix
                             [icon]="'calendar'">
                         </i>
-                        <input mz-datepicker
+                        <input mz-datepicker disabled
                             [label]="'Fecha de Arte'"
                             id="fecha_arte"
                             [(ngModel)]="detallesolicitud.fecha_arte"
@@ -319,12 +338,15 @@
                             type="tel" />
                     </mz-datepicker-container>
                 </div>
-            </div>
-            
+            </div> 
         </mz-modal-content>
+
         <mz-modal-footer>
           <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
-          <button mz-button [flat]="true" mz-modal-close (click)="onAddItemSolicitud()">Agregar</button>
+          <button mz-button [flat]="true" mz-modal-close (click)="onAddItemSolicitud()" mz-modal-close (click)=" onValidaAgregarDetalle()"mz-modal [disabled]="!form.valid" type="submit">Agregar</button>
         </mz-modal-footer>
+
       </mz-modal>
 </form>
+
+

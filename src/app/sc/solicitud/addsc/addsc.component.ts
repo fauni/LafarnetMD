@@ -31,6 +31,16 @@ export class AddscComponent implements OnInit {
     },
     motivo: {
         required: 'Ingrese un Motivo'
+    },
+    tipo_compra: {
+        required: 'Ingrese el tipo de Compra'
+    },
+
+    fecha_requerida: {
+      required: 'Seleccione la fecha'
+    },
+    cantidad:  {
+    required: 'Seleccione la fecha'
     }
   };
 //#endregion
@@ -78,34 +88,6 @@ export class AddscComponent implements OnInit {
     // alert(localStorage.getItem('username'));
 
   // Variables para subir archivos
-    this._fileUp.setOptions({
-      classes: {
-        buttonAdd: 'button cyan',
-        buttonRemoveAll: 'ui button red tiny',
-        iconButtonAdd: 'add-test',
-        iconButtonRemoveAll: 'remove-test'
-      },
-      texts: {
-        buttonAdd: 'Adicionar <i class="ui icon plus"></i>',
-        buttonRemoveAll: 'Quitar Todos <i class="ui icon plus"></i>',
-        placeholderOnDragOver: 'Suelte en este lugar los archivos',
-        placeholder: 'Arrastre los elementos aqui',
-        placeholderSub: 'o haga click aqui para seleccionar los archivos'
-      }
-    });
-
-    this.filSer.onValidate$.subscribe(validation => {
-      const individualIsNotUndefined = validation.individualValidation.info !== undefined;
-      const hasIndividualValidation = individualIsNotUndefined && validation.individualValidation.info.length > 0;
-      const validationIsNotUndefined = validation.validation.tags !== undefined;
-      const hasValidation = validationIsNotUndefined && validation.validation.tags.length > 0;
-
-      if ( hasIndividualValidation || hasValidation ) {
-        this._hasValidationException = true;
-      }
-    });
-    this.filSer.setMaxSize(3072);
-    this.filSer.setMaxSizePerFile(3072);
   }
 
   onLoadSolicitudCompra() {
