@@ -52,4 +52,8 @@ export class SolicitudService {
     return this.http.get(this.global.urlAPICORE + 'scsolicitudautorizador/' + data);
   }
 
+  // Subir archivos adjuntos para la solicitud
+  uploadFilesSolicitud(data) {
+    return this.http.post(this.global.urlAPICORE + 'scfilessolicitudcompra', data);
+  }
 }

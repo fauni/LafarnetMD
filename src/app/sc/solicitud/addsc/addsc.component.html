@@ -42,12 +42,21 @@
     </mz-modal-header>
     <mz-modal-content>
         <div class="margen-espacio">   
-            
+            <ng-container>
+                <input type="file" id="file" multiple 
+                    (change)="getFileDetails($event)">
+            </ng-container>
         </div>
+
+        <mz-collection>
+            <mz-collection-header><h4>Lista de Archivos Adjuntos</h4></mz-collection-header>
+            <mz-collection-item ng *ngFor="let file of lfiles"> {{file.Nombre}}.{{Extension}}</mz-collection-item>
+        </mz-collection>
     </mz-modal-content>
     <mz-modal-footer>
-    <button mz-button [flat]="true" mz-modal-close (click)="abort()">Cancelar</button>
-    <button mz-button [flat]="true" mz-modal-close (click)="sendFiles()">Enviar Archivos</button>
+    <button mz-button [flat]="true" mz-modal-close (click)="abort()">Cerrar</button>
+    <button mz-button [flat]="true" mz-modal-close (click)="abort()">Eliminar Adjuntos</button>
+    <button mz-button [flat]="true" (click)="uploadFiles()">Enviar Archivos</button>
     </mz-modal-footer>
 </mz-modal>
 
