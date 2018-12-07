@@ -17,7 +17,6 @@ import { FormGroup } from '@angular/forms';
 export class AddscComponent implements OnInit {
   // Variables para subir archivos
 
-
 //#region VARIABLES DE VALIDACIÓN
   @ViewChild('form') form: FormGroup;
   submitted = false;
@@ -43,6 +42,7 @@ export class AddscComponent implements OnInit {
     required: 'Seleccione la fecha'
     }
   };
+
 //#endregion
 
   public opcionesDatePicker: Pickadate.DateOptions = {
@@ -72,8 +72,12 @@ export class AddscComponent implements OnInit {
   constructor(
     private servSC: SolicitudService,
     private toast: MzToastService,
-    private router: Router) {
+    private router: Router){
   }
+
+   // Variables para agregar detalle
+
+
 
   ngOnInit() {
     this.onGeneraCodigo();
@@ -162,10 +166,12 @@ export class AddscComponent implements OnInit {
     if (this.ldetallesolicitud.length > 0) { // Valida si existen items agregados en la solicitud
       // this.toast.show('Guardando' + this.solicitud.codigo, 1000, 'green');
       this.onSaveSolicitudCompra(this.solicitud);
-    }else {
+    }
+    else {
       this.toast.show('No existen Items agregados a la solicitud ' + this.solicitud.codigo, 3000, 'red');
     }
   }
+
 
   // Funcion para obtener proveedores
   onGetProveedores(): void {

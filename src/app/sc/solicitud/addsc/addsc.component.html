@@ -138,9 +138,6 @@
                 <div *ngIf="!solicitud.nombre_proveedor" class="mensaje-error">Seleccione el Nombre del Proveedor</div>
             </div>
         </div>
-                
-            
-
             <!--<mz-datepicker-container class="col s12 m4">
                 <i mz-icon-mdi mz-input-prefix
                     [icon]="'calendar'">
@@ -149,8 +146,7 @@
                     [label]="'Fecha Necesaria'"
                     id="prefix-datepicker"
                     type="tel" />
-            </mz-datepicker-container>-->
-        
+            </mz-datepicker-container>-->     
         <div class="row">
             <mz-input-container class="col s12 m9">
                 <input mz-input mz-validation required
@@ -329,7 +325,7 @@
                         <i mz-icon-mdi mz-input-prefix
                             [icon]="'calendar'">
                         </i>
-                        <input mz-datepicker disabled
+                        <input mz-datepicker
                             [label]="'Fecha de Arte'"
                             id="fecha_arte"
                             [(ngModel)]="detallesolicitud.fecha_arte"
@@ -343,10 +339,27 @@
 
         <mz-modal-footer>
           <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
-          <button mz-button [flat]="true" mz-modal-close (click)="onAddItemSolicitud()" mz-modal-close (click)=" onValidaAgregarDetalle()"mz-modal [disabled]="!form.valid" type="submit">Agregar</button>
+          <button
+           mz-button [flat]="true"
+           mz-modal-close (click)="onAddItemSolicitud()"
+           mz-modal [disabled]="!formDS.valid" 
+           type="submit" 
+           mz-button [large]="true">Agregar</button>
         </mz-modal-footer>
-
       </mz-modal>
 </form>
 
+
+<!--<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <button 
+        "onAddItemSolicitud()"
+            [float]="true" mz-button 
+            [disabled]="!form.valid" 
+            [large]="true" 
+            class="blue"
+            (click)="onValidaCabeceraSolicitud()"
+            type="submit"><i class="large mdi-action-done"></i>
+        </button>
+    </div>
+    </form>-->
 
