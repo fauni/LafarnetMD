@@ -8,6 +8,7 @@ import { Proveedorsc } from '../../proveedorsc';
 import { DetalleSolicitud } from '../detallesolicitud';
 import { ItemArticuloSc } from '../../itemarticulosc';
 import { FormGroup } from '@angular/forms';
+import { SCFile } from '../../scfile';
 
 @Component({
   selector: 'app-addsc',
@@ -16,6 +17,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class AddscComponent implements OnInit {
   // Variables para subir archivos
+  myFiles: string [] = [];
+  public lfiles: Array<SCFile> = new Array<SCFile>(); // Lista de Archivos que fueron subidos
 
 //#region VARIABLES DE VALIDACIÓN
   @ViewChild('form') form: FormGroup;
@@ -272,7 +275,6 @@ export class AddscComponent implements OnInit {
   }
 
   onAddItemSolicitud() {
-    debugger;
     this.numero_item = this.numero_item + 1;
     this.detallesolicitud.prioridad =  this.numero_item;
     this.detallesolicitud.estado = 'S';
@@ -315,6 +317,32 @@ export class AddscComponent implements OnInit {
   }
   */
 
-  
+  // Subir archivos
+  getFileDetails (e) {
+    // console.log (e.target.files);
+    for (let i = 0; i < e.target.files.length; i++) {
+      this.myFiles.push(e.target.files[i]);
+    }
+  }
+
+  uploadFiles () {
+    const frmData = new FormData();
+
+    for (let i = 0; i < this.myFiles.length; i++) {
+      frmData.append('fileUpload', this.myFiles[i]);
+    }
+    this.servSC.uploadFilesSolicitud(frmData).subscribe(
+      data => {
+        this.lfiles = data['body'];
+        // SHOW A MESSAGE RECEIVED FROM THE WEB API.
+        this.toast.show('Los archivos fueron adjuntos correctamente!', 2000, 'green');
+        console.log (this.lfiles);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('Ocurrio un error al subir los archivos', 2000, 'red');
+        console.log (err.message);    // SHOW ERRORS IF ANY.
+      }
+    );
+  }
 
 }
