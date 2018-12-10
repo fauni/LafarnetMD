@@ -56,4 +56,14 @@ export class SolicitudService {
   uploadFilesSolicitud(data) {
     return this.http.post(this.global.urlAPICORE + 'scfilessolicitudcompra', data);
   }
+
+  saveUploadFilesSolicitud(data, codigo) {
+    return this.http.put(this.global.urlAPICORE + 'scfilessolicitudcompra/' + codigo, data);
+  }
 }
+
+
+
+
+
+

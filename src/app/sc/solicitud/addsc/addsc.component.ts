@@ -16,6 +16,8 @@ import { SCFile } from '../../scfile';
   styleUrls: ['./addsc.component.scss'],
 })
 export class AddscComponent implements OnInit {
+  modificar: Boolean = false;
+
   // Variables para subir archivos
   myFiles: string [] = [];
   public lfiles: Array<SCFile> = new Array<SCFile>(); // Lista de Archivos que fueron subidos
@@ -41,8 +43,17 @@ export class AddscComponent implements OnInit {
     fecha_requerida: {
       required: 'Seleccione la fecha'
     },
+
+    fecha_requerida_servicio: {
+      required: 'Seleccione la fecha requerida'
+    },
+
     cantidad:  {
-    required: 'Seleccione la fecha'
+      required: 'Seleccione la fecha'
+    },
+
+    s_descripcion: {
+      required: 'Ingrese la descripción del servicio'
     }
   };
 
@@ -69,8 +80,11 @@ export class AddscComponent implements OnInit {
   articulos: Array<ItemArticuloSc> = new Array<ItemArticuloSc>();
 
   // Variables para detalle de Solicitud
-  detallesolicitud: DetalleSolicitud = new DetalleSolicitud();
-  ldetallesolicitud: Array<DetalleSolicitud> = new Array<DetalleSolicitud>();
+  detallesolicitud: DetalleSolicitud = new DetalleSolicitud(); // OBJETO ARTICULOS
+  detallesolicitudservicio: DetalleSolicitud = new DetalleSolicitud(); // OBJETO SERVICIOS
+  ldetallesolicitud: Array<DetalleSolicitud> = new Array<DetalleSolicitud>(); // lista detalle articulos
+  ldetallesolicitudservicio: Array<DetalleSolicitud> = new Array<DetalleSolicitud>(); // lista detalle servicios
+
   numero_item: number;
   constructor(
     private servSC: SolicitudService,
@@ -86,15 +100,22 @@ export class AddscComponent implements OnInit {
     this.onGeneraCodigo();
     this.onGetProveedores();
     this.onGetItemArticulo();
-    this.tipo_solicitud = 'a';
+    this.solicitud.tipo = 'I';
     // this.onLoadSolicitudCompra();
     // this.onLoadDetalleSolicitudCompra();
     this.onLoadListaDetalleSolicitud();
     this.onLimpiaListaDetalleSolicitud();
+    this.onValoresPorDefecto();
     // alert(localStorage.getItem('id_superior'));
     // alert(localStorage.getItem('username'));
 
   // Variables para subir archivos
+    this.modificar = false;
+  }
+
+  onValoresPorDefecto() {
+    this.detallesolicitud.fecha_arte = new Date('1990-01-01');
+    this.detallesolicitudservicio.fecha_arte = new Date('1990-01-01');
   }
 
   onLoadSolicitudCompra() {
@@ -141,15 +162,28 @@ export class AddscComponent implements OnInit {
               this.toast.show('No se guardo, revise la información', 3000, 'red');
               this.botonSave = true;
           } else {
-              this.ldetallesolicitud.forEach(element => {
-              this.detallesolicitud = new DetalleSolicitud();
-              this.detallesolicitud = element;
-              this.detallesolicitud.codigo_solicitud = s.codigo;
-              this.detallesolicitud.estado = 'A';
-              this.detallesolicitud.tipo_item = s.tipo;
-              this.onSaveDetalleSolicitudCompra(this.detallesolicitud);
-            });
-            this.toast.show('Se guardo correctamente!', 3000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+              if (s.tipo == 'I') {
+                this.ldetallesolicitud.forEach(element => {
+                  this.detallesolicitud = new DetalleSolicitud();
+                  this.detallesolicitud = element;
+                  this.detallesolicitud.codigo_solicitud = s.codigo;
+                  this.detallesolicitud.estado = 'A';
+                  this.detallesolicitud.tipo_item = s.tipo;
+                  this.onSaveDetalleSolicitudCompra(this.detallesolicitud);
+                });
+                this.toast.show('Se guardo correctamente!', 1500, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+              } else {
+                this.ldetallesolicitudservicio.forEach(element => {
+                  this.detallesolicitudservicio = new DetalleSolicitud();
+                  this.detallesolicitudservicio = element;
+                  this.detallesolicitudservicio.codigo_solicitud = s.codigo;
+                  this.detallesolicitudservicio.estado = 'A';
+                  this.detallesolicitudservicio.tipo_item = s.tipo;
+                  this.onSaveDetalleSolicitudCompra(this.detallesolicitudservicio);
+                });
+                this.toast.show('Se guardo correctamente!', 3000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+              }
+              this.onSaveUploadFilesSolicitud(this.lfiles, this.solicitud.codigo);
           }
         // this.toast.show('Se guardo correctamente!', 3000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
         console.log(data);
@@ -166,12 +200,20 @@ export class AddscComponent implements OnInit {
   }
 
   onValidaCabeceraSolicitud() {
-    if (this.ldetallesolicitud.length > 0) { // Valida si existen items agregados en la solicitud
-      // this.toast.show('Guardando' + this.solicitud.codigo, 1000, 'green');
-      this.onSaveSolicitudCompra(this.solicitud);
-    }
-    else {
-      this.toast.show('No existen Items agregados a la solicitud ' + this.solicitud.codigo, 3000, 'red');
+    if (this.solicitud.tipo == 'I') {
+      if (this.ldetallesolicitud.length > 0) { // Valida si existen items agregados en la solicitud
+        // this.toast.show('Guardando' + this.solicitud.codigo, 1000, 'green');
+        this.onSaveSolicitudCompra(this.solicitud);
+      }else {
+        this.toast.show('No existen Items agregados a la solicitud ' + this.solicitud.codigo, 3000, 'red');
+      }
+    } else {
+      if (this.ldetallesolicitudservicio.length > 0) { // Valida si existen items agregados en la solicitud
+        // this.toast.show('Guardando' + this.solicitud.codigo, 1000, 'green');
+        this.onSaveSolicitudCompra(this.solicitud);
+      }else {
+        this.toast.show('No existen Items agregados a la solicitud ' + this.solicitud.codigo, 3000, 'red');
+      }
     }
   }
 
@@ -234,6 +276,7 @@ export class AddscComponent implements OnInit {
     this.ldetallesolicitud = new Array<DetalleSolicitud>();
     this.detallesolicitud = new DetalleSolicitud();
     this.numero_item = 0;
+    this.onValoresPorDefecto();
   }
 
   onSaveDetalleSolicitudCompra(ds: DetalleSolicitud): void {
@@ -284,6 +327,20 @@ export class AddscComponent implements OnInit {
     this.detallesolicitud.fecha_modificacion = new Date('2018-11-27'); // Estos datos solo son para envio ya que se cambian en el servicio
     this.ldetallesolicitud.push(this.detallesolicitud);
     this.detallesolicitud = new DetalleSolicitud();
+    this.onValoresPorDefecto();
+  }
+
+  onAddServicioSolicitud() {
+    this.numero_item = this.numero_item + 1;
+    this.detallesolicitudservicio.codigo_item = this.numero_item.toString();
+    this.detallesolicitudservicio.prioridad =  this.numero_item;
+    this.detallesolicitudservicio.estado = 'S';
+    this.detallesolicitudservicio.usuario_creacion = localStorage.getItem('username');
+    this.detallesolicitudservicio.fecha_creacion = new Date('2018-11-27'); // se cambian en el servicio
+    this.detallesolicitudservicio.usuario_modificacion = localStorage.getItem('username');
+    this.detallesolicitudservicio.fecha_modificacion = new Date('2018-11-27'); // se cambian en el servicio
+    this.ldetallesolicitudservicio.push(this.detallesolicitudservicio);
+    this.detallesolicitudservicio = new DetalleSolicitud();
   }
 
   onQuitarItemSolicitud(codigo: string) {
@@ -345,4 +402,26 @@ export class AddscComponent implements OnInit {
     );
   }
 
+  onSaveUploadFilesSolicitud (lf: Array<SCFile>, codigo_solicitud: string): void {
+    this.servSC.saveUploadFilesSolicitud(lf, codigo_solicitud).subscribe(
+      data => {
+        this.toast.show('Se subio los archivos correctamente!', 2000, 'green');
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('No se guardaron los archivos adjuntos!', 2000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  //#region MODIFICAR DETALLE ARTICULO -----------------------------------------------------------
+  onModificarArticulo(codigo: string) {
+    alert(codigo);
+  }
+  //#endregion
 }
