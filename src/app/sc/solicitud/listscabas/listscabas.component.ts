@@ -6,11 +6,11 @@ import { Solicitudcompralistado } from '../solicitud';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-listsc',
-  templateUrl: './listsc.component.html',
-  styleUrls: ['./listsc.component.scss'],
+  selector: 'app-listscabas',
+  templateUrl: './listscabas.component.html',
+  styleUrls: ['./listscabas.component.scss'],
 })
-export class ListscComponent implements OnInit {
+export class ListscabasComponent implements OnInit {
   lsolicitud: Array<Solicitudcompralistado> = new Array<Solicitudcompralistado>();
   constructor(private servSC: SolicitudService, private toast: MzToastService, private router: Router) { }
 
@@ -21,18 +21,18 @@ export class ListscComponent implements OnInit {
   // Esta funcion obtiene las solicitudes del Solicitante
   onGetSolicitudes(): void {
     let username = localStorage.getItem('username');
-    this.servSC.getListadoSolicitudXUsuario(username).subscribe(
+    this.servSC.getListadoSolicitudXAbastecimiento(username).subscribe(
       data => {
         if (data['length'] > 0) {
           this.lsolicitud = data['body'];
-          // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
+          this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 1000, 'green');
         }else {
-          this.toast.show('No tiene solicitudes!', 2000, 'red');
+          this.toast.show('No tiene solicitudes para autorizar!', 1000, 'red');
         }
         console.log(data);
       },
       (err: HttpErrorResponse) => {
-        this.toast.show('Ocurrio un error al obtener las solicitudes!', 2000, 'red');
+        this.toast.show('Ocurrio un error al obtener las solicitudes!', 1000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
         } else {
@@ -49,7 +49,10 @@ export class ListscComponent implements OnInit {
     // alert(codigo_solicitud);
   }
 
-  irAConversaciones(codigo_solicitud: string): void {
-    this.router.navigate(['/sc/solicitud/notify/' + codigo_solicitud]);
+  // Esta funcion te envia al formulario de Nueva Orden de Compra
+  onOpenAddOrden(codigo_solicitud: string): void {
+    // alert(codigo_solicitud);
+    this.router.navigate(['/sc/orden/add/' + codigo_solicitud]);
   }
+
 }

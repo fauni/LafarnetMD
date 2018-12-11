@@ -1,0 +1,83 @@
+<nav class="lafar-bg-blue">
+        <div class="nav-wrapper">
+            <div class="left col s12 m5 l5">
+                <ul>
+                    <li><a href="javascript:void(0);" [routerLink]="['/sc/main']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+                    </li>
+                    <li><a href="javascript:void(0);" class="email-type">LISTADO DE SOLICITUDES AUTORIZADAS</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right">
+                    <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                    <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-content-send"></i></a></li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <mz-card style="margin-bottom:0px;">
+        <mz-card-content>
+    
+        </mz-card-content>
+    </mz-card>
+    <mz-card>
+        <mz-card-content>
+            <table class="highlight responsive-table">
+                <tr>
+                    <th>Codigo</th>
+                    <th class="center">
+                        <i mz-icon-mdi mz-input-prefix class="green-text"
+                            [icon]="'wechat'">
+                        </i>
+                    </th>
+                    <th>Fecha de Solicitud</th>
+                    <th>Tipo de Solicitud</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
+                    <th width="150">Opciones</th>
+                </tr>
+        
+                <tr class="border_bottom" *ngFor="let solicitud of lsolicitud">
+                    <td>{{solicitud.codigo}}</td>
+                    <td class="center">
+                        <mz-badge
+                            [value]="solicitud.conversacion"
+                            [caption]="'Sms'"
+                            [badgeClass]="'red'"
+                            [new]="true">
+                        </mz-badge>
+                    </td>
+                    <td class="center">{{ solicitud.fecha | date:'yyyy-MM-dd' }}</td>
+                    <td class="center">{{solicitud.tipo}}</td>
+                    <td>{{solicitud.motivo}}</td>
+                    <td>
+                        <i *ngIf="solicitud.estado_autorizacion_superior ==='A'"  mz-icon-mdi mz-input-prefix class="green-text"
+                            [icon]="'thumb-up-outline'">
+                        </i>
+                        <i *ngIf="solicitud.estado_autorizacion_superior ==='R'"  mz-icon-mdi mz-input-prefix class="red-text"
+                            [icon]="'thumb-down-outline'">
+                        </i>
+                        <i *ngIf="solicitud.estado_autorizacion_superior ==='P'"  mz-icon-mdi mz-input-prefix class="orange-text"
+                            [icon]="'clock'">
+                        </i>
+                    </td>
+                    <td>
+                        <button mz-button (click)="onOpenSolicitud(solicitud.codigo)"
+                            [float]="true" class="blue">
+                            <i mz-icon-mdi [icon]="'file-find'"></i>
+                        </button>
+                        <button mz-button
+                            [float]="true" class="red">
+                            <i mz-icon-mdi [icon]="'cancel'"></i>
+                        </button>
+                        <button mz-button (click)="onOpenAddOrden(solicitud.codigo)" *ngIf="solicitud.estado_autorizacion_superior ==='A'"
+                            [float]="true" class="green">
+                            <i mz-icon-mdi [icon]="'arrow-collapse-right'"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </mz-card-content>
+    </mz-card>

@@ -311,4 +311,10 @@ export class DetailscComponent implements OnInit {
     });
   }
   */
+
+
+  // Revisar las lineas anteriores talvez no se utilicen en este modulo
+  onDirigirConversacion() {
+    this.router.navigate(['sc/solicitud/notify/' + this.codigo_solicitud]);
+  }
 }
