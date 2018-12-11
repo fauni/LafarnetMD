@@ -1,3 +1,16 @@
+<div id="loading">
+        <div id="loadingcontent">
+            <p id="loadingspinner">
+                <mz-spinner
+                    class="valign center-align col s4"
+                    [size]="'big'">
+                </mz-spinner>
+                <br><br>
+                Cargando Información ... 
+            </p>
+        </div>
+</div>
+
 <nav class="lafar-bg-blue">
     <div class="nav-wrapper">
         <div class="left col s12 m5 l5">
@@ -43,13 +56,27 @@
     <mz-modal-content>
         <div class="margen-espacio">   
             <ng-container>
-                <input type="file" id="file" multiple 
-                    (change)="getFileDetails($event)">
+            <div class="style_buttom">
+               <input type="file" id="file" multiple (change)="getFileDetails($event)">
+
+            </div>
+                <form class="md-form">
+                        <div class="file-field">
+                          <div class="btn btn-primary btn-sm float-left">
+                            <span>Elegir Archivos<i class="fas fa-paper-plane"></i></span>       
+                            <input type="file">
+                          </div>
+                          <div class="file-path-wrapper">
+                            <input class="file-path validate" multiple (change)="getFileDetails($event)"type="text" placeholder="Sube tu Archivo">
+                          </div>
+                        </div>
+                </form>
+
             </ng-container>
         </div>
 
         <mz-collection>
-            <mz-collection-header><h4>Lista de Archivos Adjuntos</h4></mz-collection-header>
+            <mz-collection-header><h6>Lista de Archivos Adjuntos</h6></mz-collection-header>
             <mz-collection-item ng *ngFor="let file of lfiles"> {{file.Nombre}}.{{Extension}}</mz-collection-item>
         </mz-collection>
     </mz-modal-content>

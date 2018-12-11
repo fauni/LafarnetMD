@@ -97,6 +97,7 @@ export class AddscComponent implements OnInit {
 
 
   ngOnInit() {
+    this.openLoading();
     this.onGeneraCodigo();
     this.onGetProveedores();
     this.onGetItemArticulo();
@@ -241,16 +242,18 @@ export class AddscComponent implements OnInit {
   onGetItemArticulo(): void {
     this.servSC.getItemArticuloSC().subscribe(
       data => {
+        this.closeLoading();
         this.articulos = data['body'];
-        this.toast.show('Se obtuvieron ' + data['length'].toString() + ' articulos correctamente!', 1000, 'green');
+        this.toast.show('Se obtuvieron' + data['length'].toString() + ' articulos correctamente!', 1000, 'green');
         console.log(data);
       },
       (err: HttpErrorResponse) => {
+        this.closeLoading();
         this.toast.show('Ocurrio un error al obtener los proveedores!', 3000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
         } else {
-          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+          console.log(`El servidor respondio : ${err.status}, body was: ${err.error}`);
         }
       }
     );
@@ -424,4 +427,15 @@ export class AddscComponent implements OnInit {
     alert(codigo);
   }
   //#endregion
+
+
+  // Funciones Loading
+  openLoading() {
+    const loading = $('#loading');
+    loading.fadeIn();
+  }
+  closeLoading() {
+      const loading = $('#loading');
+      loading.fadeOut();
+  }
 }
