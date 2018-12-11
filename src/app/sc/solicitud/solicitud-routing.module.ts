@@ -11,7 +11,9 @@ const routes: Routes = [
             { path: 'add', loadChildren: './addsc/addsc.module#AddscModule' },
             { path: 'list', loadChildren: './listsc/listsc.module#ListscModule' },
             { path: 'detail/:id', loadChildren: './detailsc/detailsc.module#DetailscModule' },
-            { path: 'list_aut', loadChildren: './listscsup/listscsup.module#ListscsupModule' }
+            { path: 'list_aut', loadChildren: './listscsup/listscsup.module#ListscsupModule' },
+            { path: 'list_abast', loadChildren: './listscabas/listscabas.module#ListscabasModule' },
+            { path: 'notify/:id', loadChildren: './notifysc/notifysc.module#NotifyscModule' }
         ]
     }
 ];

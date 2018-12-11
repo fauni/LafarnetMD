@@ -43,6 +43,7 @@
                 <td>{{solicitud.codigo}}</td>
                 <td class="center">
                     <mz-badge
+                        (click)="irAConversaciones(solicitud.codigo)"
                         [value]="solicitud.conversacion"
                         [caption]="'Sms'"
                         [badgeClass]="'red'"

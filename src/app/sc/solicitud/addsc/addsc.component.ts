@@ -94,7 +94,11 @@ export class AddscComponent implements OnInit {
 
    // Variables para agregar detalle
 
-
+  // Variables para editar cantidad
+  EditRowID: any = '';
+  Edit(val) {
+    this.EditRowID = val;
+  }
 
   ngOnInit() {
     this.onGeneraCodigo();
@@ -423,5 +427,5 @@ export class AddscComponent implements OnInit {
   onModificarArticulo(codigo: string) {
     alert(codigo);
   }
-  //#endregion
+  //#endregionz
 }

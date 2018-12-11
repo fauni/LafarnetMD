@@ -192,23 +192,24 @@
                 <th>Codigo</th>
                 <th>Descripción</th>
                 <th>Unidad</th>
-                <th>Cantidad</th>
+                <th width="50">Cantidad</th>
                 <th>Fec. Requerida</th>
                 <th>Opciones</th>
             </tr>
             <tr class="border_bottom" *ngFor="let ds of ldetallesolicitud">
                 <td>{{ ds.codigo_item }}</td>
                 <td>{{ ds.descripcion_item }}</td>
-                <td>{{ ds.unidad }}</td>
-                <td>{{ ds.cantidad }}</td>
+                <td>{{ ds.unidad }} </td>
+                <td *ngIf="ds.prioridad === EditRowID"><input type="number" [(ngModel)]="ds.cantidad" name="cantidad {{ds.prioridad}}"></td>
+                <td *ngIf="ds.prioridad !== EditRowID" (click) = "Edit(ds.prioridad)">{{ ds.cantidad }}</td>
                 <td>{{ ds.fecha_requerida }}</td>
                 <td>
-                    <button mz-button
+                    <!--<button mz-button
                         (click)="ModificarItemModal.open()"
                         (click)="onModificarArticulo(ds.prioridad)"
                         [float]="true" class="orange">
                         <i mz-icon-mdi [icon]="'pencil'"></i>
-                    </button>
+                    </button>-->
                     <button mz-button (click)="onQuitarItemSolicitud(ds.codigo_item)"
                           [float]="true" class="red">
                           <i mz-icon-mdi [icon]="'minus'"></i>
@@ -232,11 +233,11 @@
                 <td>{{ ds.descripcion_item }}</td>
                 <td>{{ ds.fecha_requerida }}</td>
                 <td>
-                    <button mz-button
+                    <!--<button mz-button
                         (click)="ModificarServicioModal.open()"
                         [float]="true" class="orange">
                         <i mz-icon-mdi [icon]="'pencil'"></i>
-                    </button>
+                    </button>-->
                     <button mz-button (click)="onQuitarItemSolicitud(ds.codigo_item)"
                           [float]="true" class="red">
                           <i mz-icon-mdi [icon]="'minus'"></i>
@@ -247,7 +248,13 @@
     </mz-card-content>
 </mz-card>
 
-
+<!--
+<div class="row">
+    <pre>
+        {{ ldetallesolicitud | json }}    
+    </pre>
+</div>
+-->
 <!--<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="onValidaCabeceraSolicitud()">
         <i class="large mdi-navigation-check"></i>

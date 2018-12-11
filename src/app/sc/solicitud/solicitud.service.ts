@@ -52,6 +52,11 @@ export class SolicitudService {
     return this.http.get(this.global.urlAPICORE + 'scsolicitudautorizador/' + data);
   }
 
+  // Funciones para Listado de Solicitud para convertir en Orden de Compra
+  getListadoSolicitudXAbastecimiento(data) {
+    return this.http.get(this.global.urlAPICORE + 'scsolicitudabastecimiento/');
+  }
+
   // Subir archivos adjuntos para la solicitud
   uploadFilesSolicitud(data) {
     return this.http.post(this.global.urlAPICORE + 'scfilessolicitudcompra', data);
@@ -59,6 +64,15 @@ export class SolicitudService {
 
   saveUploadFilesSolicitud(data, codigo) {
     return this.http.put(this.global.urlAPICORE + 'scfilessolicitudcompra/' + codigo, data);
+  }
+
+  // Obtener conversaciones de la solicitud
+  getConversacionesXSolicitud(data) {
+    return this.http.get(this.global.urlAPICORE + 'scconversacionsolicitud/' + data);
+  }
+  // Enviar mensaje (Guardar conversación)
+  saveConversacionSolicitud(data) {
+    return this.http.post(this.global.urlAPICORE + 'scconversacionsolicitud/', data);
   }
 }
 

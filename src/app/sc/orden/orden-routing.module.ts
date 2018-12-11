@@ -7,8 +7,7 @@ const routes: Routes = [
         path: '',
         component: OrdenComponent,
         children: [
-            { path: '', redirectTo: 'add' },
-            { path: 'add', loadChildren: './addoc/addoc.module#AddocModule' },
+            { path: 'add/:id', loadChildren: './addoc/addoc.module#AddocModule' },
             { path: 'list', loadChildren: './listoc/listoc.module#ListocModule' },
             { path: 'notify', loadChildren: './notifyoc/notifyoc.module#NotifyocModule' }
         ]
