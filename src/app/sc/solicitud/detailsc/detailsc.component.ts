@@ -9,6 +9,7 @@ import { DetalleSolicitud } from '../detallesolicitud';
 import { ItemArticuloSc } from '../../itemarticulosc';
 import { FormGroup } from '@angular/forms';
 import { SCFile } from '../../scfile';
+import { Globals } from '../../../globals';
 
 @Component({
   selector: 'app-detailsc',
@@ -94,6 +95,7 @@ export class DetailscComponent implements OnInit {
 
   numero_item: number;
   constructor(
+    private global: Globals,
     private servSC: SolicitudService,
     private toast: MzToastService,
     private router: Router, private route: ActivatedRoute) {
@@ -476,15 +478,15 @@ export class DetailscComponent implements OnInit {
   }
 
   downloadFile(nombre: string) { // Funcion para descargar el archivo adjunto
-    alert(nombre);
-    window.open('http://localhost:1925/api/scfilessolicitudcompra/' + nombre.replace('.', '|'));
+    // alert(nombre);
+    window.open(this.global.urlAPICORE + 'scfilessolicitudcompra/' + nombre.replace('.', '|'));
   }
 //#endregion
 
 
   //#region MODIFICAR DETALLE ARTICULO -----------------------------------------------------------
   onModificarArticulo(codigo: string) {
-    alert(codigo);
+    // alert(codigo);
   }
   //#endregion
 

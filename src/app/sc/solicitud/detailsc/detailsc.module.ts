@@ -7,6 +7,7 @@ import { MzCardModule, MzButtonModule, MzIconModule, MzNavbarModule, MzInputModu
 import { SolicitudService } from '../solicitud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { Globals } from '../../../globals';
 
 @NgModule({
     imports: [
@@ -36,7 +37,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         DetailscComponent
     ],
     providers: [
-        SolicitudService, MzToastService
+        SolicitudService, MzToastService, Globals
     ]
 })
 
