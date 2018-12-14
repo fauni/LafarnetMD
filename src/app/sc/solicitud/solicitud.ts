@@ -33,4 +33,12 @@ export class Solicitudcompralistado {
     public motivo: string;
     public estado_autorizacion_superior: string;
     public estado: string;
+    public solicitante: string;
+    public nombre_solicitante: string;
+}
+
+export class RequestAnulacionSolicitud {
+    public codigo_solicitud: string;
+    public motivo_anulacion: string;
+    public usuario_anulacion: string;
 }

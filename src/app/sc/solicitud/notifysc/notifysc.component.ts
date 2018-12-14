@@ -57,11 +57,12 @@ export class NotifyscComponent implements OnInit {
     );
   }
 
-  onLoadValoresInicialesConversacion(){
+  onLoadValoresInicialesConversacion() {
     this.conversacion.codigo_documento = this.codigo_solicitud;
     this.conversacion.estado = 'N';
     this.conversacion.nombre_usuario = this.nombre_usuario;
     this.conversacion.username = this.username;
+    this.conversacion.mensaje = '';
   }
 
   ngOnSaveConversacion() {
@@ -69,6 +70,7 @@ export class NotifyscComponent implements OnInit {
     this.servSC.saveConversacionSolicitud(this.conversacion).subscribe(
         data => {
           this.onGetConversaciones(this.conversacion.codigo_documento);
+          this.onLoadValoresInicialesConversacion();
           console.log(data);
         },
         (err: HttpErrorResponse) => {

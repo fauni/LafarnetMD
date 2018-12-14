@@ -228,7 +228,7 @@ export class AddscComponent implements OnInit {
     this.servSC.getProveedoresSC().subscribe(
       data => {
         this.proveedores = data['body'];
-        this.toast.show('Se obtuvieron ' + data['length'].toString() + ' proveedores correctamente!', 1000, 'green');
+        // this.toast.show('Se obtuvieron ' + data['length'].toString() + ' proveedores correctamente!', 1000, 'green');
         console.log(data);
       },
       (err: HttpErrorResponse) => {
@@ -248,7 +248,7 @@ export class AddscComponent implements OnInit {
       data => {
         this.closeLoading();
         this.articulos = data['body'];
-        this.toast.show('Se obtuvieron' + data['length'].toString() + ' articulos correctamente!', 1000, 'green');
+        // this.toast.show('Se obtuvieron' + data['length'].toString() + ' articulos correctamente!', 1000, 'green');
         console.log(data);
       },
       (err: HttpErrorResponse) => {
@@ -412,7 +412,7 @@ export class AddscComponent implements OnInit {
   onSaveUploadFilesSolicitud (lf: Array<SCFile>, codigo_solicitud: string): void {
     this.servSC.saveUploadFilesSolicitud(lf, codigo_solicitud).subscribe(
       data => {
-        this.toast.show('Se subio los archivos correctamente!', 2000, 'green');
+        // this.toast.show('Se subio los archivos correctamente!', 2000, 'green');
         console.log(data);
       },
       (err: HttpErrorResponse) => {

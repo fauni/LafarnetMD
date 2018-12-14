@@ -58,20 +58,7 @@
             <ng-container>
             <div class="style_buttom">
                <input type="file" id="file" multiple (change)="getFileDetails($event)">
-
             </div>
-                <form class="md-form">
-                        <div class="file-field">
-                          <div class="btn btn-primary btn-sm float-left">
-                            <span>Elegir Archivos<i class="fas fa-paper-plane"></i></span>       
-                            <input type="file">
-                          </div>
-                          <div class="file-path-wrapper">
-                            <input class="file-path validate" multiple (change)="getFileDetails($event)"type="text" placeholder="Sube tu Archivo">
-                          </div>
-                        </div>
-                </form>
-
             </ng-container>
         </div>
 
@@ -81,8 +68,8 @@
         </mz-collection>
     </mz-modal-content>
     <mz-modal-footer>
-    <button mz-button [flat]="true" mz-modal-close (click)="abort()">Cerrar</button>
-    <button mz-button [flat]="true" mz-modal-close (click)="abort()">Eliminar Adjuntos</button>
+    <button mz-button [flat]="true" mz-modal-close>Cerrar</button>
+    <button mz-button [flat]="true" mz-modal-close>Eliminar Adjuntos</button>
     <button mz-button [flat]="true" (click)="uploadFiles()">Enviar Archivos</button>
     </mz-modal-footer>
 </mz-modal>
@@ -229,7 +216,7 @@
                 <td>{{ ds.unidad }} </td>
                 <td *ngIf="ds.prioridad === EditRowID"><input type="number" [(ngModel)]="ds.cantidad" name="cantidad {{ds.prioridad}}"></td>
                 <td *ngIf="ds.prioridad !== EditRowID" (click) = "Edit(ds.prioridad)">{{ ds.cantidad }}</td>
-                <td>{{ ds.fecha_requerida }}</td>
+                <td>{{ ds.fecha_requerida | date:'yyyy-MM-dd' }}</td>
                 <td>
                     <!--<button mz-button
                         (click)="ModificarItemModal.open()"
@@ -258,7 +245,7 @@
             </tr>
             <tr class="border_bottom" *ngFor="let ds of ldetallesolicitudservicio">
                 <td>{{ ds.descripcion_item }}</td>
-                <td>{{ ds.fecha_requerida }}</td>
+                <td>{{ ds.fecha_requerida | date:'yyyy-MM-dd' }}</td>
                 <td>
                     <!--<button mz-button
                         (click)="ModificarServicioModal.open()"

@@ -26,6 +26,7 @@
                 name="mensaje"
                 [(ngModel)]="conversacion.mensaje"
                 placeholder="Escribe un mensaje aqui ..."
+                (keydown.enter)= "ngOnSaveConversacion()"
                 type = "text"/>
             <button class="col s1" mz-button (click)="ngOnSaveConversacion()">
                 <i mz-icon-mdi [icon]="'send'" [align]="'center'"></i>

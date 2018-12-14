@@ -5,5 +5,5 @@ export class SCFile {
     public Extension: string;
     public NombreGenerico: string;
     public codigo_solicitud: string;
-    public length: number;
+    public tamanio: number;
 }

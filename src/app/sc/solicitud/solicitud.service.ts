@@ -33,6 +33,14 @@ export class SolicitudService {
     return this.http.post(this.global.urlAPICORE + 'solicitudcompra/', data);
   }
 
+  editarSolicitudCompra(data): Observable<any> {
+    return this.http.put(this.global.urlAPICORE + 'solicitudcompra/0', data);
+  }
+
+  eliminaSolicitudCompra(data): Observable<any> {
+    return this.http.delete(this.global.urlAPICORE + 'solicitudcompra/' + data);
+  }
+
   // Funciones Guardar Detalle de Solicitud de Compra
   saveDetalleSolicitudCompra(data): Observable<any> {
     return this.http.post(this.global.urlAPICORE + 'scdetallesolicitud/', data);
@@ -66,6 +74,10 @@ export class SolicitudService {
     return this.http.put(this.global.urlAPICORE + 'scfilessolicitudcompra/' + codigo, data);
   }
 
+  getUploadFilesSolicitud(codigo) {
+    return this.http.get(this.global.urlAPICORE + 'scfilessolicitudadjunto/' + codigo);
+  }
+
   // Obtener conversaciones de la solicitud
   getConversacionesXSolicitud(data) {
     return this.http.get(this.global.urlAPICORE + 'scconversacionsolicitud/' + data);
@@ -73,6 +85,12 @@ export class SolicitudService {
   // Enviar mensaje (Guardar conversación)
   saveConversacionSolicitud(data) {
     return this.http.post(this.global.urlAPICORE + 'scconversacionsolicitud/', data);
+  }
+
+
+  // Anular la solicitud
+  saveAnularSolicitud(data) {
+    return this.http.post(this.global.urlAPICORE + 'anularsolicitud/', data);
   }
 }
 

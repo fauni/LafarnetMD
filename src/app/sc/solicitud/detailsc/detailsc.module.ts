@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DetailscRoutingModule } from './detailsc-routing.module';
 import { DetailscComponent } from './detailsc.component';
 import { MzCardModule, MzButtonModule, MzIconModule, MzNavbarModule, MzInputModule, MzSelectModule, MzDatepickerModule,
-    MzIconMdiModule, MzTextareaModule, MzModalModule, MzToastService, MzToastModule, MzValidationModule } from 'ng2-materialize';
+    MzIconMdiModule, MzTextareaModule, MzModalModule, MzToastService, MzToastModule, MzValidationModule, MzCollectionModule, MzBadgeModule, MzSpinnerModule } from 'ng2-materialize';
 import { SolicitudService } from '../solicitud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -26,7 +26,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
         FormsModule,
         ReactiveFormsModule,
         MzValidationModule,
-        NgSelectModule
+        NgSelectModule,
+        MzCollectionModule,
+        MzBadgeModule,
+        MzSpinnerModule
+
     ],
     declarations: [
         DetailscComponent

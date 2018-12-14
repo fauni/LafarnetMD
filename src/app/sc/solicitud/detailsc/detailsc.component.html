@@ -1,24 +1,80 @@
+<div id="loading">
+        <div id="loadingcontent">
+            <p id="loadingspinner">
+                <mz-spinner
+                    class="valign center-align col s4"
+                    [size]="'big'">
+                </mz-spinner>
+                <br><br>
+                Cargando Información ... 
+            </p>
+        </div>
+</div>
+
 <nav class="lafar-bg-blue">
     <div class="nav-wrapper">
         <div class="left col s12 m5 l5">
             <ul>
                 <li><a href="javascript:void(0);" [routerLink]="['/sc/solicitud/list']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
                 </li>
-                <li><a href="javascript:void(0);" class="email-type">Detalle de la Solicitud  {{codigo_solicitud}}</a>
+                <li><a href="javascript:void(0);" class="email-type">Ver Solicitud</a>
                 </li>
             </ul>
         </div>
         <div class="col s12 m7 l7 hide-on-med-and-down">
             <ul class="right">
-                <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file" (click)="AddFileModal.open()"></i></a></li>-->
                 <li><a href="javascript:void(0);" (click)="onDirigirConversacion()"><i class="modal-action modal-close  mdi-communication-textsms"></i></a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<form #form="ngForm" novalidate>
+<mz-modal  #AddFileModal
+    [fixedFooter]="true">
+    <mz-modal-header>
+        <nav class="lafar-bg-blue">
+            <div class="nav-wrapper">
+                <div class="left col s12 m5 l5">
+                <ul>
+                    <li><a href="javascript:void(0);" (click)="AddFileModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+                    </li>
+                    <li><a href="javascript:void(0);" class="email-type">Adjuntar Archivos</a>
+                    </li>
+                </ul>
+                </div>
+                <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right">
+                    <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                    <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-content-send"></i></a></li>-->
+                </ul>
+                </div>
+    
+            </div>
+        </nav>
+    </mz-modal-header>
+    <mz-modal-content>
+        <div class="margen-espacio">   
+            <ng-container>
+            <div class="style_buttom">
+               <input type="file" id="file" multiple (change)="getFileDetails($event)">
+            </div>
+            </ng-container>
+        </div>
 
+        <mz-collection>
+            <mz-collection-header><h6>Lista de Archivos Adjuntos</h6></mz-collection-header>
+            <mz-collection-item ng *ngFor="let file of lfiles"> {{file.Nombre}}.{{Extension}}</mz-collection-item>
+        </mz-collection>
+    </mz-modal-content>
+    <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close (click)="abort()">Cerrar</button>
+    <button mz-button [flat]="true" mz-modal-close (click)="abort()">Eliminar Adjuntos</button>
+    <button mz-button [flat]="true" (click)="uploadFiles()">Enviar Archivos</button>
+    </mz-modal-footer>
+</mz-modal>
+
+<form #form="ngForm" novalidate>
 <mz-card>
     <mz-card-content>
         <div class="row">
@@ -35,9 +91,9 @@
             <mz-select-container class="col s12 m3">
                 <select mz-select mz-validation required
                     id="tipo"
-                    [disabled]= "!modificar"
                     [errorMessageResource]="errorMessagesSolicitud.tipo"
                     [(ngModel)]="solicitud.tipo"
+                    [disabled]="true"
                     name="tipo"
                     [label]="'Tipo de Solicitud'"
                     [placeholder]="'Tipo de Solicitud'">
@@ -50,21 +106,23 @@
                 <i mz-icon-mdi mz-input-prefix
                     [icon]="'calendar'">
                 </i>
-                <input mz-datepicker mz-validation required disabled
+                <input mz-datepicker mz-validation required
                     [errorMessageResource]="errorMessagesSolicitud.fecha"
                     [label]="'Fecha de Solicitud'"
                     [options]="opcionesDatePicker"
                     [(ngModel)]="solicitud.fecha"
+                    [disabled]="true"
                     name="fecha"
                     id="fecha"
-                    type="tel" />
+                    type="tel"/>
             </mz-datepicker-container>
 
             <mz-select-container class="col s12 m3">
-                <select mz-select
-                    [disabled]= "!modificar"
+                <select mz-select mz-validation required
                     id="tipo_compra"
+                    [errorMessageResource]="errorMessagesSolicitud.tipo_compra"
                     [(ngModel)]="solicitud.tipo_compra"
+                    [disabled]="!modificar"
                     name="tipo_compra"
                     [label]="'Tipo de Compra'"
                     [placeholder]="'Tipo de Compra'">
@@ -74,95 +132,112 @@
                 </select>
             </mz-select-container>
         </div>
+
         <div class="row">
             <div class="col s12 m4">
+                <div *ngIf="solicitud.codigo_proveedor"></div>
                 <span class="title_select">Codigo de Proveedor</span>
                 <ng-select required
                     #SelectCodigoProveedor
-                    [disabled]= "!modificar"
                     [items]="proveedores"
                     bindLabel="CardCode"
                     bindValue="CardCode"
                     (change) = "OnLoadDatosProveedor($event)"
                     [(ngModel)]="solicitud.codigo_proveedor"
+                    [disabled]="!modificar"
                     name="codigo_proveedor">
                 </ng-select>
-            </div>
+                <div *ngIf="!solicitud.codigo_proveedor" class="mensaje-error">Seleccione un Codigo</div>
+            </div> 
 
             <div class="col s12 m8">
+                <div *ngIf="solicitud.nombre_proveedor"></div>
                 <span class="title_select">Nombre de Proveedor</span>
                 <ng-select required
                     #SelectNombreProveedor
                     [items]="proveedores"
-                    [disabled]= "!modificar"
                     bindLabel="CardName"
                     bindValue="CardName"
                     (change) = "OnLoadDatosProveedor($event)"
                     [(ngModel)]="solicitud.nombre_proveedor"
+                    [disabled]="!modificar"
                     name="nombre_proveedor">
                 </ng-select>
+                <div *ngIf="!solicitud.nombre_proveedor" class="mensaje-error">Seleccione el Nombre del Proveedor</div>
             </div>
-
-            <!--<mz-datepicker-container class="col s12 m4">
-                <i mz-icon-mdi mz-input-prefix
-                    [icon]="'calendar'">
-                </i>
-                <input mz-datepicker
-                    [label]="'Fecha Necesaria'"
-                    id="prefix-datepicker"
-                    type="tel" />
-            </mz-datepicker-container>-->
         </div>
+        <!--<mz-datepicker-container class="col s12 m4">
+            <i mz-icon-mdi mz-input-prefix
+                [icon]="'calendar'">
+            </i>
+            <input mz-datepicker
+                [label]="'Fecha Necesaria'"
+                id="prefix-datepicker"
+                type="tel" />
+        </mz-datepicker-container>-->     
         <div class="row">
             <mz-input-container class="col s12 m9">
-                <input mz-input
-                    [disabled]= "!modificar"
+                <input mz-input mz-validation required
                     [label]="'Motivo de la Solicitud'"
+                    [errorMessageResource]="errorMessagesSolicitud.motivo"
                     id="motivo"
                     [(ngModel)]="solicitud.motivo"
+                    [disabled]="!modificar"
                     name="motivo"
                     placeholder="Ingrese el Motivo de la Solicitud"
                     type="text">
             </mz-input-container>
             <div class="col s12 m3">
                 <br>
-                <button *ngIf="tipo_solicitud" 
-                    [disabled]= "!modificar"
-                    mz-button (click)="AddItemModal.open()">
+                <button *ngIf="solicitud.tipo === 'I'" mz-button [disabled]="!modificar" (click)="AddItemModal.open()">
                     <i mz-icon-mdi [icon]="'cart-plus'" [align]="'left'"></i>
-                    Agregar Items
+                    Agregar Articulo
+                </button>
+                <button *ngIf="solicitud.tipo === 'S'" mz-button [disabled]="!modificar" (click)="AddServicioModal.open()">
+                    <i mz-icon-mdi [icon]="'cart-plus'" [align]="'left'"></i>
+                    Agregar Servicio
                 </button>
             </div>
         </div>
+        <div class="chip" *ngFor="let item of lfiles" (click)="downloadFile(item.Nombre)">
+            <img *ngIf="item.Extension === 'xlsx' || item.Extension === 'xls'" src="assets/images/sc/excel-round.png" alt="Contact Person">
+            <img *ngIf="item.Extension === 'docx' || item.Extension === 'doc'" src="assets/images/sc/word.png" alt="Contact Person">
+            <img *ngIf="item.Extension === 'pdf'" src="assets/images/sc/pdf.png" alt="Contact Person">
+            {{ item.Nombre }}
+        </div>
+        <div class="adjuntos">
+            {{ lfiles.length }} archivos adjuntos
+        </div>
     </mz-card-content>
 </mz-card>
-
-<mz-card>
+<!--TABLA DETALLE SOLICITUD POR ARTICULO-->
+<mz-card *ngIf="solicitud.tipo==='I'">
     <mz-card-content>
-        <table id="table-items" class="highlight responsive-table">
+        <table id="table-items-articulo" class="highlight responsive-table">
             <tr>
                 <th>Codigo</th>
                 <th>Descripción</th>
                 <th>Unidad</th>
-                <th>Cantidad</th>
+                <th width="50">Cantidad</th>
                 <th>Fec. Requerida</th>
                 <th>Opciones</th>
             </tr>
             <tr class="border_bottom" *ngFor="let ds of ldetallesolicitud">
                 <td>{{ ds.codigo_item }}</td>
                 <td>{{ ds.descripcion_item }}</td>
-                <td>{{ ds.unidad }}</td>
-                <td>{{ ds.cantidad }}</td>
-                <td>{{ ds.fecha_requerida }}</td>
+                <td>{{ ds.unidad }} </td>
+                <td *ngIf="ds.prioridad === EditRowID"><input type="number" [(ngModel)]="ds.cantidad" name="cantidad {{ds.prioridad}}"></td>
+                <td *ngIf="ds.prioridad !== EditRowID" (click) = "Edit(ds.prioridad)">{{ ds.cantidad }}</td>
+                <td>{{ ds.fecha_requerida | date:'yyyy-MM-dd'}}</td>
                 <td>
-                    <button mz-button
-                        [disabled]= "!modificar"
+                    <!--<button mz-button
+                        (click)="ModificarItemModal.open()"
+                        (click)="onModificarArticulo(ds.prioridad)"
                         [float]="true" class="orange">
                         <i mz-icon-mdi [icon]="'pencil'"></i>
-                    </button>
-                    <button mz-button (click)="onQuitarItemSolicitud(ds.codigo_item)"
-                        [disabled]= "!modificar"
-                        [float]="true" class="red">
+                    </button>-->
+                    <button mz-button [disabled]="!modificar" (click)="onQuitarItemSolicitud(ds.codigo_item)"
+                          [float]="true" class="red">
                           <i mz-icon-mdi [icon]="'minus'"></i>
                     </button>
                 </td>
@@ -171,26 +246,60 @@
     </mz-card-content>
 </mz-card>
 
+<!--TABLA DETALLE SOLICITUD POR SERVICIO-->
+<mz-card *ngIf="solicitud.tipo==='S'">
+    <mz-card-content>
+        <table id="table-items-servicio" class="highlight responsive-table">
+            <tr>
+                <th>Descripción</th>
+                <th>Fec. Requerida</th>
+                <th>Opciones</th>
+            </tr>
+            <tr class="border_bottom" *ngFor="let ds of ldetallesolicitudservicio">
+                <td>{{ ds.descripcion_item }}</td>
+                <td>{{ ds.fecha_requerida | date:'yyyy-MM-dd' }}</td>
+                <td>
+                    <!--<button mz-button
+                        (click)="ModificarServicioModal.open()"
+                        [float]="true" class="orange">
+                        <i mz-icon-mdi [icon]="'pencil'"></i>
+                    </button>-->
+                    <button mz-button [disabled]="!modificar" (click)="onQuitarItemSolicitud(ds.codigo_item)"
+                          [float]="true" class="red">
+                          <i mz-icon-mdi [icon]="'minus'"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </mz-card-content>
+</mz-card>
 
+<!--
+<div class="row">
+    <pre>
+        {{ ldetallesolicitud | json }}    
+    </pre>
+</div>
+-->
 <!--<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="onValidaCabeceraSolicitud()">
         <i class="large mdi-navigation-check"></i>
     </a>
 </div>-->
 
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+<div *ngIf="solicitud.estado_autorizacion_superior !== 'X'" class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <button 
         [float]="true" mz-button 
         [disabled]="!form.valid" 
         [large]="true" 
         class="blue"
-        (click)="onValidaCabeceraSolicitud()"
+        (click)="onValidaCabeceraSolicitudModificar()"
         type="submit"><i class="large mdi-action-done"></i>
     </button>
 </div>
 </form>
 
-
+<!-- REGION BEGIN AGREGAR O ADICIONAR ******************************************************************************************************************************-->
 <form  #formDS="ngForm" novalidate>
     <mz-modal #AddItemModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
         <mz-modal-header>
@@ -205,7 +314,7 @@
                     <div class="col s12 m7 l7 hide-on-med-and-down">
                     <ul class="right">
                         <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
-                        <li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>
+                        <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>-->
                     </ul>
                     </div>
                 </div>
@@ -217,7 +326,8 @@
                     <i mz-icon-mdi mz-input-prefix
                         [icon]="'calendar'">
                     </i>
-                    <input mz-datepicker
+                    <input mz-datepicker mz-validation required
+                        [errorMessageResource]="errorMessagesSolicitud.fecha_requerida"
                         [label]="'Fecha Necesaria'"
                         id="fecha_requerida"
                         [(ngModel)]="detallesolicitud.fecha_requerida"
@@ -225,9 +335,10 @@
                         [options]= "opcionesDatePicker"
                         type="tel" />
                 </mz-datepicker-container>
+
                 <div class="col s12 m5"></div>
                 <mz-input-container class="col s12 m3">
-                    <input mz-input
+                    <input mz-input disabled
                         [label]="'Numero de Solicitud'"
                         id="dc_codigo_solicitud"
                         placeholder="Codigo de Solicitud"
@@ -239,6 +350,7 @@
     
             <div class="row">
                 <div class="col s12 m4">
+                    <div *ngIf="detallesolicitud.codigo_item"></div>
                     <span class="title_select">Codigo de Item</span>
                     <ng-select
                         [items]="articulos"
@@ -248,9 +360,11 @@
                         [(ngModel)]="detallesolicitud.codigo_item"
                         name="codigo_item">
                     </ng-select>
+                    <div *ngIf="!detallesolicitud.codigo_item"class="mensaje-error">Seleccione un Codigo</div>
                 </div>
     
                 <div class="col s12 m8">
+                    <div *ngIf="detallesolicitud.descripcion_item"></div>
                     <span class="title_select">Nombre del Articulo</span>
                     <ng-select
                         [items]="articulos"
@@ -260,12 +374,13 @@
                         [(ngModel)]="detallesolicitud.descripcion_item"
                         name="descripcion_item">
                     </ng-select>
+                    <div *ngIf="!detallesolicitud.descripcion_item"class="mensaje-error">Seleccione el Nombre del Articulo</div>
                 </div>
             </div>
     
             <div class="row">
                 <mz-input-container class="col s12 m4">
-                    <input mz-input
+                    <input mz-input disabled
                         id="unidad"
                         [(ngModel)]="detallesolicitud.unidad"
                         name="unidad"
@@ -273,13 +388,17 @@
                         type="text">
                 </mz-input-container>
                 <mz-input-container class="col s12 m4">
-                    <input mz-input
+                    <input mz-input mz-validation required
+                    [errorMessageResource]="errorMessagesSolicitud. cantidad"
                         id="cantidad"
                         [(ngModel)]="detallesolicitud.cantidad"
                         name="cantidad"
                         [label]="'Cantidad'"
                         type="number">
+
                 </mz-input-container>
+
+
                 <div class="row">
                     <mz-datepicker-container class="col s12 m4">
                         <i mz-icon-mdi mz-input-prefix
@@ -294,25 +413,331 @@
                             type="tel" />
                     </mz-datepicker-container>
                 </div>
-            </div>
-            
+            </div> 
         </mz-modal-content>
+
         <mz-modal-footer>
           <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
-          <button mz-button [flat]="true" mz-modal-close (click)="onAddItemSolicitud()">Agregar</button>
+          <button mz-button [flat]="true" mz-modal-close (click)="onAddItemSolicitud()" mz-modal-close [disabled]="!formDS.valid" type="submit">Agregar</button>
         </mz-modal-footer>
       </mz-modal>
 </form>
 
+<form  #formDSS="ngForm" novalidate>
+    <mz-modal #AddServicioModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
+        <mz-modal-header>
+            <nav class="lafar-bg-blue">
+                <div class="nav-wrapper">
+                    <div class="left col s12 m5 l5">
+                    <ul>
+                        <li><a href="javascript:void(0);" (click)="AddItemModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                        <li><a href="javascript:void(0);" class="email-type">Agregar Nuevo Servicio</a></li>
+                    </ul>
+                    </div>
+                    <div class="col s12 m7 l7 hide-on-med-and-down">
+                    <ul class="right">
+                        <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                        <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>-->
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        </mz-modal-header>
+        <mz-modal-content>
+            <div class="row">
+                <mz-textarea-container class="col s12">
+                  <textarea mz-textarea mz-validation required
+                    id="s_descripcion"
+                    [errorMessageResource]="errorMessagesSolicitud.s_descripcion"
+                    [label]="'Descripción del Servicio'"
+                    [(ngModel)]="detallesolicitudservicio.descripcion_item"
+                    name="s_descripcion"
+                    [length]="255">
+                  </textarea>
+                </mz-textarea-container>
+                
+            </div>
+            <div class="row">
+                <mz-datepicker-container class="col s12">
+                    <i mz-icon-mdi mz-input-prefix
+                        [icon]="'calendar'">
+                    </i>
+                    <input mz-datepicker mz-validation required
+                        [errorMessageResource]="errorMessagesSolicitud.fecha_requerida_servicio"
+                        [label]="'Fecha Necesaria'"
+                        id="fecha_requerida_servicio"
+                        [(ngModel)]="detallesolicitudservicio.fecha_requerida"
+                        name="fecha_requerida_servicio"
+                        [options]= "opcionesDatePicker"
+                        type="tel" />
+                </mz-datepicker-container>
+            </div>
 
-<div class="fixed-action-btn">
-    <a class="btn-floating btn-large red">
-        <i class="large material-icons">mode_edit</i>
-    </a>
-    <ul>
-        <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-        <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-        <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-        <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-    </ul>
+        </mz-modal-content>
+
+        <mz-modal-footer>
+          <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+          <button mz-button [flat]="true" mz-modal-close (click)="onAddServicioSolicitud()" mz-modal-close [disabled]="!formDSS.valid" type="submit">Agregar</button>
+        </mz-modal-footer>
+
+      </mz-modal>
+</form>
+<!-- END REGION -->
+
+
+<!-- REGION BEGIN MODIFICAR  ******************************************************************************************************************************-->
+<form  #formDSModify="ngForm" novalidate>
+        <mz-modal #ModificarItemModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
+            <mz-modal-header>
+                <nav class="lafar-bg-blue">
+                    <div class="nav-wrapper">
+                        <div class="left col s12 m5 l5">
+                        <ul>
+                            <li><a href="javascript:void(0);" (click)="ModificarItemModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                            <li><a href="javascript:void(0);" class="email-type">Modificar Articulo</a></li>
+                        </ul>
+                        </div>
+                        <div class="col s12 m7 l7 hide-on-med-and-down">
+                        <ul class="right">
+                            <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                            <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>-->
+                        </ul>
+                        </div>
+                    </div>
+                </nav>
+            </mz-modal-header>
+            <mz-modal-content>
+                <div class="row">
+                    <mz-datepicker-container class="col s12 m4">
+                        <i mz-icon-mdi mz-input-prefix
+                            [icon]="'calendar'">
+                        </i>
+                        <input mz-datepicker mz-validation required
+                            [errorMessageResource]="errorMessagesSolicitud.fecha_requerida"
+                            [label]="'Fecha Necesaria'"
+                            id="fecha_requerida"
+                            [(ngModel)]="detallesolicitud.fecha_requerida"
+                            name="fecha_requerida"
+                            [options]= "opcionesDatePicker"
+                            type="tel" />
+                    </mz-datepicker-container>
+    
+                    <div class="col s12 m5"></div>
+                    <mz-input-container class="col s12 m3">
+                        <input mz-input disabled
+                            [label]="'Numero de Solicitud'"
+                            id="dc_codigo_solicitud"
+                            placeholder="Codigo de Solicitud"
+                            [(ngModel)]="solicitud.codigo"
+                            name="codigo"
+                            type="text">
+                    </mz-input-container>
+                </div>
+        
+                <div class="row">
+                    <div class="col s12 m4">
+                        <div *ngIf="detallesolicitud.codigo_item"></div>
+                        <span class="title_select">Codigo de Item</span>
+                        <ng-select
+                            [items]="articulos"
+                            bindLabel="ItemCode"
+                            bindValue="ItemCode"
+                            (change) = "OnLoadDatosArticulo($event)"
+                            [(ngModel)]="detallesolicitud.codigo_item"
+                            name="codigo_item">
+                        </ng-select>
+                        <div *ngIf="!detallesolicitud.codigo_item"class="mensaje-error">Seleccione un Codigo</div>
+                    </div>
+        
+                    <div class="col s12 m8">
+                        <div *ngIf="detallesolicitud.descripcion_item"></div>
+                        <span class="title_select">Nombre del Articulo</span>
+                        <ng-select
+                            [items]="articulos"
+                            bindLabel="ItemName"
+                            bindValue="ItemName"
+                            (change) = "OnLoadDatosArticulo($event)"
+                            [(ngModel)]="detallesolicitud.descripcion_item"
+                            name="descripcion_item">
+                        </ng-select>
+                        <div *ngIf="!detallesolicitud.descripcion_item"class="mensaje-error">Seleccione el Nombre del Articulo</div>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <mz-input-container class="col s12 m4">
+                        <input mz-input disabled
+                            id="unidad"
+                            [(ngModel)]="detallesolicitud.unidad"
+                            name="unidad"
+                            [label]="'Unidad'"
+                            type="text">
+                    </mz-input-container>
+                    <mz-input-container class="col s12 m4">
+                        <input mz-input mz-validation required
+                        [errorMessageResource]="errorMessagesSolicitud. cantidad"
+                            id="cantidad"
+                            [(ngModel)]="detallesolicitud.cantidad"
+                            name="cantidad"
+                            [label]="'Cantidad'"
+                            type="number">
+    
+                    </mz-input-container>
+    
+    
+                    <div class="row">
+                        <mz-datepicker-container class="col s12 m4">
+                            <i mz-icon-mdi mz-input-prefix
+                                [icon]="'calendar'">
+                            </i>
+                            <input mz-datepicker disabled
+                                [label]="'Fecha de Arte'"
+                                id="fecha_arte"
+                                [(ngModel)]="detallesolicitud.fecha_arte"
+                                name="fecha_arte"
+                                [options]= "opcionesDatePicker"
+                                type="tel" />
+                        </mz-datepicker-container>
+                    </div>
+                </div> 
+            </mz-modal-content>
+    
+            <mz-modal-footer>
+              <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+              <button mz-button [flat]="true" mz-modal-close (click)="onAddItemSolicitud()" mz-modal-close [disabled]="!formDSModify.valid" type="submit">Modificar</button>
+            </mz-modal-footer>
+    
+          </mz-modal>
+    </form>
+    
+    <form  #formDSSModify="ngForm" novalidate>
+        <mz-modal #ModificarServicioModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
+            <mz-modal-header>
+                <nav class="lafar-bg-blue">
+                    <div class="nav-wrapper">
+                        <div class="left col s12 m5 l5">
+                        <ul>
+                            <li><a href="javascript:void(0);" (click)="ModificarServicioModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                            <li><a href="javascript:void(0);" class="email-type">Modificar Servicio</a></li>
+                        </ul>
+                        </div>
+                        <div class="col s12 m7 l7 hide-on-med-and-down">
+                        <ul class="right">
+                            <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                            <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>-->
+                        </ul>
+                        </div>
+                    </div>
+                </nav>
+            </mz-modal-header>
+            <mz-modal-content>
+                <div class="row">
+                    <mz-textarea-container class="col s12">
+                      <textarea mz-textarea mz-validation required
+                        id="s_descripcion"
+                        [errorMessageResource]="errorMessagesSolicitud.s_descripcion"
+                        [label]="'Descripción del Servicio'"
+                        [(ngModel)]="detallesolicitudservicio.descripcion_item"
+                        name="s_descripcion"
+                        [length]="255">
+                      </textarea>
+                    </mz-textarea-container>
+                    
+                </div>
+                <div class="row">
+                    <mz-datepicker-container class="col s12">
+                        <i mz-icon-mdi mz-input-prefix
+                            [icon]="'calendar'">
+                        </i>
+                        <input mz-datepicker mz-validation required
+                            [errorMessageResource]="errorMessagesSolicitud.fecha_requerida_servicio"
+                            [label]="'Fecha Necesaria'"
+                            id="fecha_requerida_servicio"
+                            [(ngModel)]="detallesolicitudservicio.fecha_requerida"
+                            name="fecha_requerida_servicio"
+                            [options]= "opcionesDatePicker"
+                            type="tel" />
+                    </mz-datepicker-container>
+                </div>
+    
+            </mz-modal-content>
+    
+            <mz-modal-footer>
+              <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+              <button mz-button [flat]="true" mz-modal-close (click)="onAddServicioSolicitud()" mz-modal-close [disabled]="!formDSSModify.valid" type="submit">Modificar</button>
+            </mz-modal-footer>
+    
+          </mz-modal>
+    </form>
+<!-- END REGION **************************************************************************************************************** -->
+    
+<!-- REGION ANULAR SOLICITUD -->
+    <mz-modal #AnularSolicitudModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="false">
+        <mz-modal-header>
+            <nav class="lafar-bg-blue">
+                <div class="nav-wrapper">
+                    <div class="left col s12 m5 l5">
+                    <ul>
+                        <li><a href="javascript:void(0);" (click)="AnularSolicitudModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                        <li><a href="javascript:void(0);" class="email-type">Anular Solicitud</a></li>
+                    </ul>
+                    </div>
+                    <div class="col s12 m7 l7 hide-on-med-and-down">
+                    <ul class="right">
+                        <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                        <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>-->
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        </mz-modal-header>
+        <mz-modal-content>
+            <mz-card>
+                <mz-card-content>
+                    <mz-textarea-container>
+                        <i mz-icon-mdi mz-textarea-prefix
+                            [icon]="'eraser'">
+                        </i>
+                        <textarea mz-textarea
+                            [label]="'Motivo de Anulación'"
+                            [(ngModel)]="asolicitud.motivo_anulacion"
+                            name="motivo_anulacion"
+                            id="motivo_anulacion"
+                            placeholder="Ingrese el motivo de anulación"
+                            length="300"></textarea>
+                    </mz-textarea-container>
+                </mz-card-content>
+            </mz-card>
+    
+            <!--<div class="row">
+                <pre>
+                    {{ asolicitud | json }}    
+                </pre>
+            </div>-->
+        </mz-modal-content>
+        <mz-modal-footer>
+            <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+            <button mz-button [flat]="true" mz-modal-close (click)="onGuardarAnularSolicitud()">Anular</button>
+        </mz-modal-footer>
+    </mz-modal>
+<!-- END REGION ANULAR SOLICITUD-->
+
+<div *ngIf="solicitud.estado_autorizacion_superior !== 'X'" class="footer" id="footer">
+    <button mz-button (click)="onEditar()" *ngIf="!modificar">
+        Editar
+    </button>
+    <button mz-button (click)="AnularSolicitudModal.open()" class="red">
+        Anular
+    </button>
+    <button mz-button (click)="onCancelarEdicion()" *ngIf="modificar">
+        Cancel
+    </button>
 </div>
+
+
+
+<!--<div class="row">
+    <pre>
+        {{ lfiles | json }}    
+    </pre>
+</div>-->
