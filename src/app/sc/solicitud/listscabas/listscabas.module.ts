@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MzCardModule, MzIconMdiModule, MzBadgeModule,
     MzButtonModule, MzModalModule, MzDatepickerModule, MzInputModule, 
-    MzSelectModule, MzToastService, MzToastModule } from 'ng2-materialize';
+    MzSelectModule, MzToastService, MzToastModule, MzTextareaModule, MzTooltipModule } from 'ng2-materialize';
 import { SolicitudService } from '../solicitud.service';
 import { ListscabasRoutingModule } from './listscabas-routing.module';
 import { ListscabasComponent } from './listscabas.component';
+import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
     imports: [
@@ -19,7 +21,11 @@ import { ListscabasComponent } from './listscabas.component';
         MzDatepickerModule,
         MzInputModule,
         MzSelectModule,
-        MzToastModule
+        MzToastModule,
+        MzTextareaModule,
+        MzTooltipModule,
+        FormsModule,
+        Ng2SearchPipeModule
     ],
     declarations: [
         ListscabasComponent

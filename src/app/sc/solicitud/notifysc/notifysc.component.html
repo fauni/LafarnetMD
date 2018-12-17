@@ -11,7 +11,7 @@
         <div class="col s12 m7 l7 hide-on-med-and-down">
             <ul class="right">
                 <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
-                <li><a href="javascript:void(0);" (click)="onDirigirConversacion()"><i class="modal-action modal-close  mdi-communication-textsms"></i></a></li>
+                <!--<li><a href="javascript:void(0);" (click)="onDirigirConversacion()"><i class="modal-action modal-close  mdi-communication-textsms"></i></a></li>-->
             </ul>
         </div>
     </div>
@@ -21,14 +21,14 @@
 <mz-card>
     <mz-card-content>
         <div class="row">
-            <input class="col s11"
+            <input class="col s12 m11"
                 id="mensaje"
                 name="mensaje"
                 [(ngModel)]="conversacion.mensaje"
                 placeholder="Escribe un mensaje aqui ..."
                 (keydown.enter)= "ngOnSaveConversacion()"
                 type = "text"/>
-            <button class="col s1" mz-button (click)="ngOnSaveConversacion()">
+            <button class="col s12 m1" mz-button (click)="ngOnSaveConversacion()">
                 <i mz-icon-mdi [icon]="'send'" [align]="'center'"></i>
             </button>
         </div>

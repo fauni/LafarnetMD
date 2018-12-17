@@ -42,3 +42,15 @@ export class RequestAnulacionSolicitud {
     public motivo_anulacion: string;
     public usuario_anulacion: string;
 }
+
+export class RequestAutorizacionSolicitud {
+    public codigo_solicitud: string;
+    public motivo_autorizacion_superior: string;
+    public estado_autorizacion: string;
+    public autorizador: string;
+}
+
+export class RequestEstadoAutorizador {
+    public id_superior: string;
+    public estado_autorizacion: string;
+}

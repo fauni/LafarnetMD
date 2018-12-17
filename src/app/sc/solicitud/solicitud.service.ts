@@ -55,14 +55,21 @@ export class SolicitudService {
     return this.http.get(this.global.urlAPICORE + 'solicitudcompra/' + data);
   }
 
-  // Funciones para Listado de Solicitud por usuario
+  // Funciones para Listado de Solicitud por autorizador
   getListadoSolicitudXAutorizador(data) {
     return this.http.get(this.global.urlAPICORE + 'scsolicitudautorizador/' + data);
+  }
+  getListadoSolicitudXEstadoForAutorizador(data) {
+    return this.http.post(this.global.urlAPICORE + 'scsolicitudautorizador/', data);
   }
 
   // Funciones para Listado de Solicitud para convertir en Orden de Compra
   getListadoSolicitudXAbastecimiento(data) {
     return this.http.get(this.global.urlAPICORE + 'scsolicitudabastecimiento/');
+  }
+
+  getListadoSolicitudXEstado(data) {
+    return this.http.get(this.global.urlAPICORE + 'scsolicitudabastecimiento/' + data);
   }
 
   // Subir archivos adjuntos para la solicitud
@@ -91,6 +98,11 @@ export class SolicitudService {
   // Anular la solicitud
   saveAnularSolicitud(data) {
     return this.http.post(this.global.urlAPICORE + 'anularsolicitud/', data);
+  }
+
+  // Autorizar la solicitud
+  saveAutorizarSolicitud(data) {
+    return this.http.post(this.global.urlAPICORE + 'autorizarsolicitud/', data);
   }
 }
 

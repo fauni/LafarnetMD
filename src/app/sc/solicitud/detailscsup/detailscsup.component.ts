@@ -1,31 +1,39 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { SolicitudCompra } from '../solicitud';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SolicitudCompra, RequestAnulacionSolicitud, RequestAutorizacionSolicitud } from '../solicitud';
 import { SolicitudService } from '../solicitud.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MzToastService } from 'ng2-materialize';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Proveedorsc } from '../../proveedorsc';
 import { DetalleSolicitud } from '../detallesolicitud';
 import { ItemArticuloSc } from '../../itemarticulosc';
 import { FormGroup } from '@angular/forms';
 import { SCFile } from '../../scfile';
+import { Globals } from '../../../globals';
 
 @Component({
-  selector: 'app-addsc',
-  templateUrl: './addsc.component.html',
-  styleUrls: ['./addsc.component.scss'],
+  selector: 'app-detailscsup',
+  templateUrl: './detailscsup.component.html',
+  styleUrls: ['./detailscsup.component.scss'],
 })
-export class AddscComponent implements OnInit {
-  modificar: Boolean = false;
+export class DetailscsupComponent implements OnInit {
 
+// Anulacion de Solicitud
+  asolicitud: RequestAnulacionSolicitud = new RequestAnulacionSolicitud();
+// Autorizar Aprobar o Rechazar solicitud
+  autorizarsolcitud: RequestAutorizacionSolicitud = new RequestAutorizacionSolicitud();
+
+//#region VARIABLES PARA MODIFICACIÓN
+  modificar: Boolean = false;
+//#endregion
+
+  codigo_solicitud: string;
   // Variables para subir archivos
   myFiles: string [] = [];
   public lfiles: Array<SCFile> = new Array<SCFile>(); // Lista de Archivos que fueron subidos
 
 //#region VARIABLES DE VALIDACIÓN
   @ViewChild('form') form: FormGroup;
-  @ViewChild('filesolicitud') myInputVariable: ElementRef;
-
   submitted = false;
 
   errorMessagesSolicitud = {
@@ -89,9 +97,15 @@ export class AddscComponent implements OnInit {
 
   numero_item: number;
   constructor(
+    private global: Globals,
     private servSC: SolicitudService,
     private toast: MzToastService,
-    private router: Router){
+    private router: Router, private route: ActivatedRoute) {
+      this.route.params.subscribe(params => {
+        this.codigo_solicitud = params['id'].toString();
+        // this.onLoadUser(atob(this.username));
+    });
+    this.modificar = false;
   }
 
    // Variables para agregar detalle
@@ -108,7 +122,7 @@ export class AddscComponent implements OnInit {
     this.onGetProveedores();
     this.onGetItemArticulo();
     this.solicitud.tipo = 'I';
-    // this.onLoadSolicitudCompra();
+    this.onLoadSolicitudCompra(this.codigo_solicitud);
     // this.onLoadDetalleSolicitudCompra();
     this.onLoadListaDetalleSolicitud();
     this.onLimpiaListaDetalleSolicitud();
@@ -125,48 +139,68 @@ export class AddscComponent implements OnInit {
     this.detallesolicitudservicio.fecha_arte = new Date('1990-01-01');
   }
 
-  onLoadSolicitudCompra() {
-    this.solicitud.codigo = 'SCA003';
-    this.solicitud.tipo = 'A';
-    this.solicitud.estado = 'C';
-    this.solicitud.estado_transferencia = 'N';
-    this.solicitud.fecha = new Date('2018-11-27');
-    this.solicitud.motivo = 'URGENTE';
-    this.solicitud.usuario_anulacion = 'NA';
-    this.solicitud.motivo_anulacion = 'NA';
-    this.solicitud.fecha_anulacion = new Date('2018-11-27');
-    this.solicitud.solicitante = 'faruni';
-    this.solicitud.autorizador = 'mfloresr';
-    this.solicitud.estado_autorizacion_superior = 'P';
-    this.solicitud.fecha_autorizacion_superior = new Date('2018-11-27');
-    this.solicitud.motivo_autorizacion = 'NA';
-    this.solicitud.tipo_compra = 'I';
-    this.solicitud.codigo_proveedor = '911000001';
-    this.solicitud.nombre_proveedor = 'PROVEEDORE PRUEBA';
-    this.solicitud.usuario_creacion = 'faruni';
-    this.solicitud.fecha_creacion = new Date('2018-11-27');
-    this.solicitud.usuario_modificacion = 'faruni';
-    this.solicitud.fecha_modificacion = new Date('2018-11-27');
+  onLoadSolicitudCompra(codigo: string) {
+    this.servSC.getSolicitudXCodigo(codigo).subscribe(
+        data => {
+            this.solicitud = data['body'];
+            this.onLoadDetalleSolicitudCompra(codigo);
+            this.onGetUploadFilesSolicitud(codigo);
+            this.onLoadAnularSolicitud(codigo);
+            this.onLoadAutorizarSolicitud(codigo);
+        },
+        (err: HttpErrorResponse) => {
+            this.toast.show('No se obtuvo ninguna solicitud, Ocurrio un error!', 3000, 'red');
+            if (err.error instanceof Error) {
+            console.log('Ocurrio un error:', err.error.message);
+            } else {
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+        }
+    );
   }
 
-// Funcion para Guardar la Cabecera de la solicitud
+  onLoadDetalleSolicitudCompra(codigo: string) {
+    this.servSC.getDetalleSolicitudXCodigo(codigo).subscribe(
+        data => {
+            this.ldetallesolicitud = data['body'];
+            this.ldetallesolicitudservicio = data['body'];
+        },
+        (err: HttpErrorResponse) => {
+            this.toast.show('No se pudo traer el detalle de esta solicitud, intente nuevamente!', 3000, 'red');
+            if (err.error instanceof Error) {
+            console.log('Ocurrio un error:', err.error.message);
+            } else {
+            console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+        }
+    );
+  }
 
-  onSaveSolicitudCompra(s: SolicitudCompra): void {
-    s.autorizador = localStorage.getItem('id_superior');
-    s.estado = 'A';
-    s.estado_autorizacion_superior = 'P';
-    s.motivo_autorizacion = 'NA';
-    s.estado_transferencia = 'N';
-    s.motivo_anulacion = 'NA';
-    s.solicitante = localStorage.getItem('username');
-    s.usuario_anulacion = 'NA';
-    s.usuario_creacion = localStorage.getItem('username');
+// Funcion para Eliminar Solicitud por Codigo
+  onEliminarSolicitudCompra(): void {
+    this.servSC.eliminaSolicitudCompra(this.codigo_solicitud).subscribe(
+      data => {
+      // this.toast.show('Se guardo correctamente!', 3000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+        this.onSaveSolicitudCompraModificar(this.solicitud);
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('No se modifico, ocurrio un error!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+// Funcion para Modificar la Cabecera de la solicitud
+  onSaveSolicitudCompraModificar(s: SolicitudCompra): void {
     s.usuario_modificacion = localStorage.getItem('username');
-
-    this.servSC.saveSolicitudCompra(s).subscribe(
+    this.servSC.editarSolicitudCompra(s).subscribe(
         data => {
           if (data['status'] == 304) {
-              this.toast.show('No se guardo, revise la información', 3000, 'red');
+              this.toast.show('No se modifico, revise la información', 1000, 'red');
               this.botonSave = true;
           } else {
               if (s.tipo == 'I') {
@@ -178,7 +212,7 @@ export class AddscComponent implements OnInit {
                   this.detallesolicitud.tipo_item = s.tipo;
                   this.onSaveDetalleSolicitudCompra(this.detallesolicitud);
                 });
-                this.toast.show('Se guardo correctamente!', 1500, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
               } else {
                 this.ldetallesolicitudservicio.forEach(element => {
                   this.detallesolicitudservicio = new DetalleSolicitud();
@@ -188,7 +222,7 @@ export class AddscComponent implements OnInit {
                   this.detallesolicitudservicio.tipo_item = s.tipo;
                   this.onSaveDetalleSolicitudCompra(this.detallesolicitudservicio);
                 });
-                this.toast.show('Se guardo correctamente!', 3000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
               }
               this.onSaveUploadFilesSolicitud(this.lfiles, this.solicitud.codigo);
           }
@@ -196,7 +230,7 @@ export class AddscComponent implements OnInit {
         console.log(data);
       },
       (err: HttpErrorResponse) => {
-        this.toast.show('No se guardo, ocurrio un error!', 3000, 'red');
+        this.toast.show('No se modifico, ocurrio un error!', 3000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
         } else {
@@ -206,20 +240,20 @@ export class AddscComponent implements OnInit {
     );
   }
 
-  onValidaCabeceraSolicitud() {
+  onValidaCabeceraSolicitudModificar() {
     if (this.solicitud.tipo == 'I') {
       if (this.ldetallesolicitud.length > 0) { // Valida si existen items agregados en la solicitud
         // this.toast.show('Guardando' + this.solicitud.codigo, 1000, 'green');
-        this.onSaveSolicitudCompra(this.solicitud);
+        this.onEliminarSolicitudCompra();
       }else {
-        this.toast.show('No existen Items agregados a la solicitud ' + this.solicitud.codigo, 3000, 'red');
+        this.toast.show('No existen Items agregados a la solicitud ' + this.solicitud.codigo, 1000, 'red');
       }
     } else {
       if (this.ldetallesolicitudservicio.length > 0) { // Valida si existen items agregados en la solicitud
         // this.toast.show('Guardando' + this.solicitud.codigo, 1000, 'green');
-        this.onSaveSolicitudCompra(this.solicitud);
+        this.onEliminarSolicitudCompra();
       }else {
-        this.toast.show('No existen Items agregados a la solicitud ' + this.solicitud.codigo, 3000, 'red');
+        this.toast.show('No existen Items agregados a la solicitud ' + this.solicitud.codigo, 1000, 'red');
       }
     }
   }
@@ -382,14 +416,8 @@ export class AddscComponent implements OnInit {
     });
   }
   */
-
+//#region ARCHIVOS ADJUNTOS --------------------------------------------------------------------------
   // Subir archivos
-  resetFileButton() {
-    console.log(this.myInputVariable.nativeElement.files);
-    this.myInputVariable.nativeElement.value = '';
-    console.log(this.myInputVariable.nativeElement.files);
-    this.lfiles = new Array<SCFile>();
-  }
   getFileDetails (e) {
     // console.log (e.target.files);
     for (let i = 0; i < e.target.files.length; i++) {
@@ -434,12 +462,46 @@ export class AddscComponent implements OnInit {
     );
   }
 
+  onGetUploadFilesSolicitud (codigo_solicitud: string): void {
+    this.servSC.getUploadFilesSolicitud(codigo_solicitud).subscribe(
+      data => {
+        this.lfiles = data['body'];
+        // this.toast.show('Se subio los archivos correctamente!', 2000, 'green');
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('Ocurrio un error al obtener los archivos adjuntos a esta solicitud!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  downloadFile(nombre: string) { // Funcion para descargar el archivo adjunto
+    // alert(nombre);
+    window.open(this.global.urlAPICORE + 'scfilessolicitudcompra/' + nombre.replace('.', '|'));
+  }
+//#endregion
+
+
   //#region MODIFICAR DETALLE ARTICULO -----------------------------------------------------------
   onModificarArticulo(codigo: string) {
-    alert(codigo);
+    // alert(codigo);
   }
   //#endregion
 
+  //#region EDITAR SOLICITUD
+  onEditar(): void {
+    this.modificar = true;
+  }
+
+  onCancelarEdicion(): void {
+    this.modificar = false;
+  }
+  //#endregion
 
   // Funciones Loading
   openLoading() {
@@ -450,4 +512,68 @@ export class AddscComponent implements OnInit {
       const loading = $('#loading');
       loading.fadeOut();
   }
+
+  onDirigirConversacion() {
+    this.router.navigate(['sc/solicitud/notify/' + this.codigo_solicitud]);
+  }
+
+  // Funciones para Anular la Solicitud
+  //#region Funciones para anular la solicitud
+
+  onLoadAnularSolicitud(codigo_solicitud: string): void {
+    this.asolicitud = new RequestAnulacionSolicitud();
+    this.asolicitud.codigo_solicitud = this.solicitud.codigo;
+    this.asolicitud.usuario_anulacion = localStorage.getItem('username');
+    // this.onGuardarAnularSolicitud();
+  }
+
+  onGuardarAnularSolicitud() {
+    this.servSC.saveAnularSolicitud(this.asolicitud).subscribe(
+      data => {
+        this.toast.show('Se anulo la solicitud!', 1000, 'green');
+        this.router.navigate(['/sc/solicitud/list']);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('Ocurrio un error al anular la solicitud. Intente nuevamente!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  onLoadAutorizarSolicitud(codigo_solicitud: string): void {
+    this.autorizarsolcitud = new RequestAutorizacionSolicitud();
+    this.autorizarsolcitud.codigo_solicitud = this.solicitud.codigo;
+    this.autorizarsolcitud.autorizador = localStorage.getItem('username');
+    // this.onGuardarAnularSolicitud();
+  }
+
+  onGuardarAutorizarSolicitud(estado_autorizacion_superior: string) {
+    this.autorizarsolcitud.estado_autorizacion = estado_autorizacion_superior;
+    let tipo_autorizacion: string = '';
+    if (this.autorizarsolcitud.estado_autorizacion == 'A') {
+      tipo_autorizacion = 'aprobo';
+    } else {
+      tipo_autorizacion = 'rechazo';
+    }
+    this.servSC.saveAutorizarSolicitud(this.autorizarsolcitud).subscribe(
+      data => {
+        this.toast.show('Se ' + tipo_autorizacion + ' la solicitud!', 1000, 'green');
+        this.router.navigate(['/sc/solicitud/list_aut']);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('Ocurrio un error al ' + tipo_autorizacion + ' la solicitud. Intente nuevamente!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+  //#endregion
+
 }
