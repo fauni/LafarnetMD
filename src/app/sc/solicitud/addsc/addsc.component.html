@@ -57,7 +57,7 @@
         <div class="margen-espacio">   
             <ng-container>
             <div class="style_buttom">
-               <input type="file" id="file" multiple (change)="getFileDetails($event)">
+               <input #filesolicitud type="file" name="filesolicitud" multiple (change)="getFileDetails($event)">
             </div>
             </ng-container>
         </div>
@@ -69,7 +69,7 @@
     </mz-modal-content>
     <mz-modal-footer>
     <button mz-button [flat]="true" mz-modal-close>Cerrar</button>
-    <button mz-button [flat]="true" mz-modal-close>Eliminar Adjuntos</button>
+    <button mz-button [flat]="true" (click)="resetFileButton()">Eliminar Adjuntos</button>
     <button mz-button [flat]="true" (click)="uploadFiles()">Enviar Archivos</button>
     </mz-modal-footer>
 </mz-modal>

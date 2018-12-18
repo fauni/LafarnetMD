@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SolicitudService } from '../solicitud.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MzToastService } from 'ng2-materialize';
-import { Solicitudcompralistado } from '../solicitud';
+import { Solicitudcompralistado, SolicitudCompra, RequestAnulacionSolicitud, RequestAutorizacionSolicitud } from '../solicitud';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./listscabas.component.scss'],
 })
 export class ListscabasComponent implements OnInit {
+// vARIABLES DE BUSQUEDA
+  term: string = '';
+  estado_autorizacion: string;
+//END VARIABLES DE BUSQUEDA
+
   lsolicitud: Array<Solicitudcompralistado> = new Array<Solicitudcompralistado>();
+  solicitud: SolicitudCompra = new SolicitudCompra();
+
+  // Anulacion de Solicitud
+  asolicitud: RequestAnulacionSolicitud = new RequestAnulacionSolicitud();
+  // Autorizar Aprobar o Rechazar solicitud
+  autorizarsolcitud: RequestAutorizacionSolicitud = new RequestAutorizacionSolicitud();
+
+
   constructor(private servSC: SolicitudService, private toast: MzToastService, private router: Router) { }
 
   ngOnInit() {
@@ -25,9 +38,9 @@ export class ListscabasComponent implements OnInit {
       data => {
         if (data['length'] > 0) {
           this.lsolicitud = data['body'];
-          this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 1000, 'green');
+          // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
         }else {
-          this.toast.show('No tiene solicitudes para autorizar!', 1000, 'red');
+          this.toast.show('No tiene solicitudes!', 1000, 'red');
         }
         console.log(data);
       },
@@ -42,11 +55,80 @@ export class ListscabasComponent implements OnInit {
     );
   }
 
-
   // Esta funcion obtiene una solicitud por su codigo
   onOpenSolicitud(codigo_solicitud: string): void {
-    this.router.navigate(['/sc/solicitud/detail/' + codigo_solicitud]);
+    this.router.navigate(['/sc/solicitud/detailabas/' + codigo_solicitud]);
     // alert(codigo_solicitud);
+  }
+
+  irAConversaciones(codigo_solicitud: string): void {
+    this.router.navigate(['/sc/solicitud/notify/' + codigo_solicitud]);
+  }
+
+
+  //#region Funciones para anular la solicitud
+
+  onLoadAnularSolicitud(codigo_solicitud: string): void {
+    this.asolicitud = new RequestAnulacionSolicitud();
+    this.asolicitud.codigo_solicitud = codigo_solicitud;
+    this.asolicitud.usuario_anulacion = localStorage.getItem('username');
+  }
+
+  onGuardarAnularSolicitud() {
+    this.servSC.saveAnularSolicitud(this.asolicitud).subscribe(
+      data => {
+        this.onGetSolicitudes();
+        this.toast.show('Se anulo la solicitud!', 1000, 'green');
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('Ocurrio un error al anular la solicitud. Intente nuevamente!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+  //#endregion
+
+  onLoadAutorizarSolicitud(codigo_solicitud: string, estado_autorizacion_superior: string): void {
+    this.autorizarsolcitud = new RequestAutorizacionSolicitud();
+    this.autorizarsolcitud.codigo_solicitud = codigo_solicitud;
+    this.autorizarsolcitud.autorizador = localStorage.getItem('username');
+    this.autorizarsolcitud.estado_autorizacion = estado_autorizacion_superior;
+    // this.onGuardarAutorizarSolicitud(estado_autorizacion_superior);
+  }
+
+  onLoadAprobarSolicitud(codigo_solicitud: string, estado_autorizacion_superior: string): void {
+    this.autorizarsolcitud = new RequestAutorizacionSolicitud();
+    this.autorizarsolcitud.codigo_solicitud = codigo_solicitud;
+    this.autorizarsolcitud.autorizador = localStorage.getItem('username');
+    this.autorizarsolcitud.estado_autorizacion = estado_autorizacion_superior;
+    this.onGuardarAutorizarSolicitud();
+  }
+
+  onGuardarAutorizarSolicitud() {
+    let tipo_autorizacion: string = '';
+    if (this.autorizarsolcitud.estado_autorizacion == 'A') {
+      tipo_autorizacion = 'aprobo';
+    } else {
+      tipo_autorizacion = 'rechazo';
+    }
+    this.servSC.saveAutorizarSolicitud(this.autorizarsolcitud).subscribe(
+      data => {
+        this.toast.show('Se ' + tipo_autorizacion + ' la solicitud!', 1000, 'green');
+        this.onGetSolicitudes();
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('Ocurrio un error al ' + tipo_autorizacion + ' la solicitud. Intente nuevamente!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
   }
 
   // Esta funcion te envia al formulario de Nueva Orden de Compra
@@ -55,4 +137,27 @@ export class ListscabasComponent implements OnInit {
     this.router.navigate(['/sc/orden/add/' + codigo_solicitud]);
   }
 
+  // Opciones para filtrado de Listado
+
+  onLoadListado() {
+    this.servSC.getListadoSolicitudXEstado(this.estado_autorizacion).subscribe(
+      data => {
+        if (data['length'] > 0) {
+          this.lsolicitud = data['body'];
+          // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
+        }else {
+          this.toast.show('No tiene solicitudes!', 1000, 'red');
+        }
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('Ocurrio un error al obtener las solicitudes!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
 }
