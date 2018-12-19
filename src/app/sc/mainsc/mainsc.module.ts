@@ -13,7 +13,9 @@ import { MainscComponent } from './mainsc.component';
         MzParallaxModule,
         MzCardModule,
         CodeSnippetModule,
-        PropertiesTableModule
+        PropertiesTableModule,
+
+        
     ],
     declarations: [
         MainscComponent
@@ -21,3 +23,5 @@ import { MainscComponent } from './mainsc.component';
 })
 
 export class MainscModule {}
+
+
