@@ -152,6 +152,7 @@ export class AddscComponent implements OnInit {
 // Funcion para Guardar la Cabecera de la solicitud
 
   onSaveSolicitudCompra(s: SolicitudCompra): void {
+    this.openLoading();
     s.autorizador = localStorage.getItem('id_superior');
     s.estado = 'A';
     s.estado_autorizacion_superior = 'P';
@@ -165,6 +166,7 @@ export class AddscComponent implements OnInit {
 
     this.servSC.saveSolicitudCompra(s).subscribe(
         data => {
+          this.closeLoading();
           if (data['status'] == 304) {
               this.toast.show('No se guardo, revise la información', 3000, 'red');
               this.botonSave = true;
@@ -178,7 +180,7 @@ export class AddscComponent implements OnInit {
                   this.detallesolicitud.tipo_item = s.tipo;
                   this.onSaveDetalleSolicitudCompra(this.detallesolicitud);
                 });
-                this.toast.show('Se guardo correctamente!', 1500, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+                this.toast.show('Se guardo correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
               } else {
                 this.ldetallesolicitudservicio.forEach(element => {
                   this.detallesolicitudservicio = new DetalleSolicitud();
@@ -196,7 +198,8 @@ export class AddscComponent implements OnInit {
         console.log(data);
       },
       (err: HttpErrorResponse) => {
-        this.toast.show('No se guardo, ocurrio un error!', 3000, 'red');
+        this.closeLoading();
+        this.toast.show('No se guardo, ocurrio un error!', 1000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
         } else {

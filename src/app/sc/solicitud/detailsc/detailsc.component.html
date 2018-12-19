@@ -726,11 +726,11 @@
     <button mz-button (click)="onEditar()" *ngIf="!modificar">
         Editar
     </button>
-    <button mz-button (click)="AnularSolicitudModal.open()" class="red">
-        Anular
-    </button>
     <button mz-button (click)="onCancelarEdicion()" *ngIf="modificar">
         Cancel
+    </button>
+    <button mz-button (click)="AnularSolicitudModal.open()" class="red">
+        Anular
     </button>
 </div>
 

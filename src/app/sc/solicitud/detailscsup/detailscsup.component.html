@@ -273,7 +273,18 @@
         </table>
     </mz-card-content>
 </mz-card>
-
+<mz-card *ngIf="solicitud.estado_autorizacion_superior === 'X'"> 
+    <mz-card-content>
+        <b>Motivo de Anulación</b>: 
+        {{ solicitud.motivo_anulacion }}
+    </mz-card-content>
+</mz-card>
+<mz-card *ngIf="solicitud.estado_autorizacion_superior === 'R'">
+    <mz-card-content>
+        <b>Motivo de Rechazo</b>: 
+        {{ solicitud.motivo_autorizacion }}
+    </mz-card-content>
+</mz-card>
 <!--
 <div class="row">
     <pre>
@@ -777,11 +788,11 @@
     <button mz-button (click)="onEditar()" *ngIf="!modificar">
         Editar
     </button>
-    <button mz-button (click)="AnularSolicitudModal.open()" class="red">
-        Anular
-    </button>
     <button mz-button (click)="onCancelarEdicion()" *ngIf="modificar">
         Cancel
+    </button>
+    <button mz-button (click)="AnularSolicitudModal.open()" class="red">
+        Anular
     </button>
     <button *ngIf="solicitud.estado_autorizacion_superior === 'P'" mz-button class="blue" (click)="onGuardarAutorizarSolicitud('A')">
         Aprobar
