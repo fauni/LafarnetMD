@@ -2,183 +2,141 @@
     <div class="nav-wrapper">
         <div class="left col s12 m5 l5">
             <ul>
-                <li><a href="javascript:void(0);" [routerLink]="['/sc/main/']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
+                <li><a href="javascript:void(0);" [routerLink]="['/sc/main']" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a>
                 </li>
-                <li><a href="javascript:void(0);" class="email-type">MI LISTA DE ORDENES DE COMPRA</a>
+                <li><a href="javascript:void(0);" class="email-type">ORDEN DE COMPRA</a>
                 </li>
             </ul>
         </div>
         <div class="col s12 m7 l7 hide-on-med-and-down">
             <ul class="right">
-                <li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>
+                <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
                 <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-content-send"></i></a></li>-->
             </ul>
         </div>
     </div>
 </nav>
-<mz-card style="margin-bottom:0px;">
-        <mz-card-content>
+
+<mz-card style="margin-bottom:0px;" class="color-hoverable white-text">
+    <mz-card-content>
+        <div class="row">
+            <div class="col s12 m6">
+                <mz-input-container>
+                    <i mz-icon-mdi mz-input-prefix
+                        [icon]="'magnify'">
+                    </i>
+                    <input mz-input
+                        id="buscar-solicitud"
+                        [(ngModel)]="term"
+                        placeholder="Buscar"
+                        type="search"
+                        value="">
+                </mz-input-container>
+            </div>
+            <mz-select-container class="col s12 m6">
+                <select mz-select mz-validation required
+                    id="estado_autorizacion"
+                    [(ngModel)]="estado_autorizacion"
+                    name="estado_autorizacion"
+                    (change)="onLoadListado()"
+                    [label]="'Seleccione una Opcion'"
+                    [placeholder]="'Seleccione una Opcion'">
+                    <option value="T">Todas</option>
+                    <option value="P">Pendientes</option>
+                    <option value="A">Aprobadas</option>
+                    <option value="R">Rechazadas</option>
+                    <option value="X">Anuladas</option>
+                </select>
+            </mz-select-container>
+        </div>
+    </mz-card-content>
+</mz-card>
+<mz-card>
+    <mz-card-content>
+        <table class="highlight responsive-table">
+            <tr>
+                <th>Codigo Orden</th>
+                <th class="center">
+                    <i mz-icon-mdi mz-input-prefix class="green-text"
+                        [icon]="'wechat'">
+                    </i>
+                </th>
+                <th>Fecha de Orden</th>
+                <th>Titular</th>
+                <th>Tipo de Orden</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th width = 150>Opciones</th>
+            </tr>
             
-        </mz-card-content>
-    </mz-card>
+            <tr class="border_bottom" *ngFor="let orden of lorden | filter:term">
+                <td>{{orden.codigo_orden}}</td>
+                <td class="center">
+                    <mz-badge
+                        (click)="irAConversaciones(orden.codigo_orden)"
+                        [value]="orden.conversacion"
+                        [caption]="'Sms'"
+                        [badgeClass]="'red'"
+                        [new]="true">
+                    </mz-badge>
+                </td>
+                <td class="center">{{ orden.fecha_orden | date:'yyyy-MM-dd' }}</td>
+                <td>{{orden.titular}}</td>
+                <td class="center">{{orden.tipo_orden}}</td>
+                <td>{{orden.motivo_orden}}</td>
+                <td>
+                    <i *ngIf="orden.estado_autorizacion_gerencia ==='A'"  mz-icon-mdi mz-input-prefix class="green-text"
+                        [icon]="'thumb-up-outline'">
+                    </i>
+                    <i *ngIf="orden.estado_autorizacion_gerencia ==='R'"  mz-icon-mdi mz-input-prefix class="red-text"
+                        [icon]="'thumb-down-outline'">
+                    </i>
+                    <i *ngIf="orden.estado_autorizacion_gerencia ==='P'"  mz-icon-mdi mz-input-prefix class="orange-text"
+                        [icon]="'clock'">
+                    </i>
+                    <i *ngIf="orden.estado_autorizacion_gerencia ==='X'"  mz-icon-mdi mz-input-prefix class="red-text"
+                        [icon]="'null'">
+                    </i>
+                </td>
+                <td>
+                    <button mz-button mz-tooltip
+                        [tooltip]="'Ver Solicitud'"
+                        (click)="onOpenSolicitud(solicitud.codigo)"
+                        [float]="true" class="blue">
+                        <i mz-icon-mdi [icon]="'file-find'"></i>
+                    </button>
+                    <button mz-button mz-tooltip
+                        [tooltip]="'Anular la Solicitud'"
+                        (click)="AnularSolicitudModal.open()"
+                        (click)="onLoadAnularSolicitud(solicitud.codigo)"
+                        *ngIf="orden.estado_autorizacion_gerencia !== 'X'"
+                        [float]="true" class="orange">
+                        <i mz-icon-mdi [icon]="'cancel'"></i>
+                    </button>
+                    <button mz-button mz-tooltip
+                        [tooltip]="'Crear Orden de Compra'"
+                        (click)="onOpenAddOrden(solicitud.codigo)" 
+                        *ngIf="orden.estado_autorizacion_gerencia ==='A'"
+                        [float]="true" class="green">
+                        <i mz-icon-mdi [icon]="'arrow-collapse-right'"></i>
+                    </button>
+                </td>
+            </tr>
+            
+        </table>
+    </mz-card-content>
+</mz-card>    
 
-    <mz-card>
-            <mz-card-content>
-                    <table id="table-items" class="highlight responsive-table">
-                        <thead>
-                            <tr>
-                                <th>Nro.</th>
-                                <th class="center">
-                                        <i mz-icon-mdi mz-input-prefix class="green-text"
-                                            [icon]="'wechat'">
-                                        </i>
-                                </th>
-                                <th>Cod. OC</th>
-                                <th>Fecha</th>
-                                <th>Solicitante</th>
-                                <th>Fecha de Entrega</th>
-                                <th>Tipo</th>
-                                <th>Estado</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                            <tbody>
-                                
-                                    <tr class="border_bottom">
-                                        <td>1</td>
-                                        <td class="center">
-                                            <mz-badge
-                                                [value]="4"
-                                                [caption]="'News'"
-                                                [badgeClass]="'red'"
-                                                [new]="true">
-                                            </mz-badge>
-                                        </td>
-                                        <td>OC-001</td>
-                                        <td>23/11/2018</td>
-                                        <td>Dra. Aixa Carranza</td>
-                                        <td>25/11/2018</td>
-                                        <td>Servicio</td>
-                                        <i mz-icon-mdi mz-input-prefix class="green-text"
-                                        [icon]="'thumb-up-outline'">
-                                        </i>
-                                        <td>
-                                            <button mz-button
-                                                    [float]="true" class="blue">
-                                                <i mz-icon-mdi [icon]="'file-find'"></i>
-                                            </button>
-                                            <button mz-button
-                                                    [float]="true" class="orange">
-                                                    <i mz-icon-mdi [icon]="'pencil'"></i>
-                                            </button>
-                                            <button mz-button
-                                                    [float]="true" class="red">
-                                                <i mz-icon-mdi [icon]="'cancel'"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
 
-                                    <tr class="border_bottom">
-                                            <td>2</td>
-                                            <td class="center">
-                                                <mz-badge
-                                                    [value]="10"
-                                                    [caption]="'News'"
-                                                    [badgeClass]="'red'"
-                                                    [new]="true">
-                                                </mz-badge>
-                                            </td>
-                                            <td>OC-002</td>
-                                            <td>23/11/2018</td>
-                                            <td>Dra. Aixa Carranza</td>
-                                            <td>23/11/2018</td>
-                                            <td>Articulo</td>
-                                            <td>
-                                                <i mz-icon-mdi mz-input-prefix class="red-text"
-                                                    [icon]="'thumb-down-outline'">
-                                                </i>
-                                            </td>
-                                            <td>
-                                                <button mz-button
-                                                    [float]="true" class="blue">
-                                                    <i mz-icon-mdi [icon]="'file-find'"></i>
-                                                </button>
-                                                <button mz-button
-                                                    [float]="true" class="orange">
-                                                    <i mz-icon-mdi [icon]="'pencil'"></i>
-                                                </button>
-                                                <button mz-button
-                                                    [float]="true" class="red">
-                                                    <i mz-icon-mdi [icon]="'cancel'"></i>
-                                                </button>
-                                            </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                            <td class="center">
-                                                <mz-badge
-                                                    [value]="0"
-                                                    [caption]="'News'"
-                                                    [badgeClass]="'green'"
-                                                    [new]="true">
-                                                </mz-badge>
-                                            </td>
-                                                <td>OC-003</td>
-                                                <td>23/11/2018</td>
-                                                <td>Dra. Aixa Carranza</td>
-                                                <td>01/12/2018</td>
-                                                <td>Servicio</td>
-                                                <td>
-                                                    <i mz-icon-mdi mz-input-prefix class="orange-text"
-                                                        [icon]="'clock'">
-                                                    </i>
-                                                </td>
-                                            <td>
-                                                <button mz-button
-                                                        [float]="true" class="blue">
-                                                        <i mz-icon-mdi [icon]="'file-find'"></i>
-                                                </button>
-                                                <button mz-button
-                                                    [float]="true" class="orange">
-                                                    <i mz-icon-mdi [icon]="'pencil'"></i>
-                                                </button>
-                                                <button mz-button
-                                                        [float]="true" class="red">
-                                                        <i mz-icon-mdi [icon]="'cancel'"></i>
-                                                </button>
-                                            </td>
-                                    </tr>
-                               
-                            </tbody>
-                    </table>
-            </mz-card-content>
-    </mz-card>
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a [routerLink]="['/sc/orden/solicitud']" href="javascript:void(0)" class="btn-floating btn-large green">
+        <i class="large mdi-content-add"></i>
+    </a>
+</div>
 
-    <mz-modal #AddItemModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="true">
-            <mz-modal-header>
-                    <nav class="lafar-bg-blue">
-                        <div class="nav-wrapper">
-                            <div class="left col s12 m5 l5">
-                            <ul>
-                                <li><a href="javascript:void(0);" (click)="AddItemModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
-                                <li><a href="javascript:void(0);" class="email-type">Orden de Compra</a></li>
-                            </ul>
-                            </div>
-                            <div class="col s12 m7 l7 hide-on-med-and-down">
-                            <ul class="right">
-                                <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
-                                <li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>
-                            </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </mz-modal-header>
-    </mz-modal>
 
-        
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-            <a href="javascript:void(0)" class="btn-floating btn-large green">
-                <i class="large mdi-navigation-check"></i>
-            </a>
-    </div>
-
+<!--<div class="row">
+    <pre>
+        {{ asolicitud | json }}    
+    </pre>
+</div>-->

@@ -104,6 +104,11 @@ export class SolicitudService {
   saveAutorizarSolicitud(data) {
     return this.http.post(this.global.urlAPICORE + 'autorizarsolicitud/', data);
   }
+
+  // Cambiar el estado del Detalle de Solicitud
+  updateEstadoDetalleSolicitud(data) {
+    return this.http.put(this.global.urlAPICORE + 'scdetallesolicitud/1', data);
+  }
 }
 
 

@@ -1,25 +1,19 @@
-export class DetalleSolicitud {
+export class DetalleOrden {
     public id_detalle_solicitud: number;
     public codigo_solicitud: string;
+    public codigo_orden: string;
     public codigo_item: string;
     public descripcion_item: string;
     public tipo_item: string;
-    public fecha_requerida: Date;
     public fecha_arte: Date;
+    public fecha_requerida: Date;
     public cantidad: number;
     public unidad: string;
-    public prioridad: number;
+    public precio_unitario: number;
+    public sub_total: number;
     public estado: string;
+    public prioridad: number;
 
     public usuario_creacion: string;
-    public fecha_creacion: Date;
     public usuario_modificacion: string;
-    public fecha_modificacion: Date;
-}
-
-export class RequestUpdateDetalleSolicitud {
-    public codigo_solicitud: string;
-    public id_detalle_solicitud: number;
-    public usuario_modificacion: string;
-    public estado: string;
 }

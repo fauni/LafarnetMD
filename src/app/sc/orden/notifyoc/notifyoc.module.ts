@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MzParallaxModule, MzCardModule, MzIconMdiModule, MzBadgeModule, MzButtonModule, MzInputModule } from 'ng2-materialize';
+import { MzParallaxModule, MzCardModule, MzIconMdiModule, MzButtonModule,
+    MzInputModule, MzIconModule, MzToastService } from 'ng2-materialize';
 import { NotifyocRoutingModule } from './notifyoc-routing.module';
 import { NotifyocComponent } from './notifyoc.component';
+import { FormsModule } from '@angular/forms';
+import { SolicitudService } from '../../solicitud/solicitud.service';
+import { Comunes } from '../../../comunes';
+import { OrdenService } from '../orden.service';
 
 
 @NgModule({
@@ -11,13 +16,17 @@ import { NotifyocComponent } from './notifyoc.component';
         NotifyocRoutingModule,
         MzParallaxModule,
         MzCardModule,
-        MzIconMdiModule,
-        MzBadgeModule,
+        MzInputModule,
         MzButtonModule,
-        MzInputModule
+        MzIconModule,
+        MzIconMdiModule,
+        FormsModule
     ],
     declarations: [
         NotifyocComponent
+    ],
+    providers: [
+        SolicitudService, MzToastService, Comunes, OrdenService
     ]
 })
 
