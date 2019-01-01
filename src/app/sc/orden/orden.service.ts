@@ -47,6 +47,16 @@ export class OrdenService {
   saveConversacionOrden(data) {
     return this.http.post(this.global.urlAPICORE + 'scconversacionorden/', data);
   }
+
+  // Obtener orden de compra por codigo de orden
+  getOrdenXCodigo(data) {
+    return this.http.get(this.global.urlAPICORE + 'scordencomprax/' + data);
+  }
+
+  // Obtener detalle de orden de compra por codigo de orden
+  getDetalleOrdenXCodigo(data) {
+    return this.http.get(this.global.urlAPICORE + 'scdetalleordencompra/' + data);
+  }
 }
 
 

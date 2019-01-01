@@ -100,13 +100,13 @@
                 </td>
                 <td>
                     <button mz-button mz-tooltip
-                        [tooltip]="'Ver Solicitud'"
-                        (click)="onOpenSolicitud(solicitud.codigo)"
+                        [tooltip]="'Ver Orden'"
+                        (click)="onOpenOrden(orden.codigo_orden)"
                         [float]="true" class="blue">
                         <i mz-icon-mdi [icon]="'file-find'"></i>
                     </button>
                     <button mz-button mz-tooltip
-                        [tooltip]="'Anular la Solicitud'"
+                        [tooltip]="'Anular la Orden'"
                         (click)="AnularSolicitudModal.open()"
                         (click)="onLoadAnularSolicitud(solicitud.codigo)"
                         *ngIf="orden.estado_autorizacion_gerencia !== 'X'"

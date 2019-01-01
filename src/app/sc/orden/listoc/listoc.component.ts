@@ -52,8 +52,8 @@ export class ListocComponent implements OnInit {
   }
 
   // Esta funcion obtiene una solicitud por su codigo
-  onOpenSolicitud(codigo_solicitud: string): void {
-    this.router.navigate(['/sc/solicitud/detailabas/' + codigo_solicitud]);
+  onOpenOrden(codigo_orden: string): void {
+    this.router.navigate(['/sc/orden/detailoc/' + codigo_orden]);
     // alert(codigo_solicitud);
   }
 
