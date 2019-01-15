@@ -9,6 +9,7 @@ import { DetalleSolicitud } from '../detallesolicitud';
 import { ItemArticuloSc } from '../../itemarticulosc';
 import { FormGroup } from '@angular/forms';
 import { SCFile } from '../../scfile';
+import { Comunes } from '../../../comunes';
 
 @Component({
   selector: 'app-addsc',
@@ -90,8 +91,9 @@ export class AddscComponent implements OnInit {
   numero_item: number;
   constructor(
     private servSC: SolicitudService,
+    private comunes: Comunes,
     private toast: MzToastService,
-    private router: Router){
+    private router: Router) {
   }
 
    // Variables para agregar detalle
@@ -108,6 +110,7 @@ export class AddscComponent implements OnInit {
     this.onGetProveedores();
     this.onGetItemArticulo();
     this.solicitud.tipo = 'I';
+    this.solicitud.fecha =  new Date(this.comunes.obtenerFechaYHoraActual());
     // this.onLoadSolicitudCompra();
     // this.onLoadDetalleSolicitudCompra();
     this.onLoadListaDetalleSolicitud();

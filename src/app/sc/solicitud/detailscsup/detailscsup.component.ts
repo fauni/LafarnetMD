@@ -164,6 +164,7 @@ export class DetailscsupComponent implements OnInit {
         data => {
             this.ldetallesolicitud = data['body'];
             this.ldetallesolicitudservicio = data['body'];
+            this.numero_item = data['length'];
         },
         (err: HttpErrorResponse) => {
             this.toast.show('No se pudo traer el detalle de esta solicitud, intente nuevamente!', 3000, 'red');

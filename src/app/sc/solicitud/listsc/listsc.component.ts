@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./listsc.component.scss'],
 })
 export class ListscComponent implements OnInit {
+  // vARIABLES DE BUSQUEDA
+  term: string = '';
+  
   lsolicitud: Array<Solicitudcompralistado> = new Array<Solicitudcompralistado>();
   solicitud: SolicitudCompra = new SolicitudCompra();
 

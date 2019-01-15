@@ -164,6 +164,7 @@ export class DetailscabasComponent implements OnInit {
         data => {
             this.ldetallesolicitud = data['body'];
             this.ldetallesolicitudservicio = data['body'];
+            this.numero_item = data['length'];
         },
         (err: HttpErrorResponse) => {
             this.toast.show('No se pudo traer el detalle de esta solicitud, intente nuevamente!', 3000, 'red');
@@ -212,7 +213,7 @@ export class DetailscabasComponent implements OnInit {
                   this.detallesolicitud.tipo_item = s.tipo;
                   this.onSaveDetalleSolicitudCompra(this.detallesolicitud);
                 });
-                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list_abast/']));
               } else {
                 this.ldetallesolicitudservicio.forEach(element => {
                   this.detallesolicitudservicio = new DetalleSolicitud();
@@ -222,7 +223,7 @@ export class DetailscabasComponent implements OnInit {
                   this.detallesolicitudservicio.tipo_item = s.tipo;
                   this.onSaveDetalleSolicitudCompra(this.detallesolicitudservicio);
                 });
-                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list_abast/']));
               }
               this.onSaveUploadFilesSolicitud(this.lfiles, this.solicitud.codigo);
           }

@@ -18,15 +18,29 @@ export class OrdenService {
     return this.http.get(this.global.urlAPICORE + 'scordencomprax/');
   }
 
+  // Obtener Listado de Ordenes de Compra para Abastecimiento
+  getOrdenCompraAutorizadorSubGerencia() {
+    return this.http.get(this.global.urlAPICORE + 'scordencomprax/');
+  }
 
   // Guardar Orden de Compra
   saveOrdenCompra(data) {
     return this.http.post(this.global.urlAPICORE + 'scordencomprax/', data);
   }
 
-  // Guardar Orden de Compra
+  // Modificar Orden de Compra
+  editOrdenCompra(data) {
+    return this.http.put(this.global.urlAPICORE + 'scordencomprax/0', data);
+  }
+
+  // Guardar Detalle Orden de Compra
   saveDetalleOrdenCompra(data) {
     return this.http.post(this.global.urlAPICORE + 'scdetalleordencompra/', data);
+  }
+
+  // Modificar Detalle Orden de Compra
+  editDetalleOrdenCompra(data) {
+    return this.http.put(this.global.urlAPICORE + 'scdetalleordencompra/0', data);
   }
 
   // Obtener Listado de Tipo de Compra y el nombre del Encargado
@@ -56,6 +70,30 @@ export class OrdenService {
   // Obtener detalle de orden de compra por codigo de orden
   getDetalleOrdenXCodigo(data) {
     return this.http.get(this.global.urlAPICORE + 'scdetalleordencompra/' + data);
+  }
+
+  eliminaOrdenCompra(data) {
+    return this.http.delete(this.global.urlAPICORE + 'scordencomprax/' + data);
+  }
+
+  // Anular Orden de Compra
+  saveAnularOrden(data) {
+    return this.http.post(this.global.urlAPICORE + 'anularorden/', data);
+  }
+
+  // Autorizar la Orden de Compra
+  saveAutorizarOrden(data) {
+    return this.http.post(this.global.urlAPICORE + 'scordenautorizadorsg/', data);
+  }
+
+  // Listado para Abastecimiento
+  getListadoOrdenXEstadoSG(data) {
+    return this.http.get(this.global.urlAPICORE + 'scordenabastecimiento/' + data);
+  }
+
+  // Listado por Autorizadores
+  getListadoOrdenXAutorizador(data) {
+    return this.http.get(this.global.urlAPICORE + 'scordenautorizadorsg/' + data);
   }
 }
 

@@ -81,7 +81,7 @@
                 <th width = 100>Precio</th>
                 <th>SubGerencia</th>
                 <th>Gerencia</th>
-                <th width = 150>Opciones</th>
+                <th width = 200>Opciones</th>
             </tr>
             
             <tr class="border_bottom" *ngFor="let orden of lorden | filter:term">
@@ -144,9 +144,24 @@
                         [float]="true" class="orange">
                         <i mz-icon-mdi [icon]="'cancel'"></i>
                     </button>
+
+                    <button mz-button mz-tooltip
+                        [tooltip]="'Aprobar Orden'"
+                        (click)="onLoadAprobarOrden(orden.codigo_orden, 'A')"
+                        *ngIf="orden.estado_autorizacion_subgerencia === 'P'"
+                        [float]="true" class="green">
+                        <i mz-icon-mdi [icon]="'check'"></i>
+                    </button>
+                    <button mz-button mz-tooltip
+                        [tooltip]="'Rechazar Orden'"
+                        (click)="RechazarOrdenModal.open()"
+                        (click)="onLoadAutorizarOrden(orden.codigo_orden, 'R')"
+                        *ngIf="orden.estado_autorizacion_subgerencia === 'P'"
+                        [float]="true" class="red">
+                        <i mz-icon-mdi [icon]="'close'"></i>
+                    </button>
                 </td>
             </tr>
-            
         </table>
     </mz-card-content>
 </mz-card>    
@@ -202,6 +217,58 @@
     </mz-modal-footer>
 </mz-modal>
 <!-- END REGION ANULAR ORDEN-->
+
+<!-- REGION RECHAZAR ORDEN -->
+<mz-modal #RechazarOrdenModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="false">
+    <mz-modal-header>
+        <nav class="lafar-bg-blue">
+            <div class="nav-wrapper">
+                <div class="left col s12 m5 l5">
+                <ul>
+                    <li><a href="javascript:void(0);" (click)="RechazarSolicitudModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                    <li><a href="javascript:void(0);" class="email-type">Rechazar Solicitud</a></li>
+                </ul>
+                </div>
+                <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right">
+                    <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                    <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>-->
+                </ul>
+                </div>
+            </div>
+        </nav>
+    </mz-modal-header>
+    <mz-modal-content>
+        <mz-card>
+            <mz-card-content>
+                <mz-textarea-container>
+                    <i mz-icon-mdi mz-textarea-prefix
+                        [icon]="'eraser'">
+                    </i>
+                    <textarea mz-textarea
+                        [label]="'Motivo de Anulación'"
+                        [(ngModel)]="autorizarsolcitud.motivo_autorizacion_superior"
+                        name="motivo_autorizacion_superior"
+                        id="motivo_autorizacion_superior"
+                        placeholder="Ingrese el motivo de Rechazo"
+                        length="300"></textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
+
+        <!--<div class="row">
+            <pre>
+                {{ autorizarsolcitud | json }}    
+            </pre>
+        </div>-->
+
+    </mz-modal-content>
+    <mz-modal-footer>
+        <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+        <button mz-button [flat]="true" mz-modal-close (click)="onGuardarAutorizarSolicitud()">Rechazar</button>
+    </mz-modal-footer>
+</mz-modal>
+<!-- END REGION RECHAZAR ORDEN-->
 
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">

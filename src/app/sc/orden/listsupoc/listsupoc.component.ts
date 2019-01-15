@@ -9,13 +9,16 @@ import { OrdenService } from '../orden.service';
 import { OrdenCompraListAbastecimiento, OCOrdenCompra } from '../orden';
 
 @Component({
-  selector: 'app-listoc',
-  templateUrl: './listoc.component.html',
-  styleUrls: ['./listoc.component.scss'],
+  selector: 'app-listsupoc',
+  templateUrl: './listsupoc.component.html',
+  styleUrls: ['./listsupoc.component.scss'],
 })
-export class ListocComponent implements OnInit {
-  // Anulacion de Solicitud
+export class ListsupocComponent implements OnInit {
+  // Anulacion de Orden de Compra
   aorden: RequestAnulacionSolicitud = new RequestAnulacionSolicitud();
+
+  // Autorización de Orden de Compra
+  autorizarorden: RequestAutorizacionSolicitud = new RequestAutorizacionSolicitud();
 
   // vARIABLES DE BUSQUEDA
   term: string = '';
@@ -31,16 +34,17 @@ export class ListocComponent implements OnInit {
     this.onGetOrdenesCompra();
   }
 
-  // Esta funcion obtiene las solicitudes del Solicitante
+  // Esta funcion obtiene las ordenes para el autorizador
   onGetOrdenesCompra(): void {
+    this.estado_autorizacion_subgerencia = 'T';
     this.openLoading();
-    this.servOC.getOrdenCompraAbastecimiento().subscribe(
+    this.servOC.getListadoOrdenXAutorizador(localStorage.getItem('username') + '_' + this.estado_autorizacion_subgerencia).subscribe(
       data => {
         this.closeLoading();
         if (data['length'] > 0) {
           this.lorden = data['body'];
           // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
-        }else {
+        } else {
           this.toast.show('No existen Ordenes de Compra!', 1000, 'red');
         }
         console.log(data);
@@ -79,20 +83,20 @@ export class ListocComponent implements OnInit {
   onLoadListado() {
     this.openLoading();
     this.lorden = [];
-    this.servOC.getListadoOrdenXEstadoSG(this.estado_autorizacion_subgerencia).subscribe(
+    this.servOC.getListadoOrdenXAutorizador(localStorage.getItem('username') + '_' + this.estado_autorizacion_subgerencia).subscribe(
       data => {
         this.closeLoading();
         if (data['length'] > 0) {
           this.lorden = data['body'];
           // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
         }else {
-          this.toast.show('No tiene solicitudes!', 1000, 'red');
+          this.toast.show('No tiene Ordenes de Compra! para aprobar', 1000, 'red');
         }
         console.log(data);
       },
       (err: HttpErrorResponse) => {
         this.closeLoading();
-        this.toast.show('Ocurrio un error al obtener las solicitudes!', 1000, 'red');
+        this.toast.show('Ocurrio un error al obtener las ordenes de compra!', 1000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
         } else {
@@ -122,6 +126,50 @@ export class ListocComponent implements OnInit {
       (err: HttpErrorResponse) => {
         this.closeLoading();
         this.toast.show('Ocurrio un error al anular la orden. Intente nuevamente!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+  //#endregion
+
+  //#region AUTORIZACION SUG_GERENCIA
+  onLoadAutorizarOrden(codigo_orden: string, estado_autorizacion_subgerencia: string): void {
+    this.autorizarorden = new RequestAutorizacionSolicitud();
+    this.autorizarorden.codigo_solicitud = codigo_orden;
+    this.autorizarorden.autorizador = localStorage.getItem('username');
+    this.autorizarorden.estado_autorizacion = estado_autorizacion_subgerencia;
+    // this.onGuardarAutorizarSolicitud(estado_autorizacion_superior);
+  }
+
+  onLoadAprobarOrden(codigo_orden: string, estado_autorizacion_subgerencia: string): void {
+    this.autorizarorden = new RequestAutorizacionSolicitud();
+    this.autorizarorden.codigo_solicitud = codigo_orden;
+    this.autorizarorden.autorizador = localStorage.getItem('username');
+    this.autorizarorden.estado_autorizacion = estado_autorizacion_subgerencia;
+    this.onGuardarAutorizarSGOrden();
+  }
+
+  onGuardarAutorizarSGOrden() {
+    this.openLoading();
+    let tipo_autorizacion: string = '';
+    if (this.autorizarorden.estado_autorizacion == 'A') {
+      tipo_autorizacion = 'aprobar';
+    } else {
+      tipo_autorizacion = 'rechazar';
+    }
+    this.servOC.saveAutorizarOrden(this.autorizarorden).subscribe(
+      data => {
+        this.closeLoading();
+        this.toast.show('Se ' + tipo_autorizacion + ' la orden de compra!', 500, 'green');
+        this.onGetOrdenesCompra();
+      },
+      (err: HttpErrorResponse) => {
+        this.closeLoading();
+        this.toast.show('Ocurrio un error al ' + tipo_autorizacion + ' la orden de compra. Intente nuevamente!', 1000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
         } else {

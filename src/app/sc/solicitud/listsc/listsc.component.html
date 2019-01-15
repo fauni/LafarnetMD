@@ -17,9 +17,23 @@
     </div>
 </nav>
 
-<mz-card style="margin-bottom:0px;">
+<mz-card style="margin-bottom:0px;" class="color-hoverable white-text">
     <mz-card-content>
-
+        <div class="row">
+            <div class="col s12 m6">
+                <mz-input-container>
+                    <i mz-icon-mdi mz-input-prefix
+                        [icon]="'magnify'">
+                    </i>
+                    <input mz-input
+                        id="buscar-solicitud"
+                        [(ngModel)]="term"
+                        placeholder="Buscar"
+                        type="search"
+                        value="">
+                </mz-input-container>
+            </div>
+        </div>
     </mz-card-content>
 </mz-card>
 <mz-card>
@@ -40,7 +54,7 @@
                 <th width = 100>Opciones</th>
             </tr>
     
-            <tr class="border_bottom" *ngFor="let solicitud of lsolicitud">
+            <tr class="border_bottom" *ngFor="let solicitud of lsolicitud | filter:term">
                 <td>{{solicitud.codigo}}</td>
                 <td class="center">
                     <mz-badge

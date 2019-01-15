@@ -6,6 +6,7 @@ import { MzCardModule, MzIconMdiModule, MzBadgeModule,
     MzButtonModule, MzModalModule, MzDatepickerModule, MzInputModule, MzSelectModule, MzToastService, MzToastModule, MzTextareaModule } from 'ng2-materialize';
 import { SolicitudService } from '../solicitud.service';
 import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
         MzSelectModule,
         MzToastModule,
         MzTextareaModule,
-        FormsModule
+        FormsModule,
+        Ng2SearchPipeModule
     ],
     declarations: [
         ListscComponent

@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { AddscRoutingModule } from './addsc-routing.module';
 import { AddscComponent } from './addsc.component';
 import { MzCardModule, MzButtonModule, MzIconModule, MzNavbarModule, MzInputModule, MzSelectModule, MzDatepickerModule,
-    MzIconMdiModule, MzTextareaModule, MzModalModule, MzToastService, MzToastModule, MzValidationModule, MzCollectionModule, MzBadgeModule, MzSpinnerModule } from 'ng2-materialize';
+    MzIconMdiModule, MzTextareaModule, MzModalModule, MzToastService, MzToastModule, MzValidationModule, MzCollectionModule,
+    MzBadgeModule, MzSpinnerModule } from 'ng2-materialize';
 import { SolicitudService } from '../solicitud.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { Comunes } from '../../../comunes';
 
 @NgModule({
     imports: [
@@ -36,7 +38,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
         AddscComponent
     ],
     providers: [
-        SolicitudService, MzToastService
+        SolicitudService, MzToastService, Comunes
     ]
 })
 

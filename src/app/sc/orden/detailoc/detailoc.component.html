@@ -76,6 +76,7 @@
                         id="tipo_compra"
                         [(ngModel)]="orden.tipo_compra"
                         (change)="selectEncargado()"
+                        [disabled]= "modificar"
                         name="tipo_compra"
                         [label]="'Tipo de Compra'"
                         [placeholder]="'Tipo de Compra'">
@@ -93,6 +94,7 @@
                     <ng-select required
                         #SelectCodigoProveedor
                         [items]="proveedores"
+                        [disabled]= "modificar"
                         bindLabel="CardCode"
                         bindValue="CardCode"
                         (change) = "OnLoadDatosProveedor($event)"
@@ -108,6 +110,7 @@
                     <ng-select required
                         #SelectNombreProveedor
                         [items]="proveedores"
+                        [disabled]= "modificar"
                         bindLabel="CardName"
                         bindValue="CardName"
                         (change) = "OnLoadDatosProveedor($event)"
@@ -140,21 +143,21 @@
             <td>{{ ds.codigo_item }}</td>
             <td>{{ ds.descripcion_item }}</td>
             <td>{{ ds.unidad }} </td>
-            <td class="derecha" *ngIf="ds.prioridad === EditRowID"><input (change)="calculaTotal()" type="number" [(ngModel)]="ds.cantidad" name="cantidad {{ds.prioridad}}"></td>
-            <td class="derecha" *ngIf="ds.prioridad === EditRowID"><input (change)="calculaTotal()" type="number" [(ngModel)]="ds.precio_unitario" name="precio_unitario {{ds.prioridad}}"></td>
-            <td class="derecha" *ngIf="ds.prioridad !== EditRowID" (click) = "Edit(ds.prioridad)">{{ ds.cantidad }}</td>
-            <td class="derecha" *ngIf="ds.prioridad !== EditRowID" (click) = "Edit(ds.prioridad)">{{ ds.precio_unitario }} Bs.</td>
+            <td class="derecha" *ngIf="ds.id_detalle_solicitud === EditRowID"><input [disabled]= "modificar" (change)="calculaTotal()" type="number" [(ngModel)]="ds.cantidad" name="cantidad {{ds.id_detalle_solicitud}}"></td>
+            <td class="derecha" *ngIf="ds.id_detalle_solicitud === EditRowID"><input [disabled]= "modificar" (change)="calculaTotal()" type="number" [(ngModel)]="ds.precio_unitario" name="precio_unitario {{ds.id_detalle_solicitud}}"></td>
+            <td class="derecha" *ngIf="ds.id_detalle_solicitud !== EditRowID" (click) = "Edit(ds.id_detalle_solicitud)">{{ ds.cantidad }}</td>
+            <td class="derecha" *ngIf="ds.id_detalle_solicitud !== EditRowID" (click) = "Edit(ds.id_detalle_solicitud)">{{ ds.precio_unitario }} Bs.</td>
             <td class="derecha">{{ ds.cantidad * ds.precio_unitario }} Bs.</td>
             <td>{{ ds.fecha_requerida | date:'yyyy-MM-dd'}}</td>
             <td>
                 <!--<button mz-button
                     (click)="ModificarItemModal.open()"
-                    (click)="onModificarArticulo(ds.prioridad)"
+                    (click)="onModificarArticulo(ds.codigo_solicitud)"
                     [float]="true" class="orange">
                     <i mz-icon-mdi [icon]="'pencil'"></i>
                 </button>-->
                 <button mz-button (click)="onQuitarDetalleOrdenCompra(ds)"
-                      [float]="true" class="red">
+                    [disabled]= "modificar" [float]="true" class="red">
                       <i mz-icon-mdi [icon]="'minus'"></i>
                 </button>
             </td>
@@ -172,8 +175,8 @@
             <td>{{ ds.codigo_solicitud }}</td>
             <td>{{ ds.descripcion_item }}</td>
             <td>{{ ds.fecha_requerida | date:'yyyy-MM-dd' }}</td>
-            <td class="derecha" *ngIf="ds.prioridad === EditRowID"><input (change)="calculaTotal()" type="number" [(ngModel)]="ds.sub_total" name="sub_total {{ds.prioridad}}"></td>
-            <td class="derecha" *ngIf="ds.prioridad !== EditRowID" (click) = "Edit(ds.prioridad)">{{ ds.sub_total }}</td>
+            <td class="derecha" *ngIf="ds.codigo_solicitud === EditRowID"><input [disabled]= "modificar" (change)="calculaTotal()" type="number" [(ngModel)]="ds.sub_total" name="sub_total {{ds.codigo_solicitud}}"></td>
+            <td class="derecha" *ngIf="ds.codigo_solicitud !== EditRowID" (click) = "Edit(ds.codigo_solicitud)">{{ ds.sub_total }}</td>
             <td>
                 <!--<button mz-button
                     (click)="ModificarServicioModal.open()"
@@ -181,7 +184,7 @@
                     <i mz-icon-mdi [icon]="'pencil'"></i>
                 </button>-->
                 <button mz-button (click)="onQuitarDetalleOrdenCompra(ds)"
-                      [float]="true" class="red">
+                    [disabled]= "modificar" [float]="true" class="red">
                       <i mz-icon-mdi [icon]="'minus'"></i>
                 </button>
             </td>
@@ -194,6 +197,7 @@
                 [label]="'Comentarios Adicionales'"
                 id="motivo_orden"
                 [(ngModel)]="orden.motivo_orden"
+                [disabled]= "modificar"
                 name="motivo_orden"
                 placeholder="Ingrese un Comentario Adicional"
                 type="text">
@@ -204,11 +208,11 @@
         </div>
     </div>
     <div style="text-align: center">
-        <button *ngIf="solicitud.tipo === 'I'" mz-button (click)="ModalAddArticulo.open()" (click)="OpenAddDetalleOrden('I')">
+        <button [disabled]="modificar" *ngIf="orden.tipo_orden === 'I'" mz-button (click)="ModalAddArticulo.open()" (click)="OpenAddDetalleOrden('I')">
             <i mz-icon-mdi [icon]="'cart-plus'" [align]="'left'"></i>
             Agregar Articulo
         </button>
-        <button *ngIf="solicitud.tipo === 'S'" mz-button (click)="ModalAddArticulo.open()" (click)="OpenAddDetalleOrden('S')">
+        <button [disabled]="modificar" *ngIf="orden.tipo_orden === 'S'" mz-button (click)="ModalAddArticulo.open()" (click)="OpenAddDetalleOrden('S')">
             <i mz-icon-mdi [icon]="'cart-plus'" [align]="'left'"></i>
             Agregar Servicio
         </button>
@@ -235,6 +239,7 @@
                 <input mz-datepicker
                     [label]="'Fecha de Entrega'"
                     [options]="opcionesDatePicker"
+                    [disabled]= "modificar"
                     [(ngModel)]="orden.fecha_entrega"
                     name="fecha_entrega"
                     id="fecha_entrega"
@@ -244,6 +249,7 @@
                 <select mz-select
                     id="incoterms"
                     [(ngModel)]="orden.incoterms"
+                    [disabled]= "modificar"
                     name="incoterms"
                     [label]="'Incoterms'"
                     [placeholder]="'Seleccione Incoterms'">
@@ -268,11 +274,13 @@
         </div>
     </mz-card-content>
 </mz-card>
+
 <!--
 <div class="row">
 <pre>
-    {{ ldetallesolicitud | json }}    
+    {{ ldetalleordenA | json }}    
 </pre>
+
 </div>
 -->
 <!--<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -281,12 +289,12 @@
 </a>
 </div>-->
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <button 
+        <button
             [float]="true" mz-button 
             [disabled]="!form.valid" 
             [large]="true" 
             class="blue"
-            (click)="onValidaCabeceraOrden()"
+            (click)="onModificarOrdenCompra()"
             type="submit"><i class="large mdi-action-done"></i>
         </button>
     </div>
@@ -395,16 +403,86 @@
     </mz-modal-footer>
 </mz-modal>
 
-<!--
-    <div class="row">
-        <pre>
-            {{ ldetalleordenA | json }}    
-        </pre>
-    </div>
+<div *ngIf="orden.estado_autorizacion_subgerencia !== 'X'" class="footer" id="footer">
+    <button mz-button (click)="onEditar()" *ngIf="modificar">
+        Editar
+    </button>
+    <button mz-button (click)="onCancelarEdicion()" *ngIf="!modificar">
+        Cancel
+    </button>
+    <button mz-button (click)="AnularOrdenModal.open()" class="red">
+        Anular
+    </button>
+</div>
 
-    <div class="row">
-        <pre>
-            {{ ldetalleordenS | json }}    
-        </pre>
-    </div>
+<!-- REGION ANULAR ORDEN -->
+<mz-modal #AnularOrdenModal [fixedFooter]="true" [fullscreen]="false" [bottomSheet]="false">
+    <mz-modal-header>
+        <nav class="lafar-bg-blue">
+            <div class="nav-wrapper">
+                <div class="left col s12 m5 l5">
+                <ul>
+                    <li><a href="javascript:void(0);" (click)="AnularOrdenModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                    <li><a href="javascript:void(0);" class="email-type">Anular Orden de Compra</a></li>
+                </ul>
+                </div>
+                <div class="col s12 m7 l7 hide-on-med-and-down">
+                <ul class="right">
+                    <!--<li><a href="javascript:void(0);"><i class="mdi-editor-attach-file"></i></a></li>-->
+                    <!--<li><a href="javascript:void(0);"><i class="modal-action modal-close  mdi-notification-sms"></i></a></li>-->
+                </ul>
+                </div>
+            </div>
+        </nav>
+    </mz-modal-header>
+    <mz-modal-content>
+        <mz-card>
+            <mz-card-content>
+                <mz-textarea-container>
+                    <i mz-icon-mdi mz-textarea-prefix
+                        [icon]="'eraser'">
+                    </i>
+                    <textarea mz-textarea
+                        [label]="'Motivo de Anulación'"
+                        [(ngModel)]="aorden.motivo_anulacion"
+                        name="motivo_anulacion"
+                        id="motivo_anulacion"
+                        placeholder="Ingrese el motivo de anulación"
+                        length="300"></textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
+<!--
+        <div class="row">
+            <pre>
+                {{ aorden | json }}    
+            </pre>
+        </div>
+        -->
+    </mz-modal-content>
+    <mz-modal-footer>
+        <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+        <button mz-button [flat]="true" mz-modal-close (click)="onGuardarAnularOrden()">Anular</button>
+    </mz-modal-footer>
+</mz-modal>
+<!-- END REGION ANULAR ORDEN-->
+
+<!--
+<div class="row">
+    <pre>
+        {{ orden | json }}    
+    </pre>
+</div>
+
+<div class="row">
+    <pre>
+        {{ ldetalleordenA | json }}    
+    </pre>
+</div>
+
+<div class="row">
+    <pre>
+        {{ ldetalleordenS | json }}    
+    </pre>
+</div>
 -->

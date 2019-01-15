@@ -32,10 +32,11 @@ export class ListscsupComponent implements OnInit {
 
   // Esta funcion obtiene las solicitudes del Solicitante
   onGetSolicitudes(): void {
-    debugger;
+    this.openLoading();
     let username = localStorage.getItem('username');
     this.servSC.getListadoSolicitudXAutorizador(username).subscribe(
       data => {
+        this.closeLoading();
         if (data['length'] > 0) {
           this.lsolicitud = data['body'];
           // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
@@ -45,6 +46,7 @@ export class ListscsupComponent implements OnInit {
         console.log(data);
       },
       (err: HttpErrorResponse) => {
+        this.closeLoading();
         this.toast.show('Ocurrio un error al obtener las solicitudes!', 1000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
@@ -110,6 +112,7 @@ export class ListscsupComponent implements OnInit {
   }
 
   onGuardarAutorizarSolicitud() {
+    this.openLoading(); 
     let tipo_autorizacion: string = '';
     if (this.autorizarsolcitud.estado_autorizacion == 'A') {
       tipo_autorizacion = 'aprobo';
@@ -118,10 +121,12 @@ export class ListscsupComponent implements OnInit {
     }
     this.servSC.saveAutorizarSolicitud(this.autorizarsolcitud).subscribe(
       data => {
+        this.closeLoading();
         this.toast.show('Se ' + tipo_autorizacion + ' la solicitud!', 1000, 'green');
         this.onGetSolicitudes();
       },
       (err: HttpErrorResponse) => {
+        this.closeLoading();
         this.toast.show('Ocurrio un error al ' + tipo_autorizacion + ' la solicitud. Intente nuevamente!', 1000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
@@ -160,4 +165,14 @@ export class ListscsupComponent implements OnInit {
     );
   }
 
+  // Funciones Loading
+  openLoading() {
+    const loading = $('#loading');
+    loading.fadeIn();
+  }
+
+  closeLoading() {
+      const loading = $('#loading');
+      loading.fadeOut();
+  }
 }

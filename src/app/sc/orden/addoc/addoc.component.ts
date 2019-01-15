@@ -317,7 +317,10 @@ export class AddocComponent implements OnInit {
     ldetalle.forEach(element => {
       detalle = new DetalleOrden();
       detalle = element;
-      detalle.sub_total = detalle.cantidad * detalle.precio_unitario;
+
+      if (detalle.tipo_item == 'I') {
+        detalle.sub_total = detalle.cantidad * detalle.precio_unitario;
+      }
 
       requestDS = new RequestUpdateDetalleSolicitud();
       requestDS.codigo_solicitud = detalle.codigo_solicitud;

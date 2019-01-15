@@ -64,3 +64,14 @@ table {
     background: #fff;
     color: #455A64;
 }
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 75%;
+}
+
+.footer{
+    opacity:0.75; /* Opacidad 60% */
+    text-align: center;
+}

@@ -10,6 +10,7 @@ const routes: Routes = [
             { path: '', redirectTo: 'solicitud' },
             { path: 'add/:id', loadChildren: './addoc/addoc.module#AddocModule' },
             { path: 'list', loadChildren: './listoc/listoc.module#ListocModule' },
+            { path: 'list_aut', loadChildren: './listsupoc/listsupoc.module#ListsupocModule' },
             { path: 'notify/:id', loadChildren: './notifyoc/notifyoc.module#NotifyocModule' },
             { path: 'solicitud', loadChildren: './searchsc/searchsc.module#SearchscModule' },
             { path: 'detailoc/:id', loadChildren: './detailoc/detailoc.module#DetailocModule' }

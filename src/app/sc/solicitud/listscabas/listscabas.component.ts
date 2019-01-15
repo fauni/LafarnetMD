@@ -33,9 +33,11 @@ export class ListscabasComponent implements OnInit {
 
   // Esta funcion obtiene las solicitudes del Solicitante
   onGetSolicitudes(): void {
+    this.openLoading();
     let username = localStorage.getItem('username');
     this.servSC.getListadoSolicitudXAbastecimiento(username).subscribe(
       data => {
+        this.closeLoading();
         if (data['length'] > 0) {
           this.lsolicitud = data['body'];
           // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
@@ -75,8 +77,10 @@ export class ListscabasComponent implements OnInit {
   }
 
   onGuardarAnularSolicitud() {
+    this.openLoading();
     this.servSC.saveAnularSolicitud(this.asolicitud).subscribe(
       data => {
+        this.closeLoading();
         this.onGetSolicitudes();
         this.toast.show('Se anulo la solicitud!', 1000, 'green');
       },
@@ -140,8 +144,10 @@ export class ListscabasComponent implements OnInit {
   // Opciones para filtrado de Listado
 
   onLoadListado() {
+    this.openLoading();
     this.servSC.getListadoSolicitudXEstado(this.estado_autorizacion).subscribe(
       data => {
+        this.closeLoading();
         if (data['length'] > 0) {
           this.lsolicitud = data['body'];
           // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
@@ -159,5 +165,16 @@ export class ListscabasComponent implements OnInit {
         }
       }
     );
+  }
+
+  // Funciones Loading
+  openLoading() {
+    const loading = $('#loading');
+    loading.fadeIn();
+  }
+
+  closeLoading() {
+      const loading = $('#loading');
+      loading.fadeOut();
   }
 }

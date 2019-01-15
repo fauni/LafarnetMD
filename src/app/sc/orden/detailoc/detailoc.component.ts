@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { OCOrdenCompra, OCTipoCompraEncargado } from '../orden';
 import { DetalleOrden } from '../detalleorden';
 import { DetalleSolicitud, RequestUpdateDetalleSolicitud } from '../../solicitud/detallesolicitud';
-import { SolicitudCompra } from '../../solicitud/solicitud';
+import { SolicitudCompra, RequestAnulacionSolicitud } from '../../solicitud/solicitud';
 import { Proveedorsc } from '../../proveedorsc';
 import { ItemArticuloSc } from '../../itemarticulosc';
 import { Comunes } from '../../../comunes';
@@ -21,12 +21,16 @@ import { Users } from '../../../admin-intranet/users/users';
   styleUrls: ['./detailoc.component.scss'],
 })
 export class DetailocComponent implements OnInit {
+  // Anulacion de Solicitud
+    aorden: RequestAnulacionSolicitud = new RequestAnulacionSolicitud();
+
     codigo_orden: string = '';
+    codigo_solicitud: string = '';
     modificar: Boolean;
 
     errorMessagesSolicitud = {
     };
-  
+
     //#region Opciones Calendario
     public opcionesDatePicker: Pickadate.DateOptions = {
       clear: 'Limpiar', // Clear button text
@@ -81,7 +85,7 @@ export class DetailocComponent implements OnInit {
             this.codigo_orden = params['id'].toString();
             // this.onLoadUser(atob(this.username));
             });
-            this.modificar = false;
+            this.modificar = true;
     }
 
     // Variables para editar cantidad
@@ -292,6 +296,7 @@ export class DetailocComponent implements OnInit {
             this.orden = data['body'];
             this.onLoadUsuarioForUsername(this.orden.solicitante);
             this.onLoadTipoCompraEncargado();
+            this.onLoadAnularOrden(this.codigo_orden);
             // this.toast.show('Se obtuvieron ' + data['length'].toString() + ' proveedores correctamente!', 1000, 'green');
             console.log(data);
         },
@@ -330,14 +335,224 @@ export class DetailocComponent implements OnInit {
         });
     }
 
-    // Funciones Loading
-    openLoading() {
-        const loading = $('#loading');
-        loading.fadeIn();
+
+    //#region EDITAR ORDEN DE COMPRA
+    onEditar(): void {
+        this.modificar = false;
     }
 
-    closeLoading() {
-        const loading = $('#loading');
-        loading.fadeOut();
+    onCancelarEdicion(): void {
+        this.modificar = true;
     }
+    //#endregion
+
+    //#region MODIFICAR ORDEN DE COMPRA
+    onModificarOrdenCompra(): void {
+        this.onEliminarOrdenCompra();
+    }
+
+    onEliminarOrdenCompra(): void {
+        debugger;
+        this.openLoading();
+        this.servOC.eliminaOrdenCompra(this.orden.codigo_orden + '_' + localStorage.getItem('username')).subscribe(
+          data => {
+            this.closeLoading();
+          // this.toast.show('Se guardo correctamente!', 3000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+            this.onSaveOrdenCompra(this.orden);
+            console.log(data);
+          },
+          (err: HttpErrorResponse) => {
+              this.closeLoading();
+            this.toast.show('No se modifico, ocurrio un error!', 1000, 'red');
+            if (err.error instanceof Error) {
+              console.log('Ocurrio un error:', err.error.message);
+            } else {
+              console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+            }
+          }
+        );
+    }
+
+    onSaveOrdenCompra(o: OCOrdenCompra): void {
+        this.openLoading();
+        this.orden.usuario_modificacion = localStorage.getItem('username');
+        this.servOC.editOrdenCompra(o).subscribe(
+            data => {
+                this.closeLoading();
+                if (this.orden.tipo_orden == 'I') {
+                    this.onSaveDetalleOrdenCompra(this.ldetalleordenA);
+                } else {
+                    this.onSaveDetalleOrdenCompra(this.ldetalleordenS);
+                }
+                this.toast.show('Se modifo la orden correctamente!', 250, 'green', () => { this.router.navigate(['/sc/orden/list']); });
+            },
+            (err: HttpErrorResponse) => {
+                this.closeLoading();
+              this.toast.show('No se guardo los cambios, ocurrio un error!', 1000, 'red');
+              if (err.error instanceof Error) {
+                console.log('Ocurrio un error:', err.error.message);
+              } else {
+                console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+              }
+            }
+        );
+    }
+
+    onQuitarDetalleOrdenCompra(doc: DetalleOrden) {
+      if (this.orden.tipo_orden == 'I') {
+        if (this.ldetalleordenA.find(x => x == doc)) { this.ldetalleordenA.splice(this.ldetalleordenA.indexOf(doc), 1); }
+      } else {
+        if (this.ldetalleordenS.find(x => x == doc)) { this.ldetalleordenS.splice(this.ldetalleordenS.indexOf(doc), 1); }
+      }
+    }
+
+    onSaveDetalleOrdenCompra(ldetalle: Array<DetalleOrden>) {
+        this.openLoading();
+        let detalle: DetalleOrden = new DetalleOrden();
+        let requestDS: RequestUpdateDetalleSolicitud = new RequestUpdateDetalleSolicitud();
+        ldetalle.forEach(element => {
+          detalle = new DetalleOrden();
+          detalle = element;
+          detalle.usuario_modificacion = localStorage.getItem('username');
+
+          if (detalle.tipo_item == 'I') {
+            detalle.sub_total = detalle.cantidad * detalle.precio_unitario;
+          }
+
+          requestDS = new RequestUpdateDetalleSolicitud();
+          requestDS.codigo_solicitud = detalle.codigo_solicitud;
+          requestDS.id_detalle_solicitud = detalle.id_detalle_solicitud;
+          requestDS.usuario_modificacion = localStorage.getItem('username');
+          requestDS.estado  = 'X'; // Cambia el estado de A a X que indica que ya se tomo en cuenta en una orden de compra
+          this.servOC.editDetalleOrdenCompra(detalle).subscribe(
+            data => {
+              this.closeLoading();
+              console.log(data);
+              this.updateEstadoDetalleSolicitud(requestDS);
+              // this.toast.show('Se guardo correctamente el detalle de la orden!', 1000, 'green');
+            },
+            (err: HttpErrorResponse) => {
+              this.closeLoading();
+              this.toast.show('No se guardo el detalle de la orden de compra, ocurrio un error!', 1000, 'red');
+              if (err.error instanceof Error) {
+                console.log('Ocurrio un error:', err.error.message);
+              } else {
+                console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+              }
+            }
+          );
+        });
+    }
+    //#endregion
+
+  //#region Funciones para anular la solicitud
+  onLoadAnularOrden(codigo_solicitud: string): void {
+    this.aorden = new RequestAnulacionSolicitud();
+    this.aorden.codigo_solicitud = this.orden.codigo_orden;
+    this.aorden.usuario_anulacion = localStorage.getItem('username');
+  }
+
+  onGuardarAnularOrden() {
+    this.servOC.saveAnularOrden(this.aorden).subscribe(
+      data => {
+        this.toast.show('Se anulo la orden!', 1000, 'green');
+        this.router.navigate(['/sc/orden/list']);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('Ocurrio un error al anular la orden. Intente nuevamente!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+  //#endregion
+
+  //#region AGREGAR NUEVOS ARTICULOS DE OTRA SOLICITUD
+  onSeleccionaItemArticulo(ds: DetalleSolicitud) {
+    if (this.addarraydetalle.find(x => x == ds)) {
+      this.addarraydetalle.splice(this.addarraydetalle.indexOf(ds), 1);
+    } else {
+      this.addarraydetalle.push(ds);
+    }
+    console.log(this.addarraydetalle);
+  }
+
+  AddOrden(accion: string) {
+    if (accion == 'C') {
+      this.addarraydetalle = [];
+    } else {
+      this.addarraydetalle.forEach(element => {
+        let dorden: DetalleOrden = new DetalleOrden();
+
+        this.numero_item = this.numero_item + 1;
+        dorden.id_detalle_solicitud = element.id_detalle_solicitud;
+        dorden.codigo_solicitud = element.codigo_solicitud;
+        dorden.codigo_orden = this.orden.codigo_orden;
+        dorden.codigo_item = element.codigo_item;
+        dorden.descripcion_item = element.descripcion_item;
+        dorden.tipo_item = element.tipo_item;
+        dorden.fecha_arte = element.fecha_arte;
+        dorden.fecha_requerida = element.fecha_requerida;
+        dorden.cantidad = element.cantidad;
+        dorden.unidad = element.unidad;
+        dorden.precio_unitario = 0;
+        dorden.sub_total = dorden.cantidad * dorden.precio_unitario;
+        dorden.estado = 'A';
+        dorden.prioridad = this.numero_item;
+
+        dorden.usuario_creacion = localStorage.getItem('username');
+        dorden.usuario_modificacion = localStorage.getItem('username');
+        if (element.tipo_item == 'S') {
+          this.ldetalleordenS.push(dorden);
+        } else {
+          this.ldetalleordenA.push(dorden);
+        }
+      });
+    }
+  }
+
+  OpenAddDetalleOrden(tipo: string) {
+    this.search_codigo_solicitud = '';
+    this.addarraydetalle = [];
+    if (tipo == 'I') {
+      this.ldetallesolicitud = [];
+    } else {
+      this.ldetallesolicitudservicio = [];
+    }
+  }
+
+  buscarSolicitud() {
+    this.openLoading();
+    this.servSC.getDetalleSolicitudXCodigo(this.search_codigo_solicitud).subscribe(
+      data => {
+        this.closeLoading();
+        this.ldetallesolicitud = data['body'];
+        this.ldetallesolicitudservicio = data['body'];
+      },
+      (err: HttpErrorResponse) => {
+        this.closeLoading();
+        this.toast.show('No se pudo traer los Items de esta solicitud, intente nuevamente!', 500, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+  //#endregion
+
+  // Funciones Loading
+  openLoading() {
+      const loading = $('#loading');
+      loading.fadeIn();
+  }
+
+  closeLoading() {
+      const loading = $('#loading');
+      loading.fadeOut();
+  }
 }

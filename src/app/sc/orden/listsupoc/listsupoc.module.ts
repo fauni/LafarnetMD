@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MzCardModule, MzIconMdiModule, MzBadgeModule, MzButtonModule, MzModalModule, MzToastService,
-    MzDatepickerModule, MzInputModule, MzSelectModule, MzToastModule, MzTextareaModule, MzTooltipModule, MzSpinnerModule } from 'ng2-materialize';
-import { ListocRoutingModule } from './listoc-routing.module';
-import { ListocComponent } from './listoc.component';
+    MzDatepickerModule, MzInputModule, MzSelectModule, MzToastModule, MzTextareaModule, MzTooltipModule,
+    MzSpinnerModule } from 'ng2-materialize';
+import { ListsupocRoutingModule } from './listsupoc-routing.module';
+import { ListsupocComponent } from './listsupoc.component';
 import { SolicitudService } from '../../solicitud/solicitud.service';
 import { OrdenService } from '../orden.service';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +14,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 @NgModule({
     imports: [
         CommonModule,
-        ListocRoutingModule,
+        ListsupocRoutingModule,
         MzCardModule,
         MzIconMdiModule,
         MzBadgeModule,
@@ -30,11 +31,11 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
         MzSpinnerModule
     ],
     declarations: [
-        ListocComponent
+        ListsupocComponent
     ],
     providers: [
         SolicitudService, MzToastService, OrdenService
     ]
 })
 
-export class ListocModule {}
+export class ListsupocModule {}
