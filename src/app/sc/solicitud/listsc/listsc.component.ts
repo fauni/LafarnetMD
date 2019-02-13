@@ -28,6 +28,7 @@ export class ListscComponent implements OnInit {
 
   // Esta funcion obtiene las solicitudes del Solicitante
   onGetSolicitudes(): void {
+    this.lsolicitud = new Array<Solicitudcompralistado>();
     let username = localStorage.getItem('username');
     this.servSC.getListadoSolicitudXUsuario(username).subscribe(
       data => {
@@ -35,12 +36,12 @@ export class ListscComponent implements OnInit {
           this.lsolicitud = data['body'];
           // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
         }else {
-          this.toast.show('No tiene solicitudes!', 2000, 'red');
+          this.toast.show('No tiene solicitudes!', 1000, 'red');
         }
         console.log(data);
       },
       (err: HttpErrorResponse) => {
-        this.toast.show('Ocurrio un error al obtener las solicitudes!', 2000, 'red');
+        this.toast.show('Ocurrio un error al obtener las solicitudes!', 1000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
         } else {

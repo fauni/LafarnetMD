@@ -29,7 +29,7 @@
 
       <mz-sidenav-collapsible *ngFor="let item of items">
         <mz-sidenav-collapsible-header>
-            <i mz-icon-mdi [icon]="item.icon" class="icono"></i><span class="item">{{item.itemName}}</span>
+          <i mz-icon-mdi [icon]="item.icon" class="icono"></i><span class="item">{{item.itemName}}</span>
         </mz-sidenav-collapsible-header>
         <mz-sidenav-collapsible-content>
             <mz-sidenav-link *ngFor="let subitem of item.items">

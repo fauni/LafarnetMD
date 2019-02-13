@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ListscRoutingModule } from './listsc-routing.module';
 import { ListscComponent } from './listsc.component';
 import { MzCardModule, MzIconMdiModule, MzBadgeModule,
-    MzButtonModule, MzModalModule, MzDatepickerModule, MzInputModule, MzSelectModule, MzToastService, MzToastModule, MzTextareaModule } from 'ng2-materialize';
+    MzButtonModule, MzModalModule, MzDatepickerModule, MzInputModule, MzSelectModule, MzToastService, MzToastModule, MzTextareaModule, MzTooltipModule } from 'ng2-materialize';
 import { SolicitudService } from '../solicitud.service';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -23,7 +23,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
         MzToastModule,
         MzTextareaModule,
         FormsModule,
-        Ng2SearchPipeModule
+        Ng2SearchPipeModule,
+        MzTooltipModule
     ],
     declarations: [
         ListscComponent

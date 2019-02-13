@@ -532,7 +532,7 @@ export class DetailscabasComponent implements OnInit {
     this.servSC.saveAnularSolicitud(this.asolicitud).subscribe(
       data => {
         this.toast.show('Se anulo la solicitud!', 1000, 'green');
-        this.router.navigate(['/sc/solicitud/list']);
+        this.router.navigate(['/sc/solicitud/list_abast']);
       },
       (err: HttpErrorResponse) => {
         this.toast.show('Ocurrio un error al anular la solicitud. Intente nuevamente!', 1000, 'red');

@@ -42,7 +42,9 @@
                         <tr>
                             <th (click)="sort('Cod_Producto')">Codigo <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Cod_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
                             <th (click)="sort('Nombre_Producto')">Nombre del Producto <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Nombre_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
-                            <th (click)="sort('Concentracion')">Concentración <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Nombre_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                            <th (click)="sort('Concentracion')">Concentración <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Concentracion'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                            <th (click)="sort('Tipo_Productos')">Tipo de Producto <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Tipo_Productos'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -58,6 +60,7 @@
                             </td>
                             <td>{{producto.Nombre_Producto}}</td>
                             <td>{{producto.Concentracion}}</td>
+                            <td>{{producto.Tipo_Productos}}</td>
                         </tr>
                     </tbody>
                 </table>

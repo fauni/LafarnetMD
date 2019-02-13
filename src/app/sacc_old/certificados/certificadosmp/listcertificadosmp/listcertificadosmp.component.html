@@ -1,0 +1,69 @@
+<mz-parallax class="header-background" [height]="170">
+    <img src="assets/images/dark-material-bg.jpg">
+  </mz-parallax>
+  
+  <div id="preview" class="header-content valign-wrapper lafar-light">
+    <img class="image-user circle" src="assets/images/userlafar.png">
+    <div class="nombre-user">CERTIFICADO DE ANALISIS DE CONTROL DE CALIDAD</div>
+  
+    <div class="box">
+        <div class="container-1">
+            <span class="icon"><i class="mdi-action-search"></i></span>
+            <input type="search" id="search" name="search" placeholder="Buscar Certificado..." [(ngModel)]="filter"/>
+        </div>
+    </div>
+  </div>
+  
+  <div class="contenido-principal" style="background: #ffffff;">
+  <div class="row">
+    <table class="bordered responsive-table">
+      <thead>
+        <tr>
+          <th (click)="sort('codigo_certificado')">COD. CER.<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha_analisis'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th (click)="sort('fecha_analisis')">FECHA DE ANALISIS<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='fecha_analisis'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th (click)="sort('nombre_producto')">NOMBRE DEL PRODUCTO<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='codigo_certificado'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th (click)="sort('lote')">NRO DE LOTE<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='lote'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th (click)="sort('tipo_certificado')">TIPO DE CERTIFICADO<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='lote'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th (click)="sort('dictamen')">DICTAMEN<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='dictamen'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let certificado of certificados | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+          <td>{{certificado.codigo_certificado}}</td>
+          <td>{{certificado.fecha_analisis}}</td>
+          <td>{{certificado.nombre_producto}}</td>
+          <td>{{certificado.lote}}</td>
+          <td>{{certificado.tipo_certificado}}</td>
+          <td>{{certificado.dictamen}}</td>
+          <!--<td><a href="javascript:void(0)" (click)="obtenerDatosReporte(certificado.codigo_certificado)">Vista Previa</a></td>-->
+          <!--<td><a href="javascript:void(0)" (click)="obtenerPDF()">Vista Previa</a></td>-->
+          <td><a [routerLink]="['/sacc/certificados/mp/detail/', certificado.codigo_certificado.replace('/','|')]">Ver Detalle</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+  </div>
+  
+  
+  <mz-modal #modalVerAnalista [fixedFooter]="true" [bottomSheet]="true">
+    <mz-modal-header>
+      Detalle del Analista
+    </mz-modal-header>
+    <mz-modal-content>  
+    </mz-modal-content>
+    <mz-modal-footer>
+      <button mz-button [flat]="true" mz-modal-close>Guardar</button>
+      <button mz-button [flat]="true" mz-modal-close>Cerrar</button>
+    </mz-modal-footer>
+  </mz-modal>
+  
+  
+  
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+      <a [routerLink]="['/sacc/certificados/mp/add']" class="btn-floating btn-large green">
+      <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+        <i class="large mdi-content-add"></i>
+      </a>
+  </div>

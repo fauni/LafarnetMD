@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MzCardModule, MzIconMdiModule, MzBadgeModule, MzButtonModule, MzModalModule, MzToastService,
-    MzDatepickerModule, MzInputModule, MzSelectModule, MzToastModule, MzTextareaModule, MzTooltipModule, MzSpinnerModule } from 'ng2-materialize';
+    MzDatepickerModule, MzInputModule, MzSelectModule, MzToastModule, MzTextareaModule, MzTooltipModule,
+    MzSpinnerModule } from 'ng2-materialize';
 import { ListocRoutingModule } from './listoc-routing.module';
 import { ListocComponent } from './listoc.component';
 import { SolicitudService } from '../../solicitud/solicitud.service';

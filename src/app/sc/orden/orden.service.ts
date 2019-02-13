@@ -86,6 +86,11 @@ export class OrdenService {
     return this.http.post(this.global.urlAPICORE + 'scordenautorizadorsg/', data);
   }
 
+  // Autorizar la Orden de Compra
+  saveAutorizarOrdenG(data) {
+    return this.http.post(this.global.urlAPICORE + 'scordenautorizadorg/', data);
+  }
+
   // Listado para Abastecimiento
   getListadoOrdenXEstadoSG(data) {
     return this.http.get(this.global.urlAPICORE + 'scordenabastecimiento/' + data);
@@ -94,6 +99,26 @@ export class OrdenService {
   // Listado por Autorizadores
   getListadoOrdenXAutorizador(data) {
     return this.http.get(this.global.urlAPICORE + 'scordenautorizadorsg/' + data);
+  }
+
+  // Listado por Autorizadores
+  getListadoOrdenXAutorizadorG(data) {
+    return this.http.get(this.global.urlAPICORE + 'scordenautorizadorg/' + data);
+  }
+
+  // Enviar Email como notificación de creación de orden de compra
+  getEnviarEmailOrdenSolicitantes(data) {
+    return this.http.get(this.global.urlAPICORE + 'notificacionorden/' + data);
+  }
+
+  // Enviar Email como notificación de creación de orden de compra
+  getVerificaEstadoTransferenciaOC() {
+    return this.http.get(this.global.urlAPICORE + 'scnumeroordencompra');
+  }
+
+  // Generar archivos para subir ordenes de compra al SAP
+  generarArchivosParaSAP() {
+    return this.http.get(this.global.urlAPICORE + 'scgeneraordencompra');
   }
 }
 

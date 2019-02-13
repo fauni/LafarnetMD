@@ -259,12 +259,14 @@ export class AddocComponent implements OnInit {
     this.detallesolicitud.unidad = $event['BuyUnitMsr'];
   }
 
+  // Genera el codigo de orden de compra
   onGeneraCodigo() {
     let timestamp = + new Date;
     this.orden.codigo_orden = timestamp.toString();
     // alert(this.orden.codigo_orden);
   }
 
+  // Verifica que los datos esten llenos o ingresados de manera correcta tambien carga los valores por defecto
   onValidaCabeceraOrden() {
 
     // let uencargado: Users = new Users();
@@ -288,7 +290,8 @@ export class AddocComponent implements OnInit {
           this.onSaveDetalleOrdenCompra(this.ldetalleordenS);
         }
         console.log(data);
-        this.toast.show('Se guardo correctamente!', 500, 'green', () => this.router.navigate(['/sc/orden/list']) );
+        this.enviarNotificacionCreacionOrden(o.codigo_orden);
+        this.toast.show('Se guardo correctamente!', 1000, 'green', () => this.enviarNotificacionCreacionOrden(o.codigo_orden) );
       },
       (err: HttpErrorResponse) => {
         this.closeLoading();
@@ -301,7 +304,24 @@ export class AddocComponent implements OnInit {
       }
     );
   }
-
+  // Envia emails a todos los solicitantes que se encuentran en la orden de compra
+  enviarNotificacionCreacionOrden(codigo_orden: string) {
+    this.servOC.getEnviarEmailOrdenSolicitantes(codigo_orden).subscribe(
+      data => {
+        // this.toast.show('Se notifico correctamente', 500, 'green');
+        this.router.navigate(['/sc/orden/list']);
+        console.log(data);
+      },
+      (err: HttpErrorResponse) => {
+        this.toast.show('No se pudo notificar a los solicitantes!', 500, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
   //#region DETALLE DE ORDEN DE COMPRA
   onQuitarDetalleOrdenCompra(doc: DetalleOrden) {
     if (this.orden.tipo_orden == 'I') {
@@ -379,7 +399,7 @@ export class AddocComponent implements OnInit {
         }else {
           this.orden.autorizador_sub = 'jocampod';
         }
-        this.orden.autorizador_gerencia = 'jocampo';
+        this.orden.autorizador_gerencia = 'jocampom';
       },
       (err: HttpErrorResponse) => {
         this.closeLoading();

@@ -84,11 +84,14 @@
                     </i>
                 </td>
                 <td>
-                    <button mz-button (click)="onOpenSolicitud(solicitud.codigo)"
+                    <button mz-button mz-tooltip
+                        [tooltip]="'Ver Solicitud'"
+                        (click)="onOpenSolicitud(solicitud.codigo)"
                         [float]="true" class="blue">
                         <i mz-icon-mdi [icon]="'file-find'"></i>
                     </button>
-                    <button mz-button 
+                    <button mz-button mz-tooltip
+                        [tooltip]="'Anular la Solicitud'"
                         (click)="AnularSolicitudModal.open()"
                         (click)="onLoadAnularSolicitud(solicitud.codigo)"
                         *ngIf="solicitud.estado_autorizacion_superior !== 'X'"
@@ -240,13 +243,15 @@
                         <td>15</td>
                         <td>30/11/2018</td>
                         <td>
-                            <button mz-button
-                                    [float]="true" class="orange">
-                                    <i mz-icon-mdi [icon]="'pencil'"></i>
+                            <button mz-button mz-tooltip
+                                [tooltip]="'Ver Solicitud'"
+                                [float]="true" class="orange">
+                                <i mz-icon-mdi [icon]="'pencil'"></i>
                             </button>
-                            <button mz-button
-                                    [float]="true" class="red">
-                                    <i mz-icon-mdi [icon]="'minus'"></i>
+                            <button mz-button mz-tooltip
+                                [tooltip]="'Anular la Solicitud'"
+                                [float]="true" class="orange">
+                                <i mz-icon-mdi [icon]="'cancel'"></i>
                             </button>
                         </td>
                     </tr>

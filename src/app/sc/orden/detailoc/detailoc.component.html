@@ -413,6 +413,12 @@
     <button mz-button (click)="AnularOrdenModal.open()" class="red">
         Anular
     </button>
+    <!--<button *ngIf="solicitud.estado_autorizacion_superior === 'P'" mz-button class="blue" (click)="onGuardarAutorizarSolicitud('A')">
+        Aprobar
+    </button>
+    <button *ngIf="solicitud.estado_autorizacion_superior === 'P'" mz-button (click)="RechazarSolicitudModal.open()" class="red">
+        Rechazar
+    </button>-->
 </div>
 
 <!-- REGION ANULAR ORDEN -->

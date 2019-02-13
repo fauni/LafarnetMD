@@ -27,7 +27,7 @@
         <mz-card-content>
             <div class="row">
                 <div class="col x6 l6 titulo_codigo">
-                    Codigo Certificado: {{ codigo_certificado }}
+                    Codigo Certificado: {{ codigo_certificado.split('|').join('/') }}
                 </div>
                 <div class="col x6 l6" style="text-align: right;">
                     <button *ngIf="certificado.dictamen !== 'ANULADO'" mz-button (click)="onAnularCertificado()" id="btnAnularCertificado" class="red btn">
@@ -154,7 +154,7 @@
 </div>
   
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="export(certificado.codigo_certificado)">
+    <a href="javascript:void(0)" class="btn-floating btn-large blue" (click)="export(certificado.codigo_certificado.split('/').join('|'))">
         <i class="large mdi-file-file-download"></i>
     </a>
 </div>

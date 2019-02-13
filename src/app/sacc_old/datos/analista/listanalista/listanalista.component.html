@@ -1,0 +1,70 @@
+<mz-parallax class="header-background" [height]="170">
+  <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+
+<div id="preview" class="header-content valign-wrapper lafar-light">
+  <img class="image-user circle" src="assets/images/userlafar.png">
+  <div class="nombre-user">ANALISTAS DE CONTROL DE CALIDAD </div>
+
+  <div class="box">
+      <div class="container-1">
+          <span class="icon"><i class="mdi-action-search"></i></span>
+          <input type="search" id="search" name="search" placeholder="Buscar Analistas..." [(ngModel)]="filter"/>
+      </div>
+  </div>
+</div>
+
+<div class="contenido-principal" style="background: #ffffff;">
+<div class="row">
+  <table class="bordered">
+    <thead>
+      <tr>
+        <th (click)="sort('codigo')">CODIGO<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='codigo'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+        <th (click)="sort('username')" hidden>USERNAME<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='username'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+        <th (click)="sort('nombre_completo')">NOMBRES Y APELLIDOS<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='username'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+        <th (click)="sort('grado')" hidden>GRADO A.<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='grado'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+        <th (click)="sort('especialidad')">ESPECIALIDAD<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='especialidad'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+        <th (click)="sort('id_firma')" hidden>FIRMA<span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='id_firma'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let analista of analistas | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+        <td>{{analista.codigo}}</td>
+        <td hidden>{{analista.username}}</td>
+        <td>{{analista.nombre_completo}}</td>
+        <td hidden>{{analista.grado}}</td>
+        <td>{{analista.especialidad}}</td>
+        <td hidden>{{analista.id_firma}}</td>
+        <td><a [routerLink]="['/sacc/datos/analista/detail', analista.codigo]">Ver mas Detalles</a> </td>
+        <td><a href="javascript:void(0)" (click)="borranalista(analista.username)">Eliminar</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+</div>
+
+
+
+<mz-modal #modalVerAnalista [fixedFooter]="true" [bottomSheet]="true">
+  <mz-modal-header>
+    Detalle del Analista
+  </mz-modal-header>
+  <mz-modal-content>  
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close>Guardar</button>
+    <button mz-button [flat]="true" mz-modal-close>Cerrar</button>
+  </mz-modal-footer>
+</mz-modal>
+
+
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a [routerLink]="['/sacc/datos/analista/add']" class="btn-floating btn-large green">
+    <!--<a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">-->
+      <i class="large mdi-content-add"></i>
+    </a>
+</div>

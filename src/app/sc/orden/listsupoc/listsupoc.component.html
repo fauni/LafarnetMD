@@ -225,7 +225,7 @@
             <div class="nav-wrapper">
                 <div class="left col s12 m5 l5">
                 <ul>
-                    <li><a href="javascript:void(0);" (click)="RechazarSolicitudModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
+                    <li><a href="javascript:void(0);" (click)="RechazarOrdenModal.close()" class="email-menu"><i class="modal-action modal-close  mdi-hardware-keyboard-backspace"></i></a></li>
                     <li><a href="javascript:void(0);" class="email-type">Rechazar Solicitud</a></li>
                 </ul>
                 </div>
@@ -246,8 +246,8 @@
                         [icon]="'eraser'">
                     </i>
                     <textarea mz-textarea
-                        [label]="'Motivo de Anulación'"
-                        [(ngModel)]="autorizarsolcitud.motivo_autorizacion_superior"
+                        [label]="'Motivo de Rechazo'"
+                        [(ngModel)]="autorizarorden.motivo_autorizacion_superior"
                         name="motivo_autorizacion_superior"
                         id="motivo_autorizacion_superior"
                         placeholder="Ingrese el motivo de Rechazo"
@@ -258,25 +258,25 @@
 
         <!--<div class="row">
             <pre>
-                {{ autorizarsolcitud | json }}    
+                {{ autorizarorden | json }}    
             </pre>
         </div>-->
 
     </mz-modal-content>
     <mz-modal-footer>
         <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
-        <button mz-button [flat]="true" mz-modal-close (click)="onGuardarAutorizarSolicitud()">Rechazar</button>
+        <button mz-button [flat]="true" mz-modal-close (click)="onGuardarAutorizarSGOrden()">Rechazar</button>
     </mz-modal-footer>
 </mz-modal>
 <!-- END REGION RECHAZAR ORDEN-->
 
-
+<!--
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
     <a [routerLink]="['/sc/orden/solicitud']" href="javascript:void(0)" class="btn-floating btn-large green">
         <i class="large mdi-content-add"></i>
     </a>
 </div>
-
+-->
 <!--
 <div class="row">
     <pre>

@@ -1,0 +1,83 @@
+<div id="loading">
+    <div id="loadingcontent">
+        <p id="loadingspinner">
+            <mz-spinner
+                class="valign center-align col s4"
+                [size]="'big'">
+            </mz-spinner>
+            <br><br>
+            Cargando Productos ... 
+        </p>
+    </div>
+</div>
+
+<div class="contenido-principal">
+    <div>
+        <mz-card>
+            <mz-card-title>
+                PRODUCTO TERMINADO
+            </mz-card-title>
+            <mz-card-content>
+                <div class="row">
+                    <div class="col l6 m12 s12">
+                        <mz-select-container class="col s12 m12">
+                            <select mz-select
+                                id="clasificacion"
+                                [label]="'Clasificacion'"
+                                [placeholder]="'Buscar por Clasificación'"
+                                (change)="onChangeClasificacion()"
+                                [(ngModel)]="clasificacion">
+                                <option *ngFor="let clasificacion of clasificaciones" value="{{clasificacion.name}}">{{clasificacion.name}}</option>
+                            </select>
+                        </mz-select-container>
+                    </div>
+                    <div class="col l6 m12 s12">
+                        <mz-input-container>
+                            <i mz-icon-mdi mz-input-prefix
+                                [icon]="'magnify'">
+                            </i>
+                            <input mz-input
+                                [label]="'Buscar Producto'"
+                                id="sproducto"
+                                type="text"
+                                [(ngModel)]='filter'
+                                value="">
+                        </mz-input-container>
+                    </div>
+                </div>
+            </mz-card-content>
+        </mz-card>
+
+        <div class="row">
+            <div class="col l12 m12 s12">
+                <mz-card>        
+                    <mz-card-content>
+                        <table class="bordered">
+                            <thead>
+                                <tr>
+                                    <th (click)="sort('Cod_Producto')">Codigo <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Cod_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                                    <th (click)="sort('Nombre_Producto')">Nombre del Producto <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Nombre_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                                    <th (click)="sort('Concentracion')">Concentración <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Nombre_Producto'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let producto of newproductos | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 10, currentPage: p }; let i = index" [ngClass]="producto.Estado == 1 ? 'fondoSiRegistro':'fondoNoRegistro'">
+                                    <td>{{producto.Cod_Producto}}</td>
+                                    <td>{{producto.Nombre_Producto}}</td>
+                                    <td>{{producto.Concentracion}}</td>
+                                    <td><a [routerLink]="['/sacc/asignacion/pt/detail', producto.Tipo_Productos, producto.Cod_Producto]">Especificaciones</a> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </mz-card-content>
+                </mz-card>
+            </div>
+            <div class="col l12 m12 s12">
+
+            </div>
+        </div>
+    </div>
+</div>
+

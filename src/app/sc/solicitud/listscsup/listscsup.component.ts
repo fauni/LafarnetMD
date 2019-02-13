@@ -32,6 +32,7 @@ export class ListscsupComponent implements OnInit {
 
   // Esta funcion obtiene las solicitudes del Solicitante
   onGetSolicitudes(): void {
+    this.lsolicitud = new Array<Solicitudcompralistado>();
     this.openLoading();
     let username = localStorage.getItem('username');
     this.servSC.getListadoSolicitudXAutorizador(username).subscribe(
@@ -140,6 +141,7 @@ export class ListscsupComponent implements OnInit {
   // Opciones para filtrado de Listado
 
   onLoadListado() {
+    this.lsolicitud = [];
     let id_autorizador: string = localStorage.getItem('username');
     let eautorizacion: RequestEstadoAutorizador = new RequestEstadoAutorizador();
     eautorizacion.id_superior = id_autorizador;
@@ -150,7 +152,7 @@ export class ListscsupComponent implements OnInit {
           this.lsolicitud = data['body'];
           // this.toast.show('Se trajo ' + data['length'] + ' solicitudes', 2000, 'green');
         }else {
-          this.toast.show('No tiene solicitudes!', 1000, 'red');
+          this.toast.show('No tiene solicitudes de este tipo!', 1000, 'red');
         }
         console.log(data);
       },

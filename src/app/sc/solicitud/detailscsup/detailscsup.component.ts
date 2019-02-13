@@ -213,7 +213,7 @@ export class DetailscsupComponent implements OnInit {
                   this.detallesolicitud.tipo_item = s.tipo;
                   this.onSaveDetalleSolicitudCompra(this.detallesolicitud);
                 });
-                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list_aut/']));
               } else {
                 this.ldetallesolicitudservicio.forEach(element => {
                   this.detallesolicitudservicio = new DetalleSolicitud();
@@ -223,7 +223,7 @@ export class DetailscsupComponent implements OnInit {
                   this.detallesolicitudservicio.tipo_item = s.tipo;
                   this.onSaveDetalleSolicitudCompra(this.detallesolicitudservicio);
                 });
-                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list/']));
+                this.toast.show('Se modifico correctamente!', 1000, 'green', () => this.router.navigate(['/sc/solicitud/list_aut/']));
               }
               this.onSaveUploadFilesSolicitud(this.lfiles, this.solicitud.codigo);
           }

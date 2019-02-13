@@ -1,0 +1,345 @@
+<div id="loading">
+    <div id="loadingcontent">
+        <p id="loadingspinner">
+            <mz-spinner
+                class="valign center-align col s4"
+                [size]="'big'">
+            </mz-spinner>
+            <br><br>
+            Cargando Información ... 
+        </p>
+    </div>
+</div>
+
+<mz-parallax class="header-background" [height]="170">
+    <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+
+<div id="preview" class="header-content valign-wrapper lafar-light">
+    <img class="image-user circle" src="assets/images/userlafar.png">
+    <div class="nombre-user">CERTIFICADO DE MATERIA PRIMA</div>
+</div>
+
+<div class="contenido-principal">
+    <!--<form #certificadoPTForm = "ngForm" novalidate>-->
+        <mz-card>
+            <mz-card-content>
+                <div class="row">
+                    <mz-input-container class="col l4 s12 m4">
+                        <input mz-input required
+                            id="lote"
+                            name="lote"
+                            type="text"
+                            [label]="'Nro Lote'"
+                            [(ngModel)]="certificado.lote"
+                            (keydown)="getLote($event)">
+                    </mz-input-container>
+
+                    <mz-datepicker-container class="col l4 s12 m4">
+                        <input mz-datepicker
+                        id="fecha_analisis"
+                        name="fecha_analisis"
+                        type="text"
+                        [label]="'Fecha de Analisis'"
+                        [options]="options"
+                        [placeholder]="'Ingrese Fecha del Analisis'"
+                        [(ngModel)]="certificado.fecha_analisis"
+                        required>
+                    </mz-datepicker-container>
+
+                    <mz-input-container class="col l4 s12 m4">
+                        <input mz-input required
+                            id="nombre_producto"
+                            name="nombre_producto"
+                            type="text"
+                            [label]="'Nombre del Producto'"
+                            [(ngModel)]="certificado.nombre_producto">
+                    </mz-input-container>
+                    <!--<div style="padding: 12px 10px" class="col l4 s12 m4">
+                        <ng2-completer 
+                            (selected)="onSelectProducto($event)"    
+                            [datasource]="productosData"
+                            [minSearchLength]="0"
+                            [maxChars]="10"
+                            [inputClass]="'form-control'"
+                            [placeholder]="'Codigo o Nombre del Producto'"
+                            [matchClass]="'match'"
+                            [autofocus]="true"
+                            [textSearching]="false">
+                        </ng2-completer>
+                    </div>-->
+                    
+                </div>
+                <div class="row">
+                    <div style="padding: 12px 10px" class="col l4 s12 m4">
+                        <ng2-completer 
+                            (selected)="onSelectAnalista($event)"
+                            [datasource]="analistaData"
+                            [minSearchLength]="0"
+                            [maxChars]="10"
+                            [inputClass]="'form-control'"
+                            [placeholder]="'Nombre de Analista'"
+                            [matchClass]="'match'"
+                            [autofocus]="true"
+                            [textSearching]="false">
+                        </ng2-completer>
+                    </div>
+
+                    <mz-input-container class="col l2 s12 m2">
+                        <input mz-input required
+                            id="codigo_analista"
+                            name="codigo_analista"
+                            type="text"
+                            [label]="'Codigo Analista'"
+                            [(ngModel)]="certificado.codigo_analista">
+                    </mz-input-container>
+
+                    <mz-datepicker-container class="col l3 s12 m3">
+                        <input mz-datepicker
+                        id="fecha_fabricacion"
+                        name="fecha_fabricacion"
+                        type="text"
+                        [label]="'Fecha de Fabricacion'"
+                        [options]="options"
+                        [placeholder]="'Ingrese Fecha del Fabricacion'"
+                        [(ngModel)]="certificado.fecha_fabricacion"
+                        required>
+                    </mz-datepicker-container>
+
+                    <mz-datepicker-container class="col l3 s12 m3">
+                        <input mz-datepicker
+                        id="fecha_vencimiento"
+                        name="fecha_vencimiento"
+                        type="text"
+                        [label]="'Fecha de Vencimiento'"
+                        [options]="options"
+                        [placeholder]="'Ingrese Fecha del Vencimiento'"
+                        [(ngModel)]="certificado.fecha_vencimiento"
+                        required>
+                    </mz-datepicker-container>
+                </div>
+
+                
+                <div class="row">    
+                    <mz-input-container class="col l4 s12 m3">
+                        <input mz-input required
+                            id="protocolo"
+                            name="protocolo"
+                            type="text"
+                            [label]="'Protocolo'"
+                            [(ngModel)]="certificado.protocolo">
+                    </mz-input-container>
+
+                    <!--<mz-select-container class="col l3 s12 m3">
+                        <select mz-select
+                            id="nombre_proveedor"
+                            [label]="'Proveedor'"
+                            [placeholder]="'Seleccione un Proveedor'"
+                            [(ngModel)]="certificado.nombre_proveedor">
+                            <option *ngFor="let proveedor of proveedores" value="{{ proveedor.Nombre_Proveedor }}">{{proveedor.Nombre_Proveedor}}</option>
+                        </select>
+                    </mz-select-container>-->
+
+                    <mz-input-container class="col l4 s12 m3">
+                        <input mz-input required
+                            id="tipo_clasificacion_producto"
+                            name="tipo_clasificacion_producto"
+                            type="text"
+                            [label]="'Codigo de Clasificación'"
+                            [(ngModel)]="certificado.tipo_clasificacion_producto">
+                    </mz-input-container>
+
+                    <mz-select-container class="col l4 s12 m3">
+                        <select mz-select
+                            id="dictamen"
+                            [label]="'Dictamen'"
+                            [placeholder]="'Seleccione un dictamen'"
+                            [(ngModel)]="certificado.dictamen">
+                            <option>APROBADO</option>
+                            <option>RECHAZADO</option>
+                        </select>
+                    </mz-select-container>
+
+                </div>
+                <div class="row">
+                    <div class="col l6 x6 s6">
+                        <span class="title_select">Proveedor</span>
+                        <ng-select [items]="proveedores"
+                                bindLabel="Nombre_Proveedor"
+                                bindValue="Nombre_Proveedor"
+                                [(ngModel)]="certificado.nombre_proveedor">
+                        </ng-select>
+                    </div>
+                    <div class="col l6 x6 s6">
+                        <span class="title_select">Fabricante</span>
+                        <ng-select [items]="fabricantes"
+                                bindLabel="nombre_fabricante"
+                                bindValue="nombre_fabricante"
+                                [(ngModel)]="certificado.nombre_fabricante">
+                        </ng-select>
+                        <span><a href="javascript:void(0)" (click)="guardarFabricante()">Agregar Fabricante</a></span>
+                    </div>
+                </div>
+            </mz-card-content>
+        </mz-card>
+
+        
+
+        <mz-card>
+            <mz-card-content>
+                <mz-switch-container>
+                <input mz-switch
+                    [off]="labelOff"
+                    [on]="labelOn"
+                    [(ngModel)]="esCopia"
+                    (change)="copiarResultados()"
+                    type="checkbox">
+                </mz-switch-container>
+                <hr>
+                <mz-tab [fixedTabWidth]="'true'">
+                    <mz-tab-item [class]="'col s12'" [label]="'Caracteristicas Fisicas'">
+                        <div class="row" *ngFor="let c of lccf">
+                            <mz-input-container  class="col l6 s12 m12">
+                                <input mz-input required
+                                id="{{c.especificacion}}"
+                                name="{{c.especificacion}}"
+                                type="text"
+                                [label]="c.descripcion"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                [(ngModel)]="c.especificacion">
+                            </mz-input-container>
+                            <mz-input-container class="col l6 s12 m12">
+                                <input mz-input required
+                                    id="{{c.resultado}}"
+                                    name="{{c.resultado}}"
+                                    type="text"
+                                    [label]="'Resultado'"
+                                    placeholder="Introduzca un Resultado para {{c.descripcion}}"
+                                    [(ngModel)]="c.resultado">
+                            </mz-input-container>
+                        </div>
+                    </mz-tab-item>
+                    <!--<mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
+                        <div class="row" *ngFor="let c of lcaq">
+                            <mz-input-container class="col l6 s12 m12">
+                                <input mz-input required
+                                id="{{c.especificacion}}"
+                                name="{{c.especificacion}}"
+                                type="text"
+                                [label]="c.descripcion"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                [(ngModel)]="c.especificacion">
+                            </mz-input-container>
+                            <mz-input-container class="col l6 s12 m12">
+                                <input mz-input required
+                                    id="{{c.resultado}}"
+                                    name="{{c.resultado}}"
+                                    type="text"
+                                    [label]="'Resultado'"
+                                    placeholder="Introduzca un Resultado para {{c.descripcion}}"
+                                    [(ngModel)]="c.resultado">
+                            </mz-input-container>
+                        </div>
+                    </mz-tab-item>-->
+                    <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
+                        <div class="row" *ngFor="let c of lccm">
+                            <mz-input-container class="col l6 s12 m12">
+                                <input mz-input required
+                                id="{{c.especificacion}}"
+                                name="{{c.especificacion}}"
+                                type="text"
+                                [label]="c.descripcion"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                [(ngModel)]="c.especificacion">
+                            </mz-input-container>
+                            <mz-input-container class="col l6 s12 m12">
+                                <input mz-input required
+                                    id="{{c.resultado}}"
+                                    name="{{c.resultado}}"
+                                    type="text"
+                                    [label]="'Resultado'"
+                                    placeholder="Introduzca un Resultado para {{c.descripcion}}"
+                                    [(ngModel)]="c.resultado">
+                            </mz-input-container>
+                        </div>
+                    </mz-tab-item>
+                </mz-tab>
+            </mz-card-content>
+        </mz-card>
+
+        <mz-card style="display:none;">
+            <mz-card-content>
+                <mz-textarea-container class="col s12">
+                    <textarea mz-textarea
+                    id="presentacion"
+                    name="presentacion"
+                    type="text"
+                    [label]="'Presentación'"
+                    placeholder="Introduzca información de la Presentación"
+                    [(ngModel)]="certificado.presentacion"
+                    [length]="255">
+                    </textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
+        <mz-card>
+            <mz-card-content>
+                <mz-textarea-container class="col s12">
+                    <textarea mz-textarea
+                    id="conservacionyalm"
+                    name="conservacionyalm"
+                    type="text"
+                    [label]="'Conservación y Almacenamiento'"
+                    placeholder="Introduzca la forma de Conservación y Almacenamiento"
+                    [(ngModel)]="certificado.conservacionyalm"
+                    [length]="255">
+                    </textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
+        <mz-card>
+            <mz-card-content>
+                <mz-textarea-container class="col s12">
+                    <textarea mz-textarea
+                    id="referencias"
+                    name="referencias"
+                    type="text"
+                    [label]="'Referencias'"
+                    placeholder="Introduzca sus Referencias"
+                    [(ngModel)]="certificado.referencias"
+                    [length]="255">
+                    </textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
+        
+        <mz-card>
+            <mz-card-content>
+                <mz-textarea-container class="col s12">
+                    <textarea mz-textarea
+                    id="observaciones"
+                    name="observaciones"
+                    type="text"
+                    [label]="'Observaciones'"
+                    placeholder="Introduzca una Observación"
+                    [(ngModel)]="certificado.observaciones"
+                    [length]="255">
+                    </textarea>
+                </mz-textarea-container>
+            </mz-card-content>
+        </mz-card>
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <button mz-button 
+                [float]="true" 
+                [large]="true" 
+                [disabled]="false" 
+                class="green" 
+                type="button"
+                (click)="guardarCertificado()">
+                <i class="large mdi-action-done"></i>
+            </button>
+        </div>
+    <!--</form>-->
+</div>
+
+<simple-notifications></simple-notifications>

@@ -1,0 +1,174 @@
+<div id="loading">
+    <div id="loadingcontent">
+        <p id="loadingspinner">
+            <mz-spinner
+                class="valign center-align col s4"
+                [size]="'big'">
+            </mz-spinner>
+            <br><br>
+            Cargando Productos ... 
+        </p>
+    </div>
+</div>
+    
+<div class="contenido-principal" style="padding-top: 10px;">
+    <nav class="lafar-bg-blue">
+        <div class="nav-wrapper">
+            <div class="col s12">
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a href="javascript:void(0)" (click)="ModalCaracteristicas.open()">
+                            <i class="mdi-av-playlist-add left"></i>Modificar Caracteristicas
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div *ngIf="show">
+        <mz-card>
+            <mz-card-content>
+                <mz-tab [fixedTabWidth]="'true'">
+                    <mz-tab-item [class]="'col s12'" [label]="'Caracteristicas Fisicas'">
+                        <mz-input-container *ngFor="let c of lcf" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
+                        <mz-input-container *ngFor="let c of laq" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
+                        <mz-input-container *ngFor="let c of lcm" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                </mz-tab>
+            </mz-card-content>
+        </mz-card>
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <button mz-button 
+                [float]="true" 
+                [large]="true" 
+                [disabled]="false" 
+                class="green" 
+                type="button"
+                (click)="guardarAsignacionCaracteristicaProducto()">
+                <i class="large mdi-action-done"></i>
+            </button>
+        </div>
+        
+    </div>
+    <div *ngIf="!show">
+        <mz-card>
+            <mz-card-content>
+                <mz-tab [fixedTabWidth]="'true'">
+                    <mz-tab-item [class]="'col s12'" [label]="'Caracteristicas Fisicas'">
+                        <mz-input-container *ngFor="let c of lcf" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Analisis Quimico'">
+                        <mz-input-container *ngFor="let c of laq" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                    <mz-tab-item [class]="'col s12'" [label]="'Control Microbiologico'">
+                        <mz-input-container *ngFor="let c of lcm" class="col s12 m6">
+                            <input mz-input
+                                [label]="c.descripcion"
+                                id="basic-input-placeholder"
+                                placeholder="Introduzca un valor para {{c.descripcion}}"
+                                type="text"
+                                [(ngModel)]="c.especificacion">
+                        </mz-input-container>
+                    </mz-tab-item>
+                </mz-tab>
+            </mz-card-content>
+        </mz-card>
+        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+            <button mz-button 
+                [float]="true" 
+                [large]="true" 
+                [disabled]="false" 
+                class="green" 
+                type="button"
+                (click)="guardarAsignacionCaracteristicaProducto()">
+                <i class="large mdi-action-done"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<mz-modal #ModalCaracteristicas [fixedFooter]="true" [bottomSheet]="true">
+    <mz-modal-content>
+        <div style="padding: 15px;">
+            <h5 class="light">Caracteristicas Físicas</h5>
+            <div class="row">
+                <mz-checkbox-container class="col s6 m3" *ngFor ="let itm of lcfPT" >
+                    <input mz-checkbox
+                        [label]="itm.descripcion"
+                        id="checkbox-{{itm.esp_car}}-{{itm.tipo}}-{{itm.id_caracteristicas_fisicas}}"
+                        type="checkbox"
+                        [checked]="cambiatipocheck(itm.checkeado)"
+                        (change)="cambiaEstadoAddOrRemove(itm)">
+                </mz-checkbox-container>
+            </div>
+            <h5 class="light">Analisis Químico</h5>
+            <div class="row">
+                <mz-checkbox-container class="col s6 m3" *ngFor ="let itm of laqPT" >
+                    <input mz-checkbox
+                        [label]="itm.descripcion"
+                        id="checkbox-{{itm.esp_car}}-{{itm.tipo}}-{{itm.id_caracteristicas_fisicas}}"
+                        type="checkbox"
+                        [checked]="cambiatipocheck(itm.checkeado)"
+                        (change)="cambiaEstadoAddOrRemove(itm)">
+                </mz-checkbox-container>
+            </div>
+            <h5 class="light">Control Microbiológico</h5>
+            <div class="row">
+                <mz-checkbox-container class="col s6 m3" *ngFor ="let itm of lcmPT" >
+                    <input mz-checkbox
+                        [label]="itm.descripcion"
+                        id="checkbox-{{itm.esp_car}}-{{itm.tipo}}-{{itm.id_caracteristicas_fisicas}}"
+                        type="checkbox"
+                        [checked]="cambiatipocheck(itm.checkeado)"
+                        (change)="cambiaEstadoAddOrRemove(itm)">
+                </mz-checkbox-container>
+            </div>
+        </div>          
+    </mz-modal-content>
+    <mz-modal-footer>
+        <button mz-button [flat]="true" (click)='openNotificacion(1, "Correcto!","Los cambios fueron guardados correctamente")' mz-modal-close>Aceptar</button>
+    </mz-modal-footer>
+</mz-modal>
+
+<simple-notifications></simple-notifications>

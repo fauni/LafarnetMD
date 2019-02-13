@@ -1,0 +1,147 @@
+<mz-parallax class="header-background" [height]="170">
+  <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+
+<div id="preview" class="header-content valign-wrapper lafar-light">
+  <img class="image-user circle" src="assets/images/userlafar.png">
+  <div class="nombre-user">PARAMETROS DE ASIGNACION</div>
+  <div class="box">
+      <div class="container-1">
+      </div>
+  </div>
+</div>
+<div class="contenido-principal">
+    <mz-card>
+        <mz-card-content>
+            
+            <mz-collapsible
+                [mode]="'accordion'"
+                [popout]="true"
+                >
+                <mz-collapsible-item [active]="false">
+                                <mz-collapsible-item-header>
+                                <h5 style="color:dodgerblue;">PRODUCTO TERMINADO</h5>
+                                </mz-collapsible-item-header>
+                                <mz-collapsible-item-body>
+                                        <div class="row">
+                                                <div class="col s12 m6"></div>
+                                                   <mz-select-container class="col s12 m6">
+                                                       <select mz-select
+                                                         id="options-selectpt"
+                                                         [label]="'Clasificacion del producto'"                     
+                                                         [(ngModel)] = "tipoClasificacionProductoPT"
+                                                         (change)="onLoadClasificacion_caracteristicas(tipoClasificacionProductoPT);" 
+                                                         >
+                                                          <option value="0" selected="true">&nbsp;</option>
+                                                           <option *ngFor = "let item of clasificacionesportipoPT" value="{{item.descripcion}}">{{item.name}}&nbsp;-&nbsp;({{item.tipo}}) </option>
+                                                       </select>
+                                                     </mz-select-container>
+                                        </div>
+                                                        <h5>Caracteristicas Físicas</h5>
+                                                        <div class="row">
+                                                                <mz-checkbox-container class="col s6 m4" *ngFor ="let itmcf of caracteristicasPT" >
+                                                                        <input mz-checkbox  *ngIf= "itmcf.esp_car == 'CF'"
+                                                                          [label]="itmcf.descripcion+'-'+itmcf.esp_car"
+                                                                          id="checkbox-{{itmcf.esp_car}}-{{itmcf.tipo}}-{{itmcf.id_caracteristicas_fisicas}}"
+                                                                          type="checkbox"
+                                                                          [checked]="cambiatipocheck(itmcf.checkeado)"
+                                                                          (change)="enCambioEstadoPT(itmcf)">
+                                                                </mz-checkbox-container>
+                                                        </div>
+                                                        <h5>Análisis Químico</h5>
+                                                        <div class="row">
+                                                                <mz-checkbox-container class="col s6 m4" *ngFor ="let itemaq of caracteristicasPT" >
+                                                                        <input mz-checkbox  *ngIf= "itemaq.esp_car == 'AQ'"
+                                                                          [label]="itemaq.descripcion+'-'+itemaq.esp_car"
+                                                                          id="checkbox-{{itemaq.esp_car}}-{{itemaq.tipo}}-{{itemaq.id_caracteristicas_fisicas}}"
+                                                                          type="checkbox"
+                                                                          [checked]="cambiatipocheck(itemaq.checkeado)"
+                                                                          (change)="enCambioEstadoPT(itemaq)">
+                                                                          
+                                                                </mz-checkbox-container>
+                                                        </div>    
+                                                        <h5>Control Microbiologico</h5>
+                                                
+                                                        <div class="row">
+                                                                <mz-checkbox-container class="col s6 m4" *ngFor ="let itmcm of caracteristicasPT" >
+                                                                        <input mz-checkbox  *ngIf= "itmcm.esp_car == 'CM'"
+                                                                          [label]="itmcm.descripcion+'-'+itmcm.esp_car"
+                                                                          id="checkbox-{{itmcm.esp_car}}-{{itmcm.tipo}}-{{itmcm.id_caracteristicas_fisicas}}"
+                                                                          type="checkbox"
+                                                                          [checked]="cambiatipocheck(itmcm.checkeado)"
+                                                                          (change)="enCambioEstadoPT(itmcm)">
+                                                                </mz-checkbox-container>
+                                                        </div>
+                        <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+                                <button class="btn-floating btn-large green"
+                                [disabled] = "activaBoton(tipoClasificacionProductoPT)"
+                                (click)= "guardaBDListaClasifCaracPT()"
+                                >
+                                   <i class="large mdi-action-done"></i>
+                                </button>
+                        </div>  
+                                </mz-collapsible-item-body>
+                            </mz-collapsible-item>
+                <mz-collapsible-item [active]="false">
+                    <mz-collapsible-item-header >
+                    <h5 style="color:lightcoral;">MATERIA PRIMA</h5>
+                    </mz-collapsible-item-header>
+                    <mz-collapsible-item-body>
+                            <div class="row">
+                                 <div class="col s12 m6"></div>
+                                    <mz-select-container class="col s12 m6">
+                                        <select mz-select
+                                          id="options-selectmp"
+                                          [label]="'Clasificacion del producto'"                     
+                                          [(ngModel)] = "tipoClasificacionProductoMP"
+                                          (change)="onLoadClasificacion_caracteristicas(tipoClasificacionProductoMP);"
+                                          >
+                                          <option value="0" selected = "true">&nbsp;</option>
+                                            <option *ngFor = "let item of clasificacionesportipoMP" value="{{item.descripcion}}">{{item.name}}&nbsp;-&nbsp;({{item.tipo}}) </option>
+                                        </select>
+                                      </mz-select-container>
+                              </div>
+                            <h5>Caracteristicas Físicas</h5>
+                                        <div class="row">
+                                                <mz-checkbox-container class="col s6 m4" *ngFor ="let itmcf2 of caracteristicasMP" >
+                                                        <input mz-checkbox  *ngIf= "itmcf2.esp_car == 'CF'"
+                                                          [label]="itmcf2.descripcion+'-'+itmcf2.esp_car"
+                                                          id="checkbox-{{itmcf2.esp_car}}-{{itmcf2.tipo}}-{{itmcf2.id_caracteristicas_fisicas}}"
+                                                          type="checkbox"
+                                                          [checked]="cambiatipocheck(itmcf2.checkeado)"
+                                                          (change)="enCambioEstadoMP(itmcf2)">
+                                                </mz-checkbox-container>
+                                        </div>
+                                <h5>Control Microbiológico</h5>                               
+                                            <div class="row">
+                                                <mz-checkbox-container class="col s6 m4" *ngFor ="let itmcm2 of caracteristicasMP" >
+                                                        <input mz-checkbox  *ngIf= "itmcm2.esp_car == 'CM'"
+                                                          [label]="itmcm2.descripcion+'-'+itmcm2.esp_car"
+                                                          id="checkbox-{{itmcm2.esp_car}}-{{itmcm2.tipo}}-{{itmcm2.id_caracteristicas_fisicas}}"
+                                                          type="checkbox"
+                                                          [checked]="cambiatipocheck(itmcm2.checkeado)"
+                                                          (change)="enCambioEstadoMP(itmcm2)">
+                                                </mz-checkbox-container>
+                                            </div>  
+                                            <div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+                                                <button class="btn-floating btn-large green"
+                                                [disabled] = "activaBoton(tipoClasificacionProductoMP)"
+                                                (click) = "guardaBDListaClasifCaracMP()"
+                                                >
+                                                   <i class="large mdi-action-done"></i>
+                                                </button>
+                                           </div>  
+                    </mz-collapsible-item-body>
+                </mz-collapsible-item>
+            </mz-collapsible>
+  
+            <div class="row">
+            </div>
+           <!-- <ng-include
+            src="www.google.com">
+            </ng-include>-->
+          </mz-card-content>
+    </mz-card>
+    
+</div>
+<simple-notifications></simple-notifications>

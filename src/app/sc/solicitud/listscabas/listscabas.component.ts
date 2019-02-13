@@ -144,6 +144,7 @@ export class ListscabasComponent implements OnInit {
   // Opciones para filtrado de Listado
 
   onLoadListado() {
+    this.lsolicitud = [];
     this.openLoading();
     this.servSC.getListadoSolicitudXEstado(this.estado_autorizacion).subscribe(
       data => {

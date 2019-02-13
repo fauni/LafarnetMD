@@ -1,0 +1,168 @@
+<div id="loading">
+  <div id="loadingcontent">
+      <p id="loadingspinner">
+          <mz-spinner
+            class="valign center-align col s4"
+            [size]="'big'">
+          </mz-spinner>
+          <br><br>
+          Espere un momento ... 
+      </p>
+  </div>
+</div>
+
+
+<mz-parallax class="header-background" [height]="170">
+    <img src="assets/images/dark-material-bg.jpg">
+  </mz-parallax>
+  <div id="preview" class="header-content valign-wrapper lafar-light">
+    <img class="image-user circle" src="assets/images/userlafar.png">
+    <div class="nombre-user">INGRESO :&nbsp;&nbsp;{{codingreso}}&nbsp;&nbsp;&nbsp;&nbsp;DE FECHA :&nbsp;&nbsp;{{fechaingreso}} <br> PROVEEDOR :&nbsp;&nbsp;{{descproveedor}}</div>
+  </div>
+ 
+   <div class="contenido-principal">
+         <div class="contenedor-tabla">
+              <!--<div class="fixed-action-btn" style="top: 220px; right: 24px;">
+                  <a class="btn-floating btn-large blue" (click) = "modalNuevoItem.open()">
+                   <i class="large mdi-content-add"></i>
+                </a>
+                </div>-->
+            <mz-card>
+                <mz-card-content>  
+              <div class="row">
+                <table class="bordered">
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th >Codigo
+                        <span></span>
+                      </th>
+                      <th >Descripcion
+                        <span></span>
+                      </th>
+                      <th >Cantidad
+                          <span></span>
+                        </th>
+                        <th >Lote
+                            <span></span>
+                        </th>
+                        <th >Fecha Vmto.
+                            <span></span>
+                        </th>
+                      <th style= "text-align:right;">Opciones
+                        <span></span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor = "let detalleing of detallesIngreso" >
+                      <td>{{detalleing.id_detin}}</td>
+                      <td>{{detalleing.cod_producto}}</td>
+                      <td>{{detalleing.producto}}</td>
+                      <td>{{detalleing.cantidad}}</td>
+                      <td>{{detalleing.lote}}</td>
+                      <td>{{cambiaFormatofecha(detalleing.fecha_vencimiento)}}</td>
+                      <td style="text-align:right;">
+                        <a mz-button id="btn-dropdown" href="javascript:void(0)"><i class="mdi-navigation-more-vert"></i></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> 
+              <hr>
+              <div class="row">
+                <div class="header-content valign-wrapper">
+                    
+                    <div class="nombre-user">GLOSA :<br>{{glosaingreso}}</div>
+                  </div>
+              </div>
+              
+            </mz-card-content>
+            </mz-card>    
+        </div>
+      </div> 
+         <!--<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+          <a class="btn-floating btn-large green" (click)= "guardaIngreso()">
+       <a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">
+          <i class="large mdi-action-done"></i>
+        </a>
+        </div>
+       -->
+        
+  
+  <mz-modal #modalNuevoItem [fixedFooter]="true" [bottomSheet]="false">
+      <mz-modal-header>
+       <h4 style="text-align:center;">Nuevo Item</h4> 
+      </mz-modal-header>
+      <mz-modal-content>
+  <div>
+    <div class="row">
+        <div style="padding: 10px 10px" class="col s12 m8">
+            <ng2-completer 
+              [datasource]="productoData"
+              [minSearchLength]="0"
+              [maxChars]="30"
+              [inputClass]="'form-control'"
+              [placeholder]="'Seleccione el producto'"
+              [matchClass]="'match'"
+              [autofocus]="true"
+              [textSearching]="false"
+              [(ngModel)]="descprod"
+              >
+              
+            </ng2-completer>
+          </div>
+        <mz-input-container class="col s12 m4">
+        <input mz-input required
+        id="cantidad"
+        name="cantidad"
+        type="number"
+        step="any"
+        length="80"
+        width="80"
+        [label]="'Cantidad'"
+        [(ngModel)] = "cantdet"
+       >
+      </mz-input-container>
+  </div>
+  <div class="row">
+    <mz-input-container  class="col s12 m8">
+        <input mz-input required
+        id="lote"
+        name="lote"
+        type="text"
+        length="80"
+        width="80"
+        [label]="'Lote'"
+        [(ngModel)]= "loteprod"
+        >
+    </mz-input-container>
+    <mz-datepicker-container class="col s12 m4">
+        <input mz-datepicker
+          [label]="'Fecha de vencimiento'"
+          [options]="options"
+          id="fecha_vmto"
+          placeholder="Elija la fecha de Vencimiento"
+          type="text"
+          [(ngModel)]="fechavenprod"
+          >
+      </mz-datepicker-container>
+      
+  </div>
+  </div>
+  </mz-modal-content>
+  <mz-modal-footer>
+       <!--<div class="fixed-action-btn" style="bottom: 20px; right: 20px;">
+          <a class="btn-floating btn-large green" (click) = "aadDetalle($event)" mz-modal-close>
+       <a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">
+          <i class="large mdi-action-done"></i>
+        </a>
+        </div>
+        <div class="fixed-action-btn" style="bottom: 20px; right: 100px;">
+            <a class="btn-floating btn-large red" mz-modal-close >
+          <a class="btn-floating btn-large red" (click)="ngxSmartModalService.getModal('myModal').open()">
+            <i class="large mdi-content-undo"></i>
+          </a>
+          </div>-->
+  </mz-modal-footer>
+  </mz-modal>

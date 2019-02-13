@@ -38,7 +38,7 @@
           <td>{{certificado.dictamen}}</td>
           <!--<td><a href="javascript:void(0)" (click)="obtenerDatosReporte(certificado.codigo_certificado)">Vista Previa</a></td>-->
           <!--<td><a href="javascript:void(0)" (click)="obtenerPDF()">Vista Previa</a></td>-->
-          <td><a [routerLink]="['/sacc/certificados/mp/detail/', certificado.codigo_certificado.replace('/','|')]">Ver Detalle</a></td>
+          <td><a [routerLink]="['/sacc/certificados/mp/detail/', certificado.codigo_certificado.split('/').join('|')]">Ver Detalle</a></td>
         </tr>
       </tbody>
     </table>

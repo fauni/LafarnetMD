@@ -49,4 +49,5 @@ export class OrdenCompraListAbastecimiento {
     public tipo_orden: string;
     public motivo_orden: string;
     public estado_autorizacion_gerencia: string;
+    public estado_transferencia: string;
 }

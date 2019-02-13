@@ -63,7 +63,7 @@ export class ListsupocComponent implements OnInit {
 
   // Esta funcion obtiene una solicitud por su codigo
   onOpenOrden(codigo_orden: string): void {
-    this.router.navigate(['/sc/orden/detailoc/' + codigo_orden]);
+    this.router.navigate(['/sc/orden/detailocsg/' + codigo_orden]);
     // alert(codigo_solicitud);
   }
 

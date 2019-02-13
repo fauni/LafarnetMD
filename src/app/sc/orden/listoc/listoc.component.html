@@ -85,7 +85,7 @@
             </tr>
             
             <tr class="border_bottom" *ngFor="let orden of lorden | filter:term">
-                <td>{{orden.codigo_orden}}</td>
+                <td [ngClass]="{'borde-celda' : orden.estado_transferencia === 'N', 'borde-celda2' : orden.estado_transferencia === 'Y' }">{{orden.codigo_orden}}</td>
                 <td class="center">
                     <mz-badge
                         (click)="irAConversaciones(orden.codigo_orden)"
@@ -146,7 +146,6 @@
                     </button>
                 </td>
             </tr>
-            
         </table>
     </mz-card-content>
 </mz-card>    
@@ -204,11 +203,19 @@
 <!-- END REGION ANULAR ORDEN-->
 
 
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+<div *ngIf="transferencia" class="fixed-action-btn" style="bottom: 85px; right: 24px;">
+    <button id="star-button" mz-button [float]="true" [large]="true" class="blue" (click)="generarArchivosSubidaSAP()">
+        <i class="large mdi-file-file-download"></i>
+    </button>
+</div>
+
+
+<div class="fixed-action-btn">
     <a [routerLink]="['/sc/orden/solicitud']" href="javascript:void(0)" class="btn-floating btn-large green">
         <i class="large mdi-content-add"></i>
     </a>
 </div>
+
 
 <!--
 <div class="row">

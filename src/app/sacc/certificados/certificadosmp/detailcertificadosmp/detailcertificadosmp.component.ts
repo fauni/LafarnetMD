@@ -23,29 +23,29 @@ export class DetailcertificadosmpComponent implements OnInit {
   imgSafe: SafeUrl; // Imagen del Reporte Logo Lafar
   codigo_certificado: String = '';
   
-  //OBtenemos información del certificado 
+  // OBtenemos información del certificado 
   certificado: Certificados = new Certificados();
   
   // Listas de Características del Certificado
   lcf: Array<CaracteristicasCertificado> = new Array<CaracteristicasCertificado>();
-  //private laq: Array<CaracteristicasCertificado> = new Array<CaracteristicasCertificado>();
+  // private laq: Array<CaracteristicasCertificado> = new Array<CaracteristicasCertificado>();
   lcm: Array<CaracteristicasCertificado> = new Array<CaracteristicasCertificado>();
 
   constructor(public global: Globals, 
     private servCertificados: CertificadosnService, 
-    private _route: ActivatedRoute, 
+    private _route: ActivatedRoute,
     private route: Router,
     private toast: MzToastService) {
-    
+
   }
 
   ngOnInit() {
-    this.codigo_certificado = this._route.snapshot.paramMap.get('id').replace('|', '/');
-    this.onLoadCertificado(this.codigo_certificado.replace('|', '/'));
+    this.codigo_certificado = this._route.snapshot.paramMap.get('id').split('/').join('|');
+    this.onLoadCertificado(this.codigo_certificado.split('/').join('|'));
   }
 
-  onLoadCertificado(codigo_certificado: String){
-    //alert(codigo_certificado);
+  onLoadCertificado(codigo_certificado: String) {
+    // alert(codigo_certificado);
     this.servCertificados.getCertificadoAnalisisMP(codigo_certificado).subscribe(data => {
       // this.toast.show('Se trajo los datos del certificado correctamente', 500);    
       this.certificado.id_certificado_analisis = data['body'].id_certificado_analisis;

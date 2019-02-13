@@ -38,7 +38,13 @@ export class NotifyocComponent implements OnInit {
   }
 
   onDirigirOrden() {
-    this.router.navigate(['sc/orden/list/']);
+    if (this.username == 'mzeballos' || this.username == 'jocampod') {
+      this.router.navigate(['sc/orden/list_aut/']);
+    }else if(this.username == 'jocampom') {
+      this.router.navigate(['sc/orden/list_g/']);
+    }else {
+      this.router.navigate(['sc/orden/list/']);
+    }
   }
 
   // Funciones para obtener las conversaciones de la solicitud del servidor

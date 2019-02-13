@@ -785,13 +785,13 @@
 <!-- END REGION RECHAZAR SOLICITUD-->
 
 <div *ngIf="solicitud.estado_autorizacion_superior !== 'X'" class="footer" id="footer">
-    <button mz-button (click)="onEditar()" *ngIf="!modificar">
+    <button mz-button (click)="onEditar()" *ngIf="!modificar && solicitud.estado_autorizacion_superior === 'P'">
         Editar
     </button>
     <button mz-button (click)="onCancelarEdicion()" *ngIf="modificar">
         Cancel
     </button>
-    <button mz-button (click)="AnularSolicitudModal.open()" class="red">
+    <button *ngIf="solicitud.estado_autorizacion_superior !== 'X'" mz-button (click)="AnularSolicitudModal.open()" class="red">
         Anular
     </button>
     <button *ngIf="solicitud.estado_autorizacion_superior === 'P'" mz-button class="blue" (click)="onGuardarAutorizarSolicitud('A')">

@@ -14,6 +14,9 @@ import { OrdenCompraListAbastecimiento, OCOrdenCompra } from '../orden';
   styleUrls: ['./listoc.component.scss'],
 })
 export class ListocComponent implements OnInit {
+  // Existen Ordenes para transferir
+  transferencia: Boolean = false;
+
   // Anulacion de Solicitud
   aorden: RequestAnulacionSolicitud = new RequestAnulacionSolicitud();
 
@@ -28,6 +31,7 @@ export class ListocComponent implements OnInit {
   constructor(private servSC: SolicitudService, private servOC: OrdenService, private toast: MzToastService, private router: Router) { }
 
   ngOnInit() {
+    this.onVerificaEstadoTransferenciaOC();
     this.onGetOrdenesCompra();
   }
 
@@ -48,6 +52,31 @@ export class ListocComponent implements OnInit {
       (err: HttpErrorResponse) => {
         this.closeLoading();
         this.toast.show('Ocurrio un error al obtener las Ordenes de Compra!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
+
+  // Funcion que verifica si existen ordenes que no hay sido sincronizadas con el SAP
+  onVerificaEstadoTransferenciaOC(): void {
+    // debugger;
+    this.openLoading();
+    this.servOC.getVerificaEstadoTransferenciaOC().subscribe(
+      data => {
+        this.closeLoading();
+        if (data['result'] == true) {
+          this.transferencia = true;
+        } else {
+          this.transferencia = false;
+        }
+      },
+      (err: HttpErrorResponse) => {
+        this.closeLoading();
+        this.toast.show('Ocurrio un error al verificar el estado de transferencia de las Ordenes de Compra!', 1000, 'red');
         if (err.error instanceof Error) {
           console.log('Ocurrio un error:', err.error.message);
         } else {
@@ -131,6 +160,29 @@ export class ListocComponent implements OnInit {
     );
   }
   //#endregion
+
+  // Funcion para generar los archivos que se subiran al SAP
+  generarArchivosSubidaSAP() {
+    this.openLoading();
+    this.servOC.generarArchivosParaSAP().subscribe(
+      data => {
+        this.closeLoading();
+        this.toast.show('Se Genero los archivos correctamente!', 1000, 'green');
+        // this.onLoadListado();
+        this.onGetOrdenesCompra();
+        this.onVerificaEstadoTransferenciaOC();
+      },
+      (err: HttpErrorResponse) => {
+        this.closeLoading();
+        this.toast.show('Ocurrio un error al crear los archivos. Intente nuevamente!', 1000, 'red');
+        if (err.error instanceof Error) {
+          console.log('Ocurrio un error:', err.error.message);
+        } else {
+          console.log(`El servidor respondio: ${err.status}, body was: ${err.error}`);
+        }
+      }
+    );
+  }
 
   // Funciones Loading
   openLoading() {

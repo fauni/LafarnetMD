@@ -30,8 +30,7 @@
     </div>
 </nav>
 
-<mz-modal  #AddFileModal
-    [fixedFooter]="true">
+<mz-modal #AddFileModal [fixedFooter]="true">
     <mz-modal-header>
         <nav class="lafar-bg-blue">
             <div class="nav-wrapper">
@@ -774,7 +773,7 @@
 <!-- END REGION RECHAZAR SOLICITUD-->
 
 <div *ngIf="solicitud.estado_autorizacion_superior !== 'X'" class="footer" id="footer">
-    <button mz-button (click)="onEditar()" *ngIf="!modificar">
+    <button mz-button (click)="onEditar()" *ngIf="!modificar && solicitud.estado_autorizacion_superior === 'P'">
         Editar
     </button>
     <button mz-button (click)="onCancelarEdicion()" *ngIf="modificar">

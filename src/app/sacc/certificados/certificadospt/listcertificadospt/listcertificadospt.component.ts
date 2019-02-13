@@ -23,7 +23,7 @@ export class ListcertificadosptComponent implements OnInit {
   filter: any;
 
   // Ordenacion
-  key: string = 'codigo_certificado';
+  key: string = 'fecha_analisis';
   reverse: boolean = false;
 
   // Datos Harcode

@@ -86,7 +86,7 @@ export class AddcertificadosmpComponent implements OnInit {
   // Proveedores
   proveedores: Array<Proveedor> = new Array<Proveedor>();
 
-  //Fabricantes
+  // Fabricantes
   fabricantes: Array<Fabricante> = new Array<Fabricante>();
 
   constructor(
@@ -508,14 +508,14 @@ export class AddcertificadosmpComponent implements OnInit {
 
   getLote(event: any) {
     if (event.keyCode == 13) {
-      this.onLoadLoteMP(this.certificado.lote);
+      let n_lote = this.certificado.lote.split('/').join('|');
+      this.onLoadLoteMP(n_lote);
     }
   }
 
   onLoadLoteMP(nlote: String) {
-    debugger;
     let l: Lote = new Lote();
-    this.servCertificados.getLoteMP(nlote.replace('/', '|')).subscribe(data => {
+    this.servCertificados.getLoteMP(nlote).subscribe(data => {
       console.log('Datos de Lote extraidos');
       console.log(data);
       this.listalote = data['body'];
@@ -565,11 +565,11 @@ export class AddcertificadosmpComponent implements OnInit {
     return cod;
   }
 
-  guardarFabricante(){
-    let nombre_fabricante = prompt("Introduzca el nombre del Fabricante:", " ");
+  guardarFabricante() {
+    let nombre_fabricante = prompt('Introduzca el nombre del Fabricante:', ' ');
     let f: Fabricante = new Fabricante();
-    f.id_fabricante='0';
-    f.nombre_fabricante= nombre_fabricante;
+    f.id_fabricante = '0';
+    f.nombre_fabricante = nombre_fabricante;
     f.usuario_creacion = localStorage.getItem('username');
     f.usuario_modificacion = localStorage.getItem('username');
     this.servProveedor.saveFabricante(f).subscribe(data => {

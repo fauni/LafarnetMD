@@ -1,0 +1,65 @@
+<mz-parallax class="header-background" [height]="170">
+    <img src="assets/images/dark-material-bg.jpg">
+</mz-parallax>
+  
+<div id="preview" class="header-content valign-wrapper lafar-light">
+    <img class="image-user circle" src="assets/images/userlafar.png">
+    <div class="nombre-user">PROVEEDORES</div>
+
+    <div class="box">
+        <div class="container-1">
+            <span class="icon"><i class="mdi-action-search"></i></span>
+            <input type="search" id="search" name="search" placeholder="Buscar Proveedores..." [(ngModel)]="filter"/>
+        </div>
+    </div>
+</div>
+  
+<div class="contenido-principal" style="background: #ffffff;">
+  <div class="row">
+    <table class="bordered">
+      <thead>
+        <tr>
+          <th (click)="sort('Cod_Proveedor')">Codigo <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Cod_Proveedor'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th (click)="sort('Nombre_Proveedor')">Nombre del Proveedor <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Nombre_Proveedor'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th (click)="sort('Tipo')">Tipo <span class="mdi-hardware-keyboard-arrow-down" *ngIf="key =='Tipo'" [ngClass]="{'mdi-hardware-keyboard-arrow-up':reverse,'mdi-hardware-keyboard-arrow-down':!reverse}"></span></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proveedor of proveedores | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+          <td>{{proveedor.Cod_Proveedor}}</td>
+          <td>{{proveedor.Nombre_Proveedor}}</td>
+          <td>{{proveedor.Tipo}}</td>
+          <!--<td>{{producto.Principio_Activo}}</td>-->
+          <td style="text-align:right;">
+            <a [flat]="true" mz-button id="btn-dropdown-basic{{proveedor.Cod_Proveedor}}" href="javascript:void(0)"><i class="mdi-navigation-more-vert"></i></a>
+            <mz-dropdown
+              [id]="'dropdown-basic'"
+              [dropdownButtonId]="'btn-dropdown-basic' + proveedor.Cod_Proveedor"
+            >
+              <mz-dropdown-item><a href="javascript:void(0)" (click)="modalVerProveedor.open()">Ver</a></mz-dropdown-item>
+              <mz-dropdown-item><a href="javascript:void(0)">Modificar</a></mz-dropdown-item>
+              <mz-dropdown-item><a href="javascript:void(0)">Eliminar</a></mz-dropdown-item>
+            </mz-dropdown>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
+  
+  
+  
+  <mz-modal #modalVerProveedor [fixedFooter]="true" [bottomSheet]="true">
+    <mz-modal-header>
+      Detalle del Proveedor
+    </mz-modal-header>
+    <mz-modal-content>
+      
+    </mz-modal-content>
+    <mz-modal-footer>
+      <button mz-button [flat]="true" mz-modal-close>Guardar</button>
+      <button mz-button [flat]="true" mz-modal-close>Cerrar</button>
+    </mz-modal-footer>
+  </mz-modal>
